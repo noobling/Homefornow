@@ -6,13 +6,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var passport = require('passport');
-require('./app_api/models/db');
-require('./app_api/config/passport');
-
-
+require('./app_server/models/db');
+require('/app_server/config/passport');
 
 var index = require('./app_server/routes/index');
-var routesApi = require('./app_api/routes/index');
 
 var app = express();
 
