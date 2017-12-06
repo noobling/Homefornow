@@ -1,7 +1,6 @@
 var mongoose = require( 'mongoose' );
-var bed = require('bed');
 
-var addressSchema new mongoose.Schema({
+var addressSchema = new mongoose.Schema({
     appartmentNumber: {
         type : Number,
         required : false
@@ -25,6 +24,28 @@ var addressSchema new mongoose.Schema({
         min: 1
     }
 });
+
+var bedSchema = new mongoose.Schema({
+    gender: {
+        type: String,
+        required: true,
+        enum: ['Male', 'Female', 'Either']
+    },
+    isDisability: {
+        type: Boolean,
+        required: false
+    },
+    bedType: {
+        type: String,
+        required: false,
+        enum: ['Single', 'parentChild', 'Couple', 'Family']
+    },
+    taken: {
+        type: Boolean,
+        required: true
+    }
+});
+
 
 var ageSchema = new mongoose.Schema({
     minAge: {
@@ -64,7 +85,7 @@ var accomodationSchema = new mongoose.Schema({
         type: ageSchema,
         required: true
     },
-    beds: [bed.bedSchema]
+    beds: [bedSchema]
 });
 
 mongoose.model('accomodation', accomodationSchema);
