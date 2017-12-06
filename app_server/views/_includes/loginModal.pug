@@ -1,0 +1,21 @@
+.modal.fade(id="loginmodal",role="dialog")
+    .modal-dialog.modal-md
+        .modal-content
+            .modal-header
+                button(type="button",data-dismiss="modal").close &times;
+                h4.modal-title Sign Up 
+            .modal-body
+                form 
+                    .form-group
+                        label(for="email") Email 
+                        input(type="email").form-control#email
+                    .form-group
+                        label(for="pwd") Password
+                        input(type="password").form-control#pwd
+                    .form-group
+                        label(for="pwd") Confirm Password
+                        input(type="password").form-control#pwd
+            .modal-footer
+                span.pull-left
+                    button(type="submit").btn.btn-default Submit
+                button(type="button",data-dismiss="modal").btn.btn-default Close

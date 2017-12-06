@@ -1,3 +1,6 @@
+include _includes/signupModal
+include _includes/loginModal
+
 doctype html
 html
   head
@@ -15,9 +18,11 @@ html
             span.icon-bar
             span.icon-bar
         #navbar-main.navbar-collapse.collapse
-          ul.nav.navbar-nav
+          ul.nav.navbar-nav.navbar-right
             li
-              a(href='/about') About
+              a(href='#',data-toggle="modal",data-target="#signupmodal") Sign Up
+            li
+              a(href='#',data-toggle="modal",data-target="#loginmodal") Login
     
     .container
       block content
@@ -30,3 +35,6 @@ html
     script(src='/javascripts/app.js')
     script(src='/bootstrap/js/bootstrap.min.js')
     script(src='/javascripts/validation.js')
+
+
+
