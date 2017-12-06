@@ -62,5 +62,5 @@ process.on('SIGTERM', function() {
   })
 });
 
-require('./locations');
+require('./accomodation');
 require('./users');
