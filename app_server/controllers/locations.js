@@ -2,6 +2,7 @@ module.exports.bedVacanciesList = function(req, res) {
 	res.render('bedVacanciesList', {
 		title: 'Bed vaccancies',
 		tagline: 'A place to stay', 
+		user: req.session.user,
 		locations: [
 			{
 				name: 'Mission Australia',
@@ -25,6 +26,7 @@ module.exports.showLocation = function(req, res) {
 	res.render('showLocation', {
 		title: 'Mission Australia', 
 		tagline: 'Bringing people together',
+		user: req.session.user,
 		location: {
 			info: 'Located in East Perth',
 			opening: '9am',
