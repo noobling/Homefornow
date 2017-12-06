@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 var passport = require('passport');
 require('./app_server/models/db');
-require('/app_server/config/passport');
+require('./app_server/config/passport');
 
 var index = require('./app_server/routes/index');
 
@@ -28,7 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 
 app.use('/', index);
-app.use('/api', routesApi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

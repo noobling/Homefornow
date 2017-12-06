@@ -1,3 +1,3 @@
-module.exports.bedVacaniesList = function(req, res) {
-	res.render('bedVacaniesList', {content: 'it worked'});
+module.exports.bedVacanciesList = function(req, res) {
+	res.render('bedVacanciesList', {content: 'it worked'});
 }
