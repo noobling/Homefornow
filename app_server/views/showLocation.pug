@@ -1,0 +1,48 @@
+extends layout
+
+block content
+  .row.page-header
+    .col-lg-12
+      h1= title
+  .row
+    .col-xs-12.col-md-9
+      .row
+        .col-xs-12.col-sm-6
+          .panel.panel-primary
+            .panel-heading
+              h2.panel-title Office Hours
+            .panel-body
+              | Weekdays: #{location.opening} - #{location.closing}
+              br
+              | Saturday: Closed
+              br
+              | Sunday: Closed   
+          .panel.panel-primary
+            .panel-heading
+              h2.panel-title Facilities
+            .panel-body
+              each facility in location.facilities
+                span.label.label-warning
+                  span.glyphicon.glyphicon-ok 
+                  | &nbsp;#{facility}
+                | &nbsp;  
+          .panel.panel-primary
+            .panel-heading
+              h2.panel-title Restrictions
+            .panel-body
+              each restriction in location.restrictions
+                span.label.label-danger
+                  span.glyphicon.glyphicon-remove 
+                  | &nbsp;#{restriction}
+                | &nbsp;
+        .col-xs-12.col-sm-6.location-map
+          .panel.panel-primary
+            .panel-heading
+              h2.panel-title= map.title
+            .panel-body
+              img.img-responsive.img-rounded(src=map.url)
+
+    .col-xs-12.col-md-3              
+      p.lead About #{location.name}
+      p= additionalInfo
+      a(href="https://www.missionaustralia.com.au/",target="_blank").btn.btn-lg.btn-primary Learn More   
