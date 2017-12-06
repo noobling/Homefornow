@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	#banner.page-header
+		.row
+			.col-lg-6
+				h1= title
+					small &nbsp;#{tagline}
+	.row
+		.col-xs-12
+			table.table.table-hover
+				thead
+					tr
+						th Location
+						th Availability
+						th Number
+				tbody
+					each location in locations
+						tr
+							td 
+								a(href='/location')= location.name 
+							td= location.availability
+							td= location.number
