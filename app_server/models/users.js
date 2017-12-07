@@ -5,15 +5,17 @@ var jwt = require('jsonwebtoken');
 var userSchema = new mongoose.Schema({
   email: {
     type: String,
-    unique: true,
-    required: true
+    unique: true
   },
-  name: {
-    type: String,
-    required: true
-  },
+  name: String,
   hash: String,
-  salt: String
+  salt: String,
+  facebook : {
+    id: String,
+    token: String,
+    email: String,
+    name: String,
+  }
 });
 
 userSchema.methods.setPassword = function(password){

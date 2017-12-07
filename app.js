@@ -4,8 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var session = require('express-session');
 var passport = require('passport');
+
+require('dotenv').config()
 require('./app_server/models/db');
 require('./app_server/config/passport');
 
@@ -24,7 +26,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(session({
+  secret: 'randomsecret',
+  resave: true,
+  saveUninitialized: false
+})); // SECRET SHOULD BE STORED IN ENVIRONMENT VARIABLES
+app.use(function(req,res,next){
+  res.locals.session = req.session;
+  next();
+});
 app.use(passport.initialize());
 
 app.use('/', index);

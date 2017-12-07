@@ -25,6 +25,7 @@ module.exports.showLocation = function(req, res) {
 	res.render('showLocation', {
 		title: 'Mission Australia',
 		tagline: 'Bringing people together',
+		user: req.session.user,
 		location: {
 			info: 'Located in East Perth',
 			opening: '9am',
