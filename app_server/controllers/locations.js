@@ -1,19 +1,19 @@
 module.exports.bedVacanciesList = function(req, res) {
 	res.render('bedVacanciesList', {
 		title: 'Bed vaccancies',
-		tagline: 'A place to stay', 
+		tagline: 'A place to stay',
 		locations: [
 			{
-				name: 'Mission Australia',
-				availability: 'Available',
+				name: 'Youngle Group',
+				availability: true,
+				number: 94572188
+			},{
+				name: 'Foyer House',
+				availability: true,
 				number: 94572188
 			},{
 				name: 'Mission Australia',
-				availability: 'Available',
-				number: 94572188
-			},{
-				name: 'Mission Australia',
-				availability: 'Available',
+				availability: false,
 				number: 94572188
 			}
 
@@ -23,7 +23,7 @@ module.exports.bedVacanciesList = function(req, res) {
 
 module.exports.showLocation = function(req, res) {
 	res.render('showLocation', {
-		title: 'Mission Australia', 
+		title: 'Mission Australia',
 		tagline: 'Bringing people together',
 		location: {
 			info: 'Located in East Perth',
@@ -44,7 +44,7 @@ module.exports.showLocation = function(req, res) {
 		},
 		map: {
 			title: 'Mission Australia Service',
-			url: 'https://maps.googleapis.com/maps/api/staticmap?center=40.711614,-74.012318&size=800x800&&markers=color:green%7Clabel:G%7C40.711614,-74.012318&zoom=13'
+			suburb: 'Crawley'
 		},
 		additionalInfo: 'Every day we support people nationwide by combatting homelessness, assisting disadvantaged families and children, addressing mental health issues, fighting substance dependencies, and much more. We’re generously supported by our funders, partners and tens of thousands of everyday Australians, who make the work of our tireless volunteers and staff possible.'
 	})

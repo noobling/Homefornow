@@ -40,8 +40,7 @@ block content
             .panel-heading
               h2.panel-title= map.title
             .panel-body
-              img.img-responsive.img-rounded(src=map.url)
-
+              iframe.embed-responsive-item(width="100%", height="50%", frameborder="0", style="border:0", src="https://www.google.com/maps/embed/v1/search?key=AIzaSyCoUFBxBooEXs84Lx-xtlVCGDj_0YnXHl4&q=Crawley+WA")
     .col-xs-12.col-md-3              
       p.lead About #{location.name}
       p= additionalInfo
