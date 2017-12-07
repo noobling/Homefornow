@@ -1,3 +1,78 @@
+body {
+    background-color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    /*use roboto*/
+    font-style: normal;
+    color: #34515e;
+}
+
+/*CSS for custom buttons ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.btn-primary {
+    background-color: #cc66cc;
+    border-color: #cc66cc;
+}
+
+.btn-primary:hover {
+    background-color: #862d86;
+    border-color: #862d86;
+}
+
+/*CSS for custom navbar ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.navbar-default .navbar-nav > li > a:hover,
+    .navbar-default .navbar-nav > li > a:focus {
+    color: #34515e;  /*Sets the text hover color on navbar*/
+}
+
+.navbar-default .navbar-nav > a,
+    .navbar-default .navbar-nav > a:hover,
+    .navbar-default .navbar-nav > a:focus {
+
+    color: black; /*BACKGROUND color for active*/
+    background-color: #030033;
+}
+
+.navbar-default .navbar-toggle {
+    background-color: white;
+    border-color: white;
+}
+
+.navbar-default .navbar-toggle:hover, .navbar .navbar-toggle:focus {
+    border-color: #e7e7e7;
+}
+
+.navbar-default .navbar-header .navbar-brand {
+    color: white;
+    background-color: #862d86;
+}
+
+.navbar-default {
+    background-color: #cc66cc;
+    border-color: #cc66cc;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #262626;
+    text-decoration: none;
+    background-color: #66CCFF;  /*change color of links in drop down here*/
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: white; /*Change active text color here*/
+}
+
+/*CSS for custom panels ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.panel-primary > .panel-heading {
+    background-color: #cc66cc;
+    border-color: #cc66cc;
+}
+
+.panel-primary {
+    border-color: #cc66cc;
+}
+
 .review {padding-bottom: 5px;}
 .panel-body.review-container {padding-top:0;}
 .review-header {margin-bottom: 10px;}
