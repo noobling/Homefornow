@@ -7,6 +7,7 @@ LETS GOOOOOOOOOOOOO
 * `git clone https://github.com/noobling/anglicare-sprint-week.git`
 * `npm install`
 * `npm start`
+* `npm run devstart` This runs the project using nodemon. To reset the server then use 'rs'.
 
 ## Useful commands
 * `heroku addons:open mongolab`
