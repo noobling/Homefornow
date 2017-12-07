@@ -1,4 +1,5 @@
 var express = require('express');
+var passport = require('passport');
 var router = express.Router();
 var ctrlLocations = require('../controllers/locations');
 var ctrlAuth = require('../controllers/authentication');
@@ -12,4 +13,16 @@ router.get('/location', ctrlLocations.showLocation);
  */
 router.post('/login', ctrlAuth.login);
 router.post('/register', ctrlAuth.register);
+// route for facebook authentication and login
+router.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
+router.get('/auth/facebook/callback', 
+    passport.authenticate('facebook'), 
+    function(req, res) {
+        if (req.user) {
+            req.session.user = req.user;
+        }
+        res.redirect('/location');
+    }
+);
+
 module.exports = router;
