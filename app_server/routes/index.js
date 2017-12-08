@@ -11,7 +11,10 @@ router.get('/', ctrlIndex.index);
 
 router.get('/about', ctrlOthers.about);
 
-router.get('/locations', ctrlLocations.bedVacanciesList);
+router.get('/locations', ctrlLocations.showLocation);
+
+router.get('/locations/short_term', ctrlLocations.shortTermList);
+router.get('/locations/long_term', ctrlLocations.longTermList);
 
 router.get('/service', ctrlService.service);
 

@@ -1,6 +1,29 @@
-module.exports.bedVacanciesList = function(req, res) {
+module.exports.shortTermList = function(req, res) {
 	res.render('bedVacanciesList', {
-		title: 'Bed vaccancies',
+		title: 'For Now',
+		tagline: 'A place to stay',
+		locations: [
+			{
+				name: 'Youngle Group',
+				availability: true,
+				number: 94572188
+			},{
+				name: 'Foyer House',
+				availability: true,
+				number: 94572188
+			},{
+				name: 'Mission Australia',
+				availability: false,
+				number: 94572188
+			}
+
+		]
+	});
+}
+
+module.exports.longTermList = function(req, res) {
+	res.render('bedVacanciesList', {
+		title: 'For Future',
 		tagline: 'A place to stay',
 		locations: [
 			{
