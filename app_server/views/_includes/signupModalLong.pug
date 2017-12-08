@@ -1,0 +1,32 @@
+.modal.fade(id="signupmodallong",role="dialog")
+    .modal-dialog.modal-sm
+        .modal-content
+            .modal-header
+                button(type="button",data-dismiss="modal").close &times;
+                h2.modal-title For Future.
+                h3.modal-title help us find somewhere close to you.
+            .modal-body
+                form
+                    .form-group
+                        label(for="fName") First Name
+                        input(type="text", placeholder="e.g. John").form-control#fName
+                    .form-group
+                        label(for="lName") Last Name
+                        input(type="text", placeholder="e.g. Doe").form-control#lName
+                    .form-group
+                        label(for="pwd") Date of Birth
+                        input(type="date").form-control#DOB
+                    .form-group
+                        .row
+                            .col-xs-6
+                                select.form-control(placeholder="Gender")#gender
+                                    option Gender
+                                    option Male
+                                    option Female
+                                    option Other
+                            .col-xs-6
+                                label.checkbox-inline
+                                    input(type="checkbox", value="")
+                                    | Parent with child?
+                    .text-center
+                        button(type="submit").btn.btn-default Submit
