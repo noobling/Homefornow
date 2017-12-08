@@ -1,3 +1,3 @@
 module.exports.service = function(req, res) {
-    res.render('service', {title: 'Service'});
+    res.render('service', {title: 'YASS'});
 }
