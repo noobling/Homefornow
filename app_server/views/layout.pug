@@ -9,29 +9,12 @@ html
     link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    .navbar.navbar-default.navbar-fixed-top
-      .container
-        .navbar-header
-          a.navbar-brand(href='/') HomeForNow
-          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-        #navbar-main.navbar-collapse.collapse
-          ul.nav.navbar-nav.navbar-right
-            li
-              a(href='#',data-toggle="modal",data-target="#signupmodal") Sign Up
-            li
-              a(href='#',data-toggle="modal",data-target="#loginmodal") Login
-
+    block navbar
     .container
-      block content
-
       footer
         .row
           .col-xs-12
             small &copy; Anglicare
-
-    script(src='/javascripts/app.js')
-    script(src='/bootstrap/js/bootstrap.min.js')
-    script(src='/javascripts/validation.js')
+  script(src='/javascripts/app.js')
+  script(src='/bootstrap/js/bootstrap.min.js')
+  script(src='/javascripts/validation.js')
