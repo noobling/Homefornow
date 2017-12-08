@@ -2,14 +2,20 @@ var mongoose = require( 'mongoose' );
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 
+//Primary user, person seeking accomodation
 var userSchema = new mongoose.Schema({
+  //email of user
   email: {
     type: String,
     unique: true
   },
+  //name of user
   name: String,
+  //hash of their password
   hash: String,
+  //salt to the hash for the password
   salt: String,
+  //If user signs in using Facebook
   facebook : {
     id: String,
     token: String,

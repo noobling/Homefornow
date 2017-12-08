@@ -3,17 +3,14 @@
         .modal-content
             .modal-header
                 button(type="button",data-dismiss="modal").close &times;
-                h4.modal-title Sign Up
+                h4.modal-title Log In
             .modal-body
                 form(action='/login', method='post', role='form', id="addReview")
                     .form-group
                         label(for="email") Email
-                        input(type="email",placeholder="e.g. example@example.com").form-control#email
+                        input(type="email",placeholder="email").form-control#email
                     .form-group
                         label(for="pwd") Password
                         input(type="password").form-control#pwd
             .modal-footer
-                span.pull-right
-                    button(type="submit").btn.btn-default Submit
-                span.pull-left
-                    button(type="button",data-dismiss="modal").btn.btn-default Close
+                button(type="submit").btn.btn-default Submit

@@ -1,5 +1,48 @@
 extends navbarDefault
 
 block content
-  h1= title
-  p Welcome to #{title}
+    #banner.page-header
+        .row
+            .col-md-8
+                h1= title
+    form
+        .form-group
+            .row
+                .col-md-8.col-xs-12
+                    input.form-control.input-lg(type="text",placeholder="Location e.g. Subiaco")#location
+                    .spacer-sm
+                .col-md-2.col-xs-6.text-right
+                    a(href='#',data-toggle="modal",data-target="#signupmodalshort")
+                        button.btn.btn-lg.btn-primary
+                            | For now
+                .col-md-2.col-xs-6.text-left
+                    a(href='#',data-toggle="modal",data-target="#signupmodallong")
+                        button.btn.btn-lg.btn-default
+                            | Long term
+    .spacer-lg
+    .row
+        each location in locations
+            .col-lg-4.col-md-12
+                .panel.panel-default.panel-spaced
+                    .panel-heading
+                        a(href='/location', style="text-decoration: none; color: inherit;")
+                            h2.panel-title= location.name
+                    .row
+                        .col-lg-12.col-sm-5
+                            a(href='/location')
+                                img.img-responsive.img-square(src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
+                        .col-lg-12.col-sm-4
+                            .panel-body.text-justify
+                                | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        .col-lg-12.col-sm-3
+                            .panel-body
+                                if location.availability
+                                    span.text-success
+                                        span.glyphicons.glyphicons-ok
+                                        | Avaliable
+                                else
+                                    span.text-danger
+                                        span.glyphicons.glyphicons-remove
+                                        | Not Avaliable
+                            .panel-body
+                                | Contact: #{location.number}

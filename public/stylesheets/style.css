@@ -3,10 +3,37 @@ body {
     font-family: 'Roboto', sans-serif;
     /*use roboto*/
     font-style: normal;
-    color: #34515e;
+    color: #999999;
+}
+
+h1 {
+    font-size: 62pt;
+}
+
+.spacer-sm {
+    height: 2em;
+}
+
+.spacer-md {
+    height: 10em;
+}
+
+.spacer-lg {
+    height: 20em;
+}
+
+.page-header {
+    margin-top: 7em;
+    border: none;
 }
 
 /*CSS for custom buttons ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.btn {
+    text-transform: uppercase;
+    border-radius: 1px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
 .btn-primary {
     background-color: #cc66cc;
@@ -20,34 +47,34 @@ body {
 
 /*CSS for custom navbar ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-.navbar-default .navbar-nav > li > a:hover,
-    .navbar-default .navbar-nav > li > a:focus {
+.navbar-primary .navbar-nav > li > a:hover,
+    .navbar-primary .navbar-nav > li > a:focus {
     color: #34515e;  /*Sets the text hover color on navbar*/
 }
 
-.navbar-default .navbar-nav > a,
-    .navbar-default .navbar-nav > a:hover,
-    .navbar-default .navbar-nav > a:focus {
+.navbar-primary .navbar-nav > a,
+    .navbar-primary .navbar-nav > a:hover,
+    .navbar-primary .navbar-nav > a:focus {
 
     color: black; /*BACKGROUND color for active*/
     background-color: #030033;
 }
 
-.navbar-default .navbar-toggle {
+.navbar-primary .navbar-toggle {
     background-color: white;
     border-color: white;
 }
 
-.navbar-default .navbar-toggle:hover, .navbar .navbar-toggle:focus {
+.navbar-primary .navbar-toggle:hover, .navbar .navbar-toggle:focus {
     border-color: #e7e7e7;
 }
 
-.navbar-default .navbar-header .navbar-brand {
+.navbar-primary .navbar-header .navbar-brand {
     color: white;
     background-color: #862d86;
 }
 
-.navbar-default {
+.navbar-primary {
     background-color: #cc66cc;
     border-color: #cc66cc;
 }
@@ -58,11 +85,15 @@ body {
     background-color: #66CCFF;  /*change color of links in drop down here*/
 }
 
-.navbar-default .navbar-nav > li > a {
+.navbar-primary .navbar-nav > li > a {
     color: white; /*Change active text color here*/
 }
 
 /*CSS for custom panels ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.panel.panel-spaced {
+    margin: 60px;
+}
 
 .panel-primary > .panel-heading {
     background-color: #cc66cc;
