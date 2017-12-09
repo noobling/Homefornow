@@ -45,8 +45,10 @@ module.exports.longTermList = function(req, res) {
 }
 
 module.exports.showLocation = function(req, res) {
+	console.log(req.params)
+	var name = req.query.name;
 	res.render('showLocation', {
-		title: 'Mission Australia',
+		title: name,
 		tagline: 'Bringing people together',
 		user: req.session.user,
 		location: {
@@ -67,7 +69,7 @@ module.exports.showLocation = function(req, res) {
 			]
 		},
 		map: {
-			title: 'Mission Australia Service',
+			title: name,
 			suburb: 'Crawley'
 		},
 		additionalInfo: 'Every day we support people nationwide by combatting homelessness, assisting disadvantaged families and children, addressing mental health issues, fighting substance dependencies, and much more. We’re generously supported by our funders, partners and tens of thousands of everyday Australians, who make the work of our tireless volunteers and staff possible.'

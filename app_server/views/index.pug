@@ -27,11 +27,11 @@ block content
             .col-lg-4.col-md-12
                 .panel.panel-default.panel-spaced
                     .panel-heading
-                        a(href='/location', style="text-decoration: none; color: inherit;")
+                        a(href='/location'+location.name, style="text-decoration: none; color: inherit;")
                             h2.panel-title= location.name
                     .row
                         .col-lg-12.col-sm-5
-                            a(href='/location')
+                            a(href="location/?name="+location.name)
                                 img.img-responsive.img-square(src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
                         .col-lg-12.col-sm-4
                             .panel-body.text-justify
