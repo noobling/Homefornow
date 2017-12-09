@@ -122,3 +122,12 @@ div[class^="col-"] {
 .review-header {margin-bottom: 10px;}
 .reviewAuthor {margin: 0 5px;}
 .reviewTime {color: #ccc;}
+
+/*Styles for services ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+#serviceno {
+    margin-left: 1em;
+}
+
+#serviceyes {
+    margin-right: 1em;
+}

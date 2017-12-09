@@ -1,6 +1,9 @@
 extends navbarCentre
 
 block content
+    
+    include _includes/submitModal
+    
     #banner.page-header
         .row
             .col-md-8
@@ -39,4 +42,5 @@ block content
                 .col-xs-12
                     .spacer-sm
                     .text-right
-                        button(type="submit").btn.btn-default Submit
+                        a(href="#", data-toggle="modal", data-target="#servicesubmitmodal")
+                            button(type="submit").btn.btn-default Submit
