@@ -1,8 +1,7 @@
 extends navbarDefault
+include _includes/contactModal
 
 block content
-	
-	include _includes/contactModal
 	
 	#banner.page-header
 		.row
@@ -12,14 +11,15 @@ block content
 					small #{tagline}
 	.row
 		each location in locations
+			+contactModal(location.name)
 			.col-xs-12
 				.panel.panel-default
 					.panel-heading
-						a(href='/locations', style="text-decoration: none; color: inherit;")
+						a(href='/location', style="text-decoration: none; color: inherit;")
 							h2.panel-title= location.name
 					.row
 						.col-md-3.col-sm-4.col-xs-12
-							a(href='/locations')
+							a(href='/location')
 								img.img-responsive.img-square(src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
 						.col-md-3.hidden-sm.hidden-xs
 							.panel-body.text-justify
@@ -39,7 +39,7 @@ block content
 						.col-md-3.col-sm-4.col-xs-12
 							.panel-body.text-center
 								if location.availability
-									a(href='#',data-toggle="modal",data-target="#contactmodal")
+									a(href='#',data-toggle="modal",data-target="#contactmodal"+location.name.replace(/\s/g,''))
 										button.btn.btn-lg.btn-default
 											| Contact
 								else
