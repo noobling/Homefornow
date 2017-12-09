@@ -13,7 +13,7 @@ block navbar
           ul.nav.navbar-nav.navbar-right
             if user
               li 
-                a(href="#") Welcome #{user.name}
+                a(href="/service") Welcome #{user.name}
             else  
               li
                 a(href='#',data-toggle="modal",data-target="#loginmodal") Login
