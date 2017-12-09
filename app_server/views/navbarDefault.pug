@@ -11,9 +11,14 @@ block navbar
             span.icon-bar
         #navbar-main.navbar-collapse.collapse
           ul.nav.navbar-nav.navbar-right
-            li
-              a(href='/about') About
-            li
-              a(href='#',data-toggle="modal",data-target="#loginmodal") Login
+            if user
+              li 
+                a(href="#") Welcome #{user.name}
+            else  
+              li
+                a(href='#',data-toggle="modal",data-target="#loginmodal") Login
+              li
+                a(href='/about') About
+            
     .container
         block content

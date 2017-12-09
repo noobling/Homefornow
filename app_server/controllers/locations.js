@@ -1,5 +1,6 @@
 module.exports.shortTermList = function(req, res) {
 	res.render('bedVacanciesList', {
+		user: req.session.user,
 		title: 'For Now',
 		tagline: 'A place to stay',
 		locations: [
@@ -23,6 +24,7 @@ module.exports.shortTermList = function(req, res) {
 
 module.exports.longTermList = function(req, res) {
 	res.render('bedVacanciesList', {
+		user: req.session.user,
 		title: 'For Future',
 		tagline: 'A place to stay',
 		locations: [
@@ -45,9 +47,9 @@ module.exports.longTermList = function(req, res) {
 }
 
 module.exports.showLocation = function(req, res) {
-	console.log(req.params)
 	var name = req.query.name;
 	res.render('showLocation', {
+		user: req.session.user,
 		title: name,
 		tagline: 'Bringing people together',
 		user: req.session.user,
