@@ -10,6 +10,15 @@ h1 {
     font-size: 62pt;
 }
 
+/*div[class="row"] {
+    border: 1px solid blue;
+}
+
+div[class^="col-"] {
+    background-clip: content-box;
+    background-color: rgba(255, 0, 0, 0.2);
+}*/
+
 .spacer-sm {
     height: 2em;
 }
@@ -32,7 +41,7 @@ h1 {
 .btn {
     text-transform: uppercase;
     border-radius: 1px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
 .btn-primary {
@@ -102,6 +111,10 @@ h1 {
 
 .panel-primary {
     border-color: #cc66cc;
+}
+
+.panel {
+    border-radius: 0px;
 }
 
 .review {padding-bottom: 5px;}

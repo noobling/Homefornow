@@ -1,6 +1,8 @@
-extends layout
+extends navbarDefault
 
 block content
+    include _includes/signupModal
+    
     #banner.page-header
         .row
             .col-md-8
@@ -38,11 +40,11 @@ block content
                             .panel-body
                                 if location.availability
                                     span.text-success
-                                        span.glyphicons.glyphicons-ok
-                                        | Avaliable
+                                        span.glyphicon.glyphicon-ok
+                                        | &nbsp;Avaliable
                                 else
                                     span.text-danger
-                                        span.glyphicons.glyphicons-remove
-                                        | Not Avaliable
+                                        span.glyphicon.glyphicon-remove
+                                        | &nbsp;Not Avaliable
                             .panel-body
                                 | Contact: #{location.number}

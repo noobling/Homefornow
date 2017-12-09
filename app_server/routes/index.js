@@ -11,7 +11,10 @@ router.get('/', ctrlIndex.index);
 
 router.get('/about', ctrlOthers.about);
 
-router.get('/locations', ctrlLocations.bedVacanciesList);
+router.get('/locations', ctrlLocations.showLocation);
+
+router.get('/locations/short_term', ctrlLocations.shortTermList);
+router.get('/locations/long_term', ctrlLocations.longTermList);
 
 router.get('/service', ctrlService.service);
 
@@ -19,7 +22,7 @@ router.get('/service', ctrlService.service);
  * Authentication
  */
 router.post('/login', ctrlAuth.login);
-router.post('/register', ctrlAuth.register);
+//router.post('/register', ctrlAuth.register);
 // route for facebook authentication and login
 router.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
 router.get('/auth/facebook/callback',
