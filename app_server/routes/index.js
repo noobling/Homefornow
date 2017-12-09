@@ -22,7 +22,7 @@ router.get('/service', ctrlService.service);
  * Authentication
  */
 router.post('/login', ctrlAuth.login);
-//router.post('/register', ctrlAuth.register);
+router.post('/register', ctrlAuth.register);
 // route for facebook authentication and login
 router.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
 router.get('/auth/facebook/callback',
