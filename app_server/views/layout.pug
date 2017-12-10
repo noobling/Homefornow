@@ -13,9 +13,14 @@ body
 block navbar
 .container
   footer
-    .row
-      .col-xs-12
-        small &copy; HomeForNow
+    ul
+      li
+        a.bottomlink(href="/about") About us
+        a.bottomlink(href="/terms")  Terms of use
+        a.bottomlink(href="/support")  Support
+        a.bottomlink(href="/contact")  Contact us
+      p
+        | small &copy; HomeForNow 2017
 script(src='/javascripts/app.js')
 script(src='/bootstrap/js/bootstrap.min.js')
 script(src='/javascripts/validation.js')
