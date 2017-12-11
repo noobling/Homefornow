@@ -20,8 +20,8 @@ module.exports.addService = function(req, res) {
         res.json({"message": "No description was provided please provide one"});;
     }
 
-    availability = req.body.availability ? true: false;
-
+    availability = req.body.available ? true: false;
+    console.log(req.body);
     var service = new Service();
     service.name = name;
     service.description = description;

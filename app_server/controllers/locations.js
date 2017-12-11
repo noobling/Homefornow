@@ -6,7 +6,6 @@ module.exports.shortTermList = function(req, res) {
 		if (err) {
 			console.log('[ERROR] LocationsController: '+err);
 		}
-		console.log(docs);
 		res.render('bedVacanciesList', {
 			user: req.session.user,
 			title: 'For Now',
