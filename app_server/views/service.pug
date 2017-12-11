@@ -9,14 +9,14 @@ block content
             .col-md-8
                 h2
                     | Do you have a bed available?
-    form
+    form(action="/addService", method="post", role="form")
         .form-group
             .row
                 .col-md-1.col-xs-3.text-center
                     label(for="hasBeds")
                         | Yes
                     .spacer-sm
-                        input(type="checkbox", value="", id="hasBeds")
+                        input(type="checkbox", value="", id="hasBeds", name="available")
                         
                 .col-md-1.col-xs-3(align="center")
                     label(for="maleBeds")
@@ -37,10 +37,7 @@ block content
                 .col-md-7.col-xs-12
                     label(for="description")
                         | Description
-                    textarea.form-control(type="text", rows=5, id="description")
-            .row
-                .col-xs-12
-                    .spacer-sm
-                    .text-right
-                        a(href="#", data-toggle="modal", data-target="#servicesubmitmodal")
-                            button(type="submit").btn.btn-default Submit
+                    textarea.form-control(type="text", rows=5, id="description", name="description")
+        .form-group
+            .text-right
+                input(type="submit", value="Submit").btn.btn-default
