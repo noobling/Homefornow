@@ -12,15 +12,18 @@ head
 body
 block navbar
 .container
-  .footer
-    ul
+  footer
+    ul.list-inline
       li
-        a.bottomlink(href="/about") About us
-        a.bottomlink(href="/terms")  Terms of use
-        a.bottomlink(href="/support")  Support
-        a.bottomlink(href="/contact")  Contact us
+        a(href="/about") About us
+      li
+        a(href="/terms") Terms of use
+      li
+        a(href="/support") Support
+      li
+        a(href="/contact") Contact us
       p
-            | Angelicare WA &copy; 2017
+    | HomeForNow &copy; 2017
 
 script(src='/javascripts/app.js')
 script(src='/bootstrap/js/bootstrap.min.js')
