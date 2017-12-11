@@ -32,7 +32,10 @@ router.get('/auth/facebook/callback',
         res.redirect('/location');
     }
 );
-
+router.get('/logout', function(req, res) {
+    req.session.user = undefined;
+    res.redirect('/');
+});
 /**
  * services API
  */
