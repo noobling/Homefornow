@@ -25,4 +25,5 @@ router.get('/auth/facebook/callback',
     }
 );
 
+// Export router module
 module.exports = router;
