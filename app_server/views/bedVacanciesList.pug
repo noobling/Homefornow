@@ -15,11 +15,11 @@ block content
 			.col-xs-12
 				.panel.panel-default
 					.panel-heading
-						a(href='/location', style="text-decoration: none; color: inherit;")
+						a(href='/location?name='+location.name, style="text-decoration: none; color: inherit;")
 							h2.panel-title= location.name
 					.row
 						.col-md-3.col-sm-4.col-xs-12
-							a(href='/location')
+							a(href='/location?name='+location.name)
 								img.img-responsive.img-square(src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
 						.col-md-3.hidden-sm.hidden-xs
 							.panel-body.text-justify
@@ -45,4 +45,39 @@ block content
 								else
 									button.btn.btn-lg.btn-default.disabled
 										| Contact
-									
+		each dlocation in dlocations
+			+contactModal(dlocation.name)
+			.col-xs-12
+				.panel.panel-default
+					.panel-heading
+						a(href='/location?name='+dlocation.name, style="text-decoration: none; color: inherit;")
+							h2.panel-title= dlocation.name
+					.row
+						.col-md-3.col-sm-4.col-xs-12
+							a(href='/location?name='+dlocation.name)
+								img.img-responsive.img-square(src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
+						.col-md-3.hidden-sm.hidden-xs
+							.panel-body.text-justify
+								| #{dlocation.description}
+						.col-md-3.col-sm-4.col-xs-12
+							.panel-body.text-center
+								if dlocation.availability
+									h4
+										span.text-success
+											span.glyphicon.glyphicon-ok
+											| &nbsp;Avaliable
+								else
+									h4
+										span.text-danger
+											span.glyphicon.glyphicon-remove
+											| &nbsp;Not Avaliable
+						.col-md-3.col-sm-4.col-xs-12
+							.panel-body.text-center
+								if dlocation.availability
+									a(href='#',data-toggle="modal",data-target="#contactmodal"+dlocation.name.replace(/\s/g,''))
+										button.btn.btn-lg.btn-default
+											| Contact
+								else
+									button.btn.btn-lg.btn-default.disabled
+										| Contact
+							

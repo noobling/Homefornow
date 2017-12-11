@@ -12,6 +12,7 @@ module.exports.addService = function(req, res) {
     if (req.session.user === undefined) {
         res.json({"message": "no service was found, remember this request should only be made by authenticated users"});
     }
+    
     name = req.session.user.name;
     
     description = req.body.description;
@@ -31,7 +32,8 @@ module.exports.addService = function(req, res) {
           return;
         } else {
           res.redirect('/locations/short_term');
+          return;
         }
       });
-    res.json({"message": "WOAH this line of code shouldn't of been executed"});
+    //res.json({"message": "WOAH this line of code shouldn't of been executed"});
 }

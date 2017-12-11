@@ -1,32 +1,51 @@
-module.exports.shortTermList = function(req, res) {
-	res.render('bedVacanciesList', {
-		user: req.session.user,
-		title: 'For Now',
-		tagline: 'A place to stay',
-		locations: [
-			{
-				name: 'Youngle Group',
-				availability: true,
-				number: 94572188
-			},{
-				name: 'Foyer House',
-				availability: true,
-				number: 94572188
-			},{
-				name: 'Mission Australia',
-				availability: false,
-				number: 94572188
-			}
+var mongoose = require('mongoose');
+var Service = mongoose.model('Service');
 
-		]
+module.exports.shortTermList = function(req, res) {
+	Service.find({}, function (err, docs) {
+		if (err) {
+			console.log('[ERROR] LocationsController: '+err);
+		}
+		console.log(docs);
+		res.render('bedVacanciesList', {
+			user: req.session.user,
+			title: 'For Now',
+			tagline: 'A place to stay',
+			dlocations: docs,
+			locations: [
+				{
+					name: 'Youngle Group',
+					availability: true,
+					number: 94572188
+				},{
+					name: 'Foyer House',
+					availability: true,
+					number: 94572188
+				},{
+					name: 'Mission Australia',
+					availability: false,
+					number: 94572188
+				}
+	
+			]
+		});
 	});
 }
 
 module.exports.longTermList = function(req, res) {
+	var services;
+	Service.find({}, function (err, docs) {
+		if (err) {
+			console.log('[ERROR] LocationsController: '+err);
+		}
+		services = docs;
+	});
+	
 	res.render('bedVacanciesList', {
 		user: req.session.user,
 		title: 'For Future',
 		tagline: 'A place to stay',
+		dlocations: services,
 		locations: [
 			{
 				name: 'Youngle Group',
