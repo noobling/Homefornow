@@ -134,8 +134,8 @@ footer {
     right: 0;
     bottom: 0;
     left: 0;
-    height: 60px;
-    padding: 1rem;
+    max-height: 60px;
+    padding: 1em;
     background-color: #f8f8f8;
     text-align: center;
 }
