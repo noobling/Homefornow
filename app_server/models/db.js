@@ -64,3 +64,4 @@ process.on('SIGTERM', function() {
 
 require('./accomodation');
 require('./users');
+require('./services');

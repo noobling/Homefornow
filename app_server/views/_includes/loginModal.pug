@@ -5,12 +5,12 @@
                 button(type="button",data-dismiss="modal").close &times;
                 h4.modal-title Log In
             .modal-body
-                form(action='/login', method='post', role='form', id="addReview")
+                form(action='/login', method='post', role='form')
                     .form-group
                         label(for="email") Email
-                        input(type="email",placeholder="e.g. example@example.com").form-control#email
+                        input(type="email",placeholder="e.g. example@example.com",name="email").form-control#email
                     .form-group
                         label(for="pwd") Password
-                        input(type="password").form-control#pwd
-                .text-center
-                    button(type="submit").btn.btn-default Submit
+                        input(type="password", name="password").form-control#pwd
+                    .text-center
+                        input(type="submit", value="Submit").btn.btn-default

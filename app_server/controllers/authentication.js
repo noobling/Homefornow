@@ -55,9 +55,7 @@ module.exports.login = function(req, res) {
     if(user){
 			var sess = req.session;
 			sess.user = user;
-      sendJSONresponse(res, 200, {
-        user : user
-      });
+      res.redirect('/service');
     } else {
       sendJSONresponse(res, 401, info);
     }

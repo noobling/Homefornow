@@ -16,8 +16,6 @@ router.get('/location', ctrlLocations.showLocation);
 router.get('/locations/short_term', ctrlLocations.shortTermList);
 router.get('/locations/long_term', ctrlLocations.longTermList);
 
-router.get('/service', ctrlService.service);
-
 /**
  * Authentication
  */
@@ -34,5 +32,13 @@ router.get('/auth/facebook/callback',
         res.redirect('/location');
     }
 );
-
+router.get('/logout', function(req, res) {
+    req.session.user = undefined;
+    res.redirect('/');
+});
+/**
+ * services API
+ */
+router.get('/service', ctrlService.service);
+router.post('/addService', ctrlService.addService)
 module.exports = router;
