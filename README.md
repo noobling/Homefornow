@@ -61,6 +61,8 @@ The way we make commits is also impacted.
 </table>
 
 There are generally three or four main branches in which developers will branch off, of to make their required changes.
+Hopefully what each branch is self explanatory from its name. Master is the main branch which contains tested code that is ready to be deployed. Stable branch represents what is in production. Each release should be tagged and each hot fix merged into stable should be tagged.
+[Learn more here](https://gist.github.com/digitaljhelms/4287848#file-gistfile1-md)
 
 
 ## TODO
