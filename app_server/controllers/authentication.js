@@ -2,6 +2,9 @@ var passport = require('passport');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
+// This builds a json response
+// Generally you should call `return` after this
+// function
 var sendJSONresponse = function(res, status, content) {
   res.status(status);
   res.json(content);
