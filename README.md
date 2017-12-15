@@ -74,8 +74,9 @@ that the command line is actually easier to use for basic commands and gives you
 * Save your stages changes into "history": `git commit -m "Helpful commit message that describes your changes"`
 * Push your changes up to remote repo (The remote repo must be tracked): `git push origin branch-name`
 * Get changes from a remote tracking branch: `git pull origin remote-branch-name`
+
 ### The git cheat sheet
-![git cheat sheet](https://github.com/noobling/anglicare-sprint-week/blob/master/wiki_assets/atlassian-git-cheatsheet.pdf)
+![Git cheat sheet](https://github.com/noobling/anglicare-sprint-week/blob/master/wiki_assets/atlassian-git-cheatsheet.pdf "Git cheat sheet")
 
 ## TODO
 Probably should use trello for this stuff but its nice to have everything in one location
