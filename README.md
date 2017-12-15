@@ -64,6 +64,14 @@ There are generally three or four main branches in which developers will branch 
 Hopefully what each branch is self explanatory from its name. Master is the main branch which contains tested code that is ready to be deployed. Stable branch represents what is in production. Each release should be tagged and each hot fix merged into stable should be tagged.
 [Learn more here](https://gist.github.com/digitaljhelms/4287848#file-gistfile1-md)
 
+## Git basics
+What is git? Basically something to track your file changes. Ofcourse it gives you much more than that, that is why nearly every software organisation large or small e.g. Google, Atlassian, Microsoft, Apple etc use it. [Learn more here](https://www.atlassian.com/git/tutorials/what-is-git)
+
+There exists GUIs for using git e.g. Github desktop app, Git Kraken and Source tree however you will find
+that the command line is actually easier to use for basic commands and gives you more power. That doesn't mean the CLI and GUIs are mutually exclusive. I use both in my daily work. 
+### Common git commands
+Get the remote repo and set up remote tracking on origin/branch-name: `git clone https://github.com/githubusername/repo-name.git`
+Push your changes up to remote repo (The remote repo must be tracked): `git push origin branch-name`
 
 ## TODO
 1. Become familiar with main technologies `express/mongoDB/mongoose` you can learn HTML/CSS/JAVASCRIPT but your time would be more efficiently spent learning the framework 
