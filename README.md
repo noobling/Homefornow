@@ -1,5 +1,3 @@
-~~# Basic skeleton code for now it won't run, just to show you structure of app~~
-
 # anglicare-sprint-week
 LETS GOOOOOOOOOOOOO
 
@@ -69,17 +67,21 @@ What is git? Basically something to track your file changes. Ofcourse it gives y
 
 There exists GUIs for using git e.g. Github desktop app, Git Kraken and Source tree however you will find
 that the command line is actually easier to use for basic commands and gives you more power. That doesn't mean the CLI and GUIs are mutually exclusive. I use both in my daily work. 
+
 ### Common git commands
 * Get the remote repo and set up remote tracking on origin/branch-name: `git clone https://github.com/githubusername/repo-name.git`
 * Add your changes to staging, this prepares yours changes to be saved to "history": `git add file-name`
 * Save your stages changes into "history": `git commit -m "Helpful commit message that describes your changes"`
 * Push your changes up to remote repo (The remote repo must be tracked): `git push origin branch-name`
 * Get changes from a remote tracking branch: `git pull origin remote-branch-name`
+### The git cheat sheet
+![git cheat sheet](https://github.com/noobling/anglicare-sprint-week/blob/master/wiki_assets/atlassian-git-cheatsheet.pdf)
 
 ## TODO
-1. Become familiar with main technologies `express/mongoDB/mongoose` you can learn HTML/CSS/JAVASCRIPT but your time would be more efficiently spent learning the framework 
-2. Become proficient enough to fix this broken app
-3. Break down problem into components/functions e.g. authentication, admin form for vacancies, page for vancancies, landing page, schemas etc.
-4. Start building your component function!
+Probably should use trello for this stuff but its nice to have everything in one location
+1. Decide whether we should start from the beginning on new repo or build from this
+2. I feel like the best way for you guys to learn is to pick a task to do then learn the required things to do that task then do that task?
+- [ ] Yes
+- [ ] No
 
 ## I hope you guys have fun and learn a bunch from this :) ~David
