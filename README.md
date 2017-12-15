@@ -70,8 +70,11 @@ What is git? Basically something to track your file changes. Ofcourse it gives y
 There exists GUIs for using git e.g. Github desktop app, Git Kraken and Source tree however you will find
 that the command line is actually easier to use for basic commands and gives you more power. That doesn't mean the CLI and GUIs are mutually exclusive. I use both in my daily work. 
 ### Common git commands
-Get the remote repo and set up remote tracking on origin/branch-name: `git clone https://github.com/githubusername/repo-name.git`
-Push your changes up to remote repo (The remote repo must be tracked): `git push origin branch-name`
+* Get the remote repo and set up remote tracking on origin/branch-name: `git clone https://github.com/githubusername/repo-name.git`
+* Add your changes to staging, this prepares yours changes to be saved to "history": `git add file-name`
+* Save your stages changes into "history": `git commit -m "Helpful commit message that describes your changes"`
+* Push your changes up to remote repo (The remote repo must be tracked): `git push origin branch-name`
+* Get changes from a remote tracking branch: `git pull origin remote-branch-name`
 
 ## TODO
 1. Become familiar with main technologies `express/mongoDB/mongoose` you can learn HTML/CSS/JAVASCRIPT but your time would be more efficiently spent learning the framework 
