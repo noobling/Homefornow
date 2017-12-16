@@ -11,6 +11,7 @@ LETS GOOOOOOOOOOOOO
 * `heroku addons:open mongolab`
 * `nodemon` Adds hot reloading (server automatically restarts on each file change)
 * `heroku config:get MONGODB_URI`
+* `ctrl+f` Auto indentation/formatting of code
 
 ## Helpful hints for professional software development
 ### Workflow
