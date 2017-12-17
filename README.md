@@ -1,6 +1,20 @@
 # anglicare-sprint-week
 LETS GOOOOOOOOOOOOO
 
+## Our work flow
+1. Find something to fix or add.
+2. Create a card [here](https://github.com/noobling/anglicare-sprint-week/projects/1)
+3. Open an issue with card
+4. Assign the appropriate people
+5. Make your feature or fix branch by branching off `developer`
+6. Add you changes
+7. Make a pull request to `developer` branch. Make sure you reference the issue you are resolving
+8. Request and wait for someone to review you changes
+9. Merge your changes
+10. Delete your branch
+
+Just ask me if any of this doesn't make sense
+
 ## Getting started
 * `git clone https://github.com/noobling/anglicare-sprint-week.git`
 * `npm install`
