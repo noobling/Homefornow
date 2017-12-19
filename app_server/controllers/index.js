@@ -1,6 +1,6 @@
 module.exports.index = function(req, res) {
     res.render('index', {
-        user: req.session.user,
+        user: req.user,
         title: 'Do you have a secure place to stay?',
         locations: [
             {

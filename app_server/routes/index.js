@@ -19,7 +19,10 @@ router.get('/locations/long_term', ctrlLocations.longTermList);
 /**
  * Authentication
  */
-router.post('/login', ctrlAuth.login);
+router.post('/login', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/peanut'
+}));
 router.post('/register', ctrlAuth.register);
 // route for facebook authentication and login
 router.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
