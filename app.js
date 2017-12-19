@@ -36,6 +36,7 @@ app.use(function(req,res,next){
   next();
 });
 app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
 
 app.use('/', index);
 
