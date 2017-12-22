@@ -8,7 +8,7 @@
 const faker = require('faker');
 const fs = require('fs');
 const path = require('path');
-const server = require('../app');
+const server = require('./app');
 let mongoose = require( 'mongoose' );
 let User = mongoose.model('User');
 

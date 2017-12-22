@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
     "test": "./node_modules/mocha/bin/_mocha",
-    "seed": "node ./test/generate.seed.data.js"
+    "seed": "node generate.seed.data.js"
   },
   "engines": {
     "node": "~8.9.1",
