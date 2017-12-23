@@ -1,6 +1,19 @@
 # anglicare-sprint-week
 LETS GOOOOOOOOOOOOO
 
+## Commands
+Seed data `npm run seed`
+Run tests `npm test` or `npm run mocha` if on [windows](https://github.com/noobling/anglicare-sprint-week/pull/18/commits/1bb3913ffc7f107c81aeb2133096b232705a26f4)
+Start server @ localhost:3000 `nodemon`
+
+## Can't get the app to work?
+Unfortunately as a consequence of building a professional application some aspects become harder to deal with.
+* `google`
+* `npm install`
+* `Read the readme and/or wiki`
+* Check if the branch you are working is the right one
+* Ask me
+
 ## Our work flow
 1. Find something to fix or add.
 2. Create a card [here](https://github.com/noobling/anglicare-sprint-week/projects/1)

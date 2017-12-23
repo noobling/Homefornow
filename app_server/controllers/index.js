@@ -1,4 +1,5 @@
 module.exports.index = function(req, res) {
+    // /console.log(req.flash().error[0])
     res.render('index', {
         user: req.user,
         title: 'Do you have a secure place to stay?',
