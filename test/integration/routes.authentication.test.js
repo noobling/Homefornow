@@ -35,6 +35,22 @@ describe('routes : authentication', () => {
         done();
       });
     });
+
+    it ('should fail to login with invalid credentials', (done) => {
+      request.agent(server)
+      .post('/login')
+      .send({
+        email: 'randomemail@email.com',
+        password: 'invalidpass'
+      })
+      .redirects(1)
+      .expect(200)
+      .end((err, res) => {
+        should.not.exist(err);
+        res.text.should.contain('Incorrect username');
+        done();
+      });
+    });
   });
 
   describe('GET /404', () => {
