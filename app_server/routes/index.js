@@ -21,7 +21,7 @@ router.get('/locations/long_term', ctrlLocations.longTermList);
  */
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/peanut'
+    failureRedirect: '/buby'
 }));
 router.post('/register', ctrlAuth.register);
 // route for facebook authentication and login
