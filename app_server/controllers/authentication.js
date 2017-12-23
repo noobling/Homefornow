@@ -53,12 +53,10 @@ module.exports.login = (req, res) => {
     }
 
     if (user) {
-      let sess = req.session;
-      sess.user = user;
+      req.session = user;
       res.redirect('/service');
     } else {
       sendJSONresponse(res, 401, info);
     }
   })(req, res);
-
 };
