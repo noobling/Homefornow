@@ -39,7 +39,7 @@ router.get(
   }
 );
 router.get('/logout', (req, res) => {
-  req.session.user = undefined;
+  req.logout();
   res.redirect('/');
 });
 
