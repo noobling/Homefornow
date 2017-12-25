@@ -1,31 +1,35 @@
-const mongoose = require('mongoose');
-
-// const dbURI = 'mongodb://localhost/Loc8r';
-let dbURI = process.env.db_url;
+var mongoose = require( 'mongoose' );
+var gracefulShutdown
+//var dbURI = 'mongodb://localhost/Loc8r';
+var dbURI = process.env.db_url;
 if (process.env.NODE_ENV === 'production') {
   dbURI = process.env.MONGODB_URI;
 }
+// Using `mongoose.connect`...
+var promise = mongoose.connect(dbURI, {
+  useMongoClient: true,
+});
 
-setTimeout(() => {
-  mongoose.connect(dbURI, {
-    useMongoClient: true,
-  });
-}, 60000);
+promise.then(function(db) {
+  /* Use `db`, for instance `db.model()`
+});
+// Or, if you already have a connection
+connection.openUri('mongodb://localhost/myapp', { /* options */ });
 
 /************************************************
 *                                               *
 *          mongoDB connection logging           *
 *                                               *
 ************************************************/
-mongoose.connection.on('connected', () => {
-  console.log(`Mongoose connected to ${dbURI}`);
+mongoose.connection.on('connected', function () {
+  console.log('Mongoose connected to ' + dbURI);
 });
 
-mongoose.connection.on('error', (err) => {
-  console.log(`Mongoose connection error ${err}`);
+mongoose.connection.on('error', function (err) {
+  console.log('Mongoose connection error ' + err);
 });
 
-mongoose.connection.on('disconected', () => {
+mongoose.connection.on('disconected', function () {
   console.log('Mongoose disconnected');
 });
 
@@ -35,32 +39,29 @@ mongoose.connection.on('disconected', () => {
 *     Gracefully closes mongoDB connection      *
 *                                               *
 ************************************************/
-const gracefulShutdown = (msg, callback) => {
-  console.log(`Mongoose disconnected through ${msg}`);
+gracefulShutdown = function(msg, callback) {
+  console.log('Mongoose disconnected through ' + msg);
   callback();
 };
 
-process.once('SIGUSR2', () => {
-  gracefulShutdown('nodemon shutdown', () => {
+process.once('SIGUSR2', function() {
+  gracefulShutdown('nodemon shutdown', function() {
     process.kill(process.pid, 'SIGUSR2');
-  });
+  })
 });
 
-process.on('SIGINT', () => {
-  gracefulShutdown('app shutdown', () => {
+process.on('SIGINT', function() {
+  gracefulShutdown('app shutdown', function() {
     process.exit(0);
-  });
+  })
 });
 
-process.on('SIGTERM', () => {
-  gracefulShutdown('heroku app shutdown', () => {
+process.on('SIGTERM', function() {
+  gracefulShutdown('heroku app shutdown', function() {
     process.exit(0);
-  });
+  })
 });
 
-/**
- * Load our models
- */
 require('./accomodation');
 require('./users');
 require('./services');
