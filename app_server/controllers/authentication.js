@@ -26,14 +26,10 @@ module.exports.register = (req, res) => {
   user.setPassword(req.body.password);
 
   user.save((err) => {
-    let token;
     if (err) {
       sendJSONresponse(res, 404, err);
     } else {
-      token = user.generateJwt();
-      sendJSONresponse(res, 200, {
-        token,
-      });
+      sendJSONresponse(res, 200, { message: 'successs' });
     }
   });
 };
