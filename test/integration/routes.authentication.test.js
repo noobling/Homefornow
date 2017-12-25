@@ -53,8 +53,8 @@ describe('routes : authentication', () => {
         });
     });
   });
-
-  describe('POST /register', () => {
+  // skip for now since we don't need register
+  describe.skip('POST /register', () => {
     const userToRegister = {
       email: 'user@mail.com',
       name: 'Jack Wang',
@@ -64,16 +64,16 @@ describe('routes : authentication', () => {
       request.agent(server)
         .post('/register')
         .send(userToRegister)
-        .end((err, _) => {
+        .end((err, res) => {
           should.not.exist(err);
+          res.status.should.equal(200);
           User.find({ email: userToRegister.email }, (errU, user) => {
             if (err) {
               console.log(`[ERROR] POST /register: ${errU}`);
-              return false;
             }
             should.exist(user);
-            user.name.should.equal(userToRegister.name);
-            user.email.should.equal(userToRegister.email);
+            user[0].name.should.equal(userToRegister.name);
+            user[0].email.should.equal(userToRegister.email);
           });
           done();
         });
