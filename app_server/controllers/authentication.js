@@ -37,26 +37,3 @@ module.exports.register = (req, res) => {
     }
   });
 };
-
-module.exports.login = (req, res) => {
-  if (!req.body.email || !req.body.password) {
-    sendJSONresponse(res, 400, {
-      message: 'All fields required',
-    });
-    return;
-  }
-
-  passport.authenticate('local', (err, user, info) => {
-    if (err) {
-      sendJSONresponse(res, 404, err);
-      return;
-    }
-
-    if (user) {
-      req.session = user;
-      res.redirect('/service');
-    } else {
-      sendJSONresponse(res, 401, info);
-    }
-  })(req, res);
-};
