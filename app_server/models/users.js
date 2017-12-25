@@ -1,7 +1,15 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 
-// Primary user, person seeking accomodation
+/**
+ * General schema for all users of the application e.g. service providers, homeless youth, admins
+ *
+ * Role:
+ *  normal: Have their basic info saved in db but have no special previlages
+ *  service_provider: Can perform CRUD operations on their own service, can
+ *                    view homeless youth who need a bed
+ *  admin: Have full access to everything on the site and have CRUD operations on all services
+ */
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -10,6 +18,7 @@ const userSchema = new mongoose.Schema({
   name: String,
   hash: String,
   salt: String,
+  role: { type: String, default: 'normal' },
   facebook: {
     id: String,
     token: String,
