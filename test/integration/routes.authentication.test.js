@@ -1,4 +1,5 @@
 const chai = require('chai');
+const server = require('../../app');
 const chaiHttp = require('chai-http');
 const request = require('supertest');
 const users = require('../../seeded_users.json');
@@ -6,7 +7,6 @@ const users = require('../../seeded_users.json');
 const should = chai.should();
 chai.use(chaiHttp);
 
-const server = require('../../app');
 const mongoose = require('mongoose');
 
 const User = mongoose.model('User');
@@ -75,6 +75,28 @@ describe('routes : authentication', () => {
             user[0].name.should.equal(userToRegister.name);
             user[0].email.should.equal(userToRegister.email);
           });
+          done();
+        });
+    });
+  });
+
+  describe('GET /logout', () => {
+    beforeEach((done) => {
+      request.agent(server)
+        .post('/login')
+        .send({
+          email: users[0].email,
+          password: users[0].password,
+        });
+      done();
+    });
+
+    it('should logout successfully for logged in user', (done) => {
+      request.agent(server)
+        .get('/')
+        .end((err, res) => {
+          should.not.exist(err);
+          res.text.should.not.contain(`Welcome ${users[0].name}`);
           done();
         });
     });
