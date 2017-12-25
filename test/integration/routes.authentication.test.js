@@ -7,6 +7,9 @@ const should = chai.should();
 chai.use(chaiHttp);
 
 const server = require('../../app');
+const mongoose = require('mongoose');
+
+const User = mongoose.model('User');
 
 describe('routes : authentication', () => {
   beforeEach((done) => {
@@ -46,6 +49,32 @@ describe('routes : authentication', () => {
         .end((err, res) => {
           should.not.exist(err);
           res.text.should.contain('Incorrect username');
+          done();
+        });
+    });
+  });
+
+  describe('POST /register', () => {
+    const userToRegister = {
+      email: 'user@mail.com',
+      name: 'Jack Wang',
+      password: 'goodpass',
+    };
+    it('should register successfully with valid data', (done) => {
+      request.agent(server)
+        .post('/register')
+        .send(userToRegister)
+        .end((err, _) => {
+          should.not.exist(err);
+          User.find({ email: userToRegister.email }, (errU, user) => {
+            if (err) {
+              console.log(`[ERROR] POST /register: ${errU}`);
+              return false;
+            }
+            should.exist(user);
+            user.name.should.equal(userToRegister.name);
+            user.email.should.equal(userToRegister.email);
+          });
           done();
         });
     });
