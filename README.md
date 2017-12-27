@@ -29,9 +29,17 @@ Unfortunately as a consequence of building a professional application some aspec
 Just ask me if any of this doesn't make sense
 
 ## Getting started
-* `git clone https://github.com/noobling/anglicare-sprint-week.git`
-* `npm install`
-* `npm start`
+* `git clone https://github.com/noobling/anglicare-sprint-week.git` Download the app
+* Get the `.env` file from a team member and place it in the top level directory
+* `git checkout developer`Work in developer branch
+* `npm install` Get dependencies
+* `npm start` Start the server
+* Make your changes
+* `git add .` Stage your changes
+* `git commit -m "Commit message"`Save your changes
+* `git push origin developer`Upload it to github
+* Your changes should be there for everyone to see :)
+
 * `npm run devstart` This runs the project using nodemon. To reset the server then use 'rs'.
 
 ## Useful commands
