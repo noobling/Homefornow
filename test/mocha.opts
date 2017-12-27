@@ -1,0 +1,2 @@
+test/integration/*.js
+--timeout 15000
