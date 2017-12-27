@@ -17,7 +17,7 @@ Just ask me if any of this doesn't make sense
 
 ## Getting started
 * `git clone https://github.com/noobling/anglicare-sprint-week.git`
-* Get the `.env.` file from a team member and place it in the top level directory
+* Get the `.env` file from a team member and place it in the top level directory
 * `npm install`
 * `npm start`
 * `npm run devstart` This runs the project using nodemon. To reset the server then use 'rs'.
