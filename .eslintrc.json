@@ -1,7 +1,15 @@
 {
+    "plugins": [
+        "mocha"
+    ],
     "extends": "airbnb-base",
     "rules": {
         "linebreak-style": 0,
-        "code": 150
+        "code": 150,
+        "no-console": "off",
+        "mocha/no-exclusive-tests": "error"
+    },
+    "env": {
+        "mocha": true
     }
 }
