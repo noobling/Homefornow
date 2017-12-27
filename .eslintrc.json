@@ -1,6 +1,7 @@
 {
     "extends": "airbnb-base",
     "rules": {
-        "linebreak-style": 0
+        "linebreak-style": 0,
+        "code": 150
     }
 }
