@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
-var flash = require('connect-flash');
 
 require('dotenv').config()
 require('./app_server/models/db');
@@ -37,32 +36,7 @@ app.use(function(req,res,next){
   next();
 });
 app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-app.use(flash());
 
-/**
- * Custom middleware
- * 
- * Reference for middlware in express:
- *  http://expressjs.com/en/api.html#app.use
- */
-/**
- * Adds data to the views using res.locals
- * 
- * Reference:
- *  http://expressjs.com/en/api.html#res
- */
-app.use(function (req, res, next) {
-  res.locals.messages = req.flash();
-  next();
-});
-/** End custom middleware */
-
-/**
- * Use our routes defined in /routes/index.js
- * 
- * Namespaced under '/'
- */
 app.use('/', index);
 
 // catch 404 and forward to error handler
@@ -82,8 +56,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
-
 
 module.exports = app;

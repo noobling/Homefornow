@@ -1,19 +1,6 @@
 # anglicare-sprint-week
 LETS GOOOOOOOOOOOOO
 
-## Commands
-Seed data `npm run seed`
-Run tests `npm test` or `npm run mocha` if on [windows](https://github.com/noobling/anglicare-sprint-week/pull/18/commits/1bb3913ffc7f107c81aeb2133096b232705a26f4)
-Start server @ localhost:3000 `nodemon`
-
-## Can't get the app to work?
-Unfortunately as a consequence of building a professional application some aspects become harder to deal with.
-* `google`
-* `npm install`
-* `Read the readme and/or wiki`
-* Check if the branch you are working is the right one
-* Ask me
-
 ## Our work flow
 1. Find something to fix or add.
 2. Create a card [here](https://github.com/noobling/anglicare-sprint-week/projects/1)
@@ -29,17 +16,9 @@ Unfortunately as a consequence of building a professional application some aspec
 Just ask me if any of this doesn't make sense
 
 ## Getting started
-* `git clone https://github.com/noobling/anglicare-sprint-week.git` Download the app
-* Get the `.env` file from a team member and place it in the top level directory
-* `git checkout developer`Work in developer branch
-* `npm install` Get dependencies
-* `npm start` Start the server
-* Make your changes
-* `git add .` Stage your changes
-* `git commit -m "Commit message"`Save your changes
-* `git push origin developer`Upload it to github
-* Your changes should be there for everyone to see :)
-
+* `git clone https://github.com/noobling/anglicare-sprint-week.git`
+* `npm install`
+* `npm start`
 * `npm run devstart` This runs the project using nodemon. To reset the server then use 'rs'.
 
 ## Useful commands

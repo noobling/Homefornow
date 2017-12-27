@@ -42,6 +42,7 @@ div[class^="col-"] {
     text-transform: uppercase;
     border-radius: 1px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    /*width: 130px;*/
 }
 
 .btn-primary {
@@ -53,6 +54,20 @@ div[class^="col-"] {
     background-color: #862d86;
     border-color: #862d86;
 }
+
+/*CSS to remove marker on the left in places autocomplete ~~~~~~~~~~~~~~~~~~~~*/
+.pac-icon {
+  width: 0;
+  background-image: none;
+}
+
+.pac-item {
+  font-family: 'Roboto', sans-serif;
+  color: #999999;
+}
+/*.pac-container{
+  border-radius: 8px;
+}*/
 
 /*CSS for custom navbar ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 

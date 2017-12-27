@@ -4,8 +4,6 @@ block content
     include _includes/signupModal
     
     #banner.page-header
-        include _includes/messages/error
-        include _includes/messages/info
         .row
             .col-md-8
                 h1= title
@@ -13,14 +11,20 @@ block content
         .form-group
             .row
                 .col-md-8.col-xs-12
-                    input.form-control.input-lg(type="text",placeholder="Location e.g. Subiaco")#location
+                    input.form-control.input-lg(type="text",placeholder="Location e.g. Subiaco" autocomplete="on")#location
                     .spacer-sm
+                      .row
+                          .col-md-6.col-sm-8.text-left(style="margin-top: 3px;")
+                            a(style="padding-left: 18px;")
+                            | Use 
+                            a#get_location(href="#" class="geoloc" style="color: #999;")
+                                | current location
                 .col-md-2.col-xs-6.text-right
-                    a(href='#',data-toggle="modal",data-target="#signupmodalshort")
+                    a(href='#',data-toggle="modal",data-target="#signupmodalshort")#btnNow
                         button.btn.btn-lg.btn-primary
                             | For now
                 .col-md-2.col-xs-6.text-left
-                    a(href='#',data-toggle="modal",data-target="#signupmodallong")
+                    a(href='#',data-toggle="modal",data-target="#signupmodallong")#btnLong
                         button.btn.btn-lg.btn-default
                             | Long term
     .spacer-lg
@@ -49,4 +53,18 @@ block content
                                         span.glyphicon.glyphicon-remove
                                         | &nbsp;Not Avaliable
                             .panel-body
-                                | Contact: #{location.number}
+                                | Contact: #{location.number} 
+    script(src="https://code.jquery.com/jquery-3.2.1.js"  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous")
+    script(src="https://unpkg.com/axios/dist/axios.min.js")
+    script(src='/javascripts/maps.js')
+    script.
+        function initialize() {
+          var options = {
+            types: ["(cities)"],
+            componentRestrictions: {country: "au"}
+          };
+
+          var input = document.getElementById('location');
+          var autocomplete = new google.maps.places.Autocomplete(input, options);
+        }
+    script(async='', defer='',  src="https://maps.googleapis.com/maps/api/js?key="+process.env.embed_maps_api+"&libraries=places&callback=initialize")

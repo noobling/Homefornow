@@ -1,9 +1,8 @@
-const mongoose = require('mongoose');
+var mongoose = require('mongoose');
+var Service = mongoose.model('Service');
 
-const Service = mongoose.model('Service');
-
-module.exports.shortTermList = (req, res) => {
-	Service.find({}, (err, docs) => {
+module.exports.shortTermList = function(req, res) {
+	Service.find({}, function (err, docs) {
 		if (err) {
 			console.log('[ERROR] LocationsController: '+err);
 		}
@@ -33,7 +32,7 @@ module.exports.shortTermList = (req, res) => {
 }
 
 module.exports.longTermList = function(req, res) {
-	let services;
+	var services;
 	Service.find({}, function (err, docs) {
 		if (err) {
 			console.log('[ERROR] LocationsController: '+err);
@@ -66,7 +65,7 @@ module.exports.longTermList = function(req, res) {
 }
 
 module.exports.showLocation = function(req, res) {
-	let name = req.query.name;
+	var name = req.query.name;
 	res.render('showLocation', {
 		user: req.session.user,
 		title: name,

@@ -46,17 +46,11 @@ block content
             .panel-body
               #map
               |
-              script.
-                function initMap() {
-                  var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 14,
-                    center: {lat: -31.986, lng: 115.822},
-                    disableDefaultUI: true,
-                    zoomControl: true
-                  });
-                }
-              script(async='', defer='', src="https://maps.googleapis.com/maps/api/js?callback=initMap&signed_in=false&key="+process.env.embed_maps_api)
-    .col-xs-12.col-md-3              
+    .col-xs-12.col-md-3
       p.lead About #{location.name}
       p= additionalInfo
-      a(href="https://www.missionaustralia.com.au/",target="_blank").btn.btn-lg.btn-default Learn More   
+      a(href="https://www.missionaustralia.com.au/",target="_blank").btn.btn-lg.btn-default Learn More
+      p
+        | &nbsp;   
+  script(src="/javascripts/maps.js")
+  script(async='', defer='', src="https://maps.googleapis.com/maps/api/js?callback=initMap&key="+process.env.embed_maps_api+"&region=AU")
