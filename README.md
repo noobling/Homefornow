@@ -1,7 +1,10 @@
-[![Build Status](https://travis-ci.org/noobling/anglicare-sprint-week.svg?branch=master)](https://travis-ci.org/noobling/anglicare-sprint-week)
-
 # anglicare-sprint-week
+
 LETS GOOOOOOOOOOOOO
+
+[![Build Status](https://travis-ci.org/noobling/anglicare-sprint-week.svg?branch=master)](https://travis-ci.org/noobling/anglicare-sprint-week)
+[![Maintainability](https://api.codeclimate.com/v1/badges/318b1618e791619e310a/maintainability)](https://codeclimate.com/github/noobling/anglicare-sprint-week/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/318b1618e791619e310a/test_coverage)](https://codeclimate.com/github/noobling/anglicare-sprint-week/test_coverage)
 
 ## Commands
 Seed data `npm run seed`
