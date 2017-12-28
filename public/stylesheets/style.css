@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 body {
     background-color: #ffffff;
     font-family: 'Roboto', sans-serif;
@@ -163,3 +164,166 @@ footer {
 #serviceyes {
     margin-right: 1em;
 }
+=======
+body {
+    background-color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    /*use roboto*/
+    font-style: normal;
+    color: #999999;
+}
+
+h1 {
+    font-size: 62pt;
+}
+
+/*div[class="row"] {
+    border: 1px solid blue;
+}
+
+div[class^="col-"] {
+    background-clip: content-box;
+    background-color: rgba(255, 0, 0, 0.2);
+}*/
+
+.spacer-sm {
+    height: 2em;
+}
+
+.spacer-md {
+    height: 10em;
+}
+
+.spacer-lg {
+    height: 20em;
+}
+
+.page-header {
+    margin-top: 7em;
+    border: none;
+}
+
+/*CSS for custom buttons ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.btn {
+    text-transform: uppercase;
+    border-radius: 1px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+    background-color: #cc66cc;
+    border-color: #cc66cc;
+}
+
+.btn-primary:hover {
+    background-color: #862d86;
+    border-color: #862d86;
+}
+
+/*CSS for places autocomplete ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.pac-icon {
+  width: 0;
+  background-image: none;
+}
+
+.pac-item {
+  font-family: 'Roboto', sans-serif;
+  color: #999999;
+}
+
+/*CSS for custom navbar ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.navbar-primary .navbar-nav > li > a:hover,
+    .navbar-primary .navbar-nav > li > a:focus {
+    color: #34515e;  /*Sets the text hover color on navbar*/
+}
+
+.navbar-primary .navbar-nav > a,
+    .navbar-primary .navbar-nav > a:hover,
+    .navbar-primary .navbar-nav > a:focus {
+
+    color: black; /*BACKGROUND color for active*/
+    background-color: #030033;
+}
+
+.navbar-primary .navbar-toggle {
+    background-color: white;
+    border-color: white;
+}
+
+.navbar-primary .navbar-toggle:hover, .navbar .navbar-toggle:focus {
+    border-color: #e7e7e7;
+}
+
+.navbar-primary .navbar-header .navbar-brand {
+    color: white;
+    background-color: #862d86;
+}
+
+.navbar-primary {
+    background-color: #cc66cc;
+    border-color: #cc66cc;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #262626;
+    text-decoration: none;
+    background-color: #66CCFF;  /*change color of links in drop down here*/
+}
+
+.navbar-primary .navbar-nav > li > a {
+    color: white; /*Change active text color here*/
+}
+
+/*CSS for custom panels ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.panel.panel-spaced {
+    margin: 60px;
+}
+
+.panel-primary > .panel-heading {
+    background-color: #cc66cc;
+    border-color: #cc66cc;
+}
+
+.panel-primary {
+    border-color: #cc66cc;
+}
+
+.panel {
+    border-radius: 0px;
+}
+
+.review {padding-bottom: 5px;}
+.panel-body.review-container {padding-top:0;}
+.review-header {margin-bottom: 10px;}
+.reviewAuthor {margin: 0 5px;}
+.reviewTime {color: #ccc;}
+
+/*CSS for custom footer ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+ul {
+  list-style-type: none;
+}
+
+footer {
+    position: static;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    max-height: 60px;
+    padding: 1em;
+    background-color: #f8f8f8;
+    text-align: center;
+}
+
+/*Styles for services ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+#serviceno {
+    margin-left: 1em;
+}
+
+#serviceyes {
+    margin-right: 1em;
+}
+>>>>>>> Stashed changes

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 extends navbarDefault
 
 block content
@@ -54,3 +55,61 @@ block content
         | &nbsp;   
   script(src="/javascripts/maps.js")
   script(async='', defer='', src="https://maps.googleapis.com/maps/api/js?callback=initMap&key="+process.env.embed_maps_api+"&region=AU")
+=======
+extends navbarDefault
+
+block content
+  .row.page-header
+    .col-lg-12
+      h1= title
+  .row
+    .col-xs-12.col-md-9
+      .row
+        .col-xs-12.col-sm-6
+          .panel.panel-default
+            .panel-heading
+              h2.panel-title Office Hours
+            .panel-body
+              | Weekdays: #{location.opening} - #{location.closing}
+              br
+              | Saturday: Closed
+              br
+              | Sunday: Closed   
+          .panel.panel-default
+            .panel-heading
+              h2.panel-title Facilities
+            .panel-body
+              each facility in location.facilities
+                span.label.label-warning
+                  span.glyphicon.glyphicon-ok 
+                  | &nbsp;#{facility}
+                | &nbsp;  
+          .panel.panel-default
+            .panel-heading
+              h2.panel-title Restrictions
+            .panel-body
+              each restriction in location.restrictions
+                span.label.label-danger
+                  span.glyphicon.glyphicon-remove 
+                  | &nbsp;#{restriction}
+                | &nbsp;
+        .col-xs-12.col-sm-6.location-map
+          .panel.panel-default
+            .panel-heading
+              h2.panel-title= map.title
+              style.
+                #map {
+                  height: 50%;
+                }
+            .panel-body
+              #map
+              |
+    .col-xs-12.col-md-3              
+      p.lead About #{location.name}
+      p= additionalInfo
+      a(href="https://www.missionaustralia.com.au/",target="_blank").btn.btn-lg.btn-default Learn More   
+      p
+        | &nbsp;   
+  script(src="/javascripts/maps.js")
+  script(async='', defer='', src="https://maps.googleapis.com/maps/api/js?callback=initMap&key="+process.env.embed_maps_api+"&region=AU")
+>>>>>>> Stashed changes

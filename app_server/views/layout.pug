@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 include _includes/loginModal
 
 doctype html
@@ -28,3 +29,35 @@ footer
 script(src='/javascripts/app.js')
 script(src='/bootstrap/js/bootstrap.min.js')
 script(src='/javascripts/validation.js')
+=======
+include _includes/loginModal
+
+doctype html
+head
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title
+        | Home For Now:&nbsp;
+        | #{title}
+    link(href="https://fonts.googleapis.com/css?family=Roboto:300,400", rel="stylesheet")
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+body
+block navbar
+footer
+  .container-fluid
+    ul.list-inline
+      li
+        a(href="/about") About us
+      li
+        a(href="/terms") Terms of use
+      li
+        a(href="/support") Support
+      li
+        a(href="/contact") Contact us
+      p
+        | HomeForNow &copy; 2017
+        | &nbsp;
+script(src='/javascripts/app.js')
+script(src='/bootstrap/js/bootstrap.min.js')
+script(src='/javascripts/validation.js')
+>>>>>>> Stashed changes

@@ -16,7 +16,7 @@ function geoloc()
     {
       params:{
         address: position.coords.latitude +", "+ position.coords.longitude,
-        key: 'AIzaSyBozloGKD_Axji-zWkAIXAK_krMvkBdoQ8'
+        key: geo
       }
     })
     .then(function(response)
@@ -59,7 +59,7 @@ function geocode(e)
   {
     params:{
       address:location,
-      key:'AIzaSyBozloGKD_Axji-zWkAIXAK_krMvkBdoQ8'
+      key:geo
     }
   })
   .then(function(response)
