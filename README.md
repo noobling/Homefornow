@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/noobling/anglicare-sprint-week.svg?branch=master)](https://travis-ci.org/noobling/anglicare-sprint-week)
+
 # anglicare-sprint-week
 LETS GOOOOOOOOOOOOO
 
