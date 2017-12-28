@@ -54,31 +54,31 @@ describe('routes : authentication', () => {
     });
   });
   // skip for now since we don't need register
-  describe.skip('POST /register', () => {
-    const userToRegister = {
-      email: 'user@mail.com',
-      name: 'Jack Wang',
-      password: 'goodpass',
-    };
-    it('should register successfully with valid data', (done) => {
-      request.agent(server)
-        .post('/register')
-        .send(userToRegister)
-        .end((err, res) => {
-          should.not.exist(err);
-          res.status.should.equal(200);
-          User.find({ email: userToRegister.email }, (errU, user) => {
-            if (err) {
-              console.log(`[ERROR] POST /register: ${errU}`);
-            }
-            should.exist(user);
-            user[0].name.should.equal(userToRegister.name);
-            user[0].email.should.equal(userToRegister.email);
-          });
-          done();
-        });
-    });
-  });
+  // describe.skip('POST /register', () => {
+  //   const userToRegister = {
+  //     email: 'user@mail.com',
+  //     name: 'Jack Wang',
+  //     password: 'goodpass',
+  //   };
+  //   it('should register successfully with valid data', (done) => {
+  //     request.agent(server)
+  //       .post('/register')
+  //       .send(userToRegister)
+  //       .end((err, res) => {
+  //         should.not.exist(err);
+  //         res.status.should.equal(200);
+  //         User.find({ email: userToRegister.email }, (errU, user) => {
+  //           if (err) {
+  //             console.log(`[ERROR] POST /register: ${errU}`);
+  //           }
+  //           should.exist(user);
+  //           user[0].name.should.equal(userToRegister.name);
+  //           user[0].email.should.equal(userToRegister.email);
+  //         });
+  //         done();
+  //       });
+  //   });
+  // });
 
   describe('GET /logout', () => {
     beforeEach((done) => {
