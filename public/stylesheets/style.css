@@ -54,6 +54,20 @@ div[class^="col-"] {
     border-color: #862d86;
 }
 
+/*CSS for places autocomplete ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.pac-icon {
+  width: 0;
+  background-image: none;
+}
+
+.pac-item {
+  font-family: 'Roboto', sans-serif;
+  color: #999999;
+}
+/*.pac-container{
+  border-radius: 8px;
+}*/
+
 /*CSS for custom navbar ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 .navbar-primary .navbar-nav > li > a:hover,
