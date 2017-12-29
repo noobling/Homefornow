@@ -28,16 +28,20 @@ router.post('/login', passport.authenticate('local', {
 router.post('/register', ctrlAuth.register);
 // route for facebook authentication and login
 router.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
-router.get(
-  '/auth/facebook/callback',
-  passport.authenticate('facebook'),
-  (req, res) => {
-    if (req.user) {
-      req.session.user = req.user;
-    }
-    res.redirect('/location');
-  }
-);
+
+// Not sure about the logic here so I will comment this out for now
+// Since we are not using OAuth2 for now
+// router.get(
+//   '/auth/facebook/callback',
+//   passport.authenticate('facebook'),
+//   (req, res) => {
+//     if (req.user) {
+//       req.session.user = req.user;
+//     }
+//     res.redirect('/location');
+//   }
+// );
+
 router.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
