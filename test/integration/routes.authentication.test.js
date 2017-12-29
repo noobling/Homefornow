@@ -9,8 +9,6 @@ chai.use(chaiHttp);
 
 const mongoose = require('mongoose');
 
-const User = mongoose.model('User');
-
 describe('routes : authentication', () => {
   beforeEach((done) => {
     done();
@@ -114,4 +112,21 @@ describe('routes : authentication', () => {
     });
   });
 
+});
+
+after((done) => {
+  let i = 0;
+  mongoose.connections.forEach((connection) => {
+    console.log(connection);
+    console.log('\n');
+    i += 1;
+  });
+
+  console.log(`i: ${i}`);
+  mongoose.connection.close();
+  setTimeout(() => {
+    console.log(mongoose.connections[0]);
+  }, 5000);
+  
+  done();
 });
