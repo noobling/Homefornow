@@ -3,6 +3,7 @@ const server = require('../../app');
 const chaiHttp = require('chai-http');
 const request = require('supertest');
 const users = require('../../seeded_users.json');
+const User = require('../../app_server/models/users');
 
 const should = chai.should();
 chai.use(chaiHttp);
@@ -52,31 +53,31 @@ describe('routes : authentication', () => {
     });
   });
   // skip for now since we don't need register
-  // describe.skip('POST /register', () => {
-  //   const userToRegister = {
-  //     email: 'user@mail.com',
-  //     name: 'Jack Wang',
-  //     password: 'goodpass',
-  //   };
-  //   it('should register successfully with valid data', (done) => {
-  //     request.agent(server)
-  //       .post('/register')
-  //       .send(userToRegister)
-  //       .end((err, res) => {
-  //         should.not.exist(err);
-  //         res.status.should.equal(200);
-  //         User.find({ email: userToRegister.email }, (errU, user) => {
-  //           if (err) {
-  //             console.log(`[ERROR] POST /register: ${errU}`);
-  //           }
-  //           should.exist(user);
-  //           user[0].name.should.equal(userToRegister.name);
-  //           user[0].email.should.equal(userToRegister.email);
-  //         });
-  //         done();
-  //       });
-  //   });
-  // });
+  describe.skip('POST /register', () => {
+    const userToRegister = {
+      email: 'user@mail.com',
+      name: 'Jack Wang',
+      password: 'goodpass',
+    };
+    it('should register successfully with valid data', (done) => {
+      request.agent(server)
+        .post('/register')
+        .send(userToRegister)
+        .end((err, res) => {
+          should.not.exist(err);
+          res.status.should.equal(200);
+          User.find({ email: userToRegister.email }, (errU, user) => {
+            if (err) {
+              console.log(`[ERROR] POST /register: ${errU}`);
+            }
+            should.exist(user);
+            user[0].name.should.equal(userToRegister.name);
+            user[0].email.should.equal(userToRegister.email);
+          });
+          done();
+        });
+    });
+  });
 
   describe('GET /logout', () => {
     beforeEach((done) => {
@@ -111,22 +112,4 @@ describe('routes : authentication', () => {
         });
     });
   });
-
-});
-
-after((done) => {
-  let i = 0;
-  mongoose.connections.forEach((connection) => {
-    console.log(connection);
-    console.log('\n');
-    i += 1;
-  });
-
-  console.log(`i: ${i}`);
-  mongoose.connection.close();
-  setTimeout(() => {
-    console.log(mongoose.connections[0]);
-  }, 5000);
-  
-  done();
 });

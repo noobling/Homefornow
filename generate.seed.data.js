@@ -71,7 +71,11 @@ writeTofile(seededUsers);
 
 /**
  * DONE WITH THE DB CONNECTION TIME TO CLEAN UP
- * Commented out for now since closing connection does not
- * allow users to be saved to db
+ * 
+ * Waits 6 seconds then closes connections because if not
+ * the connection will close before the new users have been
+ * saved to the database
  */
-// mongoose.connection.close()
+setTimeout(() => {
+  mongoose.connection.close();
+}, 6000);
