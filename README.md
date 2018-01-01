@@ -33,7 +33,7 @@ A simple responsive web application that allows homeless youths to easily search
 
 * `npm run devstart` This runs the project using nodemon. To reset the server then use 'rs'.
 
-### Developers
+## Developers
 
 * Alex Arnold
 * Thai Nguyen
@@ -44,3 +44,5 @@ A simple responsive web application that allows homeless youths to easily search
 * Abrar Amin
 * Matthew Stagoll
 * David Yu
+
+## [Learn more about this app](https://github.com/noobling/anglicare-sprint-week/wiki)
