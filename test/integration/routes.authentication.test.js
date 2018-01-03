@@ -80,24 +80,29 @@ describe('routes : authentication', () => {
   });
 
   describe('GET /logout', () => {
+    let cookie;
     beforeEach((done) => {
       request.agent(server)
         .post('/login')
         .send({
           email: users[0].email,
           password: users[0].password,
+        })
+        .end((err, res) => {
+          should.not.exist(err);
+          cookie = res.headers['set-cookie'].pop().split(';')[0];
+          done();
         });
-      done();
     });
 
     it('should logout successfully for logged in user', (done) => {
-      request.agent(server)
-        .get('/')
-        .end((err, res) => {
-          should.not.exist(err);
-          res.text.should.not.contain(`Welcome ${users[0].name}`);
-          done();
-        });
+      const req = request.agent(server).get('/');
+      req.cookies = cookie;
+      req.end((err, res) => {
+        should.not.exist(err);
+        res.text.should.contain(`Welcome ${users[0].name}`);
+        done();
+      });
     });
   });
 
