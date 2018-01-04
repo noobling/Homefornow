@@ -8,13 +8,13 @@ module.exports.service = function(req, res) {
 
 module.exports.addService = function(req, res) {
     var availability, description, name;
-    
+
     if (req.session.user === undefined) {
         res.json({"message": "no service was found, remember this request should only be made by authenticated users"});
     }
-    
+
     name = req.session.user.name;
-    
+
     description = req.body.description;
     if (description === undefined) {
         res.json({"message": "No description was provided please provide one"});;
@@ -36,4 +36,12 @@ module.exports.addService = function(req, res) {
         }
       });
     //res.json({"message": "WOAH this line of code shouldn't of been executed"});
+}
+
+module.exports.dashboard = function(req, res) {
+  res.send('This is the Services Dashboard page, rendered by the service.js Controller');
+}
+
+module.exports.profile = function(req, res) {
+  res.send('This is the Services Profile Page, rendered by the service.js Controller');
 }

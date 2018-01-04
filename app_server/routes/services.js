@@ -1,14 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
+var service_controller = require('../controllers/service');
+
 // Services Dashboard route
-router.get('/', function(req, res) {
-	res.send('Service page dashboard');
-});
+router.get('/', service_controller.dashboard);
 
 // Services Profile Page route
-router.get('/profile', function(req, res) {
-	res.send('Service profile page');
-});
+router.get('/profile', service_controller.profile);
 
 module.exports = router;
