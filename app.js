@@ -13,6 +13,7 @@ require('./app_server/models/db');
 require('./app_server/config/passport');
 
 var index = require('./app_server/routes/index');
+var services = require('./app_server/routes/services');
 
 var app = express();
 
@@ -42,13 +43,13 @@ app.use(flash());
 
 /**
  * Custom middleware
- * 
+ *
  * Reference for middlware in express:
  *  http://expressjs.com/en/api.html#app.use
  */
 /**
  * Adds data to the views using res.locals
- * 
+ *
  * Reference:
  *  http://expressjs.com/en/api.html#res
  */
@@ -61,10 +62,11 @@ app.use(function (req, res, next) {
 
 /**
  * Use our routes defined in /routes/index.js
- * 
+ *
  * Namespaced under '/'
  */
 app.use('/', index);
+app.use('/service/dashboard', services);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
