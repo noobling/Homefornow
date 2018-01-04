@@ -1,22 +1,6 @@
 var mongoose = require( 'mongoose' );
 
 var addressSchema = new mongoose.Schema({
-  //Appartment number or Unit number
-    unitNumber: {
-        type : Number,
-        required : false
-    },
-    //Street number
-    streetNumber: {
-        type : Number,
-        required: true,
-        min: 1
-    },
-    //Street name
-    streetName: {
-        type: String,
-        required: true
-    },
     //Suburb
     suburb: {
         type: String,
@@ -32,11 +16,29 @@ var addressSchema = new mongoose.Schema({
     state: {
         type: String,
         required: true
+    },
+    //Latitude
+    lat: {
+        type: String,
+        required: true
+    },
+    //Longitude
+    long: {
+        type: String,
+        required: true
+    }
+});
+
+var tagSchema = new mongoose.Schema({
+    //Name of the tag
+    name: {
+        type: String,
+        required: true
     }
 });
 
 var bedSchema = new mongoose.Schema({
-  //Beds avaialable for the gender
+    //Beds avaialable for the gender
     gender: {
         type: String,
         required: true,
@@ -47,16 +49,21 @@ var bedSchema = new mongoose.Schema({
         type: Boolean,
         required: false
     },
-    //Is the bed for the folowing enum?
+    //Is the bed for the following enum?
     bedType: {
         type: String,
         required: false,
-        enum: ['Single', 'parentChild', 'Couple', 'Family']
+        enum: ['Single', 'ParentChild', 'Couple', 'Family']
     },
-    //Is the bed taken
-    taken: {
+    //Is the bed occupied
+    occupied: {
         type: Boolean,
         required: true
+    },
+    //User creatable tags that describe the bed, as an array
+    tags: {
+        type: [tagSchema],
+        required: false
     }
 });
 
@@ -72,25 +79,25 @@ var ageSchema = new mongoose.Schema({
     }
 });
 
-var accomodationSchema = new mongoose.Schema({
-    //Accomodation ID
-    id : {
+var accommodationSchema = new mongoose.Schema({
+    //Accommodation ID
+    id: {
         type: String,
         unique: true,
         required: true
     },
-    //Accomodation name
-    name : {
-        type : String,
-        unique : false,
-        required : true
+    //Accommodation name
+    name: {
+        type: String,
+        unique: false,
+        required: true
     },
-    //Accomodation address
+    //Accommodation address
     address: {
         type: addressSchema,
         required: true
     },
-    //Accomodation phone number
+    //Accommodation phone number
     phoneNumber: {
         type: String,
         required: true
@@ -100,23 +107,28 @@ var accomodationSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    //Accomodation age range for stay
+    //Accommodation age range for stay
     ageRange: {
         type: ageSchema,
         required: true
     },
-    //Accomodation bed details, as an array
+    //Tags that describe the accomadation's beds, as an array
+    tags: {
+        type: [tagSchema],
+        required: false
+    },
+    //Accommodation bed details, as an array
     beds: [bedSchema],
     //Timestamp for last updated
     updated: {
       type: Number,
       required: true
     },
-    //Website links to the accomodation (if they have any)
+    //Website links to the accommodation (if they have any)
     website: {
       type: String,
       required: false
     }
 });
 
-mongoose.model('accomodation', accomodationSchema);
+mongoose.model('Accommodation', accommodationSchema);

@@ -1,8 +1,10 @@
-const mongoose = require('mongoose');
-const crypto = require('crypto');
+var mongoose = require('mongoose');
+var crypto = require('crypto');
 
 /**
- * General schema for all users of the application e.g. service providers, homeless youth, admins
+ * General schema for all users of the application that have accounts e.g. service providers, admins
+ *
+ * THIS SCHEMA IS NOT FOR THE HOMELESS-YOUTH, they are represented by requestSchema
  *
  * Role:
  *  normal: Have their basic info saved in db but have no special previlages
@@ -10,7 +12,7 @@ const crypto = require('crypto');
  *                    view homeless youth who need a bed
  *  admin: Have full access to everything on the site and have CRUD operations on all services
  */
-const userSchema = new mongoose.Schema({
+var accountSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: true,
@@ -27,14 +29,14 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.methods.setPassword = function setPassword(password) {
+accountSchema.methods.setPassword = function setPassword(password) {
   this.salt = crypto.randomBytes(16).toString('hex');
   this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
 };
 
-userSchema.methods.validPassword = function validPassword(password) {
+accountSchema.methods.validPassword = function validPassword(password) {
   const hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
   return this.hash === hash;
 };
 
-mongoose.model('User', userSchema);
+mongoose.model('User', accountSchema);
