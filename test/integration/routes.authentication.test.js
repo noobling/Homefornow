@@ -1,14 +1,10 @@
 const chai = require('chai');
 const server = require('../../app');
-const chaiHttp = require('chai-http');
 const request = require('supertest');
 const users = require('../../seeded_users.json');
 const User = require('../../app_server/models/users');
 
 const should = chai.should();
-chai.use(chaiHttp);
-
-const mongoose = require('mongoose');
 
 describe('routes : authentication', () => {
   beforeEach((done) => {
@@ -90,17 +86,17 @@ describe('routes : authentication', () => {
         })
         .end((err, res) => {
           should.not.exist(err);
-          cookie = res.headers['set-cookie'].pop().split(';')[0];
+          [cookie] = res.headers['set-cookie'].pop().split(';');
           done();
         });
     });
 
     it('should logout successfully for logged in user', (done) => {
-      const req = request.agent(server).get('/');
+      const req = request.agent(server).get('/logout');
       req.cookies = cookie;
       req.end((err, res) => {
         should.not.exist(err);
-        res.text.should.contain(`Welcome ${users[0].name}`);
+        res.text.should.not.contain(`Welcome ${users[0].name}`);
         done();
       });
     });
