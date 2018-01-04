@@ -112,7 +112,7 @@ var accommodationSchema = new mongoose.Schema({
         type: ageSchema,
         required: true
     },
-    //Tags that describe the accomadation's beds, as an array
+    //Tags that describe the accommodation's beds, as an array
     tags: {
         type: [tagSchema],
         required: false

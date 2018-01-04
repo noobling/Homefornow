@@ -31,7 +31,12 @@ var requestSchema = new mongoose.Schema({
     hasChild: {
         type: Boolean,
         required: true
+    },
+    //True if requesting long term accommodation, false otherwise
+    isLongTerm: {
+        type: Boolean,
+        required: true
     }
 });
 
-mongoose.model('Requests', requestSchema);
+mongoose.model('Request', requestSchema);
