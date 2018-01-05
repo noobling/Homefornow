@@ -1,12 +1,13 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
 
-var service_controller = require('../controllers/service');
+const router = express.Router();
+
+const serviceController = require('../controllers/service');
 
 // Services Dashboard route
-router.get('/', service_controller.dashboard);
+router.get('/', serviceController.dashboard);
 
 // Services Profile Page route
-router.get('/profile', service_controller.profile);
+router.get('/profile', serviceController.profile);
 
 module.exports = router;
