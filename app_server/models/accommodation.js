@@ -1,4 +1,4 @@
-var mongoose = require( 'mongoose' );
+var mongoose = require('mongoose');
 
 var addressSchema = new mongoose.Schema({
     //Suburb
@@ -29,6 +29,7 @@ var addressSchema = new mongoose.Schema({
     }
 });
 
+//Tag schema for the beds
 var tagSchema = new mongoose.Schema({
     //Name of the tag
     name: {
@@ -49,14 +50,14 @@ var bedSchema = new mongoose.Schema({
         type: Boolean,
         required: false
     },
-    //Is the bed for the following enum?
+    //Intended use of the bed
     bedType: {
         type: String,
         required: false,
         enum: ['Single', 'ParentChild', 'Couple', 'Family']
     },
     //Is the bed occupied
-    occupied: {
+    isOccupied: {
         type: Boolean,
         required: true
     },
@@ -117,17 +118,17 @@ var accommodationSchema = new mongoose.Schema({
         type: [tagSchema],
         required: false
     },
-    //Accommodation bed details, as an array
+    //Accommodation's bed details, as an array
     beds: [bedSchema],
     //Timestamp for last updated
     updated: {
-      type: Number,
-      required: true
+        type: Number,
+        required: true
     },
-    //Website links to the accommodation (if they have any)
+    //Website link to the accommodation (if they have any)
     website: {
-      type: String,
-      required: false
+        type: String,
+        required: false
     }
 });
 

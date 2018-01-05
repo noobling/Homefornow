@@ -1,8 +1,16 @@
-var mongoose = require( 'mongoose' );
+var mongoose = require('mongoose');
 
+/**
+ * Schema for the accommodation requests that the homeless youth make.
+ */
 var requestSchema = new mongoose.Schema({
-    //Name
-    name: {
+    //Youth's first name
+    firstName: {
+        type: String,
+        required: true
+    },
+    //Youth's last name
+    lastName: {
         type: String,
         required: true
     },
@@ -36,6 +44,29 @@ var requestSchema = new mongoose.Schema({
     isLongTerm: {
         type: Boolean,
         required: true
+    },
+    //Date the request was created
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
+    //Date the request was satisfied
+    satisfiedAt: {
+        type: Date,
+        default: null,
+        required: false
+    },
+    //Has an service provider satisfied the request
+    isSatisfied: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
+    //ID of the service provider that satisfied the request
+    satisfiedBy: {
+        type: String,
+        required: false
     }
 });
 
