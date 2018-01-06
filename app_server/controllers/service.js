@@ -28,14 +28,12 @@ module.exports.addService = (req, res) => {
   service.save((err) => {
     if (err) {
       res.json({ message: err });
-      return;
     } else {
       res.redirect('/locations/short_term');
-      return;
     }
   });
   // res.json({"message": "WOAH this line of code shouldn't of been executed"});
-}
+};
 
 module.exports.dashboard = (req, res) => {
   res.send('This is the Services Dashboard page, rendered by the service.js Controller');
