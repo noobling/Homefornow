@@ -13,27 +13,11 @@ const crypto = require('crypto');
  *  admin: Have full access to everything on the site and have CRUD operations on all services
  *  super_admin: Can perform CRUD operations on admin accounts and other super_admin accounts
  */
-const accountSchema = new mongoose.Schema({
-  // Is this a shared account for members of a service provider
-  isSharedAccount: {
-    type: Boolean,
-    default: false,
+const userSchema = new mongoose.Schema({
+  // Name
+  name: {
+    type: String,
     required: true,
-  },
-  // Name of service provider
-  accommodationName: {
-    type: String,
-    required: this.isSharedAccount,
-  },
-  // First name
-  firstName: {
-    type: String,
-    required: !this.isSharedAccount,
-  },
-  // Last name
-  lastName: {
-    type: String,
-    required: !this.isSharedAccount,
   },
   // E-mail address
   email: {
@@ -62,23 +46,26 @@ const accountSchema = new mongoose.Schema({
     type: [String],
     required: false,
   },
-  // facebook: {
-  //     id: String,
-  //     token: String,
-  //     email: String,
-  //     name: String,
-  // },
 });
 
+// accountSchema
+// .virtual('name')
+// .get(function () {
+//   if(this.isSharedAccount) {
+//     console.log("\n\nhey\n\n");
+//     return this.accommodationName;
+//   }
+//   return this.firstName;
+// })
 
-accountSchema.methods.setPassword = function setPassword(password) {
+userSchema.methods.setPassword = function setPassword(password) {
   this.salt = crypto.randomBytes(16).toString('hex');
   this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
 };
 
-accountSchema.methods.validPassword = function validPassword(password) {
+userSchema.methods.validPassword = function validPassword(password) {
   const hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
   return this.hash === hash;
 };
 
-mongoose.model('User', accountSchema);
+mongoose.model('User', userSchema);
