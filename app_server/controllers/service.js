@@ -3,9 +3,7 @@ var Service = mongoose.model('Service');
 
 
 module.exports.service = function(req, res) {
-    res.render('service', {
-        user: req.session.user
-    });
+    res.render('service');
 }
 
 module.exports.addService = function(req, res) {

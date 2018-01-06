@@ -8,7 +8,6 @@ module.exports.shortTermList = (req, res) => {
 			console.log('[ERROR] LocationsController: '+err);
 		}
 		res.render('bedVacanciesList', {
-			user: req.session.user,
 			title: 'For Now',
 			tagline: 'A place to stay',
 			dlocations: docs,
@@ -42,7 +41,6 @@ module.exports.longTermList = function(req, res) {
 	});
 	
 	res.render('bedVacanciesList', {
-		user: req.session.user,
 		title: 'For Future',
 		tagline: 'A place to stay',
 		dlocations: services,
@@ -68,10 +66,8 @@ module.exports.longTermList = function(req, res) {
 module.exports.showLocation = function(req, res) {
 	let name = req.query.name;
 	res.render('showLocation', {
-		user: req.session.user,
 		title: name,
 		tagline: 'Bringing people together',
-		user: req.session.user,
 		location: {
 			info: 'Located in East Perth',
 			opening: '9am',

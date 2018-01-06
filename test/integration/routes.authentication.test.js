@@ -1,15 +1,10 @@
 const chai = require('chai');
 const server = require('../../app');
-const chaiHttp = require('chai-http');
 const request = require('supertest');
 const users = require('../../seeded_users.json');
+const User = require('../../app_server/models/users');
 
 const should = chai.should();
-chai.use(chaiHttp);
-
-const mongoose = require('mongoose');
-
-const User = mongoose.model('User');
 
 describe('routes : authentication', () => {
   beforeEach((done) => {
@@ -81,24 +76,29 @@ describe('routes : authentication', () => {
   });
 
   describe('GET /logout', () => {
+    let cookie;
     beforeEach((done) => {
       request.agent(server)
         .post('/login')
         .send({
           email: users[0].email,
           password: users[0].password,
+        })
+        .end((err, res) => {
+          should.not.exist(err);
+          [cookie] = res.headers['set-cookie'].pop().split(';');
+          done();
         });
-      done();
     });
 
     it('should logout successfully for logged in user', (done) => {
-      request.agent(server)
-        .get('/')
-        .end((err, res) => {
-          should.not.exist(err);
-          res.text.should.not.contain(`Welcome ${users[0].name}`);
-          done();
-        });
+      const req = request.agent(server).get('/logout');
+      req.cookies = cookie;
+      req.end((err, res) => {
+        should.not.exist(err);
+        res.text.should.not.contain(`Welcome ${users[0].name}`);
+        done();
+      });
     });
   });
 
@@ -113,5 +113,4 @@ describe('routes : authentication', () => {
         });
     });
   });
-
 });
