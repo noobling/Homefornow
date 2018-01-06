@@ -11,7 +11,7 @@ const crypto = require('crypto');
  *  service_provider: Can perform CRUD operations on their own service, can
  *                    view homeless youth who need a bed
  *  admin: Have full access to everything on the site and have CRUD operations on all services
- *  super_admin:
+ *  super_admin: Can perform CRUD operations on admin accounts and other super_admin accounts
  */
 const accountSchema = new mongoose.Schema({
   // Is this a shared account for members of a service provider
