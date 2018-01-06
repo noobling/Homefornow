@@ -41,14 +41,84 @@ describe('services : test', () => {
   });
 
   describe.skip('POST /addService', () => {
-    it('should create a new service successfully given all the valid details and user is logged in', (done) => {
+    it('should create a new service successfully given all the valid details and user is logged in', () => {
       const serviceJson = {
         available: '',
         description: 'very good service',
       };
-      const req = request.agent(server).post('/service')
+      const req = request.agent(server).post('/service');
       req.cookies = cookie;
       req.send(serviceJson);
     });
-  }); 
+  });
+});
+
+describe('routes : services dashboard', () => {
+  beforeEach((done) => {
+    done();
+  });
+  afterEach((done) => {
+    done();
+  });
+
+  describe('GET /service/dashboard/', () => {
+    it('Should route correctly (HTTP 200)', (done) => {
+      chai.request(server)
+        .get('/service/dashboard')
+        .end((err, res) => {
+          res.redirects.length.should.equal(0);
+          res.status.should.equal(200);
+          res.type.should.equal('text/html');
+          done();
+        });
+    });
+  });
+
+  describe('GET /service/dashboard/profile', () => {
+    it('Should route correctly (HTTP 200)', (done) => {
+      chai.request(server)
+        .get('/service/dashboard/profile')
+        .end((err, res) => {
+          res.redirects.length.should.equal(0);
+          res.status.should.equal(200);
+          res.type.should.equal('text/html');
+          done();
+        });
+    });
+  });
+});
+
+describe('routes : services dashboard', () => {
+  beforeEach((done) => {
+    done();
+  });
+  afterEach((done) => {
+    done();
+  });
+
+  describe('GET /service/dashboard/', () => {
+    it('Should route correctly (HTTP 200)', (done) => {
+      chai.request(server)
+        .get('/service/dashboard')
+        .end((err, res) => {
+          res.redirects.length.should.equal(0);
+          res.status.should.equal(200);
+          res.type.should.equal('text/html');
+          done();
+        });
+    });
+  });
+
+  describe('GET /service/dashboard/profile', () => {
+    it('Should route correctly (HTTP 200)', (done) => {
+      chai.request(server)
+        .get('/service/dashboard/profile')
+        .end((err, res) => {
+          res.redirects.length.should.equal(0);
+          res.status.should.equal(200);
+          res.type.should.equal('text/html');
+          done();
+        });
+    });
+  });
 });
