@@ -40,15 +40,21 @@ describe('services : test', () => {
     });
   });
 
-  describe.skip('POST /addService', () => {
-    it('should create a new service successfully given all the valid details and user is logged in', () => {
+  describe('POST /addService', () => {
+    it('should create a new service successfully given all the valid details and user is logged in', (done) => {
       const serviceJson = {
         available: '',
         description: 'very good service',
       };
-      const req = request.agent(server).post('/service');
+      const req = request.agent(server).post('/addService');
       req.cookies = cookie;
-      req.send(serviceJson);
+      req.send(serviceJson)
+        .redirects(1)
+        .end((err, res) => {
+          should.not.exist(err);
+          res.text.should.contain(serviceJson.description);
+          done();
+        });
     });
   });
 });

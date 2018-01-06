@@ -8,11 +8,11 @@ module.exports.service = (req, res) => {
 };
 
 module.exports.addService = (req, res) => {
-  if (req.session.user === undefined) {
+  if (!req.user) {
     res.json({ message: 'no service was found, remember this request should only be made by authenticated users' });
   }
 
-  const { name } = req.session.user;
+  const { name } = req.user;
 
   const { description } = req.body;
   if (description === undefined) {
@@ -20,7 +20,7 @@ module.exports.addService = (req, res) => {
   }
 
   const availability = req.body.available ? 'true' : 'false';
-  console.log(req.body);
+
   const service = new Service();
   service.name = name;
   service.description = description;
