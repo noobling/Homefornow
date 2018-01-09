@@ -14,7 +14,11 @@ const crypto = require('crypto');
  *  super_admin: Can perform CRUD operations on admin accounts and other super_admin accounts
  */
 const userSchema = new mongoose.Schema({
-  // Name
+  /**
+  * Name is either:
+  *  - a person's first and last name, or
+  *  - the name of a service provider
+  */
   name: {
     type: String,
     required: true,
