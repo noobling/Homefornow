@@ -18,7 +18,7 @@ const requestSchema = new mongoose.Schema({
   gender: {
     type: String,
     required: true,
-    enum: ['Male', 'Female', 'Unspecified'],
+    enum: ['Male', 'Female', 'Other'],
   },
   // Age
   age: {
@@ -28,12 +28,17 @@ const requestSchema = new mongoose.Schema({
   // Phone Number
   phoneNumber: {
     type: String,
+    required: false,
+  },
+  // The requested location
+  location: {
+    type: String,
     required: true,
   },
   // Does the youth have a disability
   hasDisability: {
     type: Boolean,
-    required: true,
+    required: false,
   },
   // Child
   hasChild: {
@@ -66,6 +71,7 @@ const requestSchema = new mongoose.Schema({
   // ID of the service provider that satisfied the request
   satisfiedBy: {
     type: String,
+    default: null,
     required: false,
   },
 });

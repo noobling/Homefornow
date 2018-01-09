@@ -25,6 +25,7 @@ module.exports.addService = (req, res) => {
   service.name = name;
   service.description = description;
   service.availability = availability;
+
   service.save((err) => {
     if (err) {
       res.json({ message: err });

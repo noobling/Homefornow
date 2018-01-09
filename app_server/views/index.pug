@@ -2,23 +2,23 @@ extends navbarDefault
 
 block content
     include _includes/signupModal
-    
+
     #banner.page-header
         include _includes/messages/error
         include _includes/messages/info
         .row
             .col-md-8
                 h1= title
-    form
+    form(id="locationForm")
         .form-group
             .row
                 .col-md-8.col-xs-12
-                    input.form-control.input-lg(type="text",placeholder="Location e.g. Subiaco" autocomplete="on")#location
+                    input.form-control.input-lg(type="text", name="location", placeholder="Location e.g. Subiaco" autocomplete="on")#location
                     .spacer-sm
                       .row
                           .col-md-6.col-sm-8.text-left(style="margin-top: 3px;")
                             a(style="padding-left: 18px;")
-                            | Use 
+                            | Use
                             a#get_location(href="#" class="geoloc" style="color: #999;")
                                 | current location
                 .col-md-2.col-xs-6.text-right
@@ -59,6 +59,7 @@ block content
     script(src="https://code.jquery.com/jquery-3.2.1.js"  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous")
     script(src="https://unpkg.com/axios/dist/axios.min.js")
     script(src='/javascripts/maps.js')
+    script(src='/javascripts/requests.js')
     script.
         function initialize() {
           var options = {

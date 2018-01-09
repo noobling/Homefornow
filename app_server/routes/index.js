@@ -5,6 +5,7 @@ const ctrlOthers = require('../controllers/others');
 const ctrlLocations = require('../controllers/locations');
 const ctrlService = require('../controllers/service');
 const ctrlAuth = require('../controllers/authentication');
+const ctrlRequests = require('../controllers/requests');
 
 const router = express.Router();
 
@@ -14,8 +15,8 @@ router.get('/about', ctrlOthers.about);
 
 router.get('/location', ctrlLocations.showLocation);
 
-router.get('/locations/short_term', ctrlLocations.shortTermList);
-router.get('/locations/long_term', ctrlLocations.longTermList);
+router.post('/locations/:lengthOfStay', ctrlRequests.addRequest);
+router.get('/locations/:lengthOfStay', ctrlLocations.shortTermList);
 
 /**
  * Authentication
