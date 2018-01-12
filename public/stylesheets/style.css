@@ -131,6 +131,11 @@ div[class^="col-"] {
     border-radius: 0px;
 }
 
+.panel-body.scroll {
+    overflow-y: scroll;
+    height: 550px;
+}
+
 .review {padding-bottom: 5px;}
 .panel-body.review-container {padding-top:0;}
 .review-header {margin-bottom: 10px;}
