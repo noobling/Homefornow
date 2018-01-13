@@ -36,7 +36,7 @@ module.exports.addService = (req, res) => {
 };
 
 module.exports.dashboard = (req, res) => {
-  res.send('This is the Services Dashboard page, rendered by the service.js Controller');
+  res.render('serviceDashboard');
 };
 
 module.exports.profile = (req, res) => {
