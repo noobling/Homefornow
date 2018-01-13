@@ -81,12 +81,6 @@ const ageSchema = new mongoose.Schema({
 });
 
 const accommodationSchema = new mongoose.Schema({
-  // Accommodation ID
-  id: {
-    type: String,
-    unique: true,
-    required: true,
-  },
   // Accommodation name
   name: {
     type: String,
@@ -132,6 +126,11 @@ const accommodationSchema = new mongoose.Schema({
   },
   img: {
     type: String,
+    required: false,
+  },
+  // The requests submitted to the accommodation provider
+  requests: {
+    type: [mongoose.Schema.Types.ObjectId],
     required: false,
   },
 });

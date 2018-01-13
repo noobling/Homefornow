@@ -44,11 +44,8 @@
                     .form-group
                         input(name="location", type="hidden", value="test location")
                     .form-group
-                        //input(type="submit", value="Submit")
-                        button.btn.btn-default(name="Submit", type="button", onclick='return submitRequest(document.getElementById("shortTermForm"))') Submit
-                //.text-center
-                    //a(href="/locations/short_term")
-                        //button.btn.btn-default Submit
+                        .text-center
+                            button.btn.btn-default(name="Submit", type="button", onclick='return submitRequest(document.getElementById("shortTermForm"))') Submit
 
 .modal.fade(id="signupmodallong",role="dialog")
     .modal-dialog.modal-sm
@@ -96,9 +93,6 @@
                     .form-group
                         input(name="location", type="hidden", value="test location")
                     .form-group
-                        input(type="submit", value="Submit")
-                        //button.btn.btn-default(name="Submit", type="button", onclick='submitRequest(document.getElementById("longTermForm"))') Submit
-                //.text-center
-                    //a(href="/locations/long_term")
-                        //button.btn.btn-default Submit
+                        .text-center
+                            button.btn.btn-default(name="Submit", type="button", onclick='submitRequest(document.getElementById("longTermForm"))') Submit
 script(src='/javascripts/requests.js')

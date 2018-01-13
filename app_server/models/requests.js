@@ -30,6 +30,10 @@ const requestSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  email: {
+    type: String,
+    required: false,
+  },
   // The requested location
   location: {
     type: String,
@@ -70,7 +74,7 @@ const requestSchema = new mongoose.Schema({
   },
   // ID of the service provider that satisfied the request
   satisfiedBy: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     default: null,
     required: false,
   },

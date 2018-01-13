@@ -1,31 +1,37 @@
 const mongoose = require('mongoose');
 
 const Service = mongoose.model('Service');
+const Accommodation = mongoose.model('Accommodation');
 
 module.exports.shortTermList = (req, res) => {
-	Service.find({}, (err, docs) => {
+	Accommodation.find({}, (err, docs) => { // TODO
 		if (err) {
 			console.log('[ERROR] LocationsController: '+err);
 		}
+
+		// console.log("\Request Id: " + req.session.requestId);
+
 		res.render('bedVacanciesList', {
 			title: 'For Now',
 			tagline: 'A place to stay',
 			dlocations: docs,
 			locations: [
 				{
+          _id: 12345,
 					name: 'Youngle Group',
 					availability: true,
 					number: 94572188
 				},{
+          _id: 23456,
 					name: 'Foyer House',
 					availability: true,
 					number: 94572188
 				},{
+          _id: 34567,
 					name: 'Mission Australia',
 					availability: false,
 					number: 94572188
 				}
-	
 			]
 		});
 	});
@@ -39,7 +45,7 @@ module.exports.longTermList = function(req, res) {
 		}
 		services = docs;
 	});
-	
+
 	res.render('bedVacanciesList', {
 		title: 'For Future',
 		tagline: 'A place to stay',

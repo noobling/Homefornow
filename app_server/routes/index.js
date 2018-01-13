@@ -15,9 +15,9 @@ router.get('/about', ctrlOthers.about);
 
 router.get('/location', ctrlLocations.showLocation);
 
-router.post('/locations/:lengthOfStay', ctrlRequests.addRequest);
 router.get('/locations/:lengthOfStay', ctrlLocations.shortTermList);
-
+router.post('/locations/contact', ctrlRequests.addPhoneToRequest);
+router.post('/locations/:lengthOfStay', ctrlRequests.addRequest);
 /**
  * Authentication
  */

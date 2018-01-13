@@ -2,82 +2,74 @@ extends navbarDefault
 include _includes/contactModal
 
 block content
-	
-	#banner.page-header
-		.row
-			.col-lg-6
-				h1= title
-					br
-					small #{tagline}
-	.row
-		each location in locations
-			+contactModal(location.name)
-			.col-xs-12
-				.panel.panel-default
-					.panel-heading
-						a(href='/location?name='+location.name, style="text-decoration: none; color: inherit;")
-							h2.panel-title= location.name
-					.row
-						.col-md-3.col-sm-4.col-xs-12
-							a(href='/location?name='+location.name)
-								img.img-responsive.img-square(src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
-						.col-md-3.hidden-sm.hidden-xs
-							.panel-body.text-justify
-								| Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-						.col-md-3.col-sm-4.col-xs-12
-							.panel-body.text-center
-								if location.availability
-									h4
-										span.text-success
-											span.glyphicon.glyphicon-ok
-											| &nbsp;Avaliable
-								else
-									h4
-										span.text-danger
-											span.glyphicon.glyphicon-remove
-											| &nbsp;Not Avaliable
-						.col-md-3.col-sm-4.col-xs-12
-							.panel-body.text-center
-								if location.availability
-									a(href='#',data-toggle="modal",data-target="#contactmodal"+location.name.replace(/\s/g,''))
-										button.btn.btn-lg.btn-default
-											| Contact
-								else
-									button.btn.btn-lg.btn-default.disabled
-										| Contact
-		each dlocation in dlocations
-			+contactModal(dlocation.name)
-			.col-xs-12
-				.panel.panel-default
-					.panel-heading
-						a(href='/location?name='+dlocation.name, style="text-decoration: none; color: inherit;")
-							h2.panel-title= dlocation.name
-					.row
-						.col-md-3.col-sm-4.col-xs-12
-							a(href='/location?name='+dlocation.name)
-								img.img-responsive.img-square(src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
-						.col-md-3.hidden-sm.hidden-xs
-							.panel-body.text-justify
-								| #{dlocation.description}
-						.col-md-3.col-sm-4.col-xs-12
-							.panel-body.text-center
-								if dlocation.availability
-									h4
-										span.text-success
-											span.glyphicon.glyphicon-ok
-											| &nbsp;Avaliable
-								else
-									h4
-										span.text-danger
-											span.glyphicon.glyphicon-remove
-											| &nbsp;Not Avaliable
-						.col-md-3.col-sm-4.col-xs-12
-							.panel-body.text-center
-								if dlocation.availability
-									a(href='#',data-toggle="modal",data-target="#contactmodal"+dlocation.name.replace(/\s/g,''))
-										button.btn.btn-lg.btn-default
-											| Contact
-								else
-									button.btn.btn-lg.btn-default.disabled
-										| Contact
-							
+
+  #banner.page-header
+    .row
+      .col-lg-6
+        h1= title
+          br
+          small #{tagline}
+  .row
+    each location in locations
+      +contactModal(location.name, location._id, location.availability)
+      .col-xs-12
+        .panel.panel-default
+          .panel-heading
+            a(href='/location?name='+location.name, style="text-decoration: none; color: inherit;")
+              h2.panel-title= location.name
+          .row
+            .col-md-3.col-sm-4.col-xs-12
+              a(href='/location?name='+location.name)
+                img.img-responsive.img-square(src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
+            .col-md-3.hidden-sm.hidden-xs
+              .panel-body.text-justify
+                | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            .col-md-3.col-sm-4.col-xs-12
+              .panel-body.text-center
+                if location.availability
+                  h4
+                    span.text-success
+                      span.glyphicon.glyphicon-ok
+                      | &nbsp;Avaliable
+                else
+                  h4
+                    span.text-danger
+                      span.glyphicon.glyphicon-remove
+                      | &nbsp;Not Avaliable
+            .col-md-3.col-sm-4.col-xs-12
+              .panel-body.text-center
+                a(href='#',data-toggle="modal",data-target="#contactmodal"+location.name.replace(/\s/g,''))
+                  button.btn.btn-lg.btn-default
+                    | Contact
+    each dlocation in dlocations
+      +contactModal(dlocation.name, dlocation._id, location.availability)
+      .col-xs-12
+        .panel.panel-default
+          .panel-heading
+            a(href='/location?name='+dlocation.name, style="text-decoration: none; color: inherit;")
+              h2.panel-title= dlocation.name
+          .row
+            .col-md-3.col-sm-4.col-xs-12
+              a(href='/location?name='+dlocation.name)
+                img.img-responsive.img-square(src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
+            .col-md-3.hidden-sm.hidden-xs
+              .panel-body.text-justify
+                | #{dlocation.description}
+            .col-md-3.col-sm-4.col-xs-12
+              .panel-body.text-center
+                if dlocation.availability
+                  h4
+                    span.text-success
+                      span.glyphicon.glyphicon-ok
+                      | &nbsp;Avaliable
+                else
+                  h4
+                    span.text-danger
+                      span.glyphicon.glyphicon-remove
+                      | &nbsp;Not Avaliable
+            .col-md-3.col-sm-4.col-xs-12
+              .panel-body.text-center
+                a(href='#',data-toggle="modal",data-target="#contactmodal"+dlocation.name.replace(/\s/g,''))
+                  button.btn.btn-lg.btn-default
+                    | Contact
+  script(src='/javascripts/requests.js')

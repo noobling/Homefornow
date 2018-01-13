@@ -32,6 +32,10 @@ app.use(session({
   secret: 'randomsecret',
   resave: true,
   saveUninitialized: false,
+  cookie: {
+    secure: false, // TODO: set this to true once the website uses https
+    maxAge: 3600000, // One hour
+  },
 })); // SECRET SHOULD BE STORED IN ENVIRONMENT VARIABLES
 app.use((req, res, next) => {
   res.locals.session = req.session;

@@ -52,16 +52,6 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// accountSchema
-// .virtual('name')
-// .get(function () {
-//   if(this.isSharedAccount) {
-//     console.log("\n\nhey\n\n");
-//     return this.accommodationName;
-//   }
-//   return this.firstName;
-// })
-
 userSchema.methods.setPassword = function setPassword(password) {
   this.salt = crypto.randomBytes(16).toString('hex');
   this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
