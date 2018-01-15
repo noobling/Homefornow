@@ -1,52 +1,52 @@
 mixin contactModal(serviceName)
-    .modal.fade(id="contactmodal"+serviceName.replace(/\s/g,''),role="dialog")
+    .modal.fade(id='contactmodal'+serviceName.replace(/\s/g,''),role='dialog')
         .modal-dialog.modal-sm
             .modal-content
                 .modal-header
-                    button(type="button",data-dismiss="modal").close &times;
-                    img.img.img-responsive.img-squared(src="https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png")
+                    button(type='button',data-dismiss='modal').close &times;
+                    img.img.img-responsive.img-squared(src='https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png')
                 .modal-body
                     .text-center
                         h4 93471810
                         h5= serviceName.replace(/\s/g,'').toLowerCase() + '.com'
-                        a(href="#")
+                        a(href='#')
                             button.btn.btn-default Call Us
-                        a(data-toggle="modal", href="#numbermodal")
-                            button(type="button", data-dismiss="modal").btn.btn-default Call You
+                        a(data-toggle='modal', href='#numbermodal')
+                            button(type='button', data-dismiss='modal').btn.btn-default Call You
 
-    .modal.fade(id="numbermodal",role="dialog")
+    .modal.fade(id='numbermodal',role='dialog')
         .modal-dialog.modal-sm
             .modal-content
                 .modal-header
-                    button(type="button", data-dismiss="modal").close &times;
+                    button(type='button', data-dismiss='modal').close &times;
                     span.pull-left
-                        a(data-toggle="modal", href="#contactmodal"+serviceName)
-                            button(type="button", data-dismiss="modal").close
+                        a(data-toggle='modal', href='#contactmodal'+serviceName)
+                            button(type='button', data-dismiss='modal').close
                                 span.glyphicon.glyphicon-arrow-left
-                        //- a(data-toggle="modal", href="#numbermodal")
-                        //-     button(type="button", data-dismiss="modal").btn.btn-default Calls us
-                    img.img.img-responsive.img-squared(src="https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png")
+                        //- a(data-toggle='modal', href='#numbermodal')
+                        //-     button(type='button', data-dismiss='modal').btn.btn-default Calls us
+                    img.img.img-responsive.img-squared(src='https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png')
                 .modal-body
                     form
                         .form-group
-                            label(for="number") Phone Number
-                            input.form-control(type="text")#number
+                            label(for='number') Phone Number
+                            input.form-control(type='text')#number
                     .text-right
-                        a(data-toggle="modal", href="#waitmodal")
-                            button(type="button", data-dismiss="modal").btn.btn-default Submit
+                        a(data-toggle='modal', href='#waitmodal')
+                            button(type='button', data-dismiss='modal').btn.btn-default Submit
                             
-    .modal.fade(id="waitmodal",role="dialog")
+    .modal.fade(id='waitmodal',role='dialog')
         .modal-dialog.modal-sm
             .modal-content
                 .modal-header
-                    button(type="button", data-dismiss="modal").close &times;
+                    button(type='button', data-dismiss='modal').close &times;
                     span.pull-left
-                        a(data-toggle="modal", href="#numbermodal")
-                            button(type="button", data-dismiss="modal").close
+                        a(data-toggle='modal', href='#numbermodal')
+                            button(type='button', data-dismiss='modal').close
                                 span.glyphicon.glyphicon-arrow-left
-                        //- a(data-toggle="modal", href="#numbermodal")
-                        //-     button(type="button", data-dismiss="modal").btn.btn-default Calls us
-                    img.img.img-responsive.img-squared(src="https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png")
+                        //- a(data-toggle='modal', href='#numbermodal')
+                        //-     button(type='button', data-dismiss='modal').btn.btn-default Calls us
+                    img.img.img-responsive.img-squared(src='https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png')
                 .modal-body
                     h4 Thank you
                     | We will get back to you soon

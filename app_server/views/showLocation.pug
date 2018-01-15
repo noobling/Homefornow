@@ -49,8 +49,8 @@ block content
     .col-xs-12.col-md-3              
       p.lead About #{location.name}
       p= additionalInfo
-      a(href="https://www.missionaustralia.com.au/",target="_blank").btn.btn-lg.btn-default Learn More   
+      a(href='https://www.missionaustralia.com.au/',target='_blank').btn.btn-lg.btn-default Learn More   
       p
         | &nbsp;   
-  script(src="/javascripts/maps.js")
-  script(async='', defer='', src="https://maps.googleapis.com/maps/api/js?callback=initMap&key="+process.env.emb)
+  script(src='/javascripts/other.js')
+  script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key='+process.env.embed_maps_api+'&callback=initMap')

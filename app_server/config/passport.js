@@ -38,7 +38,7 @@ passport.use(new LocalStrategy(
       }
       return done(null, user);
     });
-  }
+  },
 ));
 
 // =========================================================================
@@ -102,7 +102,7 @@ passport.use(new FacebookStrategy(
     clientID: configAuth.facebookAuth.clientID,
     clientSecret: configAuth.facebookAuth.clientSecret,
     callbackURL: configAuth.facebookAuth.callbackURL,
-    profileFields: ['id', 'displayName', 'photos', 'email', 'name']
+    profileFields: ['id', 'displayName', 'photos', 'email', 'name'],
   },
 
   // facebook will send back the token and profile
@@ -126,8 +126,8 @@ passport.use(new FacebookStrategy(
         newUser.facebook.id = profile.id; // set the users facebook id
         newUser.facebook.token = token; // we will save the token that facebook provides to the user
         newUser.facebook.name = `${profile.name.givenName} ${profile.name.familyName}`; // look at the passport user profile to see how names are returned
-        newUser.facebook.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
-        // save our user to the database
+        newUser.facebook.email = profile.emails[0].value; // facebook can return multiple emails
+        // so we'll take the first save our user to the database
         newUser.save((sErr) => {
           if (sErr) {
             throw sErr;
@@ -139,5 +139,5 @@ passport.use(new FacebookStrategy(
         return done();
       });
     });
-  }
+  },
 ));

@@ -22,6 +22,24 @@ block content
             .panel-body.scroll
               .mid-width.wrapItems
                 h4 Vacancies
+                .pull-right
+                  .dropdown
+                    button#menu1.btn.btn-primary.dropdown-toggle(type='button', data-toggle='dropdown')
+                      | Filter by 
+                      span.caret
+                    ul.dropdown-menu(role='menu', aria-labelledby='menu1')
+                      li(role='presentation')
+                        a(role='menuitem', href='#') All
+                      li(role='presentation')
+                        a(role='menuitem', href='#') Male
+                      li(role='presentation')
+                        a(role='menuitem', href='#') Female
+                      li(role='presentation')
+                        a(role='menuitem', href='#') Both
+                      li(role='presentation')
+                        a(role='menuitem', href='#') Child
+                      li(role='presentation')
+                        a(role='menuitem', href='#') Disability
                 ul.nav.nav-tabs
                   li.active
                     a(data-toggle='tab', href='#vacancies') Vacancies

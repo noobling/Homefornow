@@ -5,6 +5,7 @@ const ctrlOthers = require('../controllers/others');
 const ctrlLocations = require('../controllers/locations');
 const ctrlService = require('../controllers/service');
 const ctrlAuth = require('../controllers/authentication');
+const ctrlComm = require('../controllers/communications');
 
 const router = express.Router();
 
@@ -46,6 +47,16 @@ router.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
+
+/**
+ * email API
+ */
+router.post('/email', ctrlComm.email);
+
+/**
+ * SMS API
+ */
+router.post('/sms', ctrlComm.sms);
 
 /**
  * services API

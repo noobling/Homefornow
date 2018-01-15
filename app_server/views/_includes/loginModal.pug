@@ -1,16 +1,16 @@
-.modal.fade(id="loginmodal",role="dialog")
+.modal.fade(id='loginmodal',role='dialog')
     .modal-dialog.modal-md
         .modal-content
             .modal-header
-                button(type="button",data-dismiss="modal").close &times;
+                button(type='button',data-dismiss='modal').close &times;
                 h4.modal-title Log In
             .modal-body
                 form(action='/login', method='post', role='form')
                     .form-group
-                        label(for="email") Email
-                        input(type="email",placeholder="e.g. example@example.com",name="email").form-control#email
+                        label(for='email') Email
+                        input(type='email',placeholder='e.g. example@example.com',name='email').form-control#email
                     .form-group
-                        label(for="pwd") Password
-                        input(type="password", name="password").form-control#pwd
+                        label(for='pwd') Password
+                        input(type='password', name='password').form-control#pwd
                     .text-center
-                        input(type="submit", value="Submit").btn.btn-default
+                        input(type='submit', value='Submit').btn.btn-default

@@ -1,0 +1,28 @@
+.modal.fade(id="smsmodal",role="dialog")
+    .modal-dialog.modal-sm
+        .modal-content
+            .modal-header
+                button(type="button",data-dismiss="modal").close &times;
+                h4.modal-title SMS
+            .modal-body
+                form(action='/sms', method='post')#smsForm
+                    .form-group
+                        label(for="number") Phone number
+                        a(href='#', tooltip='Numbers must have the international code', class='tooltip1').pull-right#sms-info
+                            span.glyphicon.glyphicon-info-sign
+                        input(type="tel", name="number", required="true", placeholder="eg. 61412345678").form-control#tosms
+                    .form-group
+                        label(for="msg") Message
+                        span.pull-right#charNum
+                        textarea(rows="7", name="message", required="true", spellcheck="true", maxlength="160", placeholder="Enter Text Message").form-control#msg
+                    .text-right
+                        a(href="/communications/sms")
+                            input(type="submit", value="Send Text").btn.btn-default
+script.
+    $('#charNum').text('0/160');
+    $('#msg').keyup(function () {
+        var max = 160;
+        var len = $(this).val().length;
+        $('#charNum').text(len + '/' + max);
+    })
+  

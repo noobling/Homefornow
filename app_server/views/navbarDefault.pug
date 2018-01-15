@@ -13,12 +13,12 @@ block navbar
           ul.nav.navbar-nav.navbar-right
             if user
               li 
-                a(href="/service") Welcome #{user.name}
+                a(href='/service') Welcome #{user.name}
               li
-                a(href="/logout") Logout
+                a(href='/logout') Logout
             else  
               li
-                a(href='#',data-toggle="modal",data-target="#loginmodal") Login
+                a(href='#',data-toggle='modal',data-target='#loginmodal') Login
               li
                 a(href='/about') About
             
