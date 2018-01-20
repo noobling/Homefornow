@@ -38,7 +38,7 @@ passport.use(new LocalStrategy(
       }
       return done(null, user);
     });
-  },
+  }
 ));
 
 // =========================================================================
@@ -139,5 +139,5 @@ passport.use(new FacebookStrategy(
         return done();
       });
     });
-  },
+  }
 ));

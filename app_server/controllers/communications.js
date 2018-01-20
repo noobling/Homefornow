@@ -73,7 +73,7 @@ module.exports.sms = (req, res) => {
         // io.emit('smsStatus', data);
         res.redirect('/');
       }
-    },
+    }
   );
 };
 
@@ -111,6 +111,6 @@ module.exports.notification = (req, res) => {
         console.dir(responseData);
         res.redirect('/');
       }
-    },
+    }
   );
 };
