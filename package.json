@@ -24,6 +24,8 @@
     "express-session": "^1.15.6",
     "mongoose": "^4.13.5",
     "morgan": "~1.9.0",
+    "nexmo": "^2.1.1",
+    "nodemailer": "^4.4.1",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
