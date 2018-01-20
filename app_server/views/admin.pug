@@ -1,0 +1,124 @@
+extends navbarDefault
+
+block content
+
+	.container-fluid
+			.col-xs-12
+				.panel.panel-default
+					.panel-body
+						.col-sm-12
+							h2 Admin Dashboard
+			.col-xs-12.col-md-6
+				.thumbnail
+					.panel-body(style='overflow-y: scroll; height: 300px')
+						.mid-width.wrapItems(style='background-color:white; height:600px')
+							h4 Messages
+			.col-xs-12.col-md-6
+				.thumbnail
+					.panel-body(style='overflow-y: scroll; height: 300px')
+						.mid-width.wrapItems(style='background-color:white; height:600px')
+							h4 Services
+							table.table
+								thead
+									tr
+										th Name
+										th Contact Number
+										th Bed Count
+								tbody
+									tr
+										td
+											a(href='') Youngle Group
+										td 9288 3556
+										td 7
+									tr.active
+										td
+											a(href='') Foyer House
+										td 9288 3556
+										td 13
+									tr
+										td
+											a(href='') Mission Australia
+										td 9288 3556
+										td 69
+									tr.active
+										td
+											a(href='') RedCross Hut
+										td 9288 3556
+										td 157
+									tr
+										td
+											a(href='') Youngle Group
+										td 9288 3556
+										td 7
+									tr.active
+										td
+											a(href='') Foyer House
+										td 9288 3556
+										td 13
+									tr
+										td
+											a(href='') Mission Australia
+										td 9288 3556
+										td 69
+									tr.active
+										td
+											a(href='') RedCross Hut
+										td 9288 3556
+										td 157
+			.col-xs-12.col-md-12
+				.thumbnail
+					.panel-body(style='overflow-y: scroll; height: 550px')
+						.mid-width.wrapItems(style='background-color:white; height:600px')
+							h4 DATA
+							ul.nav.nav-tabs
+								li.active
+									a(data-toggle='tab', href='#vacancies') Info
+								li
+									a(data-toggle='tab', href='#tags') Menu 1
+								li
+									a(data-toggle='tab', href='#beds') Menu 2
+								li
+									a(data-toggle='tab', href='#edit') Menu 3
+							.tab-content
+								#vacancies.tab-pane.fade.in.active
+									h3 Info
+									table.table
+										thead
+											tr
+												th Firstname
+												th Lastname
+												th Email
+										tbody
+											tr
+												td Default
+												td Defaultson
+												td def@somemail.com
+											tr.success
+												td Success
+												td Doe
+												td john@example.com
+											tr.danger
+												td Danger
+												td Moe
+												td mary@example.com
+											tr.info
+												td Info
+												td Dooley
+												td july@example.com
+											tr.warning
+												td Warning
+												td Refs
+												td bo@example.com
+											tr.active
+												td Active
+												td Activeson
+												td act@example.com
+								#tags.tab-pane.fade
+									h3 Title
+									p data, graphs, tables.
+								#beds.tab-pane.fade
+									h3 Title
+									p data, graphs, tables.
+								#edit.tab-pane.fade
+									h3 Title
+									p data, graphs, tables.
