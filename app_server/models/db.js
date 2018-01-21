@@ -10,11 +10,11 @@ mongoose.connect(dbURI, {
   useMongoClient: true,
 });
 
-/************************************************
-*                                               *
-*          mongoDB connection logging           *
-*                                               *
-************************************************/
+/** **********************************************
+ *                                               *
+ *          mongoDB connection logging           *
+ *                                               *
+ *********************************************** */
 mongoose.connection.on('connected', () => {
   console.log(`Mongoose connected to ${dbURI}`);
 });
@@ -28,11 +28,11 @@ mongoose.connection.on('disconected', () => {
 });
 
 
-/************************************************
-*                                               *
-*     Gracefully closes mongoDB connection      *
-*                                               *
-************************************************/
+/** **********************************************
+ *                                               *
+ *     Gracefully closes mongoDB connection      *
+ *                                               *
+ *********************************************** */
 function gracefulShutdown(msg, callback) {
   console.log(`Mongoose disconnected through ${msg}`);
   callback();

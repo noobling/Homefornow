@@ -1,7 +1,7 @@
 extends layout
 
 block navbar
-    .navbar.navbar-default.navbar-fixed-top
+    .navbar.navbar-default.navbar-fixed-top(style='position: static')
         .container-fluid
             .navbar-header
                 a.navbar-brand.navbar-left(href='/', style="display:inline;")
@@ -14,9 +14,8 @@ block navbar
             #navbar-main.navbar-collapse.collapse
                 ul.nav.navbar-nav.navbar-right
                     li
-                        a(href='#') 
+                        a(href='#')
                             span.glyphicon.glyphicon-cog
-                            
-                    
+
     .container
         block content

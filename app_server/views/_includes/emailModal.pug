@@ -1,0 +1,23 @@
+.modal.fade(id="emailmodal",role="dialog")
+    .modal-dialog.modal-lg
+        .modal-content
+            .modal-header
+                button(type="button",data-dismiss="modal").close &times;
+                h4.modal-title Email
+            .modal-body
+                form(action='/email', method='post')#emailForm
+                    .form-group
+                        label(for="email") Email To
+                        a(href='#', tooltip='Multiple email addresses must be separated by comma', class='tooltip1').pull-right#email-info
+                            span.glyphicon.glyphicon-info-sign
+                        input(type="email", name="email", required="true", placeholder="example@example.com").form-control#toemail
+                    .form-group
+                        label(for="subject") Subject
+                        input(type="text", name="subject", required="true", spellcheck="true", placeholder="Subject").form-control#subject
+                    .form-group
+                        label(for="msg") Message
+                        textarea(rows="13", name="message", required="true", spellcheck="true", placeholder="Compose mail").form-control#mail
+                    .text-right
+                        a(href="/communications/email")
+                            input(type="submit", value="Send").btn.btn-default
+  

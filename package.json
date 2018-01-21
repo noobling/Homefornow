@@ -24,6 +24,8 @@
     "express-session": "^1.15.6",
     "mongoose": "^4.13.5",
     "morgan": "~1.9.0",
+    "nexmo": "^2.1.1",
+    "nodemailer": "^4.4.1",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
@@ -40,6 +42,8 @@
     "eslint-plugin-mocha": "^4.11.0",
     "mocha": "^4.0.1",
     "nodemon": "^1.12.5",
+    "pug-lint": "^2.5.0",
+    "pug-lint-config-clock": "^2.0.0",
     "superagent": "^3.8.2",
     "supertest": "^3.0.0",
     "supertest-session": "^3.1.0"

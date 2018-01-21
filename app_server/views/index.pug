@@ -22,11 +22,11 @@ block content
                             a#get_location(href="#" class="geoloc" style="color: #999;")
                                 | current location
                 .col-md-2.col-xs-6.text-right
-                    a(href='#',data-toggle="modal",data-target="#signupmodalshort")
+                    a(href='#',data-toggle='modal',data-target='#signupmodalshort')
                         button.btn.btn-lg.btn-primary
                             | For now
                 .col-md-2.col-xs-6.text-left
-                    a(href='#',data-toggle="modal",data-target="#signupmodallong")
+                    a(href='#',data-toggle='modal',data-target='#signupmodallong')
                         button.btn.btn-lg.btn-default
                             | Long term
     .spacer-lg
@@ -35,11 +35,11 @@ block content
             .col-lg-4.col-md-12
                 .panel.panel-default.panel-spaced
                     .panel-heading
-                        a(href='/location'+location.name, style="text-decoration: none; color: inherit;")
+                        a(href='/location'+location.name, style='text-decoration: none; color: inherit;')
                             h2.panel-title= location.name
                     .row
                         .col-lg-12.col-sm-5
-                            a(href="location/?name="+location.name)
+                            a(href='location/?name='+location.name)
                                 img.img-responsive.img-square(src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
                         .col-lg-12.col-sm-4
                             .panel-body.text-justify
@@ -57,16 +57,5 @@ block content
                             .panel-body
                                 | Contact: #{location.number}
     script(src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous")
-    script(src="https://unpkg.com/axios/dist/axios.min.js")
-    script(src='/javascripts/maps.js')
-    script.
-        function initialize() {
-          var options = {
-            types: ["(cities)"],
-            componentRestrictions: {country: "au"}
-          };
-
-          var input = document.getElementById('location');
-          var autocomplete = new google.maps.places.Autocomplete(input, options);
-        }
-    script(async='', defer='',  src="https://maps.googleapis.com/maps/api/js?key="+process.env.embed_maps_api+"&libraries=places&callback=initialize")
+    script(src='/javascripts/other.js')
+    script(async='', defer='',  src='https://maps.googleapis.com/maps/api/js?key='+process.env.embed_maps_api+'&libraries=places&callback=initialize')

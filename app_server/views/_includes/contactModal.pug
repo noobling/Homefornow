@@ -3,13 +3,13 @@ mixin contactModal(serviceName, accommodationId, available, phoneNumber)
         .modal-dialog.modal-sm
             .modal-content
                 .modal-header
-                    button(type="button",data-dismiss="modal").close &times;
-                    img.img.img-responsive.img-squared(src="https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png")
+                    button(type='button',data-dismiss='modal').close &times;
+                    img.img.img-responsive.img-squared(src='https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png')
                 .modal-body
                     .text-center
                         h4=phoneNumber
                         h5= serviceName.replace(/\s/g,'').toLowerCase() + '.com'
-                        a(href="#")
+                        a(href='#')
                             button.btn.btn-default Call Us
                         if available
                           a(data-toggle="modal", href="#numbermodal"+serviceName.replace(/\s/g,''))
@@ -19,14 +19,14 @@ mixin contactModal(serviceName, accommodationId, available, phoneNumber)
         .modal-dialog.modal-sm
             .modal-content
                 .modal-header
-                    button(type="button", data-dismiss="modal").close &times;
+                    button(type='button', data-dismiss='modal').close &times;
                     span.pull-left
                         a(data-toggle="modal", href="#contactmodal"+serviceName.replace(/\s/g,''))
                             button(type="button", data-dismiss="modal").close
                                 span.glyphicon.glyphicon-arrow-left
-                        //- a(data-toggle="modal", href="#numbermodal")
-                        //-     button(type="button", data-dismiss="modal").btn.btn-default Calls us
-                    img.img.img-responsive.img-squared(src="https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png")
+                        //- a(data-toggle='modal', href='#numbermodal')
+                        //-     button(type='button', data-dismiss='modal').btn.btn-default Calls us
+                    img.img.img-responsive.img-squared(src='https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png')
                 .modal-body
                     form
                         .form-group
@@ -47,14 +47,14 @@ mixin contactModal(serviceName, accommodationId, available, phoneNumber)
         .modal-dialog.modal-sm
             .modal-content
                 .modal-header
-                    button(type="button", data-dismiss="modal").close &times;
+                    button(type='button', data-dismiss='modal').close &times;
                     span.pull-left
                         a(data-toggle="modal", href="#numbermodal"+serviceName.replace(/\s/g,''))
                             button(type="button", data-dismiss="modal").close
                                 span.glyphicon.glyphicon-arrow-left
-                        //- a(data-toggle="modal", href="#numbermodal")
-                        //-     button(type="button", data-dismiss="modal").btn.btn-default Calls us
-                    img.img.img-responsive.img-squared(src="https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png")
+                        //- a(data-toggle='modal', href='#numbermodal')
+                        //-     button(type='button', data-dismiss='modal').btn.btn-default Calls us
+                    img.img.img-responsive.img-squared(src='https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png')
                 .modal-body
                     h4 Thank you
                     | We will get back to you soon
