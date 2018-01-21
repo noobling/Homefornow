@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-const Service = mongoose.model('Service');
 const Accommodation = mongoose.model('Accommodation');
 const Request = mongoose.model('Request');
 
@@ -62,31 +61,49 @@ module.exports.longTermList = (req, res) => {
 };
 
 module.exports.showLocation = (req, res) => {
-  let name = req.query.name;
-  res.render('showLocation', {
-    title: name,
-    tagline: 'Bringing people together',
-    location: {
-      info: 'Located in East Perth',
-      opening: '9am',
-      closing: '5pm',
-      facilities: [
-        'Hot Drinks',
-        'Wifi',
-        'Personal Rooms',
-        'Councilors',
-      ],
-      restrictions: [
-        '10pm curfew',
-        'No drugs',
-        'No alcohol',
-        'No medical issues',
-      ],
-    },
-    map: {
-      title: name,
-      suburb: 'Crawley',
-    },
-    additionalInfo: 'Every day we support people nationwide by combatting homelessness, assisting disadvantaged families and children, addressing mental health issues, fighting substance dependencies, and much more. We’re generously supported by our funders, partners and tens of thousands of everyday Australians, who make the work of our tireless volunteers and staff possible.',
-  });
+  console.log('Id: '.concat(req.params.accommodationId));
+  Accommodation.findById(
+    req.params.accommodationId,
+    'name tagline address.suburb facilities restrictions additionalInfo website',
+  ).exec()
+    .then((accommodation) => {
+      console.log('Doc: '.concat(accommodation));
+      res.render('showLocation', {
+        location: accommodation,
+        map: {
+          title: accommodation.name,
+          suburb: accommodation.address.suburb,
+        },
+      });
+    })
+    .catch((err) => {
+      console.log('[ERROR] LocationsController: '.concat(err));
+    });
+
+  // res.render('showLocation', {
+  //   title: name,
+  //   tagline: 'Bringing people together',
+  //   location: {
+  //     info: 'Located in East Perth',
+  //     opening: '9am',
+  //     closing: '5pm',
+  //     facilities: [
+  //       'Hot Drinks',
+  //       'Wifi',
+  //       'Personal Rooms',
+  //       'Councilors',
+  //     ],
+  //     restrictions: [
+  //       '10pm curfew',
+  //       'No drugs',
+  //       'No alcohol',
+  //       'No medical issues',
+  //     ],
+  //   },
+  //   map: {
+  //     title: name,
+  //     suburb: 'Crawley',
+  //   },
+  //   additionalInfo: 'Every day we support people nationwide by combatting homelessness, assisting disadvantaged families and children, addressing mental health issues, fighting substance dependencies, and much more. We’re generously supported by our funders, partners and tens of thousands of everyday Australians, who make the work of our tireless volunteers and staff possible.',
+  // });
 };

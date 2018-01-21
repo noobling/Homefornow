@@ -39,14 +39,14 @@ block content
                             h2.panel-title= location.name
                     .row
                         .col-lg-12.col-sm-5
-                            a(href='location/?name='+location.name)
+                            a(href='location/'+location.id)
                                 img.img-responsive.img-square(src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
                         .col-lg-12.col-sm-4
                             .panel-body.text-justify
-                                | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                | #{location.description}
                         .col-lg-12.col-sm-3
                             .panel-body
-                                if location.availability
+                                if location.available
                                     span.text-success
                                         span.glyphicon.glyphicon-ok
                                         | &nbsp;Avaliable
@@ -55,7 +55,7 @@ block content
                                         span.glyphicon.glyphicon-remove
                                         | &nbsp;Not Avaliable
                             .panel-body
-                                | Contact: #{location.number}
+                                | Contact: #{location.phoneNumber}
     script(src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous")
     script(src='/javascripts/other.js')
     script(async='', defer='',  src='https://maps.googleapis.com/maps/api/js?key='+process.env.embed_maps_api+'&libraries=places&callback=initialize')

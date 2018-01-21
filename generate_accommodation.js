@@ -91,7 +91,7 @@ function seedAccomm() {
     accomm.available = Math.random() < 0.5;
     accomm.facilities = FACILITIES;
     accomm.restrictions = RESTRICTIONS;
-    accomm.tagline = Math.floor(Math.random() * TAG_LINES.length);
+    accomm.tagline = TAG_LINES[Math.floor(Math.random() * TAG_LINES.length)];
     accomm.description = faker.Lorem.sentences();
     accomm.additionalInfo = faker.Lorem.sentences();
     accomm.ageRange = {

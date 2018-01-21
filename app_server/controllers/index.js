@@ -1,23 +1,18 @@
-module.exports.index = (req, res) => {
-  // /console.log(req.flash().error[0])
-  res.render('index', {
-    user: req.user,
-    title: 'Do you have a secure place to stay?',
-    locations: [
-      {
-        name: 'Youngle Group',
-        availability: true,
-        number: 94572188,
-      }, {
-        name: 'Foyer House',
-        availability: true,
-        number: 94572188,
-      }, {
-        name: 'Mission Australia',
-        availability: false,
-        number: 94572188,
-      },
+const mongoose = require('mongoose');
 
-    ],
-  });
+const Accommodation = mongoose.model('Accommodation');
+
+module.exports.index = (req, res) => {
+  // Finds any three available service providers
+  Accommodation.find({ available: true }, 'name phoneNumber description available').limit(3).exec()
+    .then((accommodation) => {
+      res.render('index', {
+        user: req.user,
+        locations: accommodation,
+        title: 'Do you have a secure place to stay?',
+      });
+    })
+    .catch((err) => {
+      console.log('[ERROR] LocationsController: '.concat(err));
+    });
 };

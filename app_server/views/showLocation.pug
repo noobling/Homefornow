@@ -3,7 +3,7 @@ extends navbarDefault
 block content
   .row.page-header
     .col-lg-12
-      h1= title
+      h1=location.tagline
   .row
     .col-xs-12.col-md-9
       .row
@@ -12,11 +12,19 @@ block content
             .panel-heading
               h2.panel-title Office Hours
             .panel-body
-              | Weekdays: #{location.opening} - #{location.closing}
-              br
-              | Saturday: Closed
-              br
-              | Sunday: Closed   
+              //- | Monday: #{location.openingHours.mon.open} - #{location.openingHours.mon.close}
+              //- br
+              //- | Tuesday: #{location.openingHours.tue.open} - #{location.openingHours.tue.close}
+              //- br
+              //- | Wednesday: #{location.openingHours.wed.open} - #{location.openingHours.wed.close}   
+              //- br
+              //- | Thursday: #{location.openingHours.thu.open} - #{location.openingHours.thu.close}
+              //- br
+              //- | Friday: #{location.openingHours.fri.open} - #{location.openingHours.fri.close}
+              //- br
+              //- | Saturday: #{location.openingHours.sat.open} - #{location.openingHours.sat.close}
+              //- br
+              //- | Sunday: #{location.openingHours.sun.open} - #{location.openingHours.sun.close}
           .panel.panel-default
             .panel-heading
               h2.panel-title Facilities
@@ -48,8 +56,8 @@ block content
               |
     .col-xs-12.col-md-3              
       p.lead About #{location.name}
-      p= additionalInfo
-      a(href='https://www.missionaustralia.com.au/',target='_blank').btn.btn-lg.btn-default Learn More   
+      p= location.additionalInfo
+      a(href=location.website, target='_blank').btn.btn-lg.btn-default Learn More   
       p
         | &nbsp;   
   script(src='/javascripts/other.js')
