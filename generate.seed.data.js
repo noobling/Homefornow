@@ -48,7 +48,6 @@ function seedUsers() {
       email: faker.Internet.email(),
       password: faker.Internet.userName(),
     };
-
     user.name = seedUser.name;
     user.email = seedUser.email;
     user.setPassword(seedUser.password);
@@ -71,7 +70,7 @@ writeTofile(seededUsers);
 
 /**
  * DONE WITH THE DB CONNECTION TIME TO CLEAN UP
- * 
+ *
  * Waits 6 seconds then closes connections because if not
  * the connection will close before the new users have been
  * saved to the database

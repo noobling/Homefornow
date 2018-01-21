@@ -10,15 +10,21 @@ module.exports.addRequest = (req, res) => {
   request.lastName = req.body.lName;
   request.gender = req.body.gender;
   request.age = req.body.age;
-  request.location = req.body.location;
   request.hasChild = req.body.child === 'yes';
   request.isLongTerm = req.params.lengthOfStay === 'long_term';
+  request.location = {
+    suburb: req.body.location,
+    coordinates: {
+      type: 'Point',
+      coordinates: [115.8605, 31.9505],
+    },
+  };
 
-  request.save((err, product) => {
+  request.save((err, doc) => {
     if (err) {
-      res.json({ message: err });
+      res.status(400).json({ message: err });
     } else {
-      req.session.requestId = product.id;
+      req.session.requestId = doc.id;
       res.redirect('/locations/'.concat(req.params.lengthOfStay));
     }
   });
@@ -38,8 +44,8 @@ module.exports.addPhoneToRequest = (req, res) => {
       { runValidators: true, new: true },
       (err) => {
         if (err) {
-          console.log(err);
-          res.status(400).json({ error: 'Could not add phone number to request.' });
+          console.log('[ERROR] RequestsController: '.concat(err));
+          res.status(400).json({ message: 'Could not add phone number to request.' });
         }
       },
     );
@@ -50,8 +56,8 @@ module.exports.addPhoneToRequest = (req, res) => {
       { runValidators: true, new: true },
       (err) => {
         if (err) {
-          console.log(err);
-          res.status(400).json({ error: 'Could not submit request to service provider.' });
+          console.log('[ERROR] RequestsController: '.concat(err));
+          res.status(400).json({ message: 'Could not submit request to service provider.' });
         }
       },
     );
@@ -60,7 +66,7 @@ module.exports.addPhoneToRequest = (req, res) => {
     //    Tell the user to submit a new request?
     //    Use a 'token' system where the youth are provided a token to
     //    access the results of their request
-    res.status(400).json({ error: 'Your session has expired. Please submit a new request.' });
+    res.status(400).json({ message: 'Your session has expired. Please submit a new request.' });
   }
   res.status(201).end();
 };

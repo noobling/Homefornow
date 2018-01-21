@@ -17,14 +17,62 @@ const addressSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // Latitude
-  lat: {
-    type: String,
+  // GeoJSON object for longitude and latitude. Longitude is listed first.
+  coordinates: {
+    type: { type: String, default: 'Point' },
+    coordinates: { type: [Number], default: [0, 0] },
+  },
+});
+
+/* Schema for the open and close time on some day.
+ * 24 hour format:
+ *  5:00am -> 500
+ *  12:00pm -> 1200
+ *  3:00pm -> 1500
+ *
+ * Days where the accommodation is closed should have the open and close set to 0.
+ */
+const openCloseSchema = new mongoose.Schema({
+  // Open time
+  open: {
+    type: Number,
     required: true,
   },
-  // Longitude
-  long: {
-    type: String,
+  // Close time
+  close: {
+    type: Number,
+    required: true,
+  },
+});
+
+// Opening hours of the accommodation provider
+const hoursSchema = new mongoose.Schema({
+  mon: {
+    type: openCloseSchema,
+    required: true,
+  },
+  tue: {
+    type: openCloseSchema,
+    required: true,
+  },
+  wed: {
+    type: openCloseSchema,
+    required: true,
+  },
+  thu: {
+    type: openCloseSchema,
+    required: true,
+  },
+  fri: {
+    type: openCloseSchema,
+    required: true,
+  },
+  sat: {
+    type: openCloseSchema,
+    required: true,
+  },
+  sun: {
+    type: openCloseSchema,
     required: true,
   },
 });
@@ -84,7 +132,6 @@ const accommodationSchema = new mongoose.Schema({
   // Accommodation name
   name: {
     type: String,
-    unique: false,
     required: true,
   },
   // Accommodation address
@@ -112,11 +159,18 @@ const accommodationSchema = new mongoose.Schema({
     type: [tagSchema],
     required: false,
   },
+  // Are any beds available
+  available: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
   // Accommodation's bed details, as an array
   beds: [bedSchema],
   // Timestamp for last updated
   updated: {
     type: Date,
+    default: Date.now,
     required: true,
   },
   // Website link to the accommodation (if they have any)
@@ -131,6 +185,38 @@ const accommodationSchema = new mongoose.Schema({
   // The requests submitted to the accommodation provider
   requests: {
     type: [mongoose.Schema.Types.ObjectId],
+    required: false,
+  },
+  // Opening hours of the accommodation provider
+  openingHours: {
+    type: hoursSchema,
+    required: false,
+  },
+  // Words that describe the accommodation's facilities, as an array. E.g. 'Showers'.
+  facilities: {
+    type: [String],
+    required: false,
+  },
+  // Restrictions that the accommodation provider may impose, as an array. E.g. 'No drugs'.
+  restrictions: {
+    type: [String],
+    required: false,
+  },
+  // Short sentence that describes the accommodation provider
+  tagline: {
+    type: String,
+    required: false,
+  },
+  // Description of the accommodation provider.
+  // Displayed on the bed vacancies list page.
+  description: {
+    type: String,
+    required: false,
+  },
+  // Additional information that the accommodation provider may want to include.
+  // Displayed on the accommodation provider's info page.
+  additionalInfo: {
+    type: String,
     required: false,
   },
 });

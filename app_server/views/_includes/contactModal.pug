@@ -1,4 +1,4 @@
-mixin contactModal(serviceName, accommodationId, availability)
+mixin contactModal(serviceName, accommodationId, available, phoneNumber)
     .modal.fade(id="contactmodal"+serviceName.replace(/\s/g,''),role="dialog")
         .modal-dialog.modal-sm
             .modal-content
@@ -7,11 +7,11 @@ mixin contactModal(serviceName, accommodationId, availability)
                     img.img.img-responsive.img-squared(src="https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png")
                 .modal-body
                     .text-center
-                        h4 93471810
+                        h4=phoneNumber
                         h5= serviceName.replace(/\s/g,'').toLowerCase() + '.com'
                         a(href="#")
                             button.btn.btn-default Call Us
-                        if availability
+                        if available
                           a(data-toggle="modal", href="#numbermodal"+serviceName.replace(/\s/g,''))
                               button(type="button", data-dismiss="modal").btn.btn-default Call You
 
