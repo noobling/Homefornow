@@ -35,7 +35,8 @@ module.exports.addPhoneToRequest = (req, res) => {
     // Add phone number to request
     Request.findOneAndUpdate(
       { _id: req.session.requestId },
-      { $set:
+      {
+        $set:
         {
           phoneNumber: req.body.number,
           email: req.body.email,

@@ -144,6 +144,11 @@ const accommodationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  longTerm: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
   // Average length of stay for the user, in weeks
   stayLength: {
     type: Number,
