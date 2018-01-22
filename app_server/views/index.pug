@@ -14,20 +14,22 @@ block content
             .row
                 .col-md-8.col-xs-12
                     input.form-control.input-lg(type="text", name="location", placeholder="Location e.g. Subiaco" autocomplete="on")#location
+                    input(type="hidden", name="lat", id="lat")
+                    input(type="hidden", name="long", id="long")
                     .spacer-sm
                       .row
                           .col-md-6.col-sm-8.text-left(style="margin-top: 3px;")
                             a(style="padding-left: 18px;")
-                            | Use
+                            | Use 
                             a#get_location(href="#" class="geoloc" style="color: #999;")
                                 | current location
                 .col-md-2.col-xs-6.text-right
                     a(href='#',data-toggle='modal',data-target='#signupmodalshort')
-                        button.btn.btn-lg.btn-primary
+                        button.btn.btn-lg.btn-primary#shortBtn
                             | For now
                 .col-md-2.col-xs-6.text-left
                     a(href='#',data-toggle='modal',data-target='#signupmodallong')
-                        button.btn.btn-lg.btn-default
+                        button.btn.btn-lg.btn-default#longBtn
                             | Long term
     .spacer-lg
     .row

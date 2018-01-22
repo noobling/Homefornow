@@ -7,14 +7,21 @@ function initialize() // Google places autocomplete
 
     var input = document.getElementById('location');
     var autocomplete = new google.maps.places.Autocomplete(input, options);
-        var place = autocomplete.getPlace();
-        // get lat
-        var lat = place.geometry.location.lat();
-        // get lng
-        var lng = place.geometry.location.lng();
-        console.log(lat);
-        console.log(lng)
-    
+
+    let shortBtn = document.getElementById('shortBtn');
+    let longBtn = document.getElementById('longBtn');
+
+    shortBtn.addEventListener("click", function() { fillLatLong(autocomplete) });
+    longBtn.addEventListener("click", function() { fillLatLong(autocomplete) });
+}
+
+
+function fillLatLong(autocomplete) { // Fills form with lat and long from the Google Maps API
+  let place = autocomplete.getPlace();
+  if(place) {
+    document.getElementById('lat').value = place.geometry.location.lat();
+    document.getElementById('long').value = place.geometry.location.lng();
+  }
 }
 
 $(() => { // jquery for geolocation
@@ -24,10 +31,10 @@ $(() => { // jquery for geolocation
 function geoloc() // 'Use Current Location' functionality
 {
     if (!navigator.geolocation)
-    {   
-			alert('Geolocation is not supported by your browser');  
+    {
+			alert('Geolocation is not supported by your browser');
 		}
-    
+
     function success(position)
     {
         var lat = position.coords.latitude;
@@ -36,10 +43,10 @@ function geoloc() // 'Use Current Location' functionality
     }
 
     function error()
-    {   
-			alert('Unable to retrieve your location');  
+    {
+			alert('Unable to retrieve your location');
 		}
-    
+
     navigator.geolocation.getCurrentPosition(success, error);
 }
 

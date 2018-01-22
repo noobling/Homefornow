@@ -2,7 +2,10 @@
 function submitRequest(form)
 {
   // TODO: validation code
-  form.elements["location"].value = document.getElementById("locationForm").elements["location"].value;
+  locationForm = document.getElementById("locationForm");
+  form.elements["location"].value = locationForm.elements["location"].value;
+  form.elements["lat"].value = locationForm.elements["lat"].value;
+  form.elements["long"].value = locationForm.elements["long"].value;
   form.submit();
 }
 
@@ -17,7 +20,7 @@ function submitPhoneNumber (form)
         data:$(form).serialize(),
       })
       .fail(function(jqXHR, textStatus) {
-        console.log("Error submitting phone number: " + textStatus);
+        console.log("[ERROR] Phone number submission: " + textStatus);
       })
     );
 };

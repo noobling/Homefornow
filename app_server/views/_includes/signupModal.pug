@@ -43,6 +43,8 @@
                                     | Parent with child?
                     .form-group
                         input(name="location", type="hidden", value="test location")
+                        input(name="lat", type="hidden")
+                        input(name="long", type="hidden")
                     .form-group
                         .text-center
                             button.btn.btn-default(name="Submit", type="button", onclick='return submitRequest(document.getElementById("shortTermForm"))') Submit
@@ -91,7 +93,9 @@
                                     input(type="checkbox", name="child", value="yes")
                                     | Parent with child?
                     .form-group
-                        input(name="location", type="hidden", value="test location")
+                        input(name="location", type="hidden")
+                        input(name="lat", type="hidden")
+                        input(name="long", type="hidden")
                     .form-group
                         .text-center
                             button.btn.btn-default(name="Submit", type="button", onclick='submitRequest(document.getElementById("longTermForm"))') Submit

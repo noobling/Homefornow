@@ -16,7 +16,7 @@ module.exports.addRequest = (req, res) => {
     suburb: req.body.location,
     coordinates: {
       type: 'Point',
-      coordinates: [115.8605, 31.9505],
+      coordinates: [req.body.long, req.body.lat],
     },
   };
 
