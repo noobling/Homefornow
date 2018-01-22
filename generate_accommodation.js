@@ -15,6 +15,7 @@ const NUM_ACCOMM = 10;
 // Indicies of states, postcodes, suburbs and coords correspond
 const STATE = 'WA';
 const POSTCODES = [6062, 6008, 6000, 6065, 6003, 6050, 6027, 6107, 6100, 6017];
+
 const SUBURBS = [
   'Morley',
   'Subiaco',
@@ -26,6 +27,7 @@ const SUBURBS = [
   'Cannington',
   'Victoria Park',
   'Osborne Park'];
+
 const COORDS = [
   [115.9070, 31.8870],
   [115.8270, 31.9490],
@@ -44,6 +46,7 @@ const TAG_LINES = [
   'Keeping people safe',
   'A community of youth',
   'Getting people back on track'];
+
 const FACILITIES = [
   'Showers',
   'Toilets',
@@ -60,12 +63,64 @@ const FACILITIES = [
   'Wifi',
   'Personal Rooms',
   'Councilors'];
+
 const RESTRICTIONS = [
   'No smoking',
   'No drugs',
   'No alcohol',
   'Lights out by 12pm',
   'Showers less than 5 minutes'];
+
+const START_HOURS = [
+  500,
+  600,
+  700,
+  800,
+  900,
+  1000,
+  1100];
+
+const END_HOURS = [
+  1700,
+  1800,
+  1900,
+  2000,
+  2100];
+
+function genOpeningHours() {
+  const startHours = START_HOURS[Math.floor(Math.random() * START_HOURS.length)];
+  const endHours = END_HOURS[Math.floor(Math.random() * END_HOURS.length)];
+  return {
+    mon: {
+      open: startHours,
+      close: endHours,
+    },
+    tue: {
+      open: startHours,
+      close: endHours,
+    },
+    wed: {
+      open: startHours,
+      close: endHours,
+    },
+    thu: {
+      open: startHours,
+      close: endHours,
+    },
+    fri: {
+      open: startHours,
+      close: endHours,
+    },
+    sat: {
+      open: 0,
+      close: 0,
+    },
+    sun: {
+      open: 0,
+      close: 0,
+    },
+  };
+}
 
 function seedAccomm() {
   for (let i = 0; i < NUM_ACCOMM; i += 1) {
@@ -93,7 +148,8 @@ function seedAccomm() {
     accomm.restrictions = RESTRICTIONS;
     accomm.tagline = TAG_LINES[Math.floor(Math.random() * TAG_LINES.length)];
     accomm.description = faker.Lorem.sentences();
-    accomm.additionalInfo = faker.Lorem.sentences();
+    accomm.additionalInfo = faker.Lorem.paragraph();
+    accomm.openingHours = genOpeningHours();
     accomm.ageRange = {
       minAge: Math.floor((Math.random() * 5) + 14), // 14 to 17
       maxAge: Math.floor((Math.random() * 5) + 20), // 21 to 25

@@ -25,9 +25,9 @@ function fillLatLong(autocomplete) // Fills form with lat and long from the Goog
   }
 }
 
-$(() => { // jquery for geolocation
-    $('.geoloc').on('click', geoloc);
-});
+// $(() => { // jquery for geolocation
+//     $('.geoloc').on('click', geoloc);
+// });
 
 function geoloc() // 'Use Current Location' functionality
 {
@@ -70,4 +70,12 @@ function initMap() // Map that displays on the services page that user sees
         position: coord,
         map: map
     });
+}
+
+function fillOpeningHours()
+{
+  let div = document.getElementById('officeHours');
+  console.log(location.openingHours.mon.open);
+  // let text = "Monday: ".concat(doc)
+  div.innerText = "hello";
 }
