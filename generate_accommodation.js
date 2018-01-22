@@ -29,16 +29,16 @@ const SUBURBS = [
   'Osborne Park'];
 
 const COORDS = [
-  [115.9070, 31.8870],
-  [115.8270, 31.9490],
-  [115.8605, 31.9505],
-  [115.8290, 31.7910],
-  [115.8540, 31.9460],
-  [115.8722, 31.934],
-  [115.7661, 31.7450],
-  [115.9340, 32.0170],
-  [115.8965, 31.9766],
-  [115.8120, 31.8980]];
+  [115.9070, -31.8870],
+  [115.8270, -31.9490],
+  [115.8605, -31.9505],
+  [115.8290, -31.7910],
+  [115.8540, -31.9460],
+  [115.8722, -31.934],
+  [115.7661, -31.7450],
+  [115.9340, -32.0170],
+  [115.8965, -31.9766],
+  [115.8120, -31.8980]];
 
 const TAG_LINES = [
   'Bringing people together',
@@ -149,7 +149,7 @@ function seedAccomm() {
     accomm.tagline = TAG_LINES[Math.floor(Math.random() * TAG_LINES.length)];
     accomm.description = faker.Lorem.sentences();
     accomm.additionalInfo = faker.Lorem.paragraph();
-    accomm.openingHours = genOpeningHours();
+    accomm.hours = genOpeningHours();
     accomm.ageRange = {
       minAge: Math.floor((Math.random() * 5) + 14), // 14 to 17
       maxAge: Math.floor((Math.random() * 5) + 20), // 21 to 25

@@ -188,7 +188,7 @@ const accommodationSchema = new mongoose.Schema({
     required: false,
   },
   // Opening hours of the accommodation provider
-  openingHours: {
+  hours: {
     type: hoursSchema,
     required: false,
   },

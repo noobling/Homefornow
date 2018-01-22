@@ -16,7 +16,7 @@ block content
         .panel.panel-default
           .panel-heading
             a(href='/location?name='+location.name, style="text-decoration: none; color: inherit;")
-              h2.panel-title= location.name
+              h2.panel-title= location.name + ' ' + location.address.suburb
           .row
             .col-md-3.col-sm-4.col-xs-12
               a(href='/location/'+location._id)
@@ -42,12 +42,12 @@ block content
                   button.btn.btn-lg.btn-default
                     | Contact
     each dlocation in dlocations
-      +contactModal(dlocation.name, dlocation._id, location.available, location.phoneNumber)
+      +contactModal(dlocation.name, dlocation._id, dlocation.available, dlocation.phoneNumber)
       .col-xs-12
         .panel.panel-default
           .panel-heading
             a(href='/location?name='+dlocation.name, style="text-decoration: none; color: inherit;")
-              h2.panel-title= dlocation.name
+              h2.panel-title= dlocation.name + ' ' + dlocation.address.suburb
           .row
             .col-md-3.col-sm-4.col-xs-12
               a(href='/location?name='+dlocation.name)

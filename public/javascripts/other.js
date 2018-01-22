@@ -71,11 +71,3 @@ function initMap() // Map that displays on the services page that user sees
         map: map
     });
 }
-
-function fillOpeningHours()
-{
-  let div = document.getElementById('officeHours');
-  console.log(location.openingHours.mon.open);
-  // let text = "Monday: ".concat(doc)
-  div.innerText = "hello";
-}

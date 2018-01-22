@@ -8,23 +8,24 @@ block content
     .col-xs-12.col-md-9
       .row
         .col-xs-12.col-sm-6
-          .panel.panel-default
-            .panel-heading
-              h2.panel-title Office Hours
-            .panel-body#officeHours
-              | Monday: #{location.openingHours.mon.open} - #{location.openingHours.mon.close}
-              br
-              | Tuesday: #{location.openingHours.tue.open} - #{location.openingHours.tue.close}
-              br
-              | Wednesday: #{location.openingHours.wed.open} - #{location.openingHours.wed.close}   
-              br
-              | Thursday: #{location.openingHours.thu.open} - #{location.openingHours.thu.close}
-              br
-              | Friday: #{location.openingHours.fri.open} - #{location.openingHours.fri.close}
-              br
-              | Saturday: #{location.openingHours.sat.open} - #{location.openingHours.sat.close}
-              br
-              | Sunday: #{location.openingHours.sun.open} - #{location.openingHours.sun.close}
+          if location.hours
+            .panel.panel-default
+              .panel-heading
+                h2.panel-title Office Hours
+              .panel-body#officeHours
+                | Monday: #{location.hours.mon.open} - #{location.hours.mon.close}
+                br
+                | Tuesday: #{location.hours.tue.open} - #{location.hours.tue.close}
+                br
+                | Wednesday: #{location.hours.wed.open} - #{location.hours.wed.close}   
+                br
+                | Thursday: #{location.hours.thu.open} - #{location.hours.thu.close}
+                br
+                | Friday: #{location.hours.fri.open} - #{location.hours.fri.close}
+                br
+                | Saturday: #{location.hours.sat.open} - #{location.hours.sat.close}
+                br
+                | Sunday: #{location.hours.sun.open} - #{location.hours.sun.close}
           .panel.panel-default
             .panel-heading
               h2.panel-title Facilities

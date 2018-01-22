@@ -17,19 +17,32 @@ module.exports.shortTermList = (req, res) => {
             },
           },
         },
-        'name available number phoneNumber description',
+        'name available number phoneNumber description address',
       ).exec();
     })
     .then((docs) => {
+      // Sort accommodation into available and unavailable
+      const available = [];
+      const unavailable = [];
+
+      for (let i = 0; i < docs.length; i += 1) {
+        if (docs[i].available) {
+          available.push(docs[i]);
+        } else {
+          unavailable.push(docs[i]);
+        }
+      }
+
       res.render('bedVacanciesList', {
         title: 'For Now',
         tagline: 'A place to stay',
-        locations: docs,
-        dlocations: [],
+        locations: available,
+        dlocations: unavailable,
       });
     })
     .catch((err) => {
       console.log('[ERROR] LocationsController: '.concat(err));
+      res.status(400).json({ message: err });
     });
 };
 
@@ -44,19 +57,32 @@ module.exports.longTermList = (req, res) => {
             },
           },
         },
-        'name available number phoneNumber description',
+        'name available number phoneNumber description address',
       ).exec();
     })
     .then((docs) => {
+      // Sort accommodation into available and unavailable
+      const available = [];
+      const unavailable = [];
+
+      for (let i = 0; i < docs.length; i += 1) {
+        if (docs[i].available) {
+          available.push(docs[i]);
+        } else {
+          unavailable.push(docs[i]);
+        }
+      }
+
       res.render('bedVacanciesList', {
         title: 'For Now',
         tagline: 'A place to stay',
-        locations: docs,
-        dlocations: [],
+        locations: available,
+        dlocations: unavailable,
       });
     })
     .catch((err) => {
       console.log('[ERROR] LocationsController: '.concat(err));
+      res.status(400).json({ message: err });
     });
 };
 
@@ -64,7 +90,7 @@ module.exports.showLocation = (req, res) => {
   console.log('Id: '.concat(req.params.accommodationId));
   Accommodation.findById(
     req.params.accommodationId,
-    'name tagline address.suburb facilities restrictions additionalInfo website openingHours',
+    'name tagline address.suburb facilities restrictions additionalInfo website hours',
   ).exec()
     .then((accommodation) => {
       res.render('showLocation', {
@@ -77,5 +103,6 @@ module.exports.showLocation = (req, res) => {
     })
     .catch((err) => {
       console.log('[ERROR] LocationsController: '.concat(err));
+      res.status(400).json({ message: err });
     });
 };
