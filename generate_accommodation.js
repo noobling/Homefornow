@@ -12,7 +12,7 @@ const Accommodation = mongoose.model('Accommodation');
 
 const NUM_ACCOMM = 10;
 
-//Indicies of states, postcodes, suburbs and coords correspond
+// Indicies of states, postcodes, suburbs and coords correspond
 const STATE = 'WA';
 const POSTCODES = [6062, 6008, 6000, 6065, 6003, 6050, 6027, 6107, 6100, 6017];
 const SUBURBS = [

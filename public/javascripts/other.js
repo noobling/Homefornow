@@ -16,7 +16,8 @@ function initialize() // Google places autocomplete
 }
 
 
-function fillLatLong(autocomplete) { // Fills form with lat and long from the Google Maps API
+function fillLatLong(autocomplete) // Fills form with lat and long from the Google Maps API
+{
   let place = autocomplete.getPlace();
   if(place) {
     document.getElementById('lat').value = place.geometry.location.lat();
@@ -30,6 +31,8 @@ $(() => { // jquery for geolocation
 
 function geoloc() // 'Use Current Location' functionality
 {
+    document.getElementById('location').value = "Finding your location ...";
+
     if (!navigator.geolocation)
     {
 			alert('Geolocation is not supported by your browser');
@@ -39,6 +42,9 @@ function geoloc() // 'Use Current Location' functionality
     {
         var lat = position.coords.latitude;
         var lng = position.coords.longitude;
+        document.getElementById('lat').value = lat;
+        document.getElementById('long').value = lng;
+
         document.getElementById('location').value = lat + ', ' + lng;
     }
 
