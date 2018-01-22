@@ -178,8 +178,9 @@ const accommodationSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  // List of image references - the path to the image in Firebase Storage
   img: {
-    type: String,
+    type: [String],
     required: false,
   },
   // The requests submitted to the accommodation provider

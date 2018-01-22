@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
 const flash = require('connect-flash');
+const admin = require('firebase-admin');
 
 require('dotenv').config();
 require('./app_server/models/db');
@@ -16,6 +17,14 @@ const index = require('./app_server/routes/index');
 const services = require('./app_server/routes/services');
 
 const app = express();
+
+// Firebase admin setup
+const serviceAccount = require('./homefornow-fd495-firebase-adminsdk-xy17w-62ee8ab849.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  storageBucket: 'homefornow-fd495.appspot.com',
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));
