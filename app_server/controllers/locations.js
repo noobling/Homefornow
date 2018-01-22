@@ -74,6 +74,11 @@ module.exports.showLocation = (req, res) => {
           title: accommodation.name,
           suburb: accommodation.address.suburb,
         },
+        images: [
+          'https://firebasestorage.googleapis.com/v0/b/homefornow-fd495.appspot.com/o/images%2Fyass%2Fimage1.jpg?alt=media&token=257f0433-4750-4afa-bcb0-a1d2291e5651',
+          'https://firebasestorage.googleapis.com/v0/b/homefornow-fd495.appspot.com/o/images%2Fyass%2Fimage2.jpg?alt=media&token=1da53563-4c44-4882-a4a3-e5d3628177e0',
+          'https://firebasestorage.googleapis.com/v0/b/homefornow-fd495.appspot.com/o/images%2Fyass%2Fimage3.jpg?alt=media&token=32fbef96-c319-418b-9e29-edba901b441f',
+        ],
       });
     })
     .catch((err) => {

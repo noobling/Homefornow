@@ -60,31 +60,34 @@ block content
       a(href=location.website, target='_blank').btn.btn-lg.btn-default Learn More   
       p
         | &nbsp;   
-    .col-xs-12.col-md-3
-      .panel.panel-default
-        .panel-heading
-          h2.panel-title Gallery
-        .panel-body
-          #myCarousel.carousel.slide(data-ride='carousel', data-interval='false')
-            // Indicators
-            ol.carousel-indicators
-              li.active(data-target='#myCarousel', data-slide-to='0')
-              li(data-target='#myCarousel', data-slide-to='1')
-              li(data-target='#myCarousel', data-slide-to='2')
-            // Wrapper for slides
-            .carousel-inner
-              .item.active
-                img(src='https://firebasestorage.googleapis.com/v0/b/homefornow-fd495.appspot.com/o/images%2Fyass%2Fimage1.jpg?alt=media&token=257f0433-4750-4afa-bcb0-a1d2291e5651', alt='Image 1')
-              .item
-                img(src='https://firebasestorage.googleapis.com/v0/b/homefornow-fd495.appspot.com/o/images%2Fyass%2Fimage2.jpg?alt=media&token=1da53563-4c44-4882-a4a3-e5d3628177e0', alt='Image 2')
-              .item
-                img(src='https://firebasestorage.googleapis.com/v0/b/homefornow-fd495.appspot.com/o/images%2Fyass%2Fimage3.jpg?alt=media&token=32fbef96-c319-418b-9e29-edba901b441f', alt='Image 3')
-            // Left and right controls
-            a.left.carousel-control(href='#myCarousel', data-slide='prev')
-              span.glyphicon.glyphicon-chevron-left
-              span.sr-only Previous
-            a.right.carousel-control(href='#myCarousel', data-slide='next')
-              span.glyphicon.glyphicon-chevron-right
-              span.sr-only Next
+    if images != null && images.length > 0
+      .col-xs-12.col-md-3
+        .panel.panel-default
+          .panel-heading
+            h2.panel-title Gallery
+          .panel-body
+            #myCarousel.carousel.slide(data-ride='carousel', data-interval='false')
+              // Indicators
+              ol.carousel-indicators
+                li.active(data-target='#myCarousel', data-slide-to='0')
+                li(data-target='#myCarousel', data-slide-to='1')
+                li(data-target='#myCarousel', data-slide-to='2')
+              // Wrapper for slides
+              .carousel-inner
+                -var index = 1
+                each image in images
+                  if index == 1
+                    .item.active
+                      img(src=image, alt='Image ' + index++)
+                  else
+                    .item
+                      img(src=image, alt='Image ' + index++)
+                // Left and right controls
+                a.left.carousel-control(href='#myCarousel', data-slide='prev')
+                  span.glyphicon.glyphicon-chevron-left
+                  span.sr-only Previous
+                a.right.carousel-control(href='#myCarousel', data-slide='next')
+                  span.glyphicon.glyphicon-chevron-right
+                  span.sr-only Next
   script(src='/javascripts/other.js')
   script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key='+process.env.embed_maps_api+'&callback=initMap')
