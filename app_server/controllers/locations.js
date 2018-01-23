@@ -2,25 +2,21 @@ const mongoose = require('mongoose');
 const admin = require('firebase-admin');
 
 const Accommodation = mongoose.model('Accommodation');
-const Request = mongoose.model('Request');
 
 // Needed to create a 2dsphere index on address.coordinates.coordinates for $near to work
 // db.collection.createIndex( { 'address.coordinates.coordinates' : '2dsphere' } )
 // https://docs.mongodb.com/manual/core/2dsphere/
 function showVacanciesList(req, res, isLongTerm) {
-  Request.findById(req.session.requestId, 'location.coordinates').exec()
-    .then((request) => {
-      return Accommodation.find(
-        { // TODO: Filter based on shortTerm and longTerm providers
-          'address.coordinates.coordinates': {
-            $near: {
-              $geometry: { type: 'Point', coordinates: request.location.coordinates.coordinates },
-            },
-          },
+  Accommodation.find(
+    { // TODO: Filter based on shortTerm and longTerm providers
+      'address.coordinates.coordinates': {
+        $near: {
+          $geometry: { type: 'Point', coordinates: req.session.coordinates },
         },
-        'name available number phoneNumber description address',
-      ).exec();
-    })
+      },
+    },
+    'name available number phoneNumber description address',
+  ).exec()
     .then((docs) => {
       // Sort accommodation into available and unavailable
       const available = [];

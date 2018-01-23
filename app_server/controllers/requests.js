@@ -12,19 +12,20 @@ module.exports.addRequest = (req, res) => {
   request.age = req.body.age;
   request.hasChild = req.body.child === 'yes';
   request.isLongTerm = req.params.lengthOfStay === 'long_term';
-  request.location = {
-    suburb: req.body.location,
-    coordinates: {
-      type: 'Point',
-      coordinates: [req.body.long, req.body.lat],
-    },
-  };
+  // request.location = {
+    // suburb: req.body.location,
+    // coordinates: {
+    //   type: 'Point',
+    //   coordinates: [req.body.long, req.body.lat],
+    // },
+  // };
 
   request.save((err, doc) => {
     if (err) {
       res.status(400).json({ message: err });
     } else {
       req.session.requestId = doc.id;
+      req.session.coordinates = [req.body.long, req.body.lat];
       res.redirect('/locations/'.concat(req.params.lengthOfStay));
     }
   });

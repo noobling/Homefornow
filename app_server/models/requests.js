@@ -3,18 +3,18 @@ const mongoose = require('mongoose');
 /**
  * Schema that stores the location of a request
  */
-const locationSchema = new mongoose.Schema({
-  // Suburb
-  suburb: {
-    type: String,
-    required: true,
-  },
-  // GeoJSON object for longitude and latitude. Longitude is listed first.
-  coordinates: {
-    type: { type: String, default: 'Point' },
-    coordinates: { type: [Number], default: [0, 0] },
-  },
-});
+// const locationSchema = new mongoose.Schema({
+//   // Suburb
+//   suburb: {
+//     type: String,
+//     required: true,
+//   },
+//   // GeoJSON object for longitude and latitude. Longitude is listed first.
+//   coordinates: {
+//     type: { type: String, default: 'Point' },
+//     coordinates: { type: [Number], default: [0, 0] },
+//   },
+// });
 
 /**
  * Schema for the accommodation requests that the homeless youth make.
@@ -51,10 +51,10 @@ const requestSchema = new mongoose.Schema({
     required: false,
   },
   // Location where the youth wants accommodation
-  location: {
-    type: locationSchema,
-    required: true,
-  },
+  // location: {
+  //   type: locationSchema,
+  //   required: true,
+  // },
   // Does the youth have a disability
   hasDisability: {
     type: Boolean,

@@ -43,6 +43,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     secure: false, // TODO: set this to true once the website uses https
+    httpOnly: true,
     maxAge: 3600000, // One hour
   },
 })); // SECRET SHOULD BE STORED IN ENVIRONMENT VARIABLES
