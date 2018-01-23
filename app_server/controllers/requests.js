@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Request = mongoose.model('Request');
-const Accommodation = mongoose.model('Accommodation');
+const Service = mongoose.model('Service');
 
 module.exports.addRequest = (req, res) => {
   const request = new Request();
@@ -15,7 +15,7 @@ module.exports.addRequest = (req, res) => {
 
   request.save((err, doc) => {
     if (err) {
-      res.status(400).json({ message: err });
+      res.status(500).json({ message: err });
     } else {
       req.session.requestId = doc.id;
       req.session.coordinates = [req.body.long, req.body.lat];
@@ -40,19 +40,19 @@ module.exports.addPhoneToRequest = (req, res) => {
       (err) => {
         if (err) {
           console.log('[ERROR] RequestsController: '.concat(err));
-          res.status(400).json({ message: 'Could not add phone number to request.' });
+          res.status(500).json({ message: 'Could not add phone number to request.' });
         }
       },
     );
-    // Add request to accommodation
-    Accommodation.findOneAndUpdate(
-      { _id: req.body.accommodationId },
+    // Add request to service
+    Service.findOneAndUpdate(
+      { _id: req.body.serviceId },
       { $push: { requests: req.session.requestId } },
       { runValidators: true, new: true },
       (err) => {
         if (err) {
           console.log('[ERROR] RequestsController: '.concat(err));
-          res.status(400).json({ message: 'Could not submit request to service provider.' });
+          res.status(500).json({ message: 'Could not submit request to service provider.' });
         }
       },
     );

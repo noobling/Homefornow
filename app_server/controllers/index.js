@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
-const Accommodation = mongoose.model('Accommodation');
+const Service = mongoose.model('Service');
 
 module.exports.index = (req, res) => {
   // Finds any three available service providers
-  Accommodation.find({ available: true }, 'name phoneNumber description available uri').limit(3).exec()
-    .then((accommodation) => {
+  Service.find({ available: true }, 'name phoneNumber description available uri').limit(3).exec()
+    .then((service) => {
       res.render('index', {
         user: req.user,
-        locations: accommodation,
+        locations: service,
         title: 'Do you have a secure place to stay?',
       });
     })

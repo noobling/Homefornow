@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema({
     enum: ['service_provider', 'admin', 'super_admin'],
   },
   // The IDs of the service providers that this user is a member of
-  accommodation: {
+  service: {
     type: [String],
     required: false,
   },

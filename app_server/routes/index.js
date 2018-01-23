@@ -15,7 +15,7 @@ router.get('/', ctrlIndex.index);
 
 router.get('/about', ctrlOthers.about);
 
-router.get('/location/:accommodationUri', ctrlLocations.showLocation);
+router.get('/location/:serviceUri', ctrlLocations.showLocation);
 
 router.get('/locations/:lengthOfStay', ctrlLocations.shortTermList);
 router.post('/locations/contact', ctrlRequests.addPhoneToRequest);

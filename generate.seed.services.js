@@ -1,16 +1,16 @@
 /**
- * SEEDS THE DATABASE WITH ACCOMMODATIONS
+ * SEEDS THE DATABASE WITH SERVICE PROVIDERS
  *
- * This file is run with `node <filename>`
+ * Run this script with `node <filename>`
  */
 // https://www.npmjs.com/package/Faker
 const faker = require('Faker');
 require('./app');
 const mongoose = require('mongoose');
 
-const Accommodation = mongoose.model('Accommodation');
+const Service = mongoose.model('Service');
 
-const NUM_ACCOMM = 10;
+const NUM_ACCOMM = 20;
 
 // Indicies of states, postcodes, suburbs and coords correspond
 const STATE = 'WA';
@@ -126,7 +126,6 @@ function encodeUri(name) {
   return name.toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_-]/g, ''); // TODO: Check for duplicates
 }
 
-
 function seedAccomm() {
   for (let i = 0; i < NUM_ACCOMM; i += 1) {
     const randNum = Math.floor(Math.random() * SUBURBS.length);
@@ -141,13 +140,16 @@ function seedAccomm() {
       },
     };
 
-    const accomm = new Accommodation();
+    const serviceTypes = Service.schema.path('serviceType').enumValues;
+
+    const accomm = new Service();
 
     accomm.name = faker.Company.companyName();
     accomm.address = address;
     accomm.phoneNumber = faker.PhoneNumber.phoneNumberFormat(0);
+    accomm.serviceType = serviceTypes[Math.floor(Math.random() * serviceTypes.length)];
     accomm.stayLength = Math.floor((Math.random() * 10) + 1); // 1 to 10
-    // accomm.website = faker.Internet.domainName();
+    accomm.website = faker.Internet.domainName();
     accomm.available = Math.random() < 0.5;
     accomm.facilities = FACILITIES;
     accomm.restrictions = RESTRICTIONS;
@@ -160,13 +162,12 @@ function seedAccomm() {
       maxAge: Math.floor((Math.random() * 5) + 20), // 21 to 25
     };
     accomm.uri = encodeUri(accomm.name);
-    accomm.longTerm = Math.random() < 0.5;
 
     accomm.save((err, doc) => {
       if (err) {
-        console.log(`[ERROR] Seeding accommodation: ${err}`);
+        console.log(`[ERROR] Seeding service provider: ${err}`);
       } else {
-        console.log(`[SUCCESS] Seeded accommodation: ${doc.name}`);
+        console.log(`[SUCCESS] Seeded service provider: ${doc.name}`);
       }
     });
   }

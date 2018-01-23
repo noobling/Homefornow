@@ -1,4 +1,4 @@
-mixin contactModal(serviceName, accommodationId, available, phoneNumber, uri)
+mixin contactModal(serviceName, serviceId, available, phoneNumber, uri)
     .modal.fade(id="contactmodal"+uri,role="dialog")
         .modal-dialog.modal-sm
             .modal-content
@@ -38,7 +38,7 @@ mixin contactModal(serviceName, accommodationId, available, phoneNumber, uri)
                             label(for="email") Email
                             input.form-control(type="text", name="email")
                         .form-group
-                            input(type="hidden", name="accommodationId", value=accommodationId)
+                            input(type="hidden", name="serviceId", value=serviceId)
                         .form-group
                             .text-right                                
                                 a(data-toggle="modal", href="#waitmodal"+uri)

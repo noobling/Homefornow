@@ -1,16 +1,17 @@
 const mongoose = require('mongoose');
 const admin = require('firebase-admin');
 
-const Accommodation = mongoose.model('Accommodation');
+const Service = mongoose.model('Service');
 
 // Needed to create a 2dsphere index on address.coordinates.coordinates for $near to work
 // db.collection.createIndex( { 'address.coordinates.coordinates' : '2dsphere' } )
 // https://docs.mongodb.com/manual/core/2dsphere/
 function showVacanciesList(req, res, isLongTerm) {
-  Accommodation.find(
-    { // TODO: Filter based on shortTerm and longTerm providers
+  const type = (isLongTerm ? ['long'] : ['critical', 'transitional']);
+  Service.find(
+    {
       $and: [
-        { longTerm: isLongTerm },
+        { serviceType: { $in: type } },
         {
           'address.coordinates.coordinates': {
             $near: {
@@ -23,7 +24,7 @@ function showVacanciesList(req, res, isLongTerm) {
     'name available number phoneNumber description address uri',
   ).exec()
     .then((docs) => {
-      // Sort accommodation into available and unavailable
+      // Sort services into available and unavailable
       const available = [];
       const unavailable = [];
 
@@ -59,20 +60,20 @@ module.exports.longTermList = (req, res) => {
 module.exports.showLocation = (req, res) => {
   let metadataCount = 0;
   let listCount = 0;
-  console.log('Accommodation URI: '.concat(req.params.accommodationUri));
-  Accommodation.findOne(
-    { uri: req.params.accommodationUri },
+  console.log('Service URI: '.concat(req.params.serviceUri));
+  Service.findOne(
+    { uri: req.params.serviceUri },
     'name tagline address facilities restrictions additionalInfo website img hours',
   ).exec()
-    .then((accommodation) => {
-      // console.log('Images: '.concat(accommodation.img));
+    .then((service) => {
+      // console.log('Images: '.concat(service.img));
       const imageList = [];
 
-      if (accommodation.img != null && accommodation.img.length > 0) {
-        listCount = accommodation.img.length;
+      if (service.img != null && service.img.length > 0) {
+        listCount = service.img.length;
         const bucket = admin.storage().bucket();
 
-        accommodation.img.forEach((image) => {
+        service.img.forEach((image) => {
           // Get the metadata for each image reference
           bucket.file(image).getMetadata().then((data) => {
             // Add the media link for the image to 'imageList'
@@ -82,10 +83,10 @@ module.exports.showLocation = (req, res) => {
             // If all the images have been added to imageList, render the page with these images
             if (metadataCount === listCount) {
               res.render('showLocation', {
-                location: accommodation,
+                location: service,
                 map: {
-                  title: accommodation.name,
-                  suburb: accommodation.address.suburb,
+                  title: service.name,
+                  suburb: service.address.suburb,
                 },
                 images: imageList,
               });
@@ -97,10 +98,10 @@ module.exports.showLocation = (req, res) => {
             listCount -= 1;
             if (metadataCount === listCount) {
               res.render('showLocation', {
-                location: accommodation,
+                location: service,
                 map: {
-                  title: accommodation.name,
-                  suburb: accommodation.address.suburb,
+                  title: service.name,
+                  suburb: service.address.suburb,
                 },
               });
             }
@@ -109,10 +110,10 @@ module.exports.showLocation = (req, res) => {
       } else {
         // If 'img' is not defined or is empty, render the page without the carousel
         res.render('showLocation', {
-          location: accommodation,
+          location: service,
           map: {
-            title: accommodation.name,
-            suburb: accommodation.address.suburb,
+            title: service.name,
+            suburb: service.address.suburb,
           },
         });
       }
