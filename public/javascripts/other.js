@@ -66,8 +66,30 @@ function initMap() // Map that displays on the services page that user sees
         disableDefaultUI: true,
         zoomControl: true
     });
+    var cityCircle = new google.maps.Circle({
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.5,
+        strokeWeight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.25,
+        map: map,
+        center: coord,
+        radius: 1 * 1000 //radius in metres
+    });
+}
+
+function userMap() // Map that displays on the user location
+{
+    var coord = {lat: -31.986, lng: 115.822}; // need to change to user current latlng
+    var map = new google.maps.Map(document.getElementById('userloc'),
+    {
+        zoom: 14,
+        center: coord,
+        disableDefaultUI: true
+    });
+
     var marker = new google.maps.Marker({
         position: coord,
         map: map
-    });
+      });
 }

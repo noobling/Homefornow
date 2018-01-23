@@ -3,7 +3,7 @@ extends navbarDefault
 block content
   .row.page-header
     .col-lg-12
-      h1=location.tagline
+      h1=location.name
   .row
     .col-xs-12.col-md-9
       .row
@@ -47,7 +47,7 @@ block content
         .col-xs-12.col-sm-6.location-map
           .panel.panel-default
             .panel-heading
-              h2.panel-title= map.title
+              h2.panel-title Location
               style.
                 #map {
                   height: 50%;
@@ -56,9 +56,10 @@ block content
               #map
               |
     .col-xs-12.col-md-3              
-      p.lead About #{location.name}
+      p.lead About
       p= location.additionalInfo
-      a(href=location.website, target='_blank').btn.btn-lg.btn-default Learn More   
+      if location.website
+        a(href=location.website, target='_blank').btn.btn-lg.btn-default Learn More   
       p
         | &nbsp;   
     if images != null && images.length > 0

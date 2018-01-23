@@ -15,7 +15,7 @@ router.get('/', ctrlIndex.index);
 
 router.get('/about', ctrlOthers.about);
 
-router.get('/location/:accommodationId', ctrlLocations.showLocation);
+router.get('/location/:accommodationUri', ctrlLocations.showLocation);
 
 router.get('/locations/:lengthOfStay', ctrlLocations.shortTermList);
 router.post('/locations/contact', ctrlRequests.addPhoneToRequest);
@@ -67,5 +67,5 @@ router.get('/service', ctrlService.service);
 router.post('/addService', ctrlService.addService);
 module.exports = router;
 
-router.get('/admin', (req, res) => {res.render('admin');});
-router.get('/serviceDashboard', (req, res) => {res.render('serviceDashboard');});
+router.get('/admin', (req, res) => { res.render('admin'); });
+router.get('/serviceDashboard', (req, res) => { res.render('serviceDashboard'); });

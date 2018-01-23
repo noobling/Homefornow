@@ -12,13 +12,6 @@ module.exports.addRequest = (req, res) => {
   request.age = req.body.age;
   request.hasChild = req.body.child === 'yes';
   request.isLongTerm = req.params.lengthOfStay === 'long_term';
-  // request.location = {
-    // suburb: req.body.location,
-    // coordinates: {
-    //   type: 'Point',
-    //   coordinates: [req.body.long, req.body.lat],
-    // },
-  // };
 
   request.save((err, doc) => {
     if (err) {

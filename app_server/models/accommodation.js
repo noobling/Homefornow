@@ -225,6 +225,11 @@ const accommodationSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  uri: {
+    type: String,
+    required: true,
+    unique: true,
+  },
 });
 
 mongoose.model('Accommodation', accommodationSchema);

@@ -1,5 +1,5 @@
-mixin contactModal(serviceName, accommodationId, available, phoneNumber)
-    .modal.fade(id="contactmodal"+serviceName.replace(/\s/g,''),role="dialog")
+mixin contactModal(serviceName, accommodationId, available, phoneNumber, uri)
+    .modal.fade(id="contactmodal"+uri,role="dialog")
         .modal-dialog.modal-sm
             .modal-content
                 .modal-header
@@ -12,16 +12,16 @@ mixin contactModal(serviceName, accommodationId, available, phoneNumber)
                         a(href='#')
                             button.btn.btn-default Call Us
                         if available
-                          a(data-toggle="modal", href="#numbermodal"+serviceName.replace(/\s/g,''))
+                          a(data-toggle="modal", href="#numbermodal"+uri)
                               button(type="button", data-dismiss="modal").btn.btn-default Call You
 
-    .modal.fade(id="numbermodal"+serviceName.replace(/\s/g,''),role="dialog")
+    .modal.fade(id="numbermodal"+uri,role="dialog")
         .modal-dialog.modal-sm
             .modal-content
                 .modal-header
                     button(type='button', data-dismiss='modal').close &times;
                     span.pull-left
-                        a(data-toggle="modal", href="#contactmodal"+serviceName.replace(/\s/g,''))
+                        a(data-toggle="modal", href="#contactmodal"+uri)
                             button(type="button", data-dismiss="modal").close
                                 span.glyphicon.glyphicon-arrow-left
                         //- a(data-toggle='modal', href='#numbermodal')
@@ -41,15 +41,15 @@ mixin contactModal(serviceName, accommodationId, available, phoneNumber)
                             input(type="hidden", name="accommodationId", value=accommodationId)
                         .form-group
                             .text-right                                
-                                a(data-toggle="modal", href="#waitmodal"+serviceName.replace(/\s/g,''))
+                                a(data-toggle="modal", href="#waitmodal"+uri)
                                     button(data-dismiss="modal", onclick='return submitPhoneNumber(this.parentNode.parentNode.parentNode.parentNode)').btn.btn-default Submit
-    .modal.fade(id="waitmodal"+serviceName.replace(/\s/g,''),role="dialog")
+    .modal.fade(id="waitmodal"+uri,role="dialog")
         .modal-dialog.modal-sm
             .modal-content
                 .modal-header
                     button(type='button', data-dismiss='modal').close &times;
                     span.pull-left
-                        a(data-toggle="modal", href="#numbermodal"+serviceName.replace(/\s/g,''))
+                        a(data-toggle="modal", href="#numbermodal"+uri)
                             button(type="button", data-dismiss="modal").close
                                 span.glyphicon.glyphicon-arrow-left
                         //- a(data-toggle='modal', href='#numbermodal')

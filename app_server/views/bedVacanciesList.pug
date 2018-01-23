@@ -10,16 +10,26 @@ block content
           br
           small #{tagline}
   .row
+    .col-xs-12.col-sm-6
+        .panel#user-panel
+          style.
+            #userloc {
+              height: 50%;
+            }
+          .panel-body
+            #userloc
+            |
+  .row
     each location in locations
-      +contactModal(location.name, location._id, location.available, location.phoneNumber)
+      +contactModal(location.name, location._id, location.available, location.phoneNumber, location.uri)
       .col-xs-12
         .panel.panel-default
           .panel-heading
-            a(href='/location?name='+location.name, style="text-decoration: none; color: inherit;")
-              h2.panel-title= location.name + ' ' + location.address.suburb
+            a(href='/location/'+location.uri, style="text-decoration: none; color: inherit;")
+              h2.panel-title= location.name + ', ' + location.address.suburb
           .row
             .col-md-3.col-sm-4.col-xs-12
-              a(href='/location/'+location._id)
+              a(href='/location/'+location.uri)
                 img.img-responsive.img-square(src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
             .col-md-3.hidden-sm.hidden-xs
               .panel-body.text-justify
@@ -38,19 +48,19 @@ block content
                       | &nbsp;Not Avaliable
             .col-md-3.col-sm-4.col-xs-12
               .panel-body.text-center
-                a(href='#',data-toggle="modal",data-target="#contactmodal"+location.name.replace(/\s/g,''))
+                a(href='#',data-toggle="modal",data-target="#contactmodal"+location.uri)
                   button.btn.btn-lg.btn-default
                     | Contact
     each dlocation in dlocations
-      +contactModal(dlocation.name, dlocation._id, dlocation.available, dlocation.phoneNumber)
+      +contactModal(dlocation.name, dlocation._id, dlocation.available, dlocation.phoneNumber, dlocation.uri)
       .col-xs-12
         .panel.panel-default
           .panel-heading
-            a(href='/location?name='+dlocation.name, style="text-decoration: none; color: inherit;")
+            a(href='/location/'+dlocation.uri, style="text-decoration: none; color: inherit;")
               h2.panel-title= dlocation.name + ' ' + dlocation.address.suburb
           .row
             .col-md-3.col-sm-4.col-xs-12
-              a(href='/location?name='+dlocation.name)
+              a(href='/location/'+dlocation.uri)
                 img.img-responsive.img-square(src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
             .col-md-3.hidden-sm.hidden-xs
               .panel-body.text-justify
@@ -69,7 +79,9 @@ block content
                       | &nbsp;Not Avaliable
             .col-md-3.col-sm-4.col-xs-12
               .panel-body.text-center
-                a(href='#',data-toggle="modal",data-target="#contactmodal"+dlocation.name.replace(/\s/g,''))
+                a(href='#',data-toggle="modal",data-target="#contactmodal"+dlocation.uri)
                   button.btn.btn-lg.btn-default
                     | Contact
   script(src='/javascripts/requests.js')
+  script(src='/javascripts/other.js')
+  script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key='+process.env.embed_maps_api+'&callback=userMap')

@@ -122,6 +122,11 @@ function genOpeningHours() {
   };
 }
 
+function encodeUri(name) {
+  return name.toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_-]/g, ''); // TODO: Check for duplicates
+}
+
+
 function seedAccomm() {
   for (let i = 0; i < NUM_ACCOMM; i += 1) {
     const randNum = Math.floor(Math.random() * SUBURBS.length);
@@ -142,7 +147,7 @@ function seedAccomm() {
     accomm.address = address;
     accomm.phoneNumber = faker.PhoneNumber.phoneNumberFormat(0);
     accomm.stayLength = Math.floor((Math.random() * 10) + 1); // 1 to 10
-    accomm.website = faker.Internet.domainName();
+    // accomm.website = faker.Internet.domainName();
     accomm.available = Math.random() < 0.5;
     accomm.facilities = FACILITIES;
     accomm.restrictions = RESTRICTIONS;
@@ -154,6 +159,8 @@ function seedAccomm() {
       minAge: Math.floor((Math.random() * 5) + 14), // 14 to 17
       maxAge: Math.floor((Math.random() * 5) + 20), // 21 to 25
     };
+    accomm.uri = encodeUri(accomm.name);
+    accomm.longTerm = Math.random() < 0.5;
 
     accomm.save((err, doc) => {
       if (err) {

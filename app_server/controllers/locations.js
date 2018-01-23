@@ -9,13 +9,18 @@ const Accommodation = mongoose.model('Accommodation');
 function showVacanciesList(req, res, isLongTerm) {
   Accommodation.find(
     { // TODO: Filter based on shortTerm and longTerm providers
-      'address.coordinates.coordinates': {
-        $near: {
-          $geometry: { type: 'Point', coordinates: req.session.coordinates },
+      $and: [
+        { longTerm: isLongTerm },
+        {
+          'address.coordinates.coordinates': {
+            $near: {
+              $geometry: { type: 'Point', coordinates: req.session.coordinates },
+            },
+          },
         },
-      },
+      ],
     },
-    'name available number phoneNumber description address',
+    'name available number phoneNumber description address uri',
   ).exec()
     .then((docs) => {
       // Sort accommodation into available and unavailable
@@ -54,15 +59,13 @@ module.exports.longTermList = (req, res) => {
 module.exports.showLocation = (req, res) => {
   let metadataCount = 0;
   let listCount = 0;
-  console.log('Id: '.concat(req.params.accommodationId));
-  Accommodation.findById(
-    req.params.accommodationId,
-    'name tagline address.suburb facilities restrictions additionalInfo website img hours',
+  console.log('Accommodation URI: '.concat(req.params.accommodationUri));
+  Accommodation.findOne(
+    { uri: req.params.accommodationUri },
+    'name tagline address facilities restrictions additionalInfo website img hours',
   ).exec()
     .then((accommodation) => {
-      console.log('Doc: '.concat(accommodation));
-
-      console.log('Images: '.concat(accommodation.img));
+      // console.log('Images: '.concat(accommodation.img));
       const imageList = [];
 
       if (accommodation.img != null && accommodation.img.length > 0) {
