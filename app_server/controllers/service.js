@@ -35,7 +35,6 @@ module.exports.addService = (req, res) => {
     maxAge: req.body.maxAge,
   };
 
-
   service.save((err) => {
     if (err) {
       res.status(500).json({ message: err });

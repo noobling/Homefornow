@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "Faker": "^0.7.2",
+    "async": "^2.6.0",
     "body-parser": "~1.18.2",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",

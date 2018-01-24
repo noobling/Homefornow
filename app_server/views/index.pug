@@ -33,7 +33,7 @@ block content
                             | Long term
     .spacer-lg
     .row
-        each location in locations
+        each location in [critical, transitional, long]
             .col-lg-4.col-md-12
                 .panel.panel-default.panel-spaced
                     .panel-heading

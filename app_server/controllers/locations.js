@@ -6,8 +6,9 @@ const Service = mongoose.model('Service');
 // Needed to create a 2dsphere index on address.coordinates.coordinates for $near to work
 // db.collection.createIndex( { 'address.coordinates.coordinates' : '2dsphere' } )
 // https://docs.mongodb.com/manual/core/2dsphere/
-function showVacanciesList(req, res, isLongTerm) {
-  const type = (isLongTerm ? ['long'] : ['critical', 'transitional']);
+module.exports.showLocations = (req, res) => {
+  const longTerm = (req.params.lengthOfStay === 'long_term');
+  const type = (longTerm ? ['long'] : ['critical', 'transitional']);
   Service.find(
     {
       $and: [
@@ -45,16 +46,8 @@ function showVacanciesList(req, res, isLongTerm) {
     })
     .catch((err) => {
       console.log('[ERROR] LocationsController: '.concat(err));
-      res.status(400).json({ message: err });
+      res.status(500).json({ message: err });
     });
-}
-
-module.exports.shortTermList = (req, res) => {
-  showVacanciesList(req, res, false);
-};
-
-module.exports.longTermList = (req, res) => {
-  showVacanciesList(req, res, true);
 };
 
 module.exports.showLocation = (req, res) => {
@@ -120,6 +113,6 @@ module.exports.showLocation = (req, res) => {
     })
     .catch((err) => {
       console.log('[ERROR] LocationsController: '.concat(err));
-      res.status(400).json({ message: err });
+      res.status(500).json({ message: err });
     });
 };

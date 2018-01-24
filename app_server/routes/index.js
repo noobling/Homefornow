@@ -17,7 +17,7 @@ router.get('/about', ctrlOthers.about);
 
 router.get('/location/:serviceUri', ctrlLocations.showLocation);
 
-router.get('/locations/:lengthOfStay', ctrlLocations.shortTermList);
+router.get('/locations/:lengthOfStay', ctrlLocations.showLocations);
 router.post('/locations/contact', ctrlRequests.addPhoneToRequest);
 router.post('/locations/:lengthOfStay', ctrlRequests.addRequest);
 /**
