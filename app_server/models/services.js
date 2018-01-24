@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 
+/**
+ * Schema for the address of a service provider.
+ * @type {mongoose.Schema}
+ */
 const addressSchema = new mongoose.Schema({
   // Suburb
   suburb: {
@@ -24,13 +28,17 @@ const addressSchema = new mongoose.Schema({
   },
 });
 
-/* Schema for the open and close time on some day.
+/**
+ * Schema for the time a service provider opens and closes on a particular day.
+ *
  * 24 hour format:
  *  5:00am -> 500
  *  12:00pm -> 1200
  *  3:00pm -> 1500
  *
- * Days where the service provider is closed should have  open and close set to 0.
+ * Set open and close to 0 if the service provider is closed.
+ *
+ * @type {mongoose.Schema}
  */
 const openCloseSchema = new mongoose.Schema({
   // Open time
@@ -45,7 +53,10 @@ const openCloseSchema = new mongoose.Schema({
   },
 });
 
-// Opening hours of the service provider
+/**
+ * Schema for the opening hours of the service provider.
+ * @type {mongoose.Schema}
+ */
 const hoursSchema = new mongoose.Schema({
   mon: {
     type: openCloseSchema,
@@ -77,7 +88,10 @@ const hoursSchema = new mongoose.Schema({
   },
 });
 
-// Tag schema for the beds
+/**
+ * Schema for the tags that are used to describe a service provider's beds.
+ * @type {mongoose.Schema}
+ */
 const tagSchema = new mongoose.Schema({
   // Name of the tag
   name: {
@@ -86,6 +100,10 @@ const tagSchema = new mongoose.Schema({
   },
 });
 
+/**
+ * Schema for service provider beds.
+ * @type {mongoose.Schema}
+ */
 const bedSchema = new mongoose.Schema({
   // Beds avaialable for the gender
   gender: {
@@ -116,7 +134,10 @@ const bedSchema = new mongoose.Schema({
   },
 });
 
-// Age range for the service provider
+/**
+ * Schema for the age range that a service provider accommodates.
+ * @type {mongoose.Schema}
+ */
 const ageSchema = new mongoose.Schema({
   minAge: {
     type: Number,
@@ -128,6 +149,10 @@ const ageSchema = new mongoose.Schema({
   },
 });
 
+/**
+ * Schema for storing a service provider.
+ * @type {mongoose.Schema}
+ */
 const serviceSchema = new mongoose.Schema({
   // Service privider's name
   name: {

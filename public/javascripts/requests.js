@@ -1,4 +1,7 @@
-//Submit request
+/**
+ * Submits the form contianing the youth person's request.
+ * @param  {Object} form The form to submit.
+ */
 function submitRequest(form)
 {
   // TODO: validation code
@@ -9,10 +12,14 @@ function submitRequest(form)
   form.submit();
 }
 
-// Submit phoneNumber with Ajax to prevent page reload
-// https://stackoverflow.com/questions/25983603/how-to-submit-html-form-without-redirection
+/**
+ * Submits the form containing the youth person's phone number.
+ * Uses Ajax to prevent a page reload.
+ * @param  {Object} form The form to submit.
+ */
 function submitPhoneNumber (form)
 {
+    // https://stackoverflow.com/questions/25983603/how-to-submit-html-form-without-redirection
     $(document).ready(
       $.ajax({
         url:"/locations/contact",

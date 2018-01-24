@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
 /**
- * Schema for the service provider requests that the homeless youth make.
+ * Schema for youth people's requests for accommodation.
+ * @type {mongoose.Schema}
  */
 const requestSchema = new mongoose.Schema({
   // Youth's first name

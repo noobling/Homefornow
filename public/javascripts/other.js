@@ -1,4 +1,7 @@
-function initialize() // Google places autocomplete
+/**
+ * Initialises the Google places autocomplete object.
+ */
+function initialize()
 {
     var options = {
         types: ['(cities)'],
@@ -15,7 +18,11 @@ function initialize() // Google places autocomplete
     longBtn.addEventListener("click", function() { fillLatLong(autocomplete) });
 }
 
-
+/**
+ * Copies the latitude and longitude from the Google places autocomplete
+ * object into a form.
+ * @param  {Object} autocomplete Google places autocomplete object
+ */
 function fillLatLong(autocomplete) // Fills form with lat and long from the Google Maps API
 {
   let place = autocomplete.getPlace();
@@ -29,7 +36,12 @@ function fillLatLong(autocomplete) // Fills form with lat and long from the Goog
 //     $('.geoloc').on('click', geoloc);
 // });
 
-function geoloc() // 'Use Current Location' functionality
+/**
+ * 'Use Current Location' functionality.
+ * Gets the user's current latitude and longitude coordinates
+ * and passes them into a form.
+ */
+function geoloc()
 {
     document.getElementById('location').value = "Finding your location ...";
 
@@ -56,7 +68,10 @@ function geoloc() // 'Use Current Location' functionality
     navigator.geolocation.getCurrentPosition(success, error);
 }
 
-function initMap() // Map that displays on the services page that user sees
+/**
+ * Initialises the map displayed on the services page
+ */
+function initMap()
 {
     var coord = {lat: -31.986, lng: 115.822}; // need to change to service accomodation latlng
     var map = new google.maps.Map(document.getElementById('map'),
@@ -78,7 +93,10 @@ function initMap() // Map that displays on the services page that user sees
     });
 }
 
-function userMap() // Map that displays on the user location
+/**
+ * Map that displays on the user location
+ */
+function userMap()
 {
     var coord = {lat: -31.986, lng: 115.822}; // need to change to user current latlng
     var map = new google.maps.Map(document.getElementById('userloc'),

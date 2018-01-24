@@ -3,9 +3,18 @@ const admin = require('firebase-admin');
 
 const Service = mongoose.model('Service');
 
-// Needed to create a 2dsphere index on address.coordinates.coordinates for $near to work
-// db.collection.createIndex( { 'address.coordinates.coordinates' : '2dsphere' } )
-// https://docs.mongodb.com/manual/core/2dsphere/
+/**
+ * Renders the bed vacancies page with short term (critical and
+ * transitional) or long term service providers. The available service
+ * providers are listed first. Available and unavailable service providers are
+ * ordered nearest to fartherest from a location specified in the req object.
+ *
+ * Requires a 2dsphere index on address.coordinates.coordinates for $near to work.
+ * db.collection.createIndex( { 'address.coordinates.coordinates' : '2dsphere' } )
+ * https://docs.mongodb.com/manual/core/2dsphere/
+ * @param  {Object} req Express request object.
+ * @param  {Object} res Express response object.
+ */
 module.exports.showLocations = (req, res) => {
   const longTerm = (req.params.lengthOfStay === 'long_term');
   const type = (longTerm ? ['long'] : ['critical', 'transitional']);
@@ -28,7 +37,6 @@ module.exports.showLocations = (req, res) => {
       // Sort services into available and unavailable
       const available = [];
       const unavailable = [];
-
       for (let i = 0; i < docs.length; i += 1) {
         if (docs[i].available) {
           available.push(docs[i]);
@@ -50,6 +58,12 @@ module.exports.showLocations = (req, res) => {
     });
 };
 
+/**
+ * Renders the showLocation page with data from a service provider specified
+ * in req.params. Pulls images from a Firebase storage bucket.
+ * @param  {Object} req Express request object.
+ * @param  {Object} res Express response object.
+ */
 module.exports.showLocation = (req, res) => {
   let metadataCount = 0;
   let listCount = 0;

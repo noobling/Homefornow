@@ -3,6 +3,12 @@ const mongoose = require('mongoose');
 const Request = mongoose.model('Request');
 const Service = mongoose.model('Service');
 
+/**
+ * Saves a youth person's request (mongo document) to the database.
+ * Redirects to the bed vacancies page.
+ * @param {Object} req Express request object.
+ * @param {Object} res Express response object.
+ */
 module.exports.addRequest = (req, res) => {
   const request = new Request();
 
@@ -24,6 +30,12 @@ module.exports.addRequest = (req, res) => {
   });
 };
 
+/**
+ * Adds a youth person's phone number to their request (mongo document) and
+ * adds that request to a service provider.
+ * @param {Object} req Express request object.
+ * @param {Object} res Express response object.
+ */
 module.exports.addPhoneToRequest = (req, res) => {
   if (req.session.requestId) {
     // Add phone number to request

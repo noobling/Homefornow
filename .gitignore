@@ -59,3 +59,6 @@ typings/
 
 # Firebase Admin SDK Private Key
 homefornow-fd495-firebase-adminsdk-xy17w-62ee8ab849.json
+
+# Mac DS_Store
+.DS_Store

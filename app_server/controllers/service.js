@@ -2,11 +2,21 @@ const mongoose = require('mongoose');
 
 const Service = mongoose.model('Service');
 
-
+/**
+ * Renders the service page.
+ * @param  {Object} req Express request object.
+ * @param  {Object} res Express response object.
+ */
 module.exports.service = (req, res) => {
   res.render('service');
 };
 
+/**
+ * Adds a new service (mongo document) to the database.
+ * Redirects to the service provider's page.
+ * @param {Object} req Express request object.
+ * @param {Object} res Express response object.
+ */
 module.exports.addService = (req, res) => {
   if (!req.user) {
     res.status(401).json({ message: 'You must be logged in to create a new service provider.' });
@@ -14,7 +24,7 @@ module.exports.addService = (req, res) => {
 
   const service = new Service();
 
-  service.name = req.user;
+  service.name = req.body.name;
   service.phoneNumber = req.body.number;
   service.serviceType = req.body.serviceType;
   service.stayLength = req.body.stayLength;
@@ -44,10 +54,20 @@ module.exports.addService = (req, res) => {
   });
 };
 
+/**
+ * Renders a service provider's dashboard.
+ * @param  {Object} req Express request object.
+ * @param  {Object} res Express response object.
+ */
 module.exports.dashboard = (req, res) => {
   res.render('serviceDashboard');
 };
 
+/**
+ * Renders a service provider's profile page
+ * @param  {Object} req Express request object.
+ * @param  {Object} res Express response object.
+ */
 module.exports.profile = (req, res) => {
   res.send('This is the Services Profile Page, rendered by the service.js Controller');
 };

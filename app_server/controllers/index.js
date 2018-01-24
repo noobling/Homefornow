@@ -4,10 +4,10 @@ const async = require('async');
 const Service = mongoose.model('Service');
 
 /**
- * Finds the first available service provider of the specified type
- * @param  {Function} callback [description]
- * @param  {[type]}   type     [description]
- * @return {[type]}            [description]
+ * Finds one available service provider of the specified type.
+ * To be called by an async operation that provides an async callback.
+ * @param  {Function} callback Callback provided by async.
+ * @param  {string}   type     Type of service provider: 'critical', 'transitional' or 'long'.
  */
 function findService(callback, type) {
   Service.findOne(
@@ -25,10 +25,10 @@ function findService(callback, type) {
 }
 
 /**
- * Finds the first available critical, transitional and long term service providers in parallel.
- * @param  {[type]} req [description]
- * @param  {[type]} res [description]
- * @return {[type]}     [description]
+ * Renders the index page with three service providers: one critical,
+ * one transitional and one long term service provider.
+ * @param  {Object} req Express request object.
+ * @param  {Object} res Express response object.
  */
 module.exports.index = (req, res) => {
   async.parallel(

@@ -1,19 +1,20 @@
 /**
  * SEEDS THE DATABASE WITH SERVICE PROVIDERS
  *
+ * Uses Faker: https://www.npmjs.com/package/Faker
+ *
  * Run this script with `node <filename>`
  */
-// https://www.npmjs.com/package/Faker
-const faker = require('Faker');
+
 require('./app');
 const mongoose = require('mongoose');
+const faker = require('Faker');
 
 const Service = mongoose.model('Service');
 
-const NUM_ACCOMM = 20;
-
 // Indicies of states, postcodes, suburbs and coords correspond
 const STATE = 'WA';
+
 const POSTCODES = [6062, 6008, 6000, 6065, 6003, 6050, 6027, 6107, 6100, 6017];
 
 const SUBURBS = [
@@ -87,6 +88,11 @@ const END_HOURS = [
   2000,
   2100];
 
+/**
+ * Returns a JSON object with random opening hours.
+ * Matches the opening hours schema embedded in the Services schema.
+ * @return {Object} Json object with random opening hours.
+ */
 function genOpeningHours() {
   const startHours = START_HOURS[Math.floor(Math.random() * START_HOURS.length)];
   const endHours = END_HOURS[Math.floor(Math.random() * END_HOURS.length)];
@@ -122,12 +128,22 @@ function genOpeningHours() {
   };
 }
 
-function encodeUri(name) {
+/**
+ * Takes a name conatining any characters and converts it into a string
+ * containing letters, numbers, - and _.
+ * @param  {String} name Name to encode.
+ * @return {String}      The encoded URI.
+ */
+function encodeURI(name) {
   return name.toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_-]/g, ''); // TODO: Check for duplicates
 }
 
-function seedAccomm() {
-  for (let i = 0; i < NUM_ACCOMM; i += 1) {
+/**
+ * Generates service providers with random 'Faker' information.
+ * @param  {Number} numToGen Number of service providers to generate.
+ */
+function seedAccomm(numToGen) {
+  for (let i = 0; i < numToGen; i += 1) {
     const randNum = Math.floor(Math.random() * SUBURBS.length);
 
     const address = {
@@ -161,7 +177,7 @@ function seedAccomm() {
       minAge: Math.floor((Math.random() * 5) + 14), // 14 to 17
       maxAge: Math.floor((Math.random() * 5) + 20), // 21 to 25
     };
-    accomm.uri = encodeUri(accomm.name);
+    accomm.uri = encodeURI(accomm.name);
 
     accomm.save((err, doc) => {
       if (err) {
@@ -174,7 +190,7 @@ function seedAccomm() {
   return true;
 }
 
-seedAccomm();
+seedAccomm(30);
 
 /**
  * DONE WITH THE DB CONNECTION TIME TO CLEAN UP
