@@ -68,8 +68,8 @@ module.exports.showLocations = (req, res) => {
         locations: available,
         dlocations: unavailable,
         userCoords: {
-          long: req.session.coordinates[1],
-          lat: req.session.coordinates[0],
+          long: req.session.coordinates[0],
+          lat: req.session.coordinates[1],
         },
       });
     })
