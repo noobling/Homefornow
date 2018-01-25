@@ -88,6 +88,8 @@ const END_HOURS = [
   2000,
   2100];
 
+const GENDER = ['Male', 'Female', 'Either'];
+
 /**
  * Returns a JSON object with random opening hours.
  * Matches the opening hours schema embedded in the Services schema.
@@ -164,6 +166,9 @@ function seedAccomm(numToGen) {
     accomm.address = address;
     accomm.phoneNumber = faker.PhoneNumber.phoneNumberFormat(0);
     accomm.serviceType = serviceTypes[Math.floor(Math.random() * serviceTypes.length)];
+    accomm.gender = GENDER[Math.floor(Math.random() * GENDER.length)];
+    accomm.disability = Math.random() < 0.5;
+    accomm.child = Math.random() < 0.5;
     accomm.stayLength = Math.floor((Math.random() * 10) + 1); // 1 to 10
     accomm.website = faker.Internet.domainName();
     accomm.available = Math.random() < 0.5;

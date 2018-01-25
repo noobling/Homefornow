@@ -4,36 +4,57 @@ const async = require('async');
 const Service = mongoose.model('Service');
 
 /**
- * Finds one available service provider of the specified type.
- * To be called by an async operation that provides an async callback.
- * @param  {Function} callback Callback provided by async.
- * @param  {string}   type     Type of service provider: 'critical', 'transitional' or 'long'.
+ * Finds one service provider of the specified availability and type.
+ * @param  {Boolean}  isAvailable Find an available or unavailable service provider.
+ * @param  {string}   type        Type of service provider: 'crisis', 'transitional' or 'long'.
  */
-function findService(callback, type) {
-  Service.findOne(
+function findServiceOfAvailability(isAvailable, type) {
+  const fields = 'name phoneNumber description available uri';
+  return Service.findOne(
     {
       $and: [
-        { available: true },
+        { available: isAvailable },
         { serviceType: type },
       ],
     },
-    'name phoneNumber description available uri',
-  ).exec((err, service) => {
-    if (err) { console.log('[ERROR] LocationsController: '.concat(err)); }
-    callback(null, service);
-  });
+    fields,
+  ).exec();
 }
 
 /**
- * Renders the index page with three service providers: one critical,
+ * Finds one service provider of the specified type.
+ * Attempts to find an available service provider first.
+ * To be called by an async operation that provides an async callback.
+ * @param  {Function} callback Async callback object.
+ * @param  {string}   type     Type of service provider: 'crisis', 'transitional' or 'long'.
+ */
+function findService(callback, type) {
+  let promise = findServiceOfAvailability(true, type);
+
+  promise
+    .then((availService) => {
+      if (availService) callback(null, availService); // found an available service
+      else {
+        promise = findServiceOfAvailability(false, type);
+        promise.then((err, unavailService) => {
+          callback(null, unavailService); // found an unavailable service, or nothing
+        });
+      }
+    })
+    .catch((err) => { console.log('[ERROR] LocationsController: '.concat(err)); });
+}
+
+/**
+ * Renders the index page with three service providers: one crisis,
  * one transitional and one long term service provider.
  * @param  {Object} req Express request object.
  * @param  {Object} res Express response object.
  */
 module.exports.index = (req, res) => {
+  // https://caolan.github.io/async/
   async.parallel(
     {
-      critical: (callback) => { findService(callback, 'critical'); },
+      crisis: (callback) => { findService(callback, 'crisis'); },
       transitional: (callback) => { findService(callback, 'transitional'); },
       long: (callback) => { findService(callback, 'long'); },
     },
@@ -43,7 +64,7 @@ module.exports.index = (req, res) => {
       }
       res.render('index', {
         user: req.user,
-        critical: services.critical,
+        crisis: services.crisis,
         transitional: services.transitional,
         long: services.long,
         title: 'Do you have a secure place to stay?',

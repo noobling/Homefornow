@@ -2,46 +2,63 @@ const mongoose = require('mongoose');
 const admin = require('firebase-admin');
 
 const Service = mongoose.model('Service');
+const Request = mongoose.model('Request');
 
 /**
- * Renders the bed vacancies page with short term (critical and
+ * Renders the bed vacancies page with short term (crisis and
  * transitional) or long term service providers. The available service
  * providers are listed first. Available and unavailable service providers are
  * ordered nearest to fartherest from a location specified in the req object.
  *
  * Requires a 2dsphere index on address.coordinates.coordinates for $near to work.
- * db.collection.createIndex( { 'address.coordinates.coordinates' : '2dsphere' } )
+ * db.service.createIndex( { 'address.coordinates.coordinates' : '2dsphere' } )
  * https://docs.mongodb.com/manual/core/2dsphere/
  * @param  {Object} req Express request object.
  * @param  {Object} res Express response object.
  */
 module.exports.showLocations = (req, res) => {
-  const longTerm = (req.params.lengthOfStay === 'long_term');
-  const type = (longTerm ? ['long'] : ['critical', 'transitional']);
-  Service.find(
-    {
-      $and: [
-        { serviceType: { $in: type } },
+  Request.findById(req.session.requestId, 'hasChild hasDisability gender').exec()
+    .then((request) => {
+      const longTerm = (req.params.lengthOfStay === 'long_term');
+      const type = (longTerm ? ['long'] : ['crisis', 'transitional']);
+      const child = (request.hasChild ? [true] : [true, false]);
+      const disability = (request.hasDisability ? [true] : [true, false]);
+
+      let gender = ['Either']; // Other
+      if (gender === 'Male') {
+        gender = ['Male', 'Either'];
+      } else if (gender === 'Female') {
+        gender = ['Female', 'Either'];
+      }
+
+      return Service.find(
         {
-          'address.coordinates.coordinates': {
-            $near: {
-              $geometry: { type: 'Point', coordinates: req.session.coordinates },
+          $and: [
+            { serviceType: { $in: type } },
+            { child: { $in: child } },
+            { disability: { $in: disability } },
+            { gender: { $in: gender } },
+            {
+              'address.coordinates.coordinates': {
+                $near: {
+                  $geometry: { type: 'Point', coordinates: req.session.coordinates },
+                },
+              },
             },
-          },
+          ],
         },
-      ],
-    },
-    'name available number phoneNumber description address uri',
-  ).exec()
-    .then((docs) => {
+        'name available number phoneNumber description address uri',
+      );
+    })
+    .then((services) => {
       // Sort services into available and unavailable
       const available = [];
       const unavailable = [];
-      for (let i = 0; i < docs.length; i += 1) {
-        if (docs[i].available) {
-          available.push(docs[i]);
+      for (let i = 0; i < services.length; i += 1) {
+        if (services[i].available) {
+          available.push(services[i]);
         } else {
-          unavailable.push(docs[i]);
+          unavailable.push(services[i]);
         }
       }
 
@@ -50,6 +67,10 @@ module.exports.showLocations = (req, res) => {
         tagline: 'A place to stay',
         locations: available,
         dlocations: unavailable,
+        userCoords: {
+          long: req.session.coordinates[1],
+          lat: req.session.coordinates[0],
+        },
       });
     })
     .catch((err) => {

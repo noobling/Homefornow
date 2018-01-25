@@ -33,7 +33,8 @@ block content
                             | Long term
     .spacer-lg
     .row
-        each location in [critical, transitional, long]
+        each location in [crisis, transitional, long]
+          if location
             .col-lg-4.col-md-12
                 .panel.panel-default.panel-spaced
                     .panel-heading

@@ -173,7 +173,26 @@ const serviceSchema = new mongoose.Schema({
   serviceType: {
     type: String,
     required: true,
-    enum: ['critical', 'transitional', 'long'],
+    enum: ['crisis', 'transitional', 'long'],
+  },
+  // Which genders the service provider accommodates
+  gender: {
+    type: String,
+    required: true,
+    enum: ['Male', 'Female', 'Either'],
+    default: 'Either',
+  },
+  // Does the service provider accommodate disabled youth
+  disability: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  // Does the service provider accommodate parents with children
+  child: {
+    type: Boolean,
+    required: true,
+    default: false,
   },
   // Average length of stay for the user, in weeks
   stayLength: {

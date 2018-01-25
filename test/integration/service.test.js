@@ -52,7 +52,7 @@ describe('services : test', () => {
         minAge: 15,
         maxAge: 20,
         number: '93809316',
-        serviceType: 'critical',
+        serviceType: 'crisis',
         stayLength: 2,
         available: true,
         website: 'www.rand-web.com',
