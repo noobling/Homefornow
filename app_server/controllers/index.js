@@ -17,7 +17,7 @@ function findServiceOfAvailability(isAvailable, type) {
         { serviceType: type },
       ],
     },
-    fields,
+    fields
   ).exec();
 }
 
@@ -69,6 +69,6 @@ module.exports.index = (req, res) => {
         long: services.long,
         title: 'Do you have a secure place to stay?',
       });
-    },
+    }
   );
 };

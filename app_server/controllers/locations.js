@@ -47,7 +47,7 @@ module.exports.showLocations = (req, res) => {
             },
           ],
         },
-        'name available number phoneNumber description address uri',
+        'name available number phoneNumber description address uri'
       );
     })
     .then((services) => {
@@ -91,7 +91,7 @@ module.exports.showLocation = (req, res) => {
   console.log('Service URI: '.concat(req.params.serviceUri));
   Service.findOne(
     { uri: req.params.serviceUri },
-    'name tagline address facilities restrictions additionalInfo website img hours',
+    'name tagline address facilities restrictions additionalInfo website img hours'
   ).exec()
     .then((service) => {
       // console.log('Images: '.concat(service.img));
