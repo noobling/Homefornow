@@ -54,7 +54,7 @@ module.exports.addPhoneToRequest = (req, res) => {
           console.log('[ERROR] RequestsController: '.concat(err));
           res.status(500).json({ message: 'Could not add phone number to request.' });
         }
-      },
+      }
     );
     // Add request to service
     Service.findOneAndUpdate(
@@ -66,7 +66,7 @@ module.exports.addPhoneToRequest = (req, res) => {
           console.log('[ERROR] RequestsController: '.concat(err));
           res.status(500).json({ message: 'Could not submit request to service provider.' });
         }
-      },
+      }
     );
   } else {
     // TODO: Handle this case
