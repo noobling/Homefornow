@@ -3,19 +3,19 @@
  */
 function initialize()
 {
-    var options = {
+    const options = {
         types: ['(cities)'],
         componentRestrictions: { country: 'au' }
     };
 
-    var input = document.getElementById('location');
-    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    const input = document.getElementById('location');
+    const autocomplete = new google.maps.places.Autocomplete(input, options);
 
-    let shortBtn = document.getElementById('shortBtn');
-    let longBtn = document.getElementById('longBtn');
+    const shortBtn = document.getElementById('shortBtn');
+    const longBtn = document.getElementById('longBtn');
 
-    shortBtn.addEventListener("click", function() { fillLatLong(autocomplete) });
-    longBtn.addEventListener("click", function() { fillLatLong(autocomplete) });
+    shortBtn.addEventListener("click", () => { fillLatLong(autocomplete) });
+    longBtn.addEventListener("click", () => { fillLatLong(autocomplete) });
 }
 
 /**
@@ -25,16 +25,13 @@ function initialize()
  */
 function fillLatLong(autocomplete) // Fills form with lat and long from the Google Maps API
 {
-  let place = autocomplete.getPlace();
-  if(place) {
+  const place = autocomplete.getPlace();
+  if(place) 
+  {
     document.getElementById('lat').value = place.geometry.location.lat();
     document.getElementById('long').value = place.geometry.location.lng();
   }
 }
-
-// $(() => { // jquery for geolocation
-//     $('.geoloc').on('click', geoloc);
-// });
 
 /**
  * 'Use Current Location' functionality.
@@ -47,67 +44,33 @@ function geoloc()
 
     if (!navigator.geolocation)
     {
-			alert('Geolocation is not supported by your browser');
-		}
+		alert('Geolocation is not supported by your browser');
+	}
 
     function success(position)
     {
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
         document.getElementById('lat').value = lat;
         document.getElementById('long').value = lng;
 
-        document.getElementById('location').value = lat + ', ' + lng;
+        const geocoder = new google.maps.Geocoder;
+        geocoder.geocode( { 'address': lat + ', ' + lng }, (results, status) => {
+            if (status == 'OK') 
+            {
+                document.getElementById('location').value = results[0].address_components[2].long_name + ', ' + results[0].address_components[4].long_name + ', Australia';
+            } 
+            else 
+            {
+                console.log('Geocode was not successful for the following reason: ' + status);
+            }
+        });
     }
 
     function error()
     {
-			alert('Unable to retrieve your location');
-		}
+		alert('Unable to retrieve your location');
+	}
 
     navigator.geolocation.getCurrentPosition(success, error);
-}
-
-/**
- * Initialises the map displayed on the services page
- */
-function initMap()
-{
-    var coord = {lat: -31.986, lng: 115.822}; // need to change to service accomodation latlng
-    var map = new google.maps.Map(document.getElementById('map'),
-    {
-        zoom: 14,
-        center: coord,
-        disableDefaultUI: true,
-        zoomControl: true
-    });
-    var cityCircle = new google.maps.Circle({
-        strokeColor: '#FF0000',
-        strokeOpacity: 0.5,
-        strokeWeight: 2,
-        fillColor: '#FF0000',
-        fillOpacity: 0.25,
-        map: map,
-        center: coord,
-        radius: 1 * 1000 //radius in metres
-    });
-}
-
-/**
- * Map that displays on the user location
- */
-function userMap()
-{
-    var coord = {lat: -31.986, lng: 115.822}; // need to change to user current latlng
-    var map = new google.maps.Map(document.getElementById('userloc'),
-    {
-        zoom: 14,
-        center: coord,
-        disableDefaultUI: true
-    });
-
-    var marker = new google.maps.Marker({
-        position: coord,
-        map: map
-      });
 }

@@ -9,19 +9,19 @@ block content
         .row
             .col-md-8
                 h1= title
-    form(id="locationForm")
+    form(id='locationForm')
         .form-group
             .row
                 .col-md-8.col-xs-12
-                    input.form-control.input-lg(type="text", name="location", placeholder="Location e.g. Subiaco" autocomplete="on")#location
-                    input(type="hidden", name="lat", id="lat")
-                    input(type="hidden", name="long", id="long")
+                    input.form-control.input-lg(type='text', name='location', placeholder='Location e.g. Subiaco' autocomplete='on')#location
+                    input(type='hidden', name='lat', id='lat')
+                    input(type='hidden', name='long', id='long')
                     .spacer-sm
                       .row
-                          .col-md-6.col-sm-8.text-left(style="margin-top: 3px;")
-                            a(style="padding-left: 18px;")
+                          .col-md-6.col-sm-8.text-left(style='margin-top: 3px;')
+                            a(style='padding-left: 18px;')
                             | Use 
-                            a#get_location(href='javascript: geoloc();', class="geoloc" style="color: #999;")
+                            a(href='javascript: geoloc();', class='geoloc' style='color: #999;')#get_location
                                 | current location
                 .col-md-2.col-xs-6.text-right
                     a(href='#',data-toggle='modal',data-target='#signupmodalshort')
@@ -59,6 +59,5 @@ block content
                                         | &nbsp;Not Avaliable
                             .panel-body
                                 | Contact: #{location.phoneNumber}
-    script(src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous")
     script(src='/javascripts/other.js')
     script(async='', defer='',  src='https://maps.googleapis.com/maps/api/js?key='+process.env.embed_maps_api+'&libraries=places&callback=initialize')

@@ -69,10 +69,22 @@ div[class^="col-"] {
 }*/
 
 /*CSS for user map ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-#user-panel {
-    border: transparent;
-    box-shadow: none;
+#userloc {							
+    border-radius: 5%;
+    height: 250px;
+    width:  250px;
 }
+
+#user-panel {   
+    border: transparent;   
+    box-shadow: none; 
+    padding: 0%;
+}
+
+/*CSS for service map ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+#servmap {
+    height: 50%;
+  }
 
 /*CSS for email ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 #msg, #mail { resize: none; }

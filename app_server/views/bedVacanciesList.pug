@@ -12,10 +12,6 @@ block content
   .row
     .col-xs-12.col-sm-6
         .panel#user-panel
-          style.
-            #userloc {
-              height: 50%;
-            }
           .panel-body
             #userloc
             |
@@ -57,7 +53,7 @@ block content
         .panel.panel-default
           .panel-heading
             a(href='/location/'+dlocation.uri, style="text-decoration: none; color: inherit;")
-              h2.panel-title= dlocation.name + ' ' + dlocation.address.suburb
+              h2.panel-title= dlocation.name + ', ' + dlocation.address.suburb
           .row
             .col-md-3.col-sm-4.col-xs-12
               a(href='/location/'+dlocation.uri)
@@ -82,6 +78,27 @@ block content
                 a(href='#',data-toggle="modal",data-target="#contactmodal"+dlocation.uri)
                   button.btn.btn-lg.btn-default
                     | Contact
+  script.
+    /**
+    * Map that displays on the user location
+    */
+    function userMap()
+    {
+        const lat = Number("#{userCoords.lat}");
+        const long = Number("#{userCoords.long}");
+        const coord = {lat: lat, lng: long}; // need to change to user current latlng
+        const map = new google.maps.Map(document.getElementById('userloc'), {
+          zoom: 14,
+          center: coord,
+          disableDefaultUI: true,
+          zoomControl: false,
+          gestureHandling: 'none'
+        });
+
+        const marker = new google.maps.Marker({
+          position: coord,
+          map: map
+        });
+    }
   script(src='/javascripts/requests.js')
-  script(src='/javascripts/other.js')
   script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key='+process.env.embed_maps_api+'&callback=userMap')
