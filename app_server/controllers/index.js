@@ -41,7 +41,7 @@ function findService(callback, type) {
         });
       }
     })
-    .catch((err) => { console.log('[ERROR] LocationsController: '.concat(err)); });
+    .catch((err) => { console.log('[ERROR] IndexController: '.concat(err)); });
 }
 
 /**
