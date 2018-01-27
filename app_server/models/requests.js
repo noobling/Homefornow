@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
 /**
- * Schema for the accommodation requests that the homeless youth make.
+ * Schema for youth people's requests for accommodation.
+ * @type {mongoose.Schema}
  */
 const requestSchema = new mongoose.Schema({
   // Youth's first name
@@ -18,7 +19,7 @@ const requestSchema = new mongoose.Schema({
   gender: {
     type: String,
     required: true,
-    enum: ['Male', 'Female', 'Unspecified'],
+    enum: ['Male', 'Female', 'Other'],
   },
   // Age
   age: {
@@ -28,19 +29,23 @@ const requestSchema = new mongoose.Schema({
   // Phone Number
   phoneNumber: {
     type: String,
-    required: true,
+    required: false,
+  },
+  email: {
+    type: String,
+    required: false,
   },
   // Does the youth have a disability
   hasDisability: {
     type: Boolean,
-    required: true,
+    required: false,
   },
   // Child
   hasChild: {
     type: Boolean,
     required: true,
   },
-  // True if requesting long term accommodation, false otherwise
+  // True if requesting long term service, false otherwise
   isLongTerm: {
     type: Boolean,
     required: true,
@@ -57,7 +62,7 @@ const requestSchema = new mongoose.Schema({
     default: null,
     required: false,
   },
-  // Has an service provider satisfied the request
+  // Has a service provider satisfied the request
   isSatisfied: {
     type: Boolean,
     default: false,
@@ -65,7 +70,8 @@ const requestSchema = new mongoose.Schema({
   },
   // ID of the service provider that satisfied the request
   satisfiedBy: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    default: null,
     required: false,
   },
 });

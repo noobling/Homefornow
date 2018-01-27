@@ -68,14 +68,32 @@ div[class^="col-"] {
   border-radius: 8px;
 }*/
 
+/*CSS for user map ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+#userloc {							
+    border-radius: 5%;
+    height: 250px;
+    width:  250px;
+}
+
+#user-panel {   
+    border: transparent;   
+    box-shadow: none; 
+    padding: 0%;
+}
+
+/*CSS for service map ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+#servmap {
+    height: 50%;
+  }
+
 /*CSS for email ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 #msg, #mail { resize: none; }
 
-#email-info, #sms-info { 
+#email-info, #sms-info {
     color: #999999;
 }
 
-#email-info:hover, #sms-info:hover{ 
+#email-info:hover, #sms-info:hover{
     color: #333;
 }
 
@@ -84,7 +102,7 @@ div[class^="col-"] {
     display: inline;
 }
 
-.tooltip1:hover::before{ 
+.tooltip1:hover::before{
     border: solid;
     border-color: #333 transparent;
     border-width: 6px 6px 0 6px;
@@ -106,7 +124,7 @@ div[class^="col-"] {
     position: absolute;
     z-index: 98;
     width: 230px;
-    
+
 }
 
 /*CSS for custom navbar ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

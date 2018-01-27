@@ -1,5 +1,5 @@
-mixin contactModal(serviceName)
-    .modal.fade(id='contactmodal'+serviceName.replace(/\s/g,''),role='dialog')
+mixin contactModal(serviceName, serviceId, available, phoneNumber, uri)
+    .modal.fade(id="contactmodal"+uri,role="dialog")
         .modal-dialog.modal-sm
             .modal-content
                 .modal-header
@@ -7,21 +7,22 @@ mixin contactModal(serviceName)
                     img.img.img-responsive.img-squared(src='https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png')
                 .modal-body
                     .text-center
-                        h4 93471810
+                        h4=phoneNumber
                         h5= serviceName.replace(/\s/g,'').toLowerCase() + '.com'
                         a(href='#')
                             button.btn.btn-default Call Us
-                        a(data-toggle='modal', href='#numbermodal')
-                            button(type='button', data-dismiss='modal').btn.btn-default Call You
+                        if available
+                          a(data-toggle="modal", href="#numbermodal"+uri)
+                              button(type="button", data-dismiss="modal").btn.btn-default Call You
 
-    .modal.fade(id='numbermodal',role='dialog')
+    .modal.fade(id="numbermodal"+uri,role="dialog")
         .modal-dialog.modal-sm
             .modal-content
                 .modal-header
                     button(type='button', data-dismiss='modal').close &times;
                     span.pull-left
-                        a(data-toggle='modal', href='#contactmodal'+serviceName)
-                            button(type='button', data-dismiss='modal').close
+                        a(data-toggle="modal", href="#contactmodal"+uri)
+                            button(type="button", data-dismiss="modal").close
                                 span.glyphicon.glyphicon-arrow-left
                         //- a(data-toggle='modal', href='#numbermodal')
                         //-     button(type='button', data-dismiss='modal').btn.btn-default Calls us
@@ -29,20 +30,27 @@ mixin contactModal(serviceName)
                 .modal-body
                     form
                         .form-group
-                            label(for='number') Phone Number
-                            input.form-control(type='text')#number
-                    .text-right
-                        a(data-toggle='modal', href='#waitmodal')
-                            button(type='button', data-dismiss='modal').btn.btn-default Submit
-                            
-    .modal.fade(id='waitmodal',role='dialog')
+                            label(for="number") Phone Number
+                            input.form-control(type="text", name="number")
+                        .text-center
+                            label - and/or - 
+                        .form-group
+                            label(for="email") Email
+                            input.form-control(type="text", name="email")
+                        .form-group
+                            input(type="hidden", name="serviceId", value=serviceId)
+                        .form-group
+                            .text-right                                
+                                a(data-toggle="modal", href="#waitmodal"+uri)
+                                    button(data-dismiss="modal", onclick='return submitPhoneNumber(this.parentNode.parentNode.parentNode.parentNode)').btn.btn-default Submit
+    .modal.fade(id="waitmodal"+uri,role="dialog")
         .modal-dialog.modal-sm
             .modal-content
                 .modal-header
                     button(type='button', data-dismiss='modal').close &times;
                     span.pull-left
-                        a(data-toggle='modal', href='#numbermodal')
-                            button(type='button', data-dismiss='modal').close
+                        a(data-toggle="modal", href="#numbermodal"+uri)
+                            button(type="button", data-dismiss="modal").close
                                 span.glyphicon.glyphicon-arrow-left
                         //- a(data-toggle='modal', href='#numbermodal')
                         //-     button(type='button', data-dismiss='modal').btn.btn-default Calls us

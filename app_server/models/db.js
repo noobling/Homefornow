@@ -56,7 +56,6 @@ process.on('SIGTERM', () => {
   });
 });
 
-require('./accommodation');
 require('./users');
 require('./requests');
 require('./services');

@@ -3,20 +3,29 @@ extends navbarDefault
 block content
   .row.page-header
     .col-lg-12
-      h1= title
+      h1=location.name
   .row
     .col-xs-12.col-md-9
       .row
         .col-xs-12.col-sm-6
-          .panel.panel-default
-            .panel-heading
-              h2.panel-title Office Hours
-            .panel-body
-              | Weekdays: #{location.opening} - #{location.closing}
-              br
-              | Saturday: Closed
-              br
-              | Sunday: Closed   
+          if location.hours
+            .panel.panel-default
+              .panel-heading
+                h2.panel-title Office Hours
+              .panel-body#officeHours
+                | Monday: #{location.hours.mon.open} - #{location.hours.mon.close}
+                br
+                | Tuesday: #{location.hours.tue.open} - #{location.hours.tue.close}
+                br
+                | Wednesday: #{location.hours.wed.open} - #{location.hours.wed.close}   
+                br
+                | Thursday: #{location.hours.thu.open} - #{location.hours.thu.close}
+                br
+                | Friday: #{location.hours.fri.open} - #{location.hours.fri.close}
+                br
+                | Saturday: #{location.hours.sat.open} - #{location.hours.sat.close}
+                br
+                | Sunday: #{location.hours.sun.open} - #{location.hours.sun.close}
           .panel.panel-default
             .panel-heading
               h2.panel-title Facilities
@@ -38,19 +47,73 @@ block content
         .col-xs-12.col-sm-6.location-map
           .panel.panel-default
             .panel-heading
-              h2.panel-title= map.title
-              style.
-                #map {
-                  height: 50%;
-                }
-            .panel-body
-              #map
+              h2.panel-title Location
+              -var lat = location.address.coordinates.coordinates[1]
+              -var long = location.address.coordinates.coordinates[0]
+            .panel-body(style='padding: 1%;')
+              #servmap
               |
     .col-xs-12.col-md-3              
-      p.lead About #{location.name}
-      p= additionalInfo
-      a(href='https://www.missionaustralia.com.au/',target='_blank').btn.btn-lg.btn-default Learn More   
+      p.lead About
+      p= location.additionalInfo
+      if location.website
+        a(href=location.website, target='_blank').btn.btn-lg.btn-default Learn More
       p
         | &nbsp;   
-  script(src='/javascripts/other.js')
+    if images != null && images.length > 0
+      .col-xs-12.col-md-3
+        .panel.panel-default
+          .panel-heading
+            h2.panel-title Gallery
+          .panel-body
+            #myCarousel.carousel.slide(data-ride='carousel', data-interval='false')
+              // Indicators
+              ol.carousel-indicators
+                li.active(data-target='#myCarousel', data-slide-to='0')
+                li(data-target='#myCarousel', data-slide-to='1')
+                li(data-target='#myCarousel', data-slide-to='2')
+              // Wrapper for slides
+              .carousel-inner
+                -var index = 1
+                each image in images
+                  if index == 1
+                    .item.active
+                      img(src=image, alt='Image ' + index++)
+                  else
+                    .item
+                      img(src=image, alt='Image ' + index++)
+                // Left and right controls
+                a.left.carousel-control(href='#myCarousel', data-slide='prev')
+                  span.glyphicon.glyphicon-chevron-left
+                  span.sr-only Previous
+                a.right.carousel-control(href='#myCarousel', data-slide='next')
+                  span.glyphicon.glyphicon-chevron-right
+                  span.sr-only Next
+  script.
+    /**
+    * Initialises the map displayed on the services page
+    */
+    function initMap()
+    {
+        const lat = Number("#{lat}");
+        const long = Number("#{long}");
+        const coord = {lat: lat, lng: long}; // need to change to service accomodation latlng
+        const map = new google.maps.Map(document.getElementById('servmap'),
+        {
+            zoom: 13,
+            center: coord,
+            disableDefaultUI: true,
+            zoomControl: true
+        });
+        const cityCircle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.5,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.25,
+            map: map,
+            center: coord,
+            radius: 1.75 * 1000 //radius in metres
+        });
+    }
   script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key='+process.env.embed_maps_api+'&callback=initMap')

@@ -14,7 +14,11 @@ const crypto = require('crypto');
  *  super_admin: Can perform CRUD operations on admin accounts and other super_admin accounts
  */
 const userSchema = new mongoose.Schema({
-  // Name
+  /*
+  * Name is either:
+  *  - a person's first and last name, or
+  *  - the name of a service provider
+  */
   name: {
     type: String,
     required: true,
@@ -42,21 +46,11 @@ const userSchema = new mongoose.Schema({
     enum: ['service_provider', 'admin', 'super_admin'],
   },
   // The IDs of the service providers that this user is a member of
-  accommodation: {
+  service: {
     type: [String],
     required: false,
   },
 });
-
-// accountSchema
-// .virtual('name')
-// .get(function () {
-//   if(this.isSharedAccount) {
-//     console.log("\n\nhey\n\n");
-//     return this.accommodationName;
-//   }
-//   return this.firstName;
-// })
 
 userSchema.methods.setPassword = function setPassword(password) {
   this.salt = crypto.randomBytes(16).toString('hex');

@@ -43,7 +43,20 @@ describe('services : test', () => {
   describe('POST /addService', () => {
     it('should create a new service successfully given all the valid details and user is logged in', (done) => {
       const serviceJson = {
-        available: '',
+        name: 'Youth Peoples Care',
+        suburb: 'Cannington',
+        postcode: 6107,
+        state: 'WA',
+        lat: 32.0170,
+        long: 115.9340,
+        minAge: 15,
+        maxAge: 20,
+        number: '93809316',
+        serviceType: 'crisis',
+        stayLength: 2,
+        available: true,
+        website: 'www.rand-web.com',
+        uri: 'youth-peoples-care',
         description: 'very good service',
       };
       const req = request.agent(server).post('/addService');
