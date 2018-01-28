@@ -386,6 +386,68 @@
 
         
             
+<h4 class="name" id="nexmo"><span class="type-signature">(constant) </span>nexmo<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    SMS initialisation
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_communications.js.html">controllers/communications.js</a>, <a href="controllers_communications.js.html#line7">line 7</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="openCloseSchema"><span class="type-signature">(constant) </span>openCloseSchema<span class="type-signature"> :mongoose.Schema</span></h4>
 
 
@@ -664,6 +726,68 @@ Set open and close to 0 if the service provider is closed.
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="models_services.js.html">models/services.js</a>, <a href="models_services.js.html#line95">line 95</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="transporter"><span class="type-signature">(constant) </span>transporter<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Email initialisation
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_communications.js.html">controllers/communications.js</a>, <a href="controllers_communications.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -1555,6 +1679,164 @@ Redirects to the service provider's page.
     
 
     
+    <h4 class="name" id="email"><span class="type-signature"></span>email<span class="signature">(req, res)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Send an email with node mailer
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_communications.js.html">controllers/communications.js</a>, <a href="controllers_communications.js.html#line99">line 99</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="findService"><span class="type-signature"></span>findService<span class="signature">(callback, type)</span><span class="type-signature"></span></h4>
     
 
@@ -2122,6 +2404,164 @@ one transitional and one long term service provider.
     
 
     
+    <h4 class="name" id="notification"><span class="type-signature"></span>notification<span class="signature">(req, res)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Sends an email and text notification with the given message
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_communications.js.html">controllers/communications.js</a>, <a href="controllers_communications.js.html#line123">line 123</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="profile"><span class="type-signature"></span>profile<span class="signature">(req, res)</span><span class="type-signature"></span></h4>
     
 
@@ -2405,6 +2845,391 @@ one transitional and one long term service provider.
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="controllers_authentication.js.html">controllers/authentication.js</a>, <a href="controllers_authentication.js.html#line17">line 17</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="sendEmail"><span class="type-signature"></span>sendEmail<span class="signature">(to, subject, text, res)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Send an email to the given email (to)
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>to</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>subject</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>text</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_communications.js.html">controllers/communications.js</a>, <a href="controllers_communications.js.html#line71">line 71</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="sendSMS"><span class="type-signature"></span>sendSMS<span class="signature">(number, message, res)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Send an SMS to the given number
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>number</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>message</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_communications.js.html">controllers/communications.js</a>, <a href="controllers_communications.js.html#line38">line 38</a>
     </li></ul></dd>
     
 
@@ -2915,6 +3740,164 @@ https://docs.mongodb.com/manual/core/2dsphere/
 
 
         
+            
+
+    
+
+    
+    <h4 class="name" id="sms"><span class="type-signature"></span>sms<span class="signature">(req, res)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Send an sms to given number
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_communications.js.html">controllers/communications.js</a>, <a href="controllers_communications.js.html#line111">line 111</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     
 
     
@@ -2930,13 +3913,13 @@ https://docs.mongodb.com/manual/core/2dsphere/
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#about">about</a></li><li><a href="global.html#addPhoneToRequest">addPhoneToRequest</a></li><li><a href="global.html#addRequest">addRequest</a></li><li><a href="global.html#addressSchema">addressSchema</a></li><li><a href="global.html#addService">addService</a></li><li><a href="global.html#ageSchema">ageSchema</a></li><li><a href="global.html#bedSchema">bedSchema</a></li><li><a href="global.html#dashboard">dashboard</a></li><li><a href="global.html#findService">findService</a></li><li><a href="global.html#findServiceOfAvailability">findServiceOfAvailability</a></li><li><a href="global.html#gracefulShutdown">gracefulShutdown</a></li><li><a href="global.html#hoursSchema">hoursSchema</a></li><li><a href="global.html#index">index</a></li><li><a href="global.html#openCloseSchema">openCloseSchema</a></li><li><a href="global.html#profile">profile</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#requestSchema">requestSchema</a></li><li><a href="global.html#service">service</a></li><li><a href="global.html#serviceSchema">serviceSchema</a></li><li><a href="global.html#showLocation">showLocation</a></li><li><a href="global.html#showLocations">showLocations</a></li><li><a href="global.html#tagSchema">tagSchema</a></li><li><a href="global.html#userSchema">userSchema</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#about">about</a></li><li><a href="global.html#addPhoneToRequest">addPhoneToRequest</a></li><li><a href="global.html#addRequest">addRequest</a></li><li><a href="global.html#addressSchema">addressSchema</a></li><li><a href="global.html#addService">addService</a></li><li><a href="global.html#ageSchema">ageSchema</a></li><li><a href="global.html#bedSchema">bedSchema</a></li><li><a href="global.html#dashboard">dashboard</a></li><li><a href="global.html#email">email</a></li><li><a href="global.html#findService">findService</a></li><li><a href="global.html#findServiceOfAvailability">findServiceOfAvailability</a></li><li><a href="global.html#gracefulShutdown">gracefulShutdown</a></li><li><a href="global.html#hoursSchema">hoursSchema</a></li><li><a href="global.html#index">index</a></li><li><a href="global.html#nexmo">nexmo</a></li><li><a href="global.html#notification">notification</a></li><li><a href="global.html#openCloseSchema">openCloseSchema</a></li><li><a href="global.html#profile">profile</a></li><li><a href="global.html#register">register</a></li><li><a href="global.html#requestSchema">requestSchema</a></li><li><a href="global.html#sendEmail">sendEmail</a></li><li><a href="global.html#sendSMS">sendSMS</a></li><li><a href="global.html#service">service</a></li><li><a href="global.html#serviceSchema">serviceSchema</a></li><li><a href="global.html#showLocation">showLocation</a></li><li><a href="global.html#showLocations">showLocations</a></li><li><a href="global.html#sms">sms</a></li><li><a href="global.html#tagSchema">tagSchema</a></li><li><a href="global.html#transporter">transporter</a></li><li><a href="global.html#userSchema">userSchema</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Jan 26 2018 20:19:17 GMT+0800 (AWST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Jan 27 2018 15:27:38 GMT+0800 (AWST)
 </footer>
 
 <script> prettyPrint(); </script>

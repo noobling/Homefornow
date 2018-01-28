@@ -19,7 +19,8 @@ const services = require('./app_server/routes/services');
 const app = express();
 
 // Firebase admin setup
-if (!process.env.NODE_ENV === 'test') {
+
+if (!(process.env.NODE_ENV === 'test')) {
   const serviceAccount = require('./homefornow-fd495-firebase-adminsdk-xy17w-62ee8ab849.json');
 
   admin.initializeApp({

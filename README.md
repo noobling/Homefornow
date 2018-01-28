@@ -1,7 +1,7 @@
 # anglicare-sprint-week
 
 [![Build Status](https://travis-ci.org/noobling/anglicare-sprint-week.svg?branch=master)](https://travis-ci.org/noobling/anglicare-sprint-week)
-[![Maintainability](https://api.codeclimate.com/v1/badges/318b1618e791619e310a/maintainability)](https://codeclimate.com/github/noobling/anglicare-sprint-week/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d12c82b2907f866ba297/maintainability)](https://codeclimate.com/github/noobling/Homefornow/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/318b1618e791619e310a/test_coverage)](https://codeclimate.com/github/noobling/anglicare-sprint-week/test_coverage)
 
 ## Context
