@@ -93,8 +93,8 @@ function sendEmail(to, subject, text, res) {
 /**
  * Send an email with node mailer
  *
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 module.exports.email = (req, res) => {
   const { message, subject, email } = req.body;
@@ -105,8 +105,8 @@ module.exports.email = (req, res) => {
 /**
  * Send an sms to given number
  *
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 module.exports.sms = (req, res) => {
   const { number, message } = req.body;
@@ -117,8 +117,8 @@ module.exports.sms = (req, res) => {
 /**
  * Sends an email and text notification with the given message
  *
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 module.exports.notification = (req, res) => {
   const { email, subject, message, number } = req.body;
