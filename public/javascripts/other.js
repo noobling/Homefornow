@@ -44,8 +44,8 @@ function geoloc()
 
     if (!navigator.geolocation)
     {
-		alert('Geolocation is not supported by your browser');
-	}
+	alert('Geolocation is not supported by your browser');
+    }
 
     function success(position)
     {
@@ -81,8 +81,8 @@ function geoloc()
 
     function error()
     {
-		alert('Unable to retrieve your location');
-	}
+	alert('Unable to retrieve your location');
+    }
 
     navigator.geolocation.getCurrentPosition(success, error);
 }
