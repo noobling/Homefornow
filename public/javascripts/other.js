@@ -60,7 +60,6 @@ function geoloc()
             {
                 let locality, state, country;
                 const addressComponents = results[0].address_components;
-                console.log(addressComponents);
 
                 for (i = 0; i < addressComponents.length; ++i)
                 {                    
