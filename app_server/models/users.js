@@ -3,23 +3,22 @@ const crypto = require('crypto');
 
 /**
  * General schema for all users of the application that have accounts e.g.
- * service providers, admins, super_admin
- *
- * THIS SCHEMA IS NOT FOR THE HOMELESS-YOUTH, they are represented by requestSchema
+ * youth, service providers, admins
  *
  * Role:
+ *  youth: Can create and read their own requests.
  *  service_provider: Can perform CRUD operations on their own service, can
  *                    view homeless youth who need a bed
  *  admin: Have full access to everything on the site and have CRUD operations on all services
- *  super_admin: Can perform CRUD operations on admin accounts and other super_admin accounts
  */
 const userSchema = new mongoose.Schema({
-  /*
-  * Name is either:
-  *  - a person's first and last name, or
-  *  - the name of a service provider
-  */
-  name: {
+  // First name
+  firstName: {
+    type: String,
+    required: true,
+  },
+  // Last name
+  lastName: {
     type: String,
     required: true,
   },
@@ -28,6 +27,27 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
+  },
+  // Phone Number
+  phoneNumber: {
+    type: String,
+    required: false,
+  },
+  // Date of birth
+  dob: {
+    type: Date,
+    required: true,
+  },
+  // Gender
+  gender: {
+    type: String,
+    required: true,
+    enum: ['Male', 'Female', 'Other'],
+  },
+  // Does the user have a disability
+  hasDisability: {
+    type: Boolean,
+    required: false,
   },
   // Hash for password
   hash: {
@@ -39,17 +59,22 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // The account holder's role: Service provider
+  // The user's role
   role: {
     type: String,
-    default: 'service_provider',
-    enum: ['service_provider', 'admin', 'super_admin'],
+    default: 'youth',
+    enum: ['youth', 'service_provider', 'admin'],
   },
-  // The IDs of the service providers that this user is a member of
+  // Service providers that this user works for
   service: {
-    type: [String],
+    type: [mongoose.Schema.Types.ObjectId],
     required: false,
   },
+  // Requests that the user has created
+  requests: {
+    type: [mongoose.Schema.Types.ObjectId],
+    required: false,
+  }
 });
 
 userSchema.methods.setPassword = function setPassword(password) {
