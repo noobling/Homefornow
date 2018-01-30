@@ -31,9 +31,8 @@ module.exports.register = (req, res) => {
   }
 
   if (!(req.body.role === 'youth' || req.body.role === 'service_provider')) {
-    sendJSONresponse(res, 400, {
-      message: 'Invalid role',
-    });
+    sendJSONresponse(res, 400, { message: 'Invalid role' });
+    return;
   }
 
   const user = new User();
@@ -46,7 +45,7 @@ module.exports.register = (req, res) => {
   user.role = req.body.role;
 
   if (req.body.role === 'youth') {
-    user.hasDisability = req.body.hasDisability;
+    user.hasDisability = req.body.hasDisability === 'yes';
   }
 
   user.setPassword(req.body.password);
@@ -58,4 +57,4 @@ module.exports.register = (req, res) => {
       sendJSONresponse(res, 200, { message: 'successs' });
     }
   });
-}
+};

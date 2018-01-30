@@ -12,19 +12,15 @@ const Service = mongoose.model('Service');
 module.exports.addRequest = (req, res) => {
   const request = new Request();
 
-  request.firstName = req.body.fName;
-  request.lastName = req.body.lName;
-  request.gender = req.body.gender;
-  request.age = req.body.age;
+  request.youth = req.user.id;
   request.hasChild = req.body.child === 'yes';
   request.isLongTerm = req.params.lengthOfStay === 'long_term';
 
-  request.save((err, doc) => {
+  request.save((err) => {
     if (err) {
       res.status(500).json({ message: err });
     } else {
-      req.session.requestId = doc.id;
-      req.session.coordinates = [req.body.long, req.body.lat];
+      req.user.coordinates = [req.body.long, req.body.lat];
       res.redirect('/locations/'.concat(req.params.lengthOfStay));
     }
   });

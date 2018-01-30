@@ -37,26 +37,48 @@ function writeTofile(data) {
 /**
  * SEED THE USERS
  */
+const USER_ROLE = 'youth';
+const NUM_USERS = 2;
+const GENDER = ['Male', 'Female', 'Other'];
 
-const NUM_USERS = 5;
 const seededUsers = [];
 function seedUsers() {
   for (let i = 0; i < NUM_USERS; i += 1) {
+    const year = Math.floor(2003 - (Math.random() * 10)); // 15 to 25 y.o. as of 2018
+    const month = Math.floor((Math.random() * 12) + 1);
+    const day = Math.floor((Math.random() * 30) + 1); // assume 30 days in month
+
+    // console.log('DOB: ' + day + '-' + month + '-' + year);
+
     const user = new User();
+
     const seedUser = {
-      name: faker.Internet.userName(),
+      firstName: faker.Name.firstName(),
+      lastName: faker.Name.lastName(),
       email: faker.Internet.email(),
+      phoneNumber: faker.PhoneNumber.phoneNumberFormat(0),
+      dob: new Date().setFullYear(year, month, day),
+      gender: GENDER[Math.floor(Math.random() * GENDER.length)],
+      hasDisability: Math.random() < 0.5,
       password: faker.Internet.userName(),
+      role: USER_ROLE
     };
-    user.name = seedUser.name;
+
+    user.firstName = seedUser.firstName;
+    user.lastName = seedUser.lastName;
     user.email = seedUser.email;
+    user.phoneNumber = seedUser.phoneNumber;
+    user.dob = seedUser.dob;
+    user.gender = seedUser.gender;
+    user.hasDisability = seedUser.hasDisability;
     user.setPassword(seedUser.password);
+    user.role = seedUser.role;
 
     user.save((err) => {
       if (err) {
         console.log(`[ERROR] Seeding user: ${err}`);
       } else {
-        console.log(`[SUCCESS] Seeded user: ${seedUser.name}`);
+        console.log(`[SUCCESS] Seeded user: ${seedUser.firstName} ${seedUser.lastName}`);
       }
     });
 

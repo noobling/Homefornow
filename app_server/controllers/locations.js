@@ -17,12 +17,12 @@ const Request = mongoose.model('Request');
  * @param  {Object} res Express response object.
  */
 module.exports.showLocations = (req, res) => {
-  Request.findById(req.session.requestId, 'hasChild hasDisability gender').exec()
+  Request.findOne({ youth: req.user.id }, 'hasChild').exec()
     .then((request) => {
       const longTerm = (req.params.lengthOfStay === 'long_term');
       const type = (longTerm ? ['long'] : ['crisis', 'transitional']);
       const child = (request.hasChild ? [true] : [true, false]);
-      const disability = (request.hasDisability ? [true] : [true, false]);
+      const disability = (req.user.hasDisability ? [true] : [true, false]);
 
       let gender = ['Either']; // Other
       if (gender === 'Male') {
@@ -41,7 +41,7 @@ module.exports.showLocations = (req, res) => {
             {
               'address.coordinates.coordinates': {
                 $near: {
-                  $geometry: { type: 'Point', coordinates: req.session.coordinates },
+                  $geometry: { type: 'Point', coordinates: [req.body.long, req.body.lat] },
                 },
               },
             },
@@ -68,8 +68,8 @@ module.exports.showLocations = (req, res) => {
         locations: available,
         dlocations: unavailable,
         userCoords: {
-          long: req.session.coordinates[0],
-          lat: req.session.coordinates[1],
+          long: req.body.long,
+          lat: req.body.lat,
         },
       });
     })
@@ -151,3 +151,19 @@ module.exports.showLocation = (req, res) => {
       res.status(500).json({ message: err });
     });
 };
+
+// Join the user with their request to get gender, hasDisability and hasChild
+// User.aggregate([
+//   { $limit: 1 },
+//   { $match: { _id: req.user.id } },
+//   {
+//     $lookup: {
+//       from: 'request',
+//       localField: '_id',
+//       foreignField: 'youth',
+//       pipline: [{ $project: { hasChild: 1 } }], // only need hasChild
+//       as: 'request'
+//     }
+//   },
+//   { $project: { gender: 1, hasDisability: 1, request: 1 } }
+// ])
