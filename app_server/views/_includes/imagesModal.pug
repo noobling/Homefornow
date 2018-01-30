@@ -1,0 +1,35 @@
+.modal.fade(id='imagesmodal',role='dialog')
+    .modal-dialog.modal-lg
+        .modal-content
+            .modal-header
+                button(type='button',data-dismiss='modal').close &times;
+                h4.modal-title Edit Profile Images
+            .modal-body
+              .row
+                .col-lg-12
+                  h3 Images
+              .row
+                .col-xs-10
+                  | Images uploaded: 
+                  span.badge.badge-primary#random 0/6
+                .col-xs-2
+                  a.btn.btn-success.pull-right Add
+              .row.list-group
+                .item.col-xs-12.col-sm-6.col-md-4
+                  .thumbnail
+                    img.img-responsive.group.list-group-image(src="/images/placeholder.png", alt="First Image")
+                    .caption
+                      .row.text-center
+                        .col-xs-6
+                          a.btn.btn-error.btn-sm Edit
+                        .col-xs-6
+                          a.btn.btn-danger.btn-sm Delete
+                .item.col-xs-12.col-sm-6.col-md-4
+                  .thumbnail
+                    img.img-responsive.group.list-group-image(src="/images/placeholder.png", alt="Second Image")
+                    .caption
+                      .row.text-center
+                        .col-xs-6
+                          a.btn.btn-error.btn-sm Edit
+                        .col-xs-6
+                          a.btn.btn-danger.btn-sm Delete

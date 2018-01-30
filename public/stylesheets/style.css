@@ -58,6 +58,16 @@ div[class^="col-"] {
   margin: 3px;
 }
 
+/* CSS for modals ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.modal-body .row {
+  padding-bottom: 16px;
+}
+
+#random {
+  vertical-align: middle;
+}
+
 /*CSS for places autocomplete ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .pac-icon {
   width: 0;
