@@ -69,5 +69,5 @@ module.exports.dashboard = (req, res) => {
  * @param  {Object} res Express response object.
  */
 module.exports.profile = (req, res) => {
-  res.send('This is the Services Profile Page, rendered by the service.js Controller');
+  res.render('editImages');
 };
