@@ -18,7 +18,7 @@ const User = mongoose.model('User');
  * HELPER FUNCTIONS
  */
 function writeTofile(data) {
-  const fileName = 'seeded_users.json'
+  const fileName = 'seeded_users.json';
   fs.writeFile(
     path.join(__dirname, fileName),
     JSON.stringify(data, null, 2),

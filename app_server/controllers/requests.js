@@ -20,7 +20,6 @@ module.exports.addRequest = (req, res) => {
     if (err) {
       res.status(500).json({ message: err });
     } else {
-      req.user.coordinates = [req.body.long, req.body.lat];
       res.redirect('/locations/'.concat(req.params.lengthOfStay));
     }
   });
