@@ -90,14 +90,38 @@ const END_HOURS = [
 
 const GENDER = ['Male', 'Female', 'Either'];
 
+const BED_TYPE = ['Single', 'ParentChild', 'Couple', 'Family'];
+
+const SERVICE_TYPES = Service.schema.path('serviceType').enumValues;
+
+/**
+ * Returns a random integer between min and max. Includes min and max.
+ * @param  {number} min Minimum random number possible.
+ * @param  {number} max Maximum random number posisble.
+ * @return {number}     Random number between min and max.
+ */
+function randInt(min, max) {
+  const range = (max - min) + 1;
+  return Math.floor(Math.random() * range) + min;
+}
+
+/**
+ * Returns a random element from the specified array.
+ * @param  {Array} arr The array to return an element from.
+ * @return {*}     A random element from arr.
+ */
+function choose(arr) {
+  return arr[randInt(0, arr.length)];
+}
+
 /**
  * Returns a JSON object with random opening hours.
  * Matches the opening hours schema embedded in the Services schema.
  * @return {Object} Json object with random opening hours.
  */
 function genOpeningHours() {
-  const startHours = START_HOURS[Math.floor(Math.random() * START_HOURS.length)];
-  const endHours = END_HOURS[Math.floor(Math.random() * END_HOURS.length)];
+  const startHours = choose(START_HOURS);
+  const endHours = choose(END_HOURS);
   return {
     mon: {
       open: startHours,
@@ -140,13 +164,25 @@ function encodeURI(name) {
   return name.toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_-]/g, ''); // TODO: Check for duplicates
 }
 
+// function seedBeds(amount) {
+//   const beds = [];
+//   let bed;
+//   for (let i = 0; i < amount; i += 1) {
+//     bed = {
+//       gender: choose(GENDER),
+//       isDisability: Math.radom() < 0.5,
+//       bedType: choose(BED_TYPE)
+//     }
+//   }
+// }
+
 /**
  * Generates service providers with random 'Faker' information.
  * @param  {Number} numToGen Number of service providers to generate.
  */
 function seedAccomm(numToGen) {
   for (let i = 0; i < numToGen; i += 1) {
-    const randNum = Math.floor(Math.random() * SUBURBS.length);
+    const randNum = randInt(0, SUBURBS.length);
 
     const address = {
       suburb: SUBURBS[randNum],
@@ -158,29 +194,27 @@ function seedAccomm(numToGen) {
       },
     };
 
-    const serviceTypes = Service.schema.path('serviceType').enumValues;
-
     const accomm = new Service();
 
     accomm.name = faker.Company.companyName();
     accomm.address = address;
     accomm.phoneNumber = faker.PhoneNumber.phoneNumberFormat(0);
-    accomm.serviceType = serviceTypes[Math.floor(Math.random() * serviceTypes.length)];
-    accomm.gender = GENDER[Math.floor(Math.random() * GENDER.length)];
+    accomm.serviceType = choose(SERVICE_TYPES);
+    accomm.gender = choose(GENDER);
     accomm.disability = Math.random() < 0.5;
     accomm.child = Math.random() < 0.5;
-    accomm.stayLength = Math.floor((Math.random() * 10) + 1); // 1 to 10
+    accomm.stayLength = randInt(1, 10);
     accomm.website = faker.Internet.domainName();
     accomm.available = Math.random() < 0.5;
     accomm.facilities = FACILITIES;
     accomm.restrictions = RESTRICTIONS;
-    accomm.tagline = TAG_LINES[Math.floor(Math.random() * TAG_LINES.length)];
+    accomm.tagline = choose(TAG_LINES);
     accomm.description = faker.Lorem.sentences();
     accomm.additionalInfo = faker.Lorem.paragraph();
     accomm.hours = genOpeningHours();
     accomm.ageRange = {
-      minAge: Math.floor((Math.random() * 5) + 14), // 14 to 17
-      maxAge: Math.floor((Math.random() * 5) + 20), // 21 to 25
+      minAge: randInt(14, 17),
+      maxAge: randInt(21, 25)
     };
     accomm.uri = encodeURI(accomm.name);
 
