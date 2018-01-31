@@ -41,6 +41,21 @@ const COORDS = [
   [115.8965, -31.9766],
   [115.8120, -31.8980]];
 
+const BED_TAGS = [
+  'Power point',
+  'Double bed',
+  'Window',
+  'Chest of drawers',
+  'Lamp',
+  'Private room'];
+
+const BED_TAGS_COLOUR = [
+  'Orange room',
+  'Purple room',
+  'Green room',
+  'Yellow room',
+  'Blue room'];
+
 const TAG_LINES = [
   'Bringing people together',
   'A little bit of comfort',
@@ -88,10 +103,8 @@ const END_HOURS = [
   2000,
   2100];
 
-const GENDER = ['Male', 'Female', 'Either'];
-
-const BED_TYPE = ['Single', 'ParentChild', 'Couple', 'Family'];
-
+const GENDER = Service.schema.path('gender').enumValues;
+const BED_TYPE = Service.schema.path('beds.0.bedType').enumValues;
 const SERVICE_TYPES = Service.schema.path('serviceType').enumValues;
 
 /**
@@ -111,13 +124,13 @@ function randInt(min, max) {
  * @return {*}     A random element from arr.
  */
 function choose(arr) {
-  return arr[randInt(0, arr.length)];
+  return arr[randInt(0, arr.length - 1)];
 }
 
 /**
  * Returns a JSON object with random opening hours.
  * Matches the opening hours schema embedded in the Services schema.
- * @return {Object} Json object with random opening hours.
+ * @return {Object} Json object with random opening hours. Conforms to the hoursSchema.
  */
 function genOpeningHours() {
   const startHours = choose(START_HOURS);
@@ -164,17 +177,48 @@ function encodeURI(name) {
   return name.toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_-]/g, ''); // TODO: Check for duplicates
 }
 
-// function seedBeds(amount) {
-//   const beds = [];
-//   let bed;
-//   for (let i = 0; i < amount; i += 1) {
-//     bed = {
-//       gender: choose(GENDER),
-//       isDisability: Math.radom() < 0.5,
-//       bedType: choose(BED_TYPE)
-//     }
-//   }
-// }
+/**
+ * Returns an array of tags that describe a bed.
+ * @param  {boolean} coloured Are the beds classified by colour.
+ * @return {Array.<String>}   Tags that describe a bed.
+ */
+function getBedTags(coloured) {
+  const tags = [];
+
+  if (coloured) {
+    tags.push(choose(BED_TAGS_COLOUR));
+  }
+
+  const numTags = randInt(0, BED_TAGS.length);
+  BED_TAGS.sort(() => 0.5 - Math.random()); // shuffle array
+  for (let i = 0; i < numTags; i += 1) {
+    tags.push(BED_TAGS[i]);
+  }
+  return tags;
+}
+
+/**
+ * Returns an array of JSON objects that represent a service provider's beds.
+ * @param  {number}         min   Minimum number of beds to generate.
+ * @param  {number}         max   Maximum number of beds to generate.
+ * @return {Array.<Object>} An a array of service provider beds. Conforms to the bedSchema.
+ */
+function genBeds(min, max) {
+  const beds = [];
+  const coloured = Math.random() < 0.5; // Are the beds classified by colour
+  const amount = randInt(min, max);
+  for (let i = 0; i < amount; i += 1) {
+    const bed = {
+      gender: choose(GENDER),
+      isDisability: Math.random() < 0.5,
+      bedType: choose(BED_TYPE),
+      isOccupied: Math.random() < 0.5,
+      tags: getBedTags(coloured)
+    };
+    beds.push(bed);
+  }
+  return beds;
+}
 
 /**
  * Generates service providers with random 'Faker' information.
@@ -217,6 +261,7 @@ function seedAccomm(numToGen) {
       maxAge: randInt(21, 25)
     };
     accomm.uri = encodeURI(accomm.name);
+    accomm.beds = genBeds(0, 50);
 
     accomm.save((err, doc) => {
       if (err) {
@@ -229,7 +274,7 @@ function seedAccomm(numToGen) {
   return true;
 }
 
-seedAccomm(30);
+seedAccomm(10);
 
 /**
  * DONE WITH THE DB CONNECTION TIME TO CLEAN UP
