@@ -10,8 +10,12 @@ const requestSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
+  // Service provider where the youth person is requesting accommodation
+  service: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
   // Does the youth person have a child
-  // Stored in request as a person may not have a child all the time
   hasChild: {
     type: Boolean,
     default: false,
@@ -22,29 +26,23 @@ const requestSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
-  // Date the request was created
-  createdAt: {
+  // Date the request was opened
+  openedAt: {
     type: Date,
     default: Date.now,
     required: true,
   },
-  // Date the request was satisfied
-  satisfiedAt: {
+  // Date the request was closed
+  closedAt: {
     type: Date,
     default: null,
     required: false,
   },
-  // Has a service provider satisfied the request
-  isSatisfied: {
+  // Has a service provider closed the request
+  isOpen: {
     type: Boolean,
     default: false,
     required: true,
-  },
-  // ID of the service provider that satisfied the request
-  satisfiedBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    default: null,
-    required: false,
   },
 });
 

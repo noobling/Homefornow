@@ -70,7 +70,7 @@ const userSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     required: false,
   },
-  // Requests that the user has created
+  // Requests that the user has created, open or closed
   requests: {
     type: [mongoose.Schema.Types.ObjectId],
     required: false,

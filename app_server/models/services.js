@@ -233,11 +233,6 @@ const serviceSchema = new mongoose.Schema({
     type: [String],
     required: false,
   },
-  // The requests submitted to the service provider
-  requests: {
-    type: [mongoose.Schema.Types.ObjectId],
-    required: false,
-  },
   // Opening hours of the service provider
   hours: {
     type: hoursSchema,
@@ -276,6 +271,11 @@ const serviceSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  // The requests submitted to the service provider that are currently open
+  openRequests: {
+    type: [mongoose.Schema.Types.ObjectId],
+    required: false,
+  }
 });
 
 mongoose.model('Service', serviceSchema);
