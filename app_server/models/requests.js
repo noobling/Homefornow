@@ -38,12 +38,13 @@ const requestSchema = new mongoose.Schema({
     default: null,
     required: false,
   },
-  // Has a service provider closed the request
-  isOpen: {
-    type: Boolean,
-    default: false,
+  // The status of the request
+  status: {
+    type: String,
     required: true,
-  },
+    enum: ['Unseen', 'Seen', 'Accepted', 'Rejected'],
+    default: 'Unseen',
+  }
 });
 
 mongoose.model('Request', requestSchema);

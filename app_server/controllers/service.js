@@ -20,6 +20,7 @@ module.exports.service = (req, res) => {
 module.exports.addService = (req, res) => {
   if (!req.user) {
     res.status(401).json({ message: 'You must be logged in to create a new service provider.' });
+    return;
   }
 
   const service = new Service();
