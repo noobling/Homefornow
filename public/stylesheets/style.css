@@ -58,6 +58,10 @@ div[class^="col-"] {
   margin: 3px;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 /* CSS for modals ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 .modal-body .row {

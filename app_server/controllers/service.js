@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const admin = require('firebase-admin');
 
 const Service = mongoose.model('Service');
 
@@ -69,5 +70,57 @@ module.exports.dashboard = (req, res) => {
  * @param  {Object} res Express response object.
  */
 module.exports.profile = (req, res) => {
-  res.render('editImages');
+  let metadataCount = 0;
+  let listCount = 0;
+  console.log('Service URI: '.concat(req.params.serviceUri));
+  Service.findOne(
+    { uri: req.params.serviceUri },
+    'name img',
+  ).exec()
+    .then((service) => {
+      // console.log('Images: '.concat(service.img));
+      const imageList = [];
+
+      if (service.img != null && service.img.length > 0) {
+        listCount = service.img.length;
+        const bucket = admin.storage().bucket();
+
+        service.img.forEach((image) => {
+          // Get the metadata for each image reference
+          bucket.file(image).getMetadata().then((data) => {
+            // Add the media link for the image to 'imageList'
+            imageList[imageList.length] = data[0].mediaLink;
+            metadataCount += 1;
+
+            // If all the images have been added to imageList, render the page with these images
+            if (metadataCount === listCount) {
+              res.render('editImages', {
+                name: service.name,
+                images: imageList,
+              });
+            }
+          }).catch((err) => {
+            console.log('[ERROR] LocationsController: '.concat(err));
+
+            // If image metadata cannot be obtained, then load the page without the images panel
+            listCount -= 1;
+            if (metadataCount === listCount) {
+              res.render('editImages', {
+                name: service.name,
+              });
+            }
+          });
+        });
+      } else {
+        // If 'img' is not defined or is empty, render the page without the carousel
+        console.log('img not defined');
+        res.render('editImages', {
+          name: service.name,
+        });
+      }
+    })
+    .catch((err) => {
+      console.log('[ERROR] LocationsController: '.concat(err));
+      res.status(500).json({ message: err });
+    });
 };
