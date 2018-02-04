@@ -96,6 +96,7 @@ module.exports.profile = (req, res) => {
             if (metadataCount === listCount) {
               res.render('editImages', {
                 name: service.name,
+                uri: req.params.serviceUri,
                 images: imageList,
               });
             }
@@ -107,6 +108,7 @@ module.exports.profile = (req, res) => {
             if (metadataCount === listCount) {
               res.render('editImages', {
                 name: service.name,
+                uri: req.params.serviceUri,
               });
             }
           });
@@ -116,6 +118,7 @@ module.exports.profile = (req, res) => {
         console.log('img not defined');
         res.render('editImages', {
           name: service.name,
+          uri: req.params.serviceUri,
         });
       }
     })

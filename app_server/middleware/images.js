@@ -13,14 +13,11 @@ if (!(process.env.NODE_ENV === 'test')) {
 const bucket = admin.storage().bucket();
 
 function sendUploadToFirebase(req, res, next) {
-
   if (!req.file) {
     return next();
   }
 
-  console.log("Made it here!");
-
-  const firebaseName = 'images/{}'.format(req.file.originalname); // TODO fix so in the right folder too
+  const firebaseName = 'images/' + req.params.serviceUri + "/" + req.file.originalname;
   const file = bucket.file(firebaseName);
 
   const stream = file.createWriteStream({

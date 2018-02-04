@@ -16,21 +16,25 @@ router.get('/profile/:serviceUri', serviceController.profile);
 // Upload new image to service
 router.post(
   '/profile/:serviceUri/add',
-  images.multer.single('image'),
+  images.multer.single('fileAdd'),
   images.sendUploadToFirebase,
   (req, res, next) => {
+    console.log('req.file.storageObject = ', req.file.storageObject);
     if (req.file && req.file.storageObject) {
       // Get the corresponding Service from the serviceUri
       console.log('Service URI: '.concat(req.params.serviceUri));
-      Service.findOne(
+      Service.findOneAndUpdate(
         { uri: req.params.serviceUri },
-        'img',
+        { $push: { img: req.file.storageObject } },
+        { runValidators: true },
       ).exec()
         .then((service) => {
           console.log(service.img);
+          res.redirect('back');
         });
+    } else {
+      res.send('Error - not a file OR could not find req.file.storageObject');
     }
-    res.send("Error - not a file");
   },
 );
 
