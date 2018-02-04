@@ -266,6 +266,44 @@ footer {
     margin-right: 1em;
 }
 
+/*Styles for images ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.image {
+  position:relative;
+  overflow:hidden;
+  padding-bottom:100%;
+  transition: .3s ease;
+}
+.image img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.middle {
+  transition: .3s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.image:hover img {
+  opacity: 0.3;
+}
+
+.image:hover .middle {
+  opacity: 1;
+}
+
+#imagerow {
+  padding-top: 10px;
+}
+
 /*Styles for toggle switch ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 .switch {

@@ -3,7 +3,34 @@ extends navbarDefault
 block content
   
   .page-header
-    a(href='#',data-toggle='modal',data-target='#imagesmodal')
-        button.btn.btn-lg.btn-primary
-            | Edit images
-    include _includes/imagesModal
+    if name != null
+      h2 Images for #{name}
+    else 
+      h2 Images
+  .row
+    .col-xs-12
+      | Images uploaded: 
+      if images != null
+        span.badge.badge-primary#random #{images.length}/6
+      else
+        span.badge.badge-primary#random 0/6
+  if images != null && images.length > 0
+    .row#imagerow
+      -var index = 1
+      if images.length <= 5
+        .item.col-xs-4.col-sm-2
+          .thumbnail
+            .image
+              img.img-responsive(src='/images/plus.png', alt='Add Image')
+              .middle
+                form(action="/service/dashboard/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
+                  label.btn.btn-success
+                    | Add
+                    input#fileAdd(type='file', hidden='', name="fileAdd", onchange="form.submit()")
+      for image in images
+        .item.col-xs-4.col-sm-2
+          .thumbnail
+            .image
+              img.img-responsive(src=image, alt="Image " + index++)
+  else
+    h5.text-center There are currently no images
