@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const crypto = require('crypto');
 
+// If we need to split this up: https://stackoverflow.com/questions/38639248/mongoose-model-for-multi-types-of-users
+
 /**
  * General schema for all users of the application that have accounts e.g.
  * youth, service providers, admins
