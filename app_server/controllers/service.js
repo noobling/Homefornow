@@ -8,9 +8,7 @@ const Service = mongoose.model('Service');
  * @param  {Object} res Express response object.
  */
 module.exports.service = (req, res) => {
-  res.render('service', {
-    user: req.user
-  });
+  res.render('service');
 };
 
 /**

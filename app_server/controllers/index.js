@@ -62,8 +62,14 @@ module.exports.index = (req, res) => {
       if (err) {
         console.log('[ERROR] LocationsController: '.concat(err));
       }
+
+      let user;
+      if (req.user) {
+        user = { name: req.user.firstName };
+      }
+
       res.render('index', {
-        user: req.user,
+        user: user,
         crisis: services.crisis,
         transitional: services.transitional,
         long: services.long,

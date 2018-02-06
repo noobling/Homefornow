@@ -15,12 +15,7 @@ const crypto = require('crypto');
  */
 const userSchema = new mongoose.Schema({
   // First name
-  firstName: {
-    type: String,
-    required: true,
-  },
-  // Last name
-  lastName: {
+  name: {
     type: String,
     required: true,
   },
