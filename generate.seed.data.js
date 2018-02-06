@@ -69,8 +69,7 @@ function seedUsers() {
     const user = new User();
 
     const seedUser = {
-      firstName: faker.Name.firstName(),
-      lastName: faker.Name.lastName(),
+      name: faker.Name.firstName().concat(' ').concat(faker.Name.lastName()),
       email: faker.Internet.email(),
       phoneNumber: faker.PhoneNumber.phoneNumberFormat(0),
       dob: new Date().setFullYear(year, month, day),
@@ -80,8 +79,7 @@ function seedUsers() {
       password: faker.Internet.userName()
     };
 
-    user.firstName = seedUser.firstName;
-    user.lastName = seedUser.lastName;
+    user.name = seedUser.name;
     user.email = seedUser.email;
     user.phoneNumber = seedUser.phoneNumber;
     user.dob = seedUser.dob;

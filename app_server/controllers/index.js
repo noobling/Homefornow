@@ -65,7 +65,7 @@ module.exports.index = (req, res) => {
 
       let user;
       if (req.user) {
-        user = { name: req.user.firstName };
+        user = { name: req.user.name };
       }
 
       res.render('index', {

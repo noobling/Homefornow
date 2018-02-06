@@ -17,7 +17,8 @@ function sendJSONresponse(res, status, content) {
  * @param  {String} role  The role of the user: 'youth' or 'service_provider'.
  */
 module.exports.register = (req, res, next) => {
-  if (!req.body.name
+  if (!req.body.firstName
+    || !req.body.lastName
     || !req.body.email
     || !req.body.password
     || !req.body.day
@@ -46,7 +47,7 @@ module.exports.register = (req, res, next) => {
   const user = new User();
 
   user.role = req.body.role;
-  user.name = req.body.name;
+  user.name = req.body.firstName.concat(' ').concat(req.body.lastName);
   user.email = req.body.email;
   user.dob = new Date().setFullYear(req.body.year, req.body.month, req.body.day);
   user.gender = req.body.gender;
