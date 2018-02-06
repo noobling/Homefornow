@@ -44,6 +44,13 @@ const userSchema = new mongoose.Schema({
   // Does the user have a disability
   hasDisability: {
     type: Boolean,
+    default: false,
+    required: false,
+  },
+  // Does the youth person have a child
+  hasChild: {
+    type: Boolean,
+    default: false,
     required: false,
   },
   // Hash for password

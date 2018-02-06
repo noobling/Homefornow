@@ -15,12 +15,6 @@ const requestSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
-  // Does the youth person have a child
-  hasChild: {
-    type: Boolean,
-    default: false,
-    required: true,
-  },
   // True if requesting long term service, false otherwise
   isLongTerm: {
     type: Boolean,

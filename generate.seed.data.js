@@ -75,6 +75,7 @@ function seedUsers() {
       dob: new Date().setFullYear(year, month, day),
       gender: choose(GENDER),
       hasDisability: Math.random() < 0.5,
+      hasChild: Math.random() < 0.5,
       role: USER_ROLE,
       password: faker.Internet.userName()
     };
@@ -85,6 +86,7 @@ function seedUsers() {
     user.dob = seedUser.dob;
     user.gender = seedUser.gender;
     user.hasDisability = seedUser.hasDisability;
+    user.hasChild = seedUser.hasChild;
     user.role = seedUser.role;
     user.setPassword(seedUser.password);
 

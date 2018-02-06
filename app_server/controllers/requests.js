@@ -30,7 +30,6 @@ module.exports.openRequest = (req, res) => {
 
   request.youth = req.user.id;
   request.service = req.body.serviceId;
-  request.hasChild = req.body.child === 'yes';
   request.isLongTerm = req.params.lengthOfStay === 'long_term';
 
   let requestId;
