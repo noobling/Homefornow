@@ -8,25 +8,28 @@ block content
         include _includes/messages/info
         .row
             .col-md-8
-                h1= title
+                h1.bang= title1
+                h1.sec-color.bang= title2
     form(id='locationForm')
         .form-group
             .row
                 .col-md-8.col-xs-12
-                    input.form-control.input-lg(type='text', name='location', placeholder='Location e.g. Subiaco' autocomplete='on')#location
+                    input.form-control.input-lg(type='text', name='location', placeholder='Where are you now - e.g. Subiaco', autocomplete='on')#location
                     input(type='hidden', name='lat', id='lat')
                     input(type='hidden', name='long', id='long')
                     .spacer-sm
                       .row
-                          .col-md-6.col-sm-8.text-left(style='margin-top: 3px;')
+                          .col-md-6.col-sm-8.text-left(style='margin-top: 3px; color: #999;')
                             a(style='padding-left: 18px;')
                             | Use 
                             a(href='javascript: geoloc();', class='geoloc' style='color: #999;')#get_location
-                                | current location
+                                | my current location
+                    .spacer-sm
+                    .spacer-sm
                 .col-md-2.col-xs-6.text-right
                     a(href='#',data-toggle='modal',data-target='#signupmodalshort')
                         button.btn.btn-lg.btn-primary#shortBtn
-                            | For now
+                            | Right now
                 .col-md-2.col-xs-6.text-left
                     a(href='#',data-toggle='modal',data-target='#signupmodallong')
                         button.btn.btn-lg.btn-default#longBtn

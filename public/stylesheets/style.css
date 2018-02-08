@@ -3,11 +3,23 @@ body {
     font-family: 'Roboto', sans-serif;
     /*use roboto*/
     font-style: normal;
-    color: #999999;
+    color: #333333;
 }
 
 h1 {
     font-size: 62pt;
+}
+
+.sec-color{
+    color: #cc0066;
+}
+
+.bang {
+    font-family: 'Bangers', sans-serif;
+}
+
+.bold {
+    font-weight: bold;
 }
 
 /*div[class="row"] {
@@ -45,8 +57,14 @@ div[class^="col-"] {
 }
 
 .btn-primary {
-    background-color: #cc66cc;
-    border-color: #cc66cc;
+    background-color: #cc0066;
+    border-color: #cc0066;
+}
+
+.btn-secondary {
+    background-color: #ffffff;
+    border-color: #cc0066;
+    color:#cc0066;
 }
 
 .btn-primary:hover {
@@ -69,15 +87,15 @@ div[class^="col-"] {
 }*/
 
 /*CSS for user map ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-#userloc {							
+#userloc {
     border-radius: 5%;
     height: 250px;
     width:  250px;
 }
 
-#user-panel {   
-    border: transparent;   
-    box-shadow: none; 
+#user-panel {
+    border: transparent;
+    box-shadow: none;
     padding: 0%;
 }
 

@@ -1,0 +1,168 @@
+.modal.fade(id='registermodal',role='dialog')
+    .modal-dialog.modal-md
+        .modal-content
+            .modal-header
+                button(type='button',data-dismiss='modal').close &times;
+                h4.modal-title.bang.sec-color Sign-up
+            .modal-body
+                form(action='/register', method='post', role='form')
+                    .form-group
+                        .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
+                            .row
+                                .col-xs-12.col-sm-11(style='padding: 0px;')
+                                    label(for='fName') First Name
+                                    input(type='text', id='fName', required='').form-control
+                        .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
+                            .row
+                                .col-xs-12.col-sm-11.col-sm-offset-1(style='padding: 0px;')
+                                    label(for='LName') Last Name
+                                    input(type='text', id='LName', required='').form-control
+                    .form-group
+                        .col-xs-12.col-sm-8
+                            .row
+                                label Date of Birth
+                            .row
+                                .col-xs-4(style='padding: 0px; margin-bottom: 15px;')
+                                    select.form-control(id='day', style='padding-left: 5px;', required='')
+                                        option(hidden='true') Day
+                                .col-xs-4(style='padding: 0px; margin-bottom: 15px;')
+                                    select.form-control(id='month', style='padding-left: 5px;', required='')
+                                        option(hidden='true') Month
+                                        option January
+                                        option Febuary
+                                        option March
+                                        option April
+                                        option May
+                                        option June
+                                        option July
+                                        option August
+                                        option September
+                                        option October
+                                        option November
+                                        option December
+                                .col-xs-4(style='padding: 0px; margin-bottom: 15px;')
+                                    select(name='year', style='padding-left: 5px;', required='').form-control#year
+                                        option(hidden='true') Year
+                    .form-group
+                        .col-xs-4.col-sm-3.col-sm-offset-1(style='padding: 0px;')
+                            label(for='gender') Gender
+                            select.form-control(id='gender', required='')
+                                option(hidden='true') &nbsp;
+                                option Male
+                                option Female
+                                option Unspecified
+                        .col-xs-7.col-xs-offset-1.col-sm-12(style='margin-top: 20px; padding:0px;')
+                            .row
+                                .col-xs-12.col-sm-6
+                                    label.checkbox-inline
+                                        input(type='checkbox', id='child', value='yes')
+                                        | Parent with child?
+                                .col-xs-12.col-sm-6
+                                    label.checkbox-inline
+                                        input(type='checkbox', id='dis', value='yes')
+                                        | Wheelchair access?
+                        .row
+                    .form-group
+                        .col-xs-12.col-sm-8(style='margin-bottom: 15px;')
+                            .row
+                                .col-xs-12.col-sm-11(style='padding: 0px;')
+                                    label(for='email') Email
+                                    input(type='email', id='email', required='').form-control
+                        .col-xs-12.col-sm-4(style='margin-bottom: 15px;')
+                            .row
+                                .col-xs-12.col-sm-11.col-sm-offset-1(style='padding: 0px;')
+                                    label(for='phone') Phone Number 
+                                        span.small(style='opacity: 0.6; filter: alpha(opacity = 60); font-style: italic;') (Optional)
+                                    input(type='tel', id='phone', maxlength='10', placeholder='04xxxxxxxx').form-control
+                    .form-group
+                        .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
+                            .row
+                                .col-xs-12.col-sm-11(style='padding: 0px;')
+                                    label(for='Rpwd') Password
+                                    span.pull-right#passstrength
+                                    input(type='password', id='Rpwd', required='').form-control
+                        .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
+                            .row
+                                .col-xs-12.col-sm-11.col-sm-offset-1(style='padding: 0px;')
+                                    label(for='Cpwd') Confirm Password
+                                    input(type='password', id='Cpwd', required='').form-control
+                        .col-xs-12
+                            .text-center
+                                span(style='opacity: 0.6; filter: alpha(opacity = 60); font-style: italic;') **passwords must contain digits, and lowercase and uppercase letters**
+                        .row                    
+                    .text-right
+                        input(type='submit', value='Register').btn.btn-primary
+script.
+    $('#Rpwd').keyup(function () {
+        //TextBox left blank.
+        if ($(this).val().length == 0) 
+        {
+            $('#passstrength').html('');
+            return;
+        }
+
+        //Regular Expressions.
+        var regex = new Array();
+        regex.push('[A-Z]'); //Uppercase Alphabet.
+        regex.push('[a-z]'); //Lowercase Alphabet.
+        regex.push('[0-9]'); //Digit.
+        regex.push('[$@$!%*#?&]'); //Special Character.
+        var passed = 0;
+
+        //Validate for each Regular Expression.
+        for (var i = 0; i < regex.length; i++) 
+        {
+            if (new RegExp(regex[i]).test($(this).val())) 
+            passed++;
+        }
+
+        //Validate for length of Password.
+        if (passed > 2 && $(this).val().length > 8)
+            passed++;
+
+        //Display status.
+        var color = '';
+        var strength = '';
+        switch (passed) 
+        {
+            case 0:
+            case 1:
+                    strength = 'Weak';
+                    color = 'red';
+                    break;
+            case 2:
+                    strength = 'Good';
+                    color = 'darkorange';
+                    break;
+            case 3:
+            case 4:
+                    strength = 'Strong';
+                    color = 'green';
+                    break;
+            case 5:
+                    strength = 'Very Strong';
+                    color = 'darkgreen';
+                    break;
+        }
+        $('#passstrength').html(strength);
+        $('#passstrength').css('color', color);
+    })
+    $('#Cpwd').keyup(function () {
+        let s = $(this).val();
+        let c = $('#Rpwd').val();
+
+        if(s != c)
+        {
+            console.log(c);
+        }
+        else
+        {
+            console.log(s);
+        }
+
+
+    })
+    for (i = new Date().getFullYear(); i >= new Date().getFullYear()-100; i--)
+    {   $('#year').append($('<option />').val(i).html(i)) }
+    for (i = 1; i <= 31; i++)
+    {   $('#day').append($('<option />').val(i).html(i)) }
