@@ -1,0 +1,139 @@
+.modal.fade(id='regloginmodal',role='dialog')
+    .modal-dialog.modal-md
+        .modal-content
+            .modal-body
+                ul.nav.nav-tabs
+                    li.active
+                      a(data-toggle='tab', href='#loginContent', id='loginTab').modal-title.bang.sec-color Login
+                    li
+                      a(data-toggle='tab', href='#registerContent', id='registerTab').modal-title.bang.sec-color Sign-up
+                .tab-content
+                    #loginContent.tab-pane.fade.in.active
+                        form(action='/login', method='post', role='form', id='loginForm')
+                            .form-group#Login_email(style='margin-top: 15px;')
+                                .col-xs-12(style='padding: 0px;')
+                                    label(for='Lemail') Email
+                                    input(type='email',placeholder='e.g. example@example.com',name='email').form-control#Lemail
+                                    span#Login_EFeed
+                                .row
+                            .form-group#Login_pass
+                                .col-xs-12(style='padding: 0px;')
+                                    label(for='pwd') Password
+                                    input(type='password', name='password').form-control#pwd
+                                    span#Login_PFeed
+                                .row
+                            .form-group
+                                input(type='hidden', name='lat')
+                                input(type='hidden', name='long')
+                                input(type='hidden', name='lengthOfStay')
+                            .text-right
+                                input(type='submit', value='Submit', disabled='').btn.btn-primary#Login
+                    #registerContent.tab-pane.fade
+                        form(action='/register', method='post', role='form', id='registerForm')
+                            .form-group
+                                .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
+                                    .row
+                                        .form-group#first
+                                            .col-xs-12.col-sm-11(style='padding: 0px;')
+                                                label(for='fName') First Name
+                                                input(type='text', name='fName', id='fName', required='').form-control
+                                                span#FNfeed
+                                .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
+                                    .row
+                                        .form-group#last
+                                            .col-xs-12.col-sm-11.col-sm-offset-1(style='padding: 0px;')
+                                                label(for='lName') Last Name
+                                                input(type='text', name='lName',id='lName', required='').form-control
+                                                span#LNfeed
+                            .form-group
+                                .col-xs-12.col-sm-8
+                                    .row
+                                        label Date of Birth
+                                    .row
+                                        .form-group#dob
+                                            .col-xs-4(style='padding: 0px; margin-bottom: 15px;')
+                                                select.form-control(id='day', name='day', style='padding-left: 5px;', required='')
+                                                    option(value='', hidden='true') Day
+                                            .col-xs-4(style='padding: 0px; margin-bottom: 15px;')
+                                                select.form-control(id='month', name='month', style='padding-left: 5px;', required='')
+                                                    option(value='', hidden='true') Month
+                                                    option(value='0') January
+                                                    option(value='1') February
+                                                    option(value='2') March
+                                                    option(value='3') April
+                                                    option(value='4') May
+                                                    option(value='5') June
+                                                    option(value='6') July
+                                                    option(value='7') August
+                                                    option(value='8') September
+                                                    option(value='9') October
+                                                    option(value='10') November
+                                                    option(value='11') December
+                                            .col-xs-4(style='padding: 0px; margin-bottom: 15px;')
+                                                select(id='year', name='year', style='padding-left: 5px;', required='').form-control
+                                                    option(value='', hidden='true') Year
+                            .form-group
+                                .col-xs-4.col-sm-3.col-sm-offset-1(style='padding: 0px;')
+                                    label(for='gender') Gender
+                                    select.form-control(name='gender', id='gender', required='')
+                                        option(value='', hidden='true')
+                                        option Male
+                                        option Female
+                                        option Unspecified
+                                .col-xs-7.col-xs-offset-1.col-sm-12(style='margin-top: 20px; padding:0px;')
+                                    .row
+                                        .col-xs-12.col-sm-6
+                                            label.checkbox-inline
+                                                input(type='checkbox', name='child', id='child', value='yes')
+                                                | Parent with child?
+                                        .col-xs-12.col-sm-6
+                                            label.checkbox-inline
+                                                input(type='checkbox', name='dis', id='dis', value='yes')
+                                                | Wheelchair access?
+                                .row
+                            .form-group
+                                .col-xs-12.col-sm-8(style='margin-bottom: 15px;')
+                                    .row
+                                        .form-group#Email
+                                            .col-xs-12.col-sm-11(style='padding: 0px;')
+                                                label(for='email') Email
+                                                input(type='email', name='email', id='email', required='').form-control
+                                                span#Efeed
+                                .col-xs-12.col-sm-4(style='margin-bottom: 15px;')
+                                    .row
+                                        .form-group#Phone
+                                            .col-xs-12.col-sm-11.col-sm-offset-1(style='padding: 0px;')
+                                                label(for='phone') Phone Number 
+                                                    span.small(style='opacity: 0.6; filter: alpha(opacity = 60); font-style: italic;') (Optional)
+                                                input(type='tel', name='phone', id='phone', maxlength='10', placeholder='04xxxxxxxx').form-control
+                                                span#Pfeed
+                            .form-group
+                                .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
+                                    .row
+                                        .col-xs-12.col-sm-11(style='padding: 0px;')
+                                            label(for='Rpwd') Password
+                                            span.pull-right#passstrength
+                                            input(type='password', name='pwd', id='Rpwd', required='').form-control
+                                .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
+                                    .row
+                                        .form-group#con
+                                            .col-xs-12.col-sm-11.col-sm-offset-1(style='padding: 0px;')
+                                                label(for='Cpwd') Confirm Password
+                                                input(type='password', id='Cpwd', required='', name='Cpwd', disabled='').form-control
+                                                span#CPfeed
+                                .col-xs-12
+                                    .text-center
+                                        span(style='opacity: 0.6; filter: alpha(opacity = 60); font-style: italic;') **passwords must contain digits, and lowercase and uppercase letters**
+                                .row   
+                            .form-group
+                                input(type='hidden', name='lat')
+                                input(type='hidden', name='long')
+                                input(type='hidden', name='lengthOfStay')              
+                            .text-right
+                                input(type='submit', value='Register', disabled='').btn.btn-primary#Reg
+script(src='javascripts/validation.js')
+script. 
+    for (i = new Date().getFullYear(); i >= new Date().getFullYear()-30; i--)
+    {   $('#year').append($('<option />').val(i).html(i)) }
+    for (i = 1; i <= 31; i++)
+    {   $('#day').append($('<option />').val(i).html(i)) }

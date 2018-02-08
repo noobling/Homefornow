@@ -18,9 +18,9 @@ block navbar
                 a(href='/logout') Logout
             else
               li
-                a(href='#',data-toggle='modal',data-target='#loginmodal') Login
+                a(href='javascript: login()') Login
               li
-                a(href='/about') About
+                a(href='javascript: register()') Register
 
     .container
         block content

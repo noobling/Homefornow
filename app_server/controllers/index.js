@@ -73,7 +73,8 @@ module.exports.index = (req, res) => {
         crisis: services.crisis,
         transitional: services.transitional,
         long: services.long,
-        title: 'Do you have a secure place to stay?',
+        title1: 'Let\'s find a',
+        title2: 'Home for now',
       });
     }
   );
