@@ -11,42 +11,42 @@
                             .row
                                 .col-xs-12.col-sm-11(style='padding: 0px;')
                                     label(for='fName') First Name
-                                    input(type='text', id='fName', required='').form-control
+                                    input(type='text', name='fName', id='fName', required='').form-control
                         .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
                             .row
                                 .col-xs-12.col-sm-11.col-sm-offset-1(style='padding: 0px;')
                                     label(for='LName') Last Name
-                                    input(type='text', id='LName', required='').form-control
+                                    input(type='text', name='lName', id='lName', required='').form-control
                     .form-group
                         .col-xs-12.col-sm-8
                             .row
                                 label Date of Birth
                             .row
                                 .col-xs-4(style='padding: 0px; margin-bottom: 15px;')
-                                    select.form-control(id='day', style='padding-left: 5px;', required='')
+                                    select.form-control(name='day', id='day', style='padding-left: 5px;', required='')
                                         option(hidden='true') Day
                                 .col-xs-4(style='padding: 0px; margin-bottom: 15px;')
-                                    select.form-control(id='month', style='padding-left: 5px;', required='')
+                                    select.form-control(name='month', id='month', style='padding-left: 5px;', required='')
                                         option(hidden='true') Month
-                                        option January
-                                        option Febuary
-                                        option March
-                                        option April
-                                        option May
-                                        option June
-                                        option July
-                                        option August
-                                        option September
-                                        option October
-                                        option November
-                                        option December
+                                        option(value='0') January
+                                        option(value='1') Febuary
+                                        option(value='2') March
+                                        option(value='3') April
+                                        option(value='4') May
+                                        option(value='5') June
+                                        option(value='6') July
+                                        option(value='7') August
+                                        option(value='8') September
+                                        option(value='9') October
+                                        option(value='10') November
+                                        option(value='11') December
                                 .col-xs-4(style='padding: 0px; margin-bottom: 15px;')
                                     select(name='year', style='padding-left: 5px;', required='').form-control#year
                                         option(hidden='true') Year
                     .form-group
                         .col-xs-4.col-sm-3.col-sm-offset-1(style='padding: 0px;')
                             label(for='gender') Gender
-                            select.form-control(id='gender', required='')
+                            select.form-control(name='gender', id='gender', required='')
                                 option(hidden='true') &nbsp;
                                 option Male
                                 option Female
@@ -55,11 +55,11 @@
                             .row
                                 .col-xs-12.col-sm-6
                                     label.checkbox-inline
-                                        input(type='checkbox', id='child', value='yes')
+                                        input(type='checkbox', name='child', id='child', value='yes')
                                         | Parent with child?
                                 .col-xs-12.col-sm-6
                                     label.checkbox-inline
-                                        input(type='checkbox', id='dis', value='yes')
+                                        input(type='checkbox', name='dis', id='dis', value='yes')
                                         | Wheelchair access?
                         .row
                     .form-group
@@ -67,25 +67,25 @@
                             .row
                                 .col-xs-12.col-sm-11(style='padding: 0px;')
                                     label(for='email') Email
-                                    input(type='email', id='email', required='').form-control
+                                    input(type='email', name='email', id='email', required='').form-control
                         .col-xs-12.col-sm-4(style='margin-bottom: 15px;')
                             .row
                                 .col-xs-12.col-sm-11.col-sm-offset-1(style='padding: 0px;')
                                     label(for='phone') Phone Number 
                                         span.small(style='opacity: 0.6; filter: alpha(opacity = 60); font-style: italic;') (Optional)
-                                    input(type='tel', id='phone', maxlength='10', placeholder='04xxxxxxxx').form-control
+                                    input(type='tel', name='phone', id='phone', maxlength='10', placeholder='04xxxxxxxx').form-control
                     .form-group
                         .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
                             .row
                                 .col-xs-12.col-sm-11(style='padding: 0px;')
                                     label(for='Rpwd') Password
                                     span.pull-right#passstrength
-                                    input(type='password', id='Rpwd', required='').form-control
+                                    input(type='password', name='pwd', id='Rpwd', required='').form-control
                         .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
                             .row
                                 .col-xs-12.col-sm-11.col-sm-offset-1(style='padding: 0px;')
                                     label(for='Cpwd') Confirm Password
-                                    input(type='password', id='Cpwd', required='').form-control
+                                    input(type='password', name='cPwd', id='Cpwd', required='').form-control
                         .col-xs-12
                             .text-center
                                 span(style='opacity: 0.6; filter: alpha(opacity = 60); font-style: italic;') **passwords must contain digits, and lowercase and uppercase letters**

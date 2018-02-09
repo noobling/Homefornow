@@ -24,12 +24,16 @@ module.exports.register = (req, res, next) => {
     || !req.body.day
     || !req.body.month
     || !req.body.year
-    || !req.body.gender
-    || !req.body.role) {
+    || !req.body.gender) {
     sendJSONresponse(res, 400, {
       message: 'All fields required.',
     });
     return;
+  }
+
+  // Default req.body.role to 'youth'
+  if (!req.body.role) {
+    req.body.role = 'youth';
   }
 
   // Check for a valid role
