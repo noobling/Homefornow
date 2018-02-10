@@ -1,0 +1,13 @@
+mixin deleteImageModal(imageLink, imageReference, index)
+  .modal.fade(id="deleteimagemodal-image"+index,role="dialog")
+      .modal-dialog.modal-sm
+          .modal-content
+              .modal-header
+                button(type='button',data-dismiss='modal').close &times;
+                h3 Delete this image?
+              .modal-header.text-center
+                .image
+                  img.img.img-responsive(src=imageReference)
+              .modal-body.text-center
+                .btn.btn-danger
+                  | Delete

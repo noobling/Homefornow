@@ -1,4 +1,5 @@
 extends navbarDefault
+include _includes/deleteImageModal
 
 block content
   
@@ -11,26 +12,35 @@ block content
     .col-xs-12
       | Images uploaded: 
       if images != null
-        span.badge.badge-primary#random #{images.length}/6
+        span.badge.badge-primary(style='cursor: default;') #{images.length}/6
       else
-        span.badge.badge-primary#random 0/6
-  if images != null && images.length > 0
-    .row#imagerow
-      -var index = 1
-      if images.length <= 5
+        span.badge.badge-primary(style='cursor: default;') 0/6
+  .row#imagerow
+    if images != null && images.length > 0
+      -var index = 1;
+      -let length = Object.keys(images).length;
+      if Object.keys(images).length <= 5
+        .item.col-xs-4.col-sm-2
+          form(action="/service/dashboard/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
+            .thumbnail
+              .image.highlight
+                label(style='margin: 0px;')
+                  img.img-responsive(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
+                  input#fileAdd(type='file', hidden='', name="fileAdd", onchange="form.submit()")
+      -for (index = 0; index < length; index += 1)
+        +deleteImageModal("Image!", images[index], index)
         .item.col-xs-4.col-sm-2
           .thumbnail
-            .image
-              img.img-responsive(src='/images/plus.png', alt='Add Image')
-              .middle
-                form(action="/service/dashboard/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
-                  label.btn.btn-success
-                    | Add
-                    input#fileAdd(type='file', hidden='', name="fileAdd", onchange="form.submit()")
-      for image in images
-        .item.col-xs-4.col-sm-2
+            .image.highlight
+              a(href='#',data-toggle="modal",data-target="#deleteimagemodal-image" + index)
+                img.img-responsive(src=images[index])
+    else
+      .item.col-xs-4.col-sm-2
+        form(action="/service/dashboard/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
           .thumbnail
-            .image
-              img.img-responsive(src=image, alt="Image " + index++)
-  else
-    h5.text-center There are currently no images
+            .image.highlight
+              label(style='margin: 0px;')
+                img.img-responsive(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
+                input#fileAdd(type='file', hidden='', name="fileAdd", onchange="form.submit()")
+      .row
+        h5.text-center There are currently no images

@@ -68,10 +68,6 @@ div[class^="col-"] {
   padding-bottom: 16px;
 }
 
-#random {
-  vertical-align: middle;
-}
-
 /*CSS for places autocomplete ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .pac-icon {
   width: 0;
@@ -272,8 +268,12 @@ footer {
   position:relative;
   overflow:hidden;
   padding-bottom:100%;
+}
+
+.highlight {
   transition: .3s ease;
 }
+
 .image img {
   position: absolute;
   top: 50%;
@@ -282,7 +282,6 @@ footer {
 }
 
 .middle {
-  transition: .3s ease;
   opacity: 0;
   position: absolute;
   top: 50%;
@@ -292,11 +291,20 @@ footer {
   text-align: center;
 }
 
-.image:hover img {
+.middle form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.highlight:hover img {
   opacity: 0.3;
 }
 
-.image:hover .middle {
+.highlight:hover .middle {
   opacity: 1;
 }
 

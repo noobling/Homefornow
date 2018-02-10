@@ -17,7 +17,25 @@ function sendUploadToFirebase(req, res, next) {
     return next();
   }
 
-  const firebaseName = 'images/' + req.params.serviceUri + "/" + req.file.originalname;
+  const splitName = req.file.originalname.split('.');
+  console.log('splitName = ', splitName);
+  let result = '';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (let i = 0; i < 5; i += 1) {
+    result += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  splitName[splitName.length - 2] += '-' + result;
+
+  let newName = '';
+  for (let i = 0; i < splitName.length; i += 1) {
+    if (i === splitName.length - 1) {
+      newName += '.';
+    }
+    newName += splitName[i];
+  }
+
+  const firebaseName = 'images/' + req.params.serviceUri + "/" + newName;
   const file = bucket.file(firebaseName);
 
   const stream = file.createWriteStream({

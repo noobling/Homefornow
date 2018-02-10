@@ -79,25 +79,27 @@ module.exports.profile = (req, res) => {
   ).exec()
     .then((service) => {
       // console.log('Images: '.concat(service.img));
-      const imageList = [];
+      const imageDict = [];
 
       if (service.img != null && service.img.length > 0) {
         listCount = service.img.length;
         const bucket = admin.storage().bucket();
+        // console.log(service.img);
 
         service.img.forEach((image) => {
           // Get the metadata for each image reference
           bucket.file(image).getMetadata().then((data) => {
             // Add the media link for the image to 'imageList'
-            imageList[imageList.length] = data[0].mediaLink;
+            imageDict[service.img.indexOf(image)] = data[0].mediaLink;
             metadataCount += 1;
 
             // If all the images have been added to imageList, render the page with these images
             if (metadataCount === listCount) {
+              console.log('LENGTH = ', Object.keys(imageDict).length);
               res.render('editImages', {
                 name: service.name,
                 uri: req.params.serviceUri,
-                images: imageList,
+                images: imageDict,
               });
             }
           }).catch((err) => {
@@ -114,8 +116,6 @@ module.exports.profile = (req, res) => {
           });
         });
       } else {
-        // If 'img' is not defined or is empty, render the page without the carousel
-        console.log('img not defined');
         res.render('editImages', {
           name: service.name,
           uri: req.params.serviceUri,
