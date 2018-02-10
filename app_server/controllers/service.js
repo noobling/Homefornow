@@ -72,10 +72,7 @@ module.exports.dashboard = (req, res) => {
  */
 module.exports.deleteImage = (req, res) => {
   // Get the Service referenced by the POSTed serviceUri
-  Service.findOne(
-    { uri: req.params.serviceUri },
-    'name img',
-  ).exec()
+  Service.findOne({ uri: req.params.serviceUri }, 'name img').exec()
     .then((service) => {
       // Delete the image specified by request.params.index from Firebase
       const bucket = admin.storage().bucket();
@@ -126,10 +123,7 @@ module.exports.profile = (req, res) => {
   let metadataCount = 0;
   let listCount = 0;
   console.log('Service URI: '.concat(req.params.serviceUri));
-  Service.findOne(
-    { uri: req.params.serviceUri },
-    'name img',
-  ).exec()
+  Service.findOne({ uri: req.params.serviceUri }, 'name img').exec()
     .then((service) => {
       // console.log('Images: '.concat(service.img));
       const imageDict = [];
