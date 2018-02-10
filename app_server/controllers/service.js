@@ -96,7 +96,7 @@ module.exports.deleteImage = (req, res) => {
         Service.findOneAndUpdate(
           { uri: req.params.serviceUri },
           { $set: { img: result } },
-          { runValidators: true, new: true },
+          { runValidators: true, new: true }
         ).exec()
           .then(() => {
             res.redirect('back');

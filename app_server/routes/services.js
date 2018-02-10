@@ -26,7 +26,7 @@ router.post(
       Service.findOneAndUpdate(
         { uri: req.params.serviceUri },
         { $push: { img: req.file.storageObject } },
-        { runValidators: true },
+        { runValidators: true }
       ).exec()
         .then((service) => {
           console.log(service.img);
