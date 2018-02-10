@@ -88,17 +88,17 @@ const hoursSchema = new mongoose.Schema({
   },
 });
 
-/**
- * Schema for the tags that are used to describe a service provider's beds.
- * @type {mongoose.Schema}
- */
-const tagSchema = new mongoose.Schema({
-  // Name of the tag
-  name: {
-    type: String,
-    required: true,
-  },
-});
+// /**
+//  * Schema for the tags that are used to describe a service provider's beds.
+//  * @type {mongoose.Schema}
+//  */
+// const tagSchema = new mongoose.Schema({
+//   // Name of the tag
+//   name: {
+//     type: String,
+//     required: true,
+//   },
+// });
 
 /**
  * Schema for service provider beds.
@@ -129,7 +129,7 @@ const bedSchema = new mongoose.Schema({
   },
   // User creatable tags that describe the bed, as an array
   tags: {
-    type: [tagSchema],
+    type: [String],
     required: false,
   },
 });
@@ -206,7 +206,7 @@ const serviceSchema = new mongoose.Schema({
   },
   // Tags that describe the service provider's beds, as an array
   tags: {
-    type: [tagSchema],
+    type: [String],
     required: false,
   },
   // Are any beds available
