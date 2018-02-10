@@ -1,4 +1,4 @@
-mixin deleteImageModal(imageLink, imageReference, index)
+mixin deleteImageModal(uri, imageReference, index)
   .modal.fade(id="deleteimagemodal-image"+index,role="dialog")
       .modal-dialog.modal-sm
           .modal-content
@@ -9,5 +9,5 @@ mixin deleteImageModal(imageLink, imageReference, index)
                 .image
                   img.img.img-responsive(src=imageReference)
               .modal-body.text-center
-                .btn.btn-danger
-                  | Delete
+                form(action="/service/dashboard/profile/" + uri + "/" + index + "/delete", method="post")
+                  input(type='submit', value='Delete').btn.btn-danger

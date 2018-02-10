@@ -38,4 +38,6 @@ router.post(
   },
 );
 
+router.post('/profile/:serviceUri/:index/delete', serviceController.deleteImage);
+
 module.exports = router;

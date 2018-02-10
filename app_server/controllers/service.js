@@ -65,6 +65,59 @@ module.exports.dashboard = (req, res) => {
 };
 
 /**
+ * Used by deleteImageModal to delete an image stored in Firebase from a service
+ * provider's profile.
+ * @param  {Object} req Express request object.
+ * @param  {Object} res Express response object.
+ */
+module.exports.deleteImage = (req, res) => {
+  // Get the Service referenced by the POSTed serviceUri
+  Service.findOne(
+    { uri: req.params.serviceUri },
+    'name img',
+  ).exec()
+    .then((service) => {
+      // Delete the image specified by request.params.index from Firebase
+      const bucket = admin.storage().bucket();
+      bucket.file(service.img[req.params.index]).delete().then(() => {
+        // After deleting the image from Firebase, delete the image from MongoDB
+        const len = service.img.length;
+        const result = [];
+
+        // Remove the reference to the image from the list of images
+        for (let i = 0; i < len; i += 1) {
+          if (i < req.params.index) {
+            result[i] = service.img[i];
+          }
+          if (i > req.params.index) {
+            result[i - 1] = service.img[i];
+          }
+        }
+
+        // Update the MongoDB database with the new list of images, returning
+        // when succesful
+        Service.findOneAndUpdate(
+          { uri: req.params.serviceUri },
+          { $set: { img: result } },
+          { runValidators: true, new: true },
+        ).exec()
+          .then(() => {
+            res.redirect('back');
+          }).catch((err) => {
+            console.log('[ERROR] LocationsController: Failed to update service.img: '.concat(err));
+            res.status(500).json({ message: err });
+          });
+      }).catch((err) => {
+        console.log('[ERROR] LocationsController: could not delete image from Firebase: '.concat(err));
+        res.status(500).json({ message: err });
+      });
+    }).catch((err) => {
+      console.log('[ERROR] LocationsController: could not find image in database: '.concat(err));
+      res.status(500).json({ message: err });
+    });
+};
+
+/**
  * Renders a service provider's profile page
  * @param  {Object} req Express request object.
  * @param  {Object} res Express response object.
@@ -103,16 +156,8 @@ module.exports.profile = (req, res) => {
               });
             }
           }).catch((err) => {
-            console.log('[ERROR] LocationsController: '.concat(err));
-
-            // If image metadata cannot be obtained, then load the page without the images panel
-            listCount -= 1;
-            if (metadataCount === listCount) {
-              res.render('editImages', {
-                name: service.name,
-                uri: req.params.serviceUri,
-              });
-            }
+            console.log('[ERROR] LocationsController: could not get metadata: '.concat(err));
+            res.status(500).json({ message: err });
           });
         });
       } else {
@@ -123,7 +168,7 @@ module.exports.profile = (req, res) => {
       }
     })
     .catch((err) => {
-      console.log('[ERROR] LocationsController: '.concat(err));
+      console.log('[ERROR] LocationsController: could not get service: '.concat(err));
       res.status(500).json({ message: err });
     });
 };
