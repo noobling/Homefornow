@@ -2,15 +2,15 @@ extends navbarDefault
 include _includes/deleteImageModal
 
 block content
-  
+
   .page-header
     if name != null
       h2 Images for #{name}
-    else 
+    else
       h2 Images
   .row
     .col-xs-12
-      | Images uploaded: 
+      | Images uploaded:
       if images != null
         span.badge.badge-primary(style='cursor: default;') #{images.length}/6
       else
@@ -25,7 +25,8 @@ block content
             .thumbnail
               .image.highlight
                 label(style='margin: 0px;')
-                  img.img-responsive(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
+                  img.img-responsive#plus-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
+                  img.img-responsive#spinner-gif(src='/images/loading_spinner.gif', style='display: none;')
                   input#fileAdd(type='file', hidden='', name="fileAdd", onchange="form.submit()")
       -for (index = 0; index < length; index += 1)
         +deleteImageModal(uri, images[index], index)
@@ -41,6 +42,13 @@ block content
             .image.highlight
               label(style='margin: 0px;')
                 img.img-responsive(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
+                img.img-responsive(src='/images/loading_spinner.gif', style='display: none;')
                 input#fileAdd(type='file', hidden='', name="fileAdd", onchange="form.submit()")
       .row
         h5.text-center There are currently no images
+
+    script.
+        $('#fileAdd').on('change', function () {
+            $('#plus-img').hide();
+            $('#spinner-gif').show();
+        });

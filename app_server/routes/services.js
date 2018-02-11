@@ -35,7 +35,7 @@ router.post(
     } else {
       res.send('Error - not a file OR could not find req.file.storageObject');
     }
-  },
+  }
 );
 
 router.post('/profile/:serviceUri/:index/delete', serviceController.deleteImage);
