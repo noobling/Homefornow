@@ -1,9 +1,8 @@
 const admin = require('firebase-admin');
 const Multer = require('multer');
 
-const serviceAccount = require('../../homefornow-fd495-firebase-adminsdk-xy17w-62ee8ab849.json');
-
 if (!(process.env.NODE_ENV === 'test')) {
+  const serviceAccount = require('../../homefornow-fd495-firebase-adminsdk-xy17w-62ee8ab849.json');
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     storageBucket: 'homefornow-fd495.appspot.com',
