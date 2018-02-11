@@ -1,5 +1,6 @@
 /**
  * Initialises the Google places autocomplete object.
+ * Adds event listeners to the 'For now' and 'Long term' buttons on the index page.
  */
 function initialize()
 {
@@ -18,6 +19,11 @@ function initialize()
     longBtn.addEventListener('click', () => { search(autocomplete, true) });
 }
 
+/**
+ * [getCoords description]
+ * @param  {Object} autocomplete Google places autocomplete object
+ * @return {Object}              JSON object containing lat and long coordinates.
+ */
 function getCoords(autocomplete)
 {
   const place = autocomplete.getPlace();
@@ -33,7 +39,8 @@ function getCoords(autocomplete)
 /**
  * Copies the latitude and longitude from the Google places autocomplete
  * object into a form.
- * @param  {Object} autocomplete Google places autocomplete object
+ * @param  {Object}   autocomplete  Google places autocomplete object
+ * @param  {Boolean}  isLongTerm    True if searching for long term accommodation, false otherwise.
  */
 function search(autocomplete, isLongTerm) // Fills form with lat and long from the Google Maps API
 {

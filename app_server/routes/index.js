@@ -22,12 +22,6 @@ router.post('/locations/:lengthOfStay/contact', ctrlRequests.openRequest);
 /**
  * Authentication
  */
-// router.post('/login', passport.authenticate('local', {
-//   successRedirect: '/',
-//   failureRedirect: '/',
-//   failureFlash: true,
-// }));
-
 router.post('/login', ctrlAuth.login);
 
 router.post('/register', ctrlAuth.register);

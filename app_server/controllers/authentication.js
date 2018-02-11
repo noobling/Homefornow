@@ -11,6 +11,13 @@ function sendJSONresponse(res, status, content) {
   res.json(content);
 }
 
+/**
+ * Logs in a user.
+ * Redirects to the locations page if a latitude and longitude are provided.
+ * @param  {Object}   req  Express request object.
+ * @param  {Object}   res  Express response object.
+ * @param  {Function} next Express next function.
+ */
 module.exports.login = (req, res, next) => {
   const prevPage = req.header('Referer') || '/';
   passport.authenticate('local', (err, user) => {
@@ -30,9 +37,10 @@ module.exports.login = (req, res, next) => {
 
 /**
  * Creates a new user of type role.
+ * Redirects to the locations page if a latitude and longitude are provided.
  * @param  {Object} req   Express request object.
  * @param  {Object} res   Express response object.
- * @param  {String} role  The role of the user: 'youth' or 'service_provider'.
+ * @param  {Function} next  Express next function.
  */
 module.exports.register = (req, res, next) => {
   if (!req.body.fName
