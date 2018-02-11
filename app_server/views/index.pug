@@ -1,8 +1,8 @@
 extends navbarDefault
 
 block content
-    include _includes/signupModal
-
+    include _includes/regloginmodal
+    
     #banner.page-header
         include _includes/messages/error
         include _includes/messages/info
@@ -15,8 +15,8 @@ block content
             .row
                 .col-md-8.col-xs-12
                     input.form-control.input-lg(type='text', name='location', placeholder='Where are you now - e.g. Subiaco', autocomplete='on')#location
-                    input(type='hidden', name='lat', id='lat')
-                    input(type='hidden', name='long', id='long')
+                    if user
+                      input(type='hidden', name='userId', id='userId', value=user.id)
                     .spacer-sm
                       .row
                           .col-md-6.col-sm-8.text-left(style='margin-top: 3px; color: #999;')
@@ -27,13 +27,11 @@ block content
                     .spacer-sm
                     .spacer-sm
                 .col-md-2.col-xs-6.text-right
-                    a(href='#',data-toggle='modal',data-target='#signupmodalshort')
-                        button.btn.btn-lg.btn-primary#shortBtn
-                            | Right now
+                    button(type='button').btn.btn-lg.btn-primary#shortBtn
+                        | Right now
                 .col-md-2.col-xs-6.text-left
-                    a(href='#',data-toggle='modal',data-target='#signupmodallong')
-                        button.btn.btn-lg.btn-default#longBtn
-                            | Long term
+                    button(type='button').btn.btn-lg.btn-default#longBtn
+                        | Long term
     .spacer-lg
     .row
         each location in [crisis, transitional, long]

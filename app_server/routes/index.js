@@ -17,16 +17,19 @@ router.get('/about', ctrlOthers.about);
 
 router.get('/location/:serviceUri', ctrlLocations.showLocation);
 
-router.get('/locations/:lengthOfStay', ctrlLocations.showLocations);
+router.post('/locations/:lengthOfStay', ctrlLocations.showLocations);
 router.post('/locations/:lengthOfStay/contact', ctrlRequests.openRequest);
 /**
  * Authentication
  */
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/',
-  failureFlash: true,
-}));
+// router.post('/login', passport.authenticate('local', {
+//   successRedirect: '/',
+//   failureRedirect: '/',
+//   failureFlash: true,
+// }));
+
+router.post('/login', ctrlAuth.login);
+
 router.post('/register', ctrlAuth.register);
 // route for facebook authentication and login
 router.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
