@@ -112,8 +112,8 @@ function geoloc()
     {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
-        document.getElementById('lat').value = lat;
-        document.getElementById('long').value = lng;
+        // document.getElementById('lat').value = lat;
+        // document.getElementById('long').value = lng;
 
         const geocoder = new google.maps.Geocoder;
         geocoder.geocode( { 'address': lat + ', ' + lng }, (results, status) => {
@@ -127,11 +127,11 @@ function geoloc()
                     if (!country && addressComponents[i].types[0] == 'country')
                         country = addressComponents[i].long_name;
                     else if (!state && addressComponents[i].types[0] == 'administrative_area_level_1')
-                        state = addressComponents[i].long_name;
+                        state = addressComponents[i].short_name;
                     else if (!locality && addressComponents[i].types[0] == 'locality')
                         locality = addressComponents[i].long_name;
                 }
-                document.getElementById('location').value = locality + ', ' + state + ', ' + country;
+                document.getElementById('location').value = locality + ' ' + state + ', ' + country;
             }
             else
             {
