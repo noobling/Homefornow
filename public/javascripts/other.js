@@ -99,11 +99,13 @@ function search(autocomplete, isLongTerm) // Fills form with lat and long from t
  */
 function geoloc()
 {
+    const oldLocValue = document.getElementById('location').value;
     document.getElementById('location').value = 'Finding your location ...';
 
     if (!navigator.geolocation)
     {
-	alert('Geolocation is not supported by your browser');
+      alert('Geolocation is not supported by your browser');
+      document.getElementById('location').value = oldLocValue;
     }
 
     function success(position)
@@ -140,7 +142,8 @@ function geoloc()
 
     function error()
     {
-	alert('Unable to retrieve your location');
+	    alert('Unable to retrieve your location');
+      document.getElementById('location').value = oldLocValue;
     }
 
     navigator.geolocation.getCurrentPosition(success, error);

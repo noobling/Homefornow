@@ -13,7 +13,7 @@ function sendJSONresponse(res, status, content) {
 
 /**
  * Logs in a user.
- * Redirects to the locations page if a latitude and longitude are provided.
+ * Redirects to the locations page if a latitude, longitude and length of stay are provided.
  * @param  {Object}   req  Express request object.
  * @param  {Object}   res  Express response object.
  * @param  {Function} next Express next function.
@@ -37,9 +37,9 @@ module.exports.login = (req, res, next) => {
 
 /**
  * Creates a new user of type role.
- * Redirects to the locations page if a latitude and longitude are provided.
- * @param  {Object} req   Express request object.
- * @param  {Object} res   Express response object.
+ * Redirects to the locations page if a latitude, longitude and length of stay are provided.
+ * @param  {Object}   req   Express request object.
+ * @param  {Object}   res   Express response object.
  * @param  {Function} next  Express next function.
  */
 module.exports.register = (req, res, next) => {
