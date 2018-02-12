@@ -4,11 +4,11 @@
             .modal-body
                 ul.nav.nav-tabs
                     li.active
-                      a(data-toggle='tab', href='#login').modal-title.bang.sec-color Login
+                      a(data-toggle='tab', href='#loginContent', id='loginTab').modal-title.bang.sec-color Login
                     li
-                      a(data-toggle='tab', href='#register').modal-title.bang.sec-color Sign-up
+                      a(data-toggle='tab', href='#registerContent', id='registerTab').modal-title.bang.sec-color Sign-up
                 .tab-content
-                    #login.tab-pane.fade.in.active
+                    #loginContent.tab-pane.fade.in.active
                         form(action='/login', method='post', role='form', id='loginForm')
                             .form-group(style='margin-top: 15px;')
                                 label(for='email') Email
@@ -22,7 +22,7 @@
                                 input(type='hidden', name='lengthOfStay')
                             .text-center
                                 input(type='submit', value='Submit').btn.btn-default
-                    #register.tab-pane.fade
+                    #registerContent.tab-pane.fade
                         form(action='/register', method='post', role='form', id='registerForm')
                             .form-group
                                 .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
