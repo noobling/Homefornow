@@ -59,5 +59,6 @@ block content
                                         | &nbsp;Not Avaliable
                             .panel-body
                                 | Contact: #{location.phoneNumber}
-    script(src='/javascripts/other.js')
+    script(src='/javascripts/search.js')
+    script(src='/javascripts/location.js')
     script(async='', defer='',  src='https://maps.googleapis.com/maps/api/js?key='+process.env.embed_maps_api+'&libraries=places&callback=initialize')
