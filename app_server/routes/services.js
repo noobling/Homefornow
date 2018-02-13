@@ -21,7 +21,7 @@ if (! (process.env.NODE_ENV == 'test')) {
     images.multer.single('fileAdd'),
     images.sendUploadToFirebase,
     (req, res, next) => {
-      console.log('req.file.storageObject = ', req.file.storageObject);
+      // console.log('req.file.storageObject = ', req.file.storageObject);
       if (req.file && req.file.storageObject) {
         // Get the corresponding Service from the serviceUri
         console.log('Service URI: '.concat(req.params.serviceUri));
@@ -35,7 +35,8 @@ if (! (process.env.NODE_ENV == 'test')) {
             res.redirect('back');
           });
       } else {
-        res.send('Error - not a file OR could not find req.file.storageObject');
+        // File did not upload - TODO rerender page with error message (AJAX)
+        res.redirect('back');
       }
     }
   );

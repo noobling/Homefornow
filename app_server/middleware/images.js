@@ -17,6 +17,8 @@ if (!(process.env.NODE_ENV === 'test')) {
       return next();
     }
 
+    console.log(req.file.originalname);
+
     const splitName = req.file.originalname.split('.');
     console.log('splitName = ', splitName);
     let result = '';
@@ -63,7 +65,18 @@ if (!(process.env.NODE_ENV === 'test')) {
   const multer = Multer({
     storage: Multer.MemoryStorage,
     limits: {
-      fileSize: 10 * 1024 * 1024, // no larger than 10mb
+      fileSize: 2 * 1024 * 1024, // no larger than 2mb
+    },
+    fileFilter: function (req, file, cb) {
+      if (file.mimetype !== 'image/png'
+          && file.mimetype !== 'image/jpg'
+          && file.mimetype !== 'image/jpeg'
+          && file.mimetype !== 'image/bmp') {
+          console.log('Got file of type', file.mimetype);
+          return cb(null, false);
+      }
+
+      cb(null, true);
     },
   });
 

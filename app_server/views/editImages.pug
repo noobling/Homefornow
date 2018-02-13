@@ -27,7 +27,7 @@ block content
                 label(style='margin: 0px;')
                   img.img-responsive#plus-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
                   img.img-responsive#spinner-gif(src='/images/loading_spinner.gif', style='display: none;')
-                  input#fileAdd(type='file', hidden='', name="fileAdd", onchange="form.submit()")
+                  input#fileAdd(type='file', accept="image/*", hidden='', name="fileAdd", onchange="form.submit()")
       -for (index = 0; index < length; index += 1)
         +deleteImageModal(uri, images[index], index)
         .item.col-xs-4.col-sm-2
@@ -43,7 +43,7 @@ block content
               label(style='margin: 0px;')
                 img.img-responsive(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
                 img.img-responsive(src='/images/loading_spinner.gif', style='display: none;')
-                input#fileAdd(type='file', hidden='', name="fileAdd", onchange="form.submit()")
+                input#fileAdd(type='file', accept="image/*", hidden='', name="fileAdd", onchange="form.submit()")
       .row
         h5.text-center There are currently no images
 
