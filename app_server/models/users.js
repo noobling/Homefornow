@@ -14,7 +14,7 @@ const crypto = require('crypto');
  *  admin: Have full access to everything on the site and have CRUD operations on all services
  */
 const userSchema = new mongoose.Schema({
-  // First name
+  // Name
   name: {
     type: String,
     required: true,

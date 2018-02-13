@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 const User = mongoose.model('User');
 
@@ -11,10 +12,35 @@ function sendJSONresponse(res, status, content) {
 }
 
 /**
+ * Logs in a user.
+ * Redirects to the locations page if a latitude, longitude and length of stay are provided.
+ * @param  {Object}   req  Express request object.
+ * @param  {Object}   res  Express response object.
+ * @param  {Function} next Express next function.
+ */
+module.exports.login = (req, res, next) => {
+  const prevPage = req.header('Referer') || '/';
+  passport.authenticate('local', (err, user) => {
+    if (err) { return next(err); }
+    if (!user) {
+      return res.redirect(prevPage);
+    }
+    req.logIn(user, (err2) => {
+      if (err2) { return next(err); }
+      if (req.body.lengthOfStay) {
+        return res.redirect(307, '/locations/'.concat(req.body.lengthOfStay)); // show vacancies
+      }
+      return res.redirect(prevPage);
+    });
+  })(req, res, next);
+};
+
+/**
  * Creates a new user of type role.
- * @param  {Object} req   Express request object.
- * @param  {Object} res   Express response object.
- * @param  {String} role  The role of the user: 'youth' or 'service_provider'.
+ * Redirects to the locations page if a latitude, longitude and length of stay are provided.
+ * @param  {Object}   req   Express request object.
+ * @param  {Object}   res   Express response object.
+ * @param  {Function} next  Express next function.
  */
 module.exports.register = (req, res, next) => {
   if (!req.body.fName
@@ -24,12 +50,16 @@ module.exports.register = (req, res, next) => {
     || !req.body.day
     || !req.body.month
     || !req.body.year
-    || !req.body.gender
-    || !req.body.role) {
+    || !req.body.gender) {
     sendJSONresponse(res, 400, {
       message: 'All fields required.',
     });
     return;
+  }
+
+  // Default req.body.role to 'youth'
+  if (!req.body.role) {
+    req.body.role = 'youth';
   }
 
   // Check for a valid role
@@ -66,7 +96,12 @@ module.exports.register = (req, res, next) => {
           next(err);
           return;
         }
-        res.redirect('/');
+        if (req.body.lengthOfStay) {
+          res.redirect(307, '/locations/'.concat(req.body.lengthOfStay)); // show vacancies
+        } else {
+          const prevPage = req.header('Referer') || '/';
+          res.redirect(prevPage);
+        }
       });
     })
     .catch((err) => {
