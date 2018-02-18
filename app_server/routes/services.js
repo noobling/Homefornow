@@ -21,17 +21,15 @@ if (! (process.env.NODE_ENV == 'test')) {
     images.multer.single('fileAdd'),
     images.sendUploadToFirebase,
     (req, res, next) => {
-      // console.log('req.file.storageObject = ', req.file.storageObject);
       if (req.file && req.file.storageObject) {
         // Get the corresponding Service from the serviceUri
-        console.log('Service URI: '.concat(req.params.serviceUri));
+        console.log('Service URI = '.concat(req.params.serviceUri));
         Service.findOneAndUpdate(
           { uri: req.params.serviceUri },
           { $push: { img: req.file.storageObject } },
           { runValidators: true }
         ).exec()
           .then((service) => {
-            console.log(service.img);
             res.redirect('back');
           });
       } else {

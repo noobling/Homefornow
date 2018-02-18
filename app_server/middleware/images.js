@@ -2,6 +2,8 @@
 if (!(process.env.NODE_ENV === 'test')) {
   const admin = require('firebase-admin');
   const Multer = require('multer');
+  const mongoose = require('mongoose');
+  const Service = mongoose.model('Service');
 
   const serviceAccount = require('../../homefornow-fd495-firebase-adminsdk-xy17w-62ee8ab849.json');
   admin.initializeApp({
@@ -17,10 +19,7 @@ if (!(process.env.NODE_ENV === 'test')) {
       return next();
     }
 
-    console.log(req.file.originalname);
-
     const splitName = req.file.originalname.split('.');
-    console.log('splitName = ', splitName);
     let result = '';
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
@@ -59,6 +58,98 @@ if (!(process.env.NODE_ENV === 'test')) {
     stream.end(req.file.buffer);
   }
 
+  function getImagesForService(service, serviceUri) {
+    return new Promise((resolve, reject) => {
+      let metadataCount = 0;
+      let listCount = 0;
+      const imageDict = [];
+
+      if (service.img != null && service.img.length > 0) {
+        listCount = service.img.length;
+        const bucket = admin.storage().bucket();
+
+        service.img.forEach((image) => {
+          // Get the metadata for each image reference
+          bucket.file(image).getMetadata().then((data) => {
+            // Add the media link for the image to 'imageList'
+            imageDict[service.img.indexOf(image)] = data[0].mediaLink;
+            metadataCount += 1;
+
+            // If all the images have been added to imageList, render the page with these images
+            if (metadataCount === listCount) {
+              resolve({
+                name: service.name,
+                uri: serviceUri,
+                images: imageDict,
+              });
+            }
+          }).catch((err) => {
+            console.log('[ERROR]: Could not get metadata: '.concat(err));
+            reject(err);
+          });
+        });
+      } else {
+        resolve({
+          name: service.name,
+          uri: serviceUri,
+        });
+      }
+    });
+  }
+
+  function deleteImageFromService(service, serviceUri, index) {
+    return new Promise((resolve, reject) => {
+      // Delete the image specified by 'index' from Firebase
+      const bucket = admin.storage().bucket();
+      bucket.file(service.img[index]).delete().then(() => {
+        // After deleting the image from Firebase, delete the image from MongoDB
+        const len = service.img.length;
+        const result = [];
+
+        // Remove the reference to the image from the list of images
+        for (let i = 0; i < len; i += 1) {
+          if (i < index) {
+            result[i] = service.img[i];
+          }
+          if (i > index) {
+            result[i - 1] = service.img[i];
+          }
+        }
+
+        // Update the MongoDB database with the new list of images, returning
+        // when succesful
+        Service.findOneAndUpdate(
+          { uri: serviceUri },
+          { $set: { img: result } },
+          { runValidators: true, new: true }
+        ).exec().then(() => {
+          resolve();
+        }).catch((err) => {
+          console.log('[ERROR]: Failed to update service.img: '.concat(err));
+          reject(err);
+        });
+      }).catch((err) => {
+        console.log('[ERROR]: Could not delete image from Firebase: '.concat(err));
+        reject(err);
+      });
+    });
+  }
+
+  function getImageFromService(serviceImage) {
+    return new Promise((resolve, reject) => {
+      if (serviceImage == null) {
+        resolve(null);
+      }
+      const bucket = admin.storage().bucket();
+      bucket.file(serviceImage).getMetadata().then((data) => {
+        resolve(data[0].mediaLink);
+      }).catch((err) => {
+        console.log('[ERROR]: Could not get image from Firebase: '.concat(err));
+        reject(err);
+      });
+    });
+  }
+
   // Multer handles parsing multipart/form-data requests.
   // This instance is configured to store images in memory.
   // This makes it straightforward to upload to Cloud Storage.
@@ -67,21 +158,23 @@ if (!(process.env.NODE_ENV === 'test')) {
     limits: {
       fileSize: 2 * 1024 * 1024, // no larger than 2mb
     },
-    fileFilter: function (req, file, cb) {
+    fileFilter: (req, file, cb) => {
       if (file.mimetype !== 'image/png'
           && file.mimetype !== 'image/jpg'
           && file.mimetype !== 'image/jpeg'
           && file.mimetype !== 'image/bmp') {
-          console.log('Got file of type', file.mimetype);
-          return cb(null, false);
+        return cb(null, false);
       }
 
-      cb(null, true);
+      return cb(null, true);
     },
   });
 
   module.exports = {
     sendUploadToFirebase,
+    getImagesForService,
+    deleteImageFromService,
+    getImageFromService,
     multer,
   };
 }

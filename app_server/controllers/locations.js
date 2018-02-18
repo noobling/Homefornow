@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const admin = require('firebase-admin');
+const images = require('../middleware/images');
 
 const Service = mongoose.model('Service');
 const Request = mongoose.model('Request');
@@ -47,35 +48,67 @@ module.exports.showLocations = (req, res) => {
             },
           ],
         },
-        'name available number phoneNumber description address uri'
+        'name available number phoneNumber description address uri img'
       );
     })
     .then((services) => {
       // Sort services into available and unavailable
       const available = [];
+      const availableImagePromises = [];
       const unavailable = [];
+      const unavailableImagePromises = [];
       for (let i = 0; i < services.length; i += 1) {
+        let serviceImg = null;
+        if (services[i].img != null && services[i].img.length > 0) {
+          serviceImg = services[i].img[0];
+        }
         if (services[i].available) {
           available.push(services[i]);
+          availableImagePromises.push(images.getImageFromService(serviceImg));
         } else {
           unavailable.push(services[i]);
+          unavailableImagePromises.push(images.getImageFromService(serviceImg));
         }
       }
 
-      res.render('bedVacanciesList', {
-        title: 'For Now',
-        tagline: 'A place to stay',
-        locations: available,
-        dlocations: unavailable,
-        userCoords: {
-          long: req.session.coordinates[0],
-          lat: req.session.coordinates[1],
-        },
+      Promise.all(availableImagePromises).then((availableImages) => {
+        Promise.all(unavailableImagePromises).then((unavailableImages) => {
+          res.render('bedVacanciesList', {
+            title: 'For Now',
+            tagline: 'A place to stay',
+            locations: available,
+            locationImgs: availableImages,
+            dlocations: unavailable,
+            dlocationImgs: unavailableImages,
+            userCoords: {
+              long: req.session.coordinates[0],
+              lat: req.session.coordinates[1],
+            },
+          });
+        }).catch(() => {
+          res.render('bedVacanciesList', {
+            title: 'For Now',
+            tagline: 'A place to stay',
+            locations: available,
+            dlocations: unavailable,
+            userCoords: {
+              long: req.session.coordinates[0],
+              lat: req.session.coordinates[1],
+            },
+          });
+        });
+      }).catch(() => {
+        res.render('bedVacanciesList', {
+          title: 'For Now',
+          tagline: 'A place to stay',
+          locations: available,
+          dlocations: unavailable,
+          userCoords: {
+            long: req.session.coordinates[0],
+            lat: req.session.coordinates[1],
+          },
+        });
       });
-    })
-    .catch((err) => {
-      console.log('[ERROR] LocationsController: '.concat(err));
-      res.status(500).json({ message: err });
     });
 };
 
@@ -86,68 +119,32 @@ module.exports.showLocations = (req, res) => {
  * @param  {Object} res Express response object.
  */
 module.exports.showLocation = (req, res) => {
-  let metadataCount = 0;
-  let listCount = 0;
   console.log('Service URI: '.concat(req.params.serviceUri));
   Service.findOne(
     { uri: req.params.serviceUri },
     'name tagline address facilities restrictions additionalInfo website img hours'
-  ).exec()
-    .then((service) => {
-      // console.log('Images: '.concat(service.img));
-      const imageList = [];
-
-      if (service.img != null && service.img.length > 0) {
-        listCount = service.img.length;
-        const bucket = admin.storage().bucket();
-
-        service.img.forEach((image) => {
-          // Get the metadata for each image reference
-          bucket.file(image).getMetadata().then((data) => {
-            // Add the media link for the image to 'imageList'
-            imageList[imageList.length] = data[0].mediaLink;
-            metadataCount += 1;
-
-            // If all the images have been added to imageList, render the page with these images
-            if (metadataCount === listCount) {
-              res.render('showLocation', {
-                location: service,
-                map: {
-                  title: service.name,
-                  suburb: service.address.suburb,
-                },
-                images: imageList,
-              });
-            }
-          }).catch((err) => {
-            console.log('[ERROR] LocationsController: '.concat(err));
-
-            // If image metadata cannot be obtained, then load the page without the images panel
-            listCount -= 1;
-            if (metadataCount === listCount) {
-              res.render('showLocation', {
-                location: service,
-                map: {
-                  title: service.name,
-                  suburb: service.address.suburb,
-                },
-              });
-            }
-          });
-        });
-      } else {
-        // If 'img' is not defined or is empty, render the page without the carousel
-        res.render('showLocation', {
-          location: service,
-          map: {
-            title: service.name,
-            suburb: service.address.suburb,
-          },
-        });
-      }
-    })
-    .catch((err) => {
+  ).exec().then((service) => {
+    images.getImagesForService(service, req.params.serviceUri).then((result) => {
+      res.render('showLocation', {
+        location: service,
+        map: {
+          title: service.name,
+          suburb: service.address.suburb,
+        },
+        images: result.images,
+      });
+    }).catch((err) => {
       console.log('[ERROR] LocationsController: '.concat(err));
-      res.status(500).json({ message: err });
+      res.render('showLocation', {
+        location: service,
+        map: {
+          title: service.name,
+          suburb: service.address.suburb,
+        },
+      });
     });
+  }).catch((err) => {
+    console.log('[ERROR] LocationsController: '.concat(err));
+    res.status(500).json({ message: err });
+  });
 };

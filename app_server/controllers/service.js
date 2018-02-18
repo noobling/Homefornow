@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const admin = require('firebase-admin');
+const images = require('../middleware/images');
 
 const Service = mongoose.model('Service');
 
@@ -71,47 +72,16 @@ module.exports.dashboard = (req, res) => {
  * @param  {Object} res Express response object.
  */
 module.exports.deleteImage = (req, res) => {
-  // Get the Service referenced by the POSTed serviceUri
-  Service.findOne({ uri: req.params.serviceUri }, 'name img').exec()
-    .then((service) => {
-      // Delete the image specified by request.params.index from Firebase
-      const bucket = admin.storage().bucket();
-      bucket.file(service.img[req.params.index]).delete().then(() => {
-        // After deleting the image from Firebase, delete the image from MongoDB
-        const len = service.img.length;
-        const result = [];
-
-        // Remove the reference to the image from the list of images
-        for (let i = 0; i < len; i += 1) {
-          if (i < req.params.index) {
-            result[i] = service.img[i];
-          }
-          if (i > req.params.index) {
-            result[i - 1] = service.img[i];
-          }
-        }
-
-        // Update the MongoDB database with the new list of images, returning
-        // when succesful
-        Service.findOneAndUpdate(
-          { uri: req.params.serviceUri },
-          { $set: { img: result } },
-          { runValidators: true, new: true }
-        ).exec()
-          .then(() => {
-            res.redirect('back');
-          }).catch((err) => {
-            console.log('[ERROR] LocationsController: Failed to update service.img: '.concat(err));
-            res.status(500).json({ message: err });
-          });
-      }).catch((err) => {
-        console.log('[ERROR] LocationsController: could not delete image from Firebase: '.concat(err));
-        res.status(500).json({ message: err });
-      });
+  Service.findOne({ uri: req.params.serviceUri }, 'name img').exec().then((service) => {
+    images.deleteImageFromService(service, req.params.serviceUri, req.params.index).then(() => {
+      res.redirect('back');
     }).catch((err) => {
-      console.log('[ERROR] LocationsController: could not find image in database: '.concat(err));
       res.status(500).json({ message: err });
     });
+  }).catch((err) => {
+    console.log('[ERROR]: Could not delete image from Firebase: '.concat(err));
+    res.status(500).json({ message: err });
+  });
 };
 
 /**
@@ -120,49 +90,11 @@ module.exports.deleteImage = (req, res) => {
  * @param  {Object} res Express response object.
  */
 module.exports.profile = (req, res) => {
-  let metadataCount = 0;
-  let listCount = 0;
-  console.log('Service URI: '.concat(req.params.serviceUri));
-  Service.findOne({ uri: req.params.serviceUri }, 'name img').exec()
-    .then((service) => {
-      // console.log('Images: '.concat(service.img));
-      const imageDict = [];
-
-      if (service.img != null && service.img.length > 0) {
-        listCount = service.img.length;
-        const bucket = admin.storage().bucket();
-        // console.log(service.img);
-
-        service.img.forEach((image) => {
-          // Get the metadata for each image reference
-          bucket.file(image).getMetadata().then((data) => {
-            // Add the media link for the image to 'imageList'
-            imageDict[service.img.indexOf(image)] = data[0].mediaLink;
-            metadataCount += 1;
-
-            // If all the images have been added to imageList, render the page with these images
-            if (metadataCount === listCount) {
-              console.log('LENGTH = ', Object.keys(imageDict).length);
-              res.render('editImages', {
-                name: service.name,
-                uri: req.params.serviceUri,
-                images: imageDict,
-              });
-            }
-          }).catch((err) => {
-            console.log('[ERROR] LocationsController: could not get metadata: '.concat(err));
-            res.status(500).json({ message: err });
-          });
-        });
-      } else {
-        res.render('editImages', {
-          name: service.name,
-          uri: req.params.serviceUri,
-        });
-      }
-    })
-    .catch((err) => {
-      console.log('[ERROR] LocationsController: could not get service: '.concat(err));
+  Service.findOne({ uri: req.params.serviceUri }, 'name img').exec().then((service) => {
+    images.getImagesForService(service, req.params.serviceUri).then((result) => {
+      res.render('editImages', result);
+    }).catch((err) => {
       res.status(500).json({ message: err });
     });
+  });
 };
