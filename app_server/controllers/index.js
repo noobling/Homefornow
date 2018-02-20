@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const async = require('async');
+const images = require('../middleware/images');
 
 const Service = mongoose.model('Service');
 
@@ -9,7 +10,7 @@ const Service = mongoose.model('Service');
  * @param  {string}   type        Type of service provider: 'crisis', 'transitional' or 'long'.
  */
 function findServiceOfAvailability(isAvailable, type) {
-  const fields = 'name phoneNumber description available uri';
+  const fields = 'name phoneNumber description available uri img logo';
   return Service.findOne(
     {
       $and: [
@@ -60,15 +61,22 @@ module.exports.index = (req, res) => {
     },
     (err, services) => {
       if (err) {
-        console.log('[ERROR] LocationsController: '.concat(err));
+        console.log('[ERROR] IndexController: '.concat(err));
       }
-      res.render('index', {
-        user: req.user,
-        crisis: services.crisis,
-        transitional: services.transitional,
-        long: services.long,
-        title: 'Do you have a secure place to stay?',
+      Promise.all([
+        images.getLogoForService(services.crisis.logo, services.crisis.uri),
+        images.getLogoForService(services.transitional.logo, services.transitional.uri),
+        images.getLogoForService(services.long.logo, services.long.uri)
+      ]).then(([result1, result2, result3]) => {
+        res.render('index', {
+          user: req.user,
+          locations: [services.crisis, services.transitional, services.long],
+          images: [result1, result2, result3],
+          title: 'Do you have a secure place to stay?',
+        });
+      }).catch((error) => {
+        console.log('[ERROR] IndexController: ', error);
       });
-    }
+    },
   );
 };

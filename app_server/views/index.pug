@@ -33,7 +33,7 @@ block content
                             | Long term
     .spacer-lg
     .row
-        each location in [crisis, transitional, long]
+        each location in locations
           if location
             .col-lg-4.col-md-12
                 .panel.panel-default.panel-spaced
@@ -43,7 +43,10 @@ block content
                     .row
                         .col-lg-12.col-sm-5
                             a(href='location/'+location.uri)
-                                img.img-responsive.img-square(src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
+                              if images[locations.indexOf(location)] != null
+                                img.img-responsive.img-square(src=images[locations.indexOf(location)])
+                              else
+                                img.img-responsive.img-square(src='images/placeholder.png')
                         .col-lg-12.col-sm-4
                             .panel-body.text-justify
                                 | #{location.description}

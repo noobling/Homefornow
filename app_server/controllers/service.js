@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const images = require('../middleware/images');
 
 const Service = mongoose.model('Service');
 
@@ -64,10 +65,55 @@ module.exports.dashboard = (req, res) => {
 };
 
 /**
+ * Used by deleteImageModal to delete an image stored in Firebase from a service
+ * provider's profile.
+ * @param  {Object} req Express request object.
+ * @param  {Object} res Express response object.
+ */
+module.exports.deleteImage = (req, res) => {
+  Service.findOne({ uri: req.params.serviceUri }, 'name img').exec().then((service) => {
+    images.deleteImageFromService(service, req.params.serviceUri, req.params.index).then(() => {
+      res.redirect('back');
+    }).catch((err) => {
+      res.status(500).json({ message: err });
+    });
+  }).catch((err) => {
+    console.log('[ERROR]: Could not find image in mongoDB: '.concat(err));
+    res.status(500).json({ message: err });
+  });
+};
+
+module.exports.deleteLogo = (req, res) => {
+  Service.findOne({ uri: req.params.serviceUri }, 'name logo').exec().then((service) => {
+    images.deleteLogoFromService(service.logo, req.params.serviceUri).then(() => {
+      res.redirect('back');
+    }).catch((err) => {
+      res.status(500).json({ message: err });
+    });
+  }).catch((err) => {
+    console.log('[ERROR]: Could not find image in mongoDB: '.concat(err));
+    res.status(500).json({ message: err });
+  });
+};
+
+/**
  * Renders a service provider's profile page
  * @param  {Object} req Express request object.
  * @param  {Object} res Express response object.
  */
 module.exports.profile = (req, res) => {
-  res.send('This is the Services Profile Page, rendered by the service.js Controller');
+  Service.findOne({ uri: req.params.serviceUri }, 'name img logo').exec().then((service) => {
+    Promise.all([
+      images.getImagesForService(service, req.params.serviceUri),
+      images.getLogoForService(service.logo, req.params.serviceUri),
+    ]).then(([imgs, logo]) => {
+      const params = imgs;
+      params.logo = logo;
+      res.render('editImages', params);
+    }).catch((err) => {
+      res.status(500).json({ message: err });
+    });
+  }).catch((err) => {
+    res.status(500).json({ message: err });
+  });
 };

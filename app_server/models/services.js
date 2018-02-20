@@ -233,6 +233,11 @@ const serviceSchema = new mongoose.Schema({
     type: [String],
     required: false,
   },
+  // Accommodation logo - the path to the image in Firebase Storage
+  logo: {
+    type: String,
+    required: false,
+  },
   // The requests submitted to the service provider
   requests: {
     type: [mongoose.Schema.Types.ObjectId],

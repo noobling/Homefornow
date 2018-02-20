@@ -1,0 +1,13 @@
+mixin deleteLogoModal(uri, logoReference)
+  .modal.fade(id="deletelogomodal",role="dialog")
+      .modal-dialog.modal-sm
+          .modal-content
+              .modal-header
+                button(type='button',data-dismiss='modal').close &times;
+                h3 Delete this logo?
+              .modal-header.text-center
+                .image
+                  img.img.img-responsive(src=logoReference)
+              .modal-body.text-center
+                form(action="/service/dashboard/profile/" + uri + "/logo/delete", method="post")
+                  input(type='submit', value='Delete').btn.btn-danger

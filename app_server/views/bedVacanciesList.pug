@@ -26,7 +26,10 @@ block content
           .row
             .col-md-3.col-sm-4.col-xs-12
               a(href='/location/'+location.uri)
-                img.img-responsive.img-square(src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
+                if locationImgs != null && locationImgs[locations.indexOf(location)] != null
+                  img.img-responsive.img-square(src=locationImgs[locations.indexOf(location)])
+                else
+                  img.img-responsive.img-square(src='/images/placeholder.png')
             .col-md-3.hidden-sm.hidden-xs
               .panel-body.text-justify
                 |  #{location.description}
@@ -57,7 +60,10 @@ block content
           .row
             .col-md-3.col-sm-4.col-xs-12
               a(href='/location/'+dlocation.uri)
-                img.img-responsive.img-square(src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
+                if dlocationImgs != null && dlocationImgs[dlocations.indexOf(dlocation)] != null
+                  img.img-responsive.img-square(src=dlocationImgs[dlocations.indexOf(dlocation)])
+                else
+                  img.img-responsive.img-square(src='/images/placeholder.png')            
             .col-md-3.hidden-sm.hidden-xs
               .panel-body.text-justify
                 | #{dlocation.description}
