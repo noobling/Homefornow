@@ -14,6 +14,7 @@ const router = express.Router();
 router.get('/', ctrlIndex.index);
 
 router.get('/about', ctrlOthers.about);
+router.get('/addServiceCreation', ctrlOthers.addServiceCreation); // MUST BE CHANGED LATER
 
 router.get('/location/:serviceUri', ctrlLocations.showLocation);
 

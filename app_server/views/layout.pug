@@ -15,8 +15,8 @@ script(src='/bootstrap/js/bootstrap.min.js')
 body
 block navbar
 footer
-  .container-fluid
-    ul.list-inline
+  .container-fluid(style='padding: 0px;')
+    ul.list-inline(style='margin: 0px;')
       li
         a(href="/about") About us
       li
@@ -25,13 +25,9 @@ footer
         a(href="/support") Support
       li
         a(href="/contact") Contact us
-      p
+      li
+        a(href='/addServiceCreation') Service Creation
+      p(style='margin: 0px;')
         | HomeForNow &copy; 2018
-        | &nbsp;
-<<<<<<< HEAD
 include _includes/regloginModal
-=======
-//- include _includes/loginModal
-//- include _includes/registerModal
-include _includes/regloginmodal
->>>>>>> 76f5f47cd7e6c2da6ad87fd87e47bf1a81e8554e
+include _includes/addServiceModal

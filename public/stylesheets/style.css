@@ -15,7 +15,8 @@ h1 {
 }
 
 .bang {
-    font-family: 'Bangers', sans-serif;
+    font-family: 'Bangers', sans-serif;    
+    /*use roboto*/
 }
 
 .bold {
@@ -32,22 +33,35 @@ div[class^="col-"] {
 }*/
 
 .spacer-sm {
-    height: 2em;
+    height: 32px;
 }
 
 .spacer-md {
-    height: 10em;
+    height: 160px;
 }
 
 .spacer-lg {
-    height: 20em;
+    height: 320px;
 }
 
 .page-header {
-    margin-top: 7em;
+    margin-top: 112px;
     border: none;
 }
 
+@media (max-width: 768px) {
+    .nav-justified > li {
+        display: table-cell;
+        width: 1%;
+    }
+    .nav-justified > li > a  {
+        border-bottom: 1px solid #ddd !important;
+        border-radius: 4px 4px 0 0 !important;
+    }
+    .nav-justified > .active > a  {
+        border-bottom-color: transparent !important;
+    }
+  }
 /*CSS for custom buttons ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 .btn {
@@ -86,6 +100,9 @@ div[class^="col-"] {
   border-radius: 8px;
 }*/
 
+/*CSS for Service Creation ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+#serveDesc, #serveAbout, #serveRules { resize: none; }
+
 /*CSS for user map ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 #userloc {
     border-radius: 5%;
@@ -104,7 +121,7 @@ div[class^="col-"] {
     height: 50%;
   }
 
-/*CSS for email ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*CSS for email/SMS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 #msg, #mail { resize: none; }
 
 #email-info, #sms-info {
@@ -227,12 +244,13 @@ ul {
 
 footer {
     position: static;
-    right: 0;
     bottom: 0;
     left: 0;
-    max-height: 65px;
-    padding: 1em;
-    background-color: #f8f8f8;
+    right: 0;
+    min-height: 100px;
+    width: 100%;
+    padding: 16px;
+    background-color: #cacaca;
     text-align: center;
 }
 
@@ -259,11 +277,11 @@ footer {
 /*Styles for services ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 #serviceno {
-    margin-left: 1em;
+    margin-left: 16px;
 }
 
 #serviceyes {
-    margin-right: 1em;
+    margin-right: 16px;
 }
 
 /*Styles for toggle switch ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

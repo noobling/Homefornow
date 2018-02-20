@@ -1,0 +1,163 @@
+extends navbarCentre
+
+block content
+    
+    #banner.page-header        
+        .container-fluid
+            .row
+                h1.bang.sec-color= title
+                .spacer-sm
+            .row
+                form(action='/register', method='post', role='form', id='addServiceForm')
+                    .row
+                        .form-group#serveName_LocForm
+                            .col-xs-12.col-sm-8(style='margin-bottom: 15px;')
+                                .row
+                                    .col-xs-12
+                                        label(for='serveName') SERVICE NAME
+                                        input(type='text', name='serveName', id='serveName', required='').form-control
+                            .col-xs-12.col-sm-4(style='margin-bottom: 15px;')
+                                .row
+                                    .col-xs-12
+                                        label(for='serveSuburb') SUBURB
+                                        input(type='text', name='serveName', id='serveSuburb', required='', autocomplete='on').form-control
+                    .form-group#serveDescForm
+                        .row
+                            .col-xs-12
+                                label(for='serveDesc') BRIEF DESCRIPTION
+                                textarea(rows="5", name='serveDesc',id='serveDesc', spellcheck="true", placeholder="Enter Description").form-control
+                    .form-group#serveAboutForm
+                        .row
+                            .col-xs-12
+                                label(for='serveAbout') ABOUT
+                                textarea(rows="5", name='serveAbout',id='serveAbout', spellcheck="true", placeholder="Enter Description").form-control
+                    .form-group#serveRulesForm
+                        .row
+                            .col-xs-12
+                                label(for='serveRules') HOUSE RULES
+                                textarea(rows="5", name='serveRules',id='serveRules', spellcheck="true", placeholder="Enter Description").form-control
+                    .form-group#serveLogoForm
+                        .row
+                            .col-xs-12
+                                label(for='serveLogo') LOGO
+                    .form-group#servePhotoForm
+                        .row
+                            .col-xs-12
+                                label(for='servePhoto') PHOTOS
+                    .form-group#serveAmenitiesForm
+                        .row
+                            .col-xs-12
+                                label AMENITIES
+                                .row
+                                    .col-xs-12.col-sm-8
+                                        .well
+                                            .row
+                                                .form-inline
+                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
+                                                        label TV
+                                                    .col-xs-1(style='padding: 0px;')
+                                                        input#TV(type="radio", name="TV")
+                                            .row
+                                                .form-inline
+                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
+                                                        label LAUNDRY/WASHER
+                                                    .col-xs-1(style='padding: 0px;')
+                                                        input#Washing(type="radio", name="Washing")
+                                            .row
+                                                .form-inline
+                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
+                                                        label WIFI
+                                                    .col-xs-1(style='padding: 0px;')
+                                                        input#WIFI(type="radio", name="WIFI")
+                                            .row(style='margin-bottom: 2px;')
+                                                .col-xs-11.col-xs-offset-1(style='padding: 0px;')
+                                                    label(style='margin: 0px;') BATHROOM
+                                                .form-inline
+                                                    .col-xs-10.col-xs-offset-1(style='padding-left: 15px;')
+                                                        span.small SHARED
+                                                    .col-xs-1(style='padding: 0px;')
+                                                        input#BATHSHARED(type="radio", name="BATH")
+                                                .form-inline
+                                                    .col-xs-10.col-xs-offset-1(style='padding-left: 15px;')
+                                                        span.small PRIVATE
+                                                    .col-xs-1(style='padding: 0px;')
+                                                        input#BATHPRIVATE(type="radio", name="BATH")
+                                            .row
+                                                .form-inline
+                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
+                                                        label SMOKING
+                                                    .col-xs-1(style='padding: 0px;')
+                                                        input#SMOKE(type="radio", name="SMOKE")
+                                            .row
+                                                .form-inline
+                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
+                                                        label AIR-CONDITIONING
+                                                    .col-xs-1(style='padding: 0px;')
+                                                        input#AIRCON(type="radio", name="AIRCON")
+                                            .row
+                                                .form-inline
+                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
+                                                        label GAMES/CONSOLE
+                                                    .col-xs-1(style='padding: 0px;')
+                                                        input#GAMES(type="radio", name="GAMES")
+                                            .row
+                                                .form-inline
+                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
+                                                        label GYM
+                                                    .col-xs-1(style='padding: 0px;')
+                                                        input#GYM(type="radio", name="GYM")
+                                            .row
+                                                .form-inline
+                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
+                                                        label STUDY
+                                                    .col-xs-1(style='padding: 0px;')
+                                                        input#STUDY(type="radio", name="STUDY")
+                                            .row
+                                                .form-inline
+                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
+                                                        label KITCHEN
+                                                    .col-xs-1(style='padding: 0px;')
+                                                        input#KITCHEN(type="radio", name="KITCHEN")
+                                            .row
+                                                .form-inline
+                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
+                                                        label PHONE
+                                                    .col-xs-1(style='padding: 0px;')
+                                                        input#PHONE(type="radio", name="PHONE")
+                                            .row
+                                                .form-inline
+                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
+                                                        label CURFEW
+                                                    .col-xs-1(style='padding: 0px;')
+                                                        input#CURFEW(type="radio", name="CURFEW")
+                                            .row
+                                                .form-inline
+                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
+                                                        label SECURE
+                                                    .col-xs-1(style='padding: 0px;')
+                                                        input#SECURE(type="radio", name="SECURE")
+                                            .row
+                                                .form-inline
+                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
+                                                        label OUTDOOR/GARDEN
+                                                    .col-xs-1(style='padding: 0px;')
+                                                        input#OUTDOOR(type="radio", name="OUTDOOR")
+                    .text-right
+                        input(type='submit', value='ADD SERVICE').btn.btn-primary#addService
+                    .spacer-sm
+    script.
+        /**
+        * Initialises the Google places autocomplete object.
+        * Adds event listeners to the 'For now' and 'Long term' buttons on the index page.
+        */
+        function initialize()
+        {
+            const options = {
+                types: ['(cities)'],
+                componentRestrictions: { country: 'au' }
+            };
+
+            const input = document.getElementById('serveSuburb');
+            const autocomplete = new google.maps.places.Autocomplete(input, options);
+        }
+    script(async='', defer='',  src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDIeuSPvAEW6jvSDFwx3tLfQw0llzYuN2A&libraries=places&callback=initialize')

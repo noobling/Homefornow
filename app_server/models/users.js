@@ -78,7 +78,9 @@ const userSchema = new mongoose.Schema({
   requests: {
     type: [mongoose.Schema.Types.ObjectId],
     required: false,
-  }
+  },
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
 });
 
 userSchema.methods.setPassword = function setPassword(password) {
