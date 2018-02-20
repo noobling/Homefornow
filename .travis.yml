@@ -1,8 +1,12 @@
 language:
 - node_js
 node_js:
-- 'node'
+- node
 env:
   global:
   - NODE_ENV=test
-services:
+services: 
+before_install:
+- openssl aes-256-cbc -K $encrypted_8f4fcae2ef89_key -iv $encrypted_8f4fcae2ef89_iv
+  -in homefornow-fd495-firebase-adminsdk-xy17w-62ee8ab849.json.enc -out homefornow-fd495-firebase-adminsdk-xy17w-62ee8ab849.json
+  -d
