@@ -206,6 +206,16 @@ div[class^="col-"] {
     color: white; /*Change active text color here*/
 }
 
+.navbar-default {
+    background-color: white;
+    border: 0;
+}
+
+.material-nav {
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
+    z-index: 10;
+}
+
 /*CSS for custom panels ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 .panel.panel-spaced {
@@ -250,7 +260,6 @@ footer {
     min-height: 100px;
     width: 100%;
     padding: 16px;
-    background-color: #cacaca;
     text-align: center;
 }
 
