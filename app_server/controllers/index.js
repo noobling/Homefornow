@@ -10,7 +10,7 @@ const Service = mongoose.model('Service');
  * @param  {string}   type        Type of service provider: 'crisis', 'transitional' or 'long'.
  */
 function findServiceOfAvailability(isAvailable, type) {
-  const fields = 'name phoneNumber description available uri img';
+  const fields = 'name phoneNumber description available uri img logo';
   return Service.findOne(
     {
       $and: [
@@ -61,12 +61,12 @@ module.exports.index = (req, res) => {
     },
     (err, services) => {
       if (err) {
-        console.log('[ERROR] LocationsController: '.concat(err));
+        console.log('[ERROR] IndexController: '.concat(err));
       }
       Promise.all([
-        images.getImageFromService(services.crisis.img[0]),
-        images.getImageFromService(services.transitional.img[0]),
-        images.getImageFromService(services.long.img[0])
+        images.getLogoForService(services.crisis.logo, services.crisis.uri),
+        images.getLogoForService(services.transitional.logo, services.transitional.uri),
+        images.getLogoForService(services.long.logo, services.long.uri)
       ]).then(([result1, result2, result3]) => {
         res.render('index', {
           user: req.user,

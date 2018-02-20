@@ -60,8 +60,8 @@ block content
           .row
             .col-md-3.col-sm-4.col-xs-12
               a(href='/location/'+dlocation.uri)
-                if dlocationImgs != null && dlocationImgs[locations.indexOf(location)] != null
-                  img.img-responsive.img-square(src=dlocationImgs[locations.indexOf(location)])
+                if dlocationImgs != null && dlocationImgs[dlocations.indexOf(dlocation)] != null
+                  img.img-responsive.img-square(src=dlocationImgs[dlocations.indexOf(dlocation)])
                 else
                   img.img-responsive.img-square(src='/images/placeholder.png')            
             .col-md-3.hidden-sm.hidden-xs

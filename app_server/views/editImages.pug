@@ -1,5 +1,6 @@
 extends navbarDefault
 include _includes/deleteImageModal
+include _includes/deleteLogoModal
 
 block content
 
@@ -15,6 +16,23 @@ block content
         span.badge.badge-primary(style='cursor: default;') #{images.length}/6
       else
         span.badge.badge-primary(style='cursor: default;') 0/6
+  .row#logorow
+    if logo != null
+      +deleteLogoModal(uri, logo)
+      .item.col-xs-4.col-sm-2
+        .thumbnail
+          .image.highlight
+            a(href='#',data-toggle="modal",data-target="#deletelogomodal")
+              img.img-responsive(src=logo)
+    else
+      .item.col-xs-4.col-sm-2
+        form(action="/service/dashboard/profile/" + uri + "/logo/add", method="post", enctype="multipart/form-data")
+          .thumbnail
+            .image.highlight
+              label(style='margin: 0px;')
+                img.img-responsive#plusLogo-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
+                img.img-responsive#spinnerLogo-gif(src='/images/loading_spinner.gif', style='display: none;')
+                input#logoAdd(type='file', accept="image/*", hidden='', name="logoAdd", onchange="form.submit()")
   .row#imagerow
     if images != null && images.length > 0
       -var index = 1;
@@ -51,4 +69,8 @@ block content
         $('#fileAdd').on('change', function () {
             $('#plus-img').hide();
             $('#spinner-gif').show();
+        });
+        $('#logoAdd').on('change', function () {
+            $('#plusLogo-img').hide();
+            $('#spinnerLogo-gif').show();
         });

@@ -23,22 +23,46 @@ if (! (process.env.NODE_ENV == 'test')) {
     (req, res, next) => {
       if (req.file && req.file.storageObject) {
         // Get the corresponding Service from the serviceUri
-        console.log('Service URI = '.concat(req.params.serviceUri));
         Service.findOneAndUpdate(
           { uri: req.params.serviceUri },
           { $push: { img: req.file.storageObject } },
           { runValidators: true }
         ).exec()
-          .then((service) => {
+          .then(() => {
             res.redirect('back');
           });
       } else {
         // File did not upload - TODO rerender page with error message (AJAX)
         res.redirect('back');
       }
-    }
+    },
+  );
+
+  router.post(
+    '/profile/:serviceUri/logo/add',
+    images.multer.single('logoAdd'),
+    images.sendUploadToFirebase,
+    (req, res, next) => {
+      if (req.file && req.file.storageObject) {
+        // Get the corresponding Service from the serviceUri
+        Service.findOneAndUpdate(
+          { uri: req.params.serviceUri },
+          { $set: { logo: req.file.storageObject } },
+          { runValidators: true }
+        ).exec()
+          .then(() => {
+            res.redirect('back');
+          });
+      } else {
+        // File did not upload - TODO rerender page with error message (AJAX)
+        res.redirect('back');
+      }
+    },
   );
 }
+
+router.post('/profile/:serviceUri/logo/delete', serviceController.deleteLogo);
+
 router.post('/profile/:serviceUri/:index/delete', serviceController.deleteImage);
 
 module.exports = router;

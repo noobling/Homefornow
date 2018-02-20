@@ -135,13 +135,36 @@ if (!(process.env.NODE_ENV === 'test')) {
     });
   }
 
-  function getImageFromService(serviceImage) {
+  function deleteLogoFromService(serviceLogo, serviceUri) {
     return new Promise((resolve, reject) => {
-      if (serviceImage == null) {
+      const bucket = admin.storage().bucket();
+      bucket.file(serviceLogo).delete().then(() => {
+        // Update the MongoDB database with the new list of images, returning
+        // when succesful
+        Service.findOneAndUpdate(
+          { uri: serviceUri },
+          { $set: { logo: '' } },
+          { runValidators: true, new: true }
+        ).exec().then(() => {
+          resolve();
+        }).catch((err) => {
+          console.log('[ERROR]: Failed to update service.img: '.concat(err));
+          reject(err);
+        });
+      }).catch((err) => {
+        console.log('[ERROR]: Could not delete image from Firebase: '.concat(err));
+        reject(err);
+      });
+    });
+  }
+
+  function getLogoForService(serviceLogo, serviceUri) {
+    return new Promise((resolve, reject) => {
+      if (serviceLogo == null || serviceLogo == '') {
         resolve(null);
       }
       const bucket = admin.storage().bucket();
-      bucket.file(serviceImage).getMetadata().then((data) => {
+      bucket.file(serviceLogo).getMetadata().then((data) => {
         resolve(data[0].mediaLink);
       }).catch((err) => {
         console.log('[ERROR]: Could not get image from Firebase: '.concat(err));
@@ -174,7 +197,8 @@ if (!(process.env.NODE_ENV === 'test')) {
     sendUploadToFirebase,
     getImagesForService,
     deleteImageFromService,
-    getImageFromService,
+    getLogoForService,
+    deleteLogoFromService,
     multer,
   };
 }

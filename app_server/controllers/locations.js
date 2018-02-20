@@ -48,7 +48,7 @@ module.exports.showLocations = (req, res) => {
             },
           ],
         },
-        'name available number phoneNumber description address uri img'
+        'name available number phoneNumber description address uri logo'
       );
     })
     .then((services) => {
@@ -58,16 +58,12 @@ module.exports.showLocations = (req, res) => {
       const unavailable = [];
       const unavailableImagePromises = [];
       for (let i = 0; i < services.length; i += 1) {
-        let serviceImg = null;
-        if (services[i].img != null && services[i].img.length > 0) {
-          serviceImg = services[i].img[0];
-        }
         if (services[i].available) {
           available.push(services[i]);
-          availableImagePromises.push(images.getImageFromService(serviceImg));
+          availableImagePromises.push(images.getLogoForService(services[i].logo));
         } else {
           unavailable.push(services[i]);
-          unavailableImagePromises.push(images.getImageFromService(serviceImg));
+          unavailableImagePromises.push(images.getLogoForService(services[i].logo));
         }
       }
 
@@ -109,6 +105,9 @@ module.exports.showLocations = (req, res) => {
           },
         });
       });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: err });
     });
 };
 
@@ -119,7 +118,6 @@ module.exports.showLocations = (req, res) => {
  * @param  {Object} res Express response object.
  */
 module.exports.showLocation = (req, res) => {
-  console.log('Service URI: '.concat(req.params.serviceUri));
   Service.findOne(
     { uri: req.params.serviceUri },
     'name tagline address facilities restrictions additionalInfo website img hours'

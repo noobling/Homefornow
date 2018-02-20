@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const admin = require('firebase-admin');
 const images = require('../middleware/images');
 
 const Service = mongoose.model('Service');
@@ -79,7 +78,20 @@ module.exports.deleteImage = (req, res) => {
       res.status(500).json({ message: err });
     });
   }).catch((err) => {
-    console.log('[ERROR]: Could not delete image from Firebase: '.concat(err));
+    console.log('[ERROR]: Could not find image in mongoDB: '.concat(err));
+    res.status(500).json({ message: err });
+  });
+};
+
+module.exports.deleteLogo = (req, res) => {
+  Service.findOne({ uri: req.params.serviceUri }, 'name logo').exec().then((service) => {
+    images.deleteLogoFromService(service.logo, req.params.serviceUri).then(() => {
+      res.redirect('back');
+    }).catch((err) => {
+      res.status(500).json({ message: err });
+    });
+  }).catch((err) => {
+    console.log('[ERROR]: Could not find image in mongoDB: '.concat(err));
     res.status(500).json({ message: err });
   });
 };
@@ -90,11 +102,18 @@ module.exports.deleteImage = (req, res) => {
  * @param  {Object} res Express response object.
  */
 module.exports.profile = (req, res) => {
-  Service.findOne({ uri: req.params.serviceUri }, 'name img').exec().then((service) => {
-    images.getImagesForService(service, req.params.serviceUri).then((result) => {
-      res.render('editImages', result);
+  Service.findOne({ uri: req.params.serviceUri }, 'name img logo').exec().then((service) => {
+    Promise.all([
+      images.getImagesForService(service, req.params.serviceUri),
+      images.getLogoForService(service.logo, req.params.serviceUri),
+    ]).then(([imgs, logo]) => {
+      const params = imgs;
+      params.logo = logo;
+      res.render('editImages', params);
     }).catch((err) => {
       res.status(500).json({ message: err });
     });
+  }).catch((err) => {
+    res.status(500).json({ message: err });
   });
 };
