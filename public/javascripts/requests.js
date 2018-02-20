@@ -12,22 +12,22 @@ function submitRequest(form)
   form.submit();
 }
 
-/**
- * Submits the form containing the youth person's phone number.
- * Uses Ajax to prevent a page reload.
- * @param  {Object} form The form to submit.
- */
-function submitPhoneNumber (form)
-{
-    // https://stackoverflow.com/questions/25983603/how-to-submit-html-form-without-redirection
-    $(document).ready(
-      $.ajax({
-        url:"/locations/contact",
-        type:"POST",
-        data:$(form).serialize(),
-      })
-      .fail(function(jqXHR, textStatus) {
-        console.log("[ERROR] Phone number submission: " + textStatus);
-      })
-    );
-};
+// /**
+//  * Submits the form containing the youth person's phone number.
+//  * Uses Ajax to prevent a page reload.
+//  * @param  {Object} form The form to submit.
+//  */
+// function submitPhoneNumber (form)
+// {
+//     // https://stackoverflow.com/questions/25983603/how-to-submit-html-form-without-redirection
+//     $(document).ready(
+//       $.ajax({
+//         url:"/locations/contact",
+//         type:"POST",
+//         data:$(form).serialize(),
+//       })
+//       .fail(function(jqXHR, textStatus) {
+//         console.log("[ERROR] Phone number submission: " + textStatus);
+//       })
+//     );
+// };

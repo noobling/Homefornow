@@ -63,20 +63,29 @@ module.exports.index = (req, res) => {
       if (err) {
         console.log('[ERROR] IndexController: '.concat(err));
       }
+      let user;
+      if (req.user) {
+        user = {
+          id: req.user.id,
+          name: req.user.name
+        };
+      }
+      
       Promise.all([
         images.getLogoForService(services.crisis.logo, services.crisis.uri),
         images.getLogoForService(services.transitional.logo, services.transitional.uri),
         images.getLogoForService(services.long.logo, services.long.uri)
       ]).then(([result1, result2, result3]) => {
         res.render('index', {
-          user: req.user,
-          locations: [services.crisis, services.transitional, services.long],
-          images: [result1, result2, result3],
-          title: 'Do you have a secure place to stay?',
+          user: user,
+          crisis: services.crisis,
+          transitional: services.transitional,
+          long: services.long,
+          title1: 'Let\'s find a',
+          title2: 'Home for now',
         });
       }).catch((error) => {
         console.log('[ERROR] IndexController: ', error);
-      });
     },
   );
 };

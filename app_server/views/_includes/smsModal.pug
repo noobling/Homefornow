@@ -20,7 +20,7 @@
                             input(type="submit", value="Send Text").btn.btn-default
 script.
     $('#charNum').text('0/160');
-    $('#msg').keyup(function () {
+    $('#msg').keydown(function () {
         var max = 160;
         var len = $(this).val().length;
         $('#charNum').text(len + '/' + max);

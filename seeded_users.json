@@ -1,27 +1,24 @@
 [
   {
-    "name": "Everardo",
-    "email": "Osbaldo.Keebler@clarissa.name",
-    "password": "Lily.Feest"
+    "firstName": "Aliya",
+    "lastName": "Reichel",
+    "email": "Maryse@jarod.name",
+    "phoneNumber": "793-207-9931",
+    "dob": 1063157624886,
+    "gender": "Male",
+    "hasDisability": false,
+    "role": "youth",
+    "password": "Kristy.Bednar"
   },
   {
-    "name": "Angus.Pacocha",
-    "email": "Andre@elliott.biz",
-    "password": "Keely"
-  },
-  {
-    "name": "Lavon_Lesch",
-    "email": "Art_Metz@kiara.us",
-    "password": "Scotty"
-  },
-  {
-    "name": "Linwood",
-    "email": "Richmond.Wuckert@dana.biz",
-    "password": "Charles_Kirlin"
-  },
-  {
-    "name": "Alba",
-    "email": "Ida_Boehm@skye.biz",
-    "password": "Lola"
+    "firstName": "Katelin",
+    "lastName": "O'Connell",
+    "email": "Haylee_Kutch@rigoberto.net",
+    "phoneNumber": "283-264-5352",
+    "dob": 810956024890,
+    "gender": "Other",
+    "hasDisability": false,
+    "role": "youth",
+    "password": "Vivienne_Johnston"
   }
 ]

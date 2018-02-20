@@ -1,8 +1,8 @@
 extends layout
 
 block navbar
-    .navbar.navbar-default.navbar-fixed-top
-      .container-fluid
+    .navbar.navbar-default.navbar-fixed-top#navbar
+      .container
         .navbar-header
           a.navbar-brand(href='/') HomeForNow
           button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
@@ -18,9 +18,19 @@ block navbar
                 a(href='/logout') Logout
             else
               li
-                a(href='#',data-toggle='modal',data-target='#loginmodal') Login
+                a(href='javascript: login()') Login
               li
-                a(href='/about') About
-
+                a(href='javascript: register()') Register
     .container
         block content
+    script.
+
+      window.onscroll = function () {
+        const nav = document.querySelector('#navbar');
+        var navClass = 'navbar navbar-default navbar-fixed-top';
+        if (this.scrollY <= 10) {
+          nav.className = navClass;
+        } else {
+          nav.className = navClass + ' material-nav';
+        }
+      };
