@@ -78,13 +78,19 @@ div[class^="col-"] {
 
 .btn-secondary {
     background-color: #ffffff;
-    border-color: #cc0066;
+    border: 2px solid #cc0066;
     color:#cc0066;
 }
 
 .btn-primary:hover {
     background-color: #862d86;
     border-color: #862d86;
+}
+
+.btn-secondary:hover {
+    background-color: #ffffff;
+    border: 2px solid #862d86;
+    color:#862d86;
 }
 
 .btn-sm {
@@ -206,11 +212,6 @@ div[class^="col-"] {
     background-color: #862d86;
 }
 
-.navbar-primary {
-    background-color: #cc66cc;
-    border-color: #cc66cc;
-}
-
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
     color: #262626;
     text-decoration: none;
@@ -227,7 +228,7 @@ div[class^="col-"] {
 }
 
 .material-nav {
-    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .05);
     z-index: 10;
 }
 

@@ -18,7 +18,7 @@ function findServiceOfAvailability(isAvailable, type) {
         { serviceType: type },
       ],
     },
-    fields
+    fields,
   ).exec();
 }
 
@@ -67,25 +67,27 @@ module.exports.index = (req, res) => {
       if (req.user) {
         user = {
           id: req.user.id,
-          name: req.user.name
+          name: req.user.name,
         };
       }
-      
+
       Promise.all([
         images.getLogoForService(services.crisis.logo, services.crisis.uri),
         images.getLogoForService(services.transitional.logo, services.transitional.uri),
-        images.getLogoForService(services.long.logo, services.long.uri)
+        images.getLogoForService(services.long.logo, services.long.uri),
       ]).then(([result1, result2, result3]) => {
         res.render('index', {
-          user: user,
+          user: req.user,
           crisis: services.crisis,
           transitional: services.transitional,
           long: services.long,
+          images: [result1, result2, result3],
           title1: 'Let\'s find a',
           title2: 'Home for now',
         });
       }).catch((error) => {
         console.log('[ERROR] IndexController: ', error);
+      });
     },
   );
 };

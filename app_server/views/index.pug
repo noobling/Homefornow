@@ -32,7 +32,7 @@ block content
                         | Long term
     .spacer-lg
     .row
-        each location in locations
+        each location in [crisis, transitional, long]
           if location
             .col-lg-4.col-md-12
                 .panel.panel-default.panel-spaced
@@ -42,8 +42,8 @@ block content
                     .row
                         .col-lg-12.col-sm-5
                             a(href='location/'+location.uri)
-                              if images[locations.indexOf(location)] != null
-                                img.img-responsive.img-square(src=images[locations.indexOf(location)])
+                              if images[[crisis, transitional, long].indexOf(location)] != null
+                                img.img-responsive.img-square(src=images[[crisis, transitional, long].indexOf(location)])
                               else
                                 img.img-responsive.img-square(src='images/placeholder.png')
                         .col-lg-12.col-sm-4
