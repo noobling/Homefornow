@@ -33,34 +33,51 @@ block content
                             | Long term
     .spacer-lg
     .row
+      .col-sm-12
+        .panel.panel-default.panel-spaced
+          h2.Text-Style-2.remove-line-spc
+            | CLOSE TO YOU.
+          h2.Text-Style-16
+            | Nearest crisis accommodation services.
+    .row
         each location in locations
           if location
             .col-lg-4.col-md-12
                 .panel.panel-default.panel-spaced
-                    .panel-heading
-                        a(href='/location/'+location.uri, style='text-decoration: none; color: inherit;')
-                            h2.panel-title= location.name
-                    .row
-                        .col-lg-12.col-sm-5
-                            a(href='location/'+location.uri)
-                              if images[locations.indexOf(location)] != null
-                                img.img-responsive.img-square(src=images[locations.indexOf(location)])
-                              else
-                                img.img-responsive.img-square(src='images/placeholder.png')
-                        .col-lg-12.col-sm-4
-                            .panel-body.text-justify
-                                | #{location.description}
-                        .col-lg-12.col-sm-3
-                            .panel-body
-                                if location.available
-                                    span.text-success
-                                        span.glyphicon.glyphicon-ok
-                                        | &nbsp;Avaliable
-                                else
-                                    span.text-danger
-                                        span.glyphicon.glyphicon-remove
-                                        | &nbsp;Not Avaliable
-                            .panel-body
-                                | Contact: #{location.phoneNumber}
+                    a(href='location/'+location.uri)
+                      if images[locations.indexOf(location)] != null
+                        img.img-responsive.img-square.img-shadow(src=images[locations.indexOf(location)])
+                      else
+                        img.img-responsive.img-square.img-shadow(src='images/placeholder.png')
+                    p
+                    a(href='/location/'+location.uri, style='text-decoration: none; color: inherit;')
+                        h2.panel-title.Text-Style-6= location.name
+                    .panel-body.text-justify.Text-Style-7.line-spc-3
+                        | #{location.description}
+    .row
+      .col-sm-12
+        .panel.panel-default.panel-spaced
+          h1.Text-Style-2.remove-line-spc
+            | WHO TO CALL.
+          h1.Text-Style-16
+            | Numbers to call if you need help.
+    .row
+      .col-sm-6
+        .panel.panel-default.panel-spaced
+          h1.Text-Style-8.line-spc-1
+            | Entry Point
+          h1.Text-Style-9.line-spc-2
+            | 6496 0001
+            p.line-spc-2
+            | 1800 124 684
+      .col-sm-6
+        .panel.panel-default.panel-spaced
+          h1.Text-Style-8.line-spc-1
+            | Crisis Care
+          h1.Text-Style-9.line-spc-2
+            | 9223 1111
+            p.line-spc-2
+            | 1800 199 008
+
     script(src='/javascripts/other.js')
     script(async='', defer='',  src='https://maps.googleapis.com/maps/api/js?key='+process.env.embed_maps_api+'&libraries=places&callback=initialize')
