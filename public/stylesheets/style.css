@@ -197,6 +197,13 @@ div[class^="col-"] {
 
 /*CSS for custom panels ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+@media (max-width:420px) {
+  .panel-spaced {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
 .panel.panel-spaced {
     margin: 60px;
 }
