@@ -20,7 +20,7 @@ block content
                       .row
                           .col-md-6.col-sm-8.text-left(style='margin-top: 3px;')
                             a(style='padding-left: 18px;')
-                            | Use 
+                            | Use
                             a(href='javascript: geoloc();', class='geoloc' style='color: #999;')#get_location
                                 | current location
                 .col-md-2.col-xs-6.text-right
@@ -35,46 +35,47 @@ block content
     .row
       .col-sm-12
         .panel.panel-default.panel-spaced
-          h2.Text-Style-2.remove-line-spc
+          .bangers-heading.black.line-spc-3
             | CLOSE TO YOU.
-          h2.Text-Style-16
+          .roboto-sub-heading.dark-grey
             | Nearest crisis accommodation services.
     .row
         each location in locations
           if location
-            .col-lg-4.col-md-12
+            .col-lg-4.col-md-4.col-sm-12
                 .panel.panel-default.panel-spaced
                     a(href='location/'+location.uri)
                       if images[locations.indexOf(location)] != null
-                        img.img-responsive.img-square.img-shadow(src=images[locations.indexOf(location)])
+                        img.img-responsive.img-square.img-shadow.center-block(src=images[locations.indexOf(location)])
                       else
-                        img.img-responsive.img-square.img-shadow(src='images/placeholder.png')
+                        img.img-responsive.img-square.img-shadow.center-block(src='images/placeholder.png')
                     p
                     a(href='/location/'+location.uri, style='text-decoration: none; color: inherit;')
-                        h2.panel-title.Text-Style-6= location.name
-                    .panel-body.text-justify.Text-Style-7.line-spc-3
+                        .panel-title.text-center.roboto-title.black.line-spc-2= location.name
+                    .panel-body.text-justify.text-center.roboto-desc.dark-grey.line-spc-4
                         | #{location.description}
+
     .row
       .col-sm-12
         .panel.panel-default.panel-spaced
-          h1.Text-Style-2.remove-line-spc
+          .bangers-heading.black.line-spc-3
             | WHO TO CALL.
-          h1.Text-Style-16
+          .roboto-sub-heading.dark-grey
             | Numbers to call if you need help.
     .row
       .col-sm-6
         .panel.panel-default.panel-spaced
-          h1.Text-Style-8.line-spc-1
+          .roboto-heading.black.line-spc-5
             | Entry Point
-          h1.Text-Style-9.line-spc-2
+          .roboto-heading.phone-num.deep-pink.line-spc-2
             | 6496 0001
             p.line-spc-2
             | 1800 124 684
       .col-sm-6
         .panel.panel-default.panel-spaced
-          h1.Text-Style-8.line-spc-1
+          .roboto-heading.black.line-spc-5
             | Crisis Care
-          h1.Text-Style-9.line-spc-2
+          .roboto-heading.phone-num.deep-pink.line-spc-2
             | 9223 1111
             p.line-spc-2
             | 1800 199 008
