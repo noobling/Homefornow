@@ -185,23 +185,52 @@ div[class^="col-"] {
     color: white; /*Change active text color here*/
 }
 
+.nav-container{
+    border-width:0;
+    box-shadow:none;
+    background-color: white;
+}
+.navbar {
+    background-color: white;
+    border: 0;
+}
+
 /*CSS for custom panels ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+@media (max-width:420px) {
+  .panel-spaced {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
 
 .panel.panel-spaced {
     margin: 60px;
 }
 
 .panel-primary > .panel-heading {
-    background-color: #cc66cc;
-    border-color: #cc66cc;
+    background-color: white;
+    border-color: none;
 }
 
 .panel-primary {
-    border-color: #cc66cc;
+    border-color: white;
 }
 
 .panel {
     border-radius: 0px;
+    border: none;
+    box-shadow: none;
+}
+
+.panel-body {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.panel-default > .panel-heading {
+    border: none;
+    background-color: white;
 }
 
 .panel-body.scroll {
@@ -371,4 +400,88 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+/*CSS for text styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.bangers-heading {
+  font-family: 'Bangers', sans-serif;
+  font-size: 42px;
+  text-align: left;
+}
+
+.roboto-heading {
+  font-family: 'Roboto', sans-serif;
+  font-size: 30px;
+  font-weight: 900;
+  text-align: left;
+}
+
+.phone-num {
+  letter-spacing: 1.5px;
+}
+
+.roboto-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24.7px;
+  font-weight: 900;
+  text-align: left;
+}
+
+.roboto-desc {
+  font-family: 'Roboto', sans-serif;
+  font-size: 17.9px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.roboto-sub-heading {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+}
+
+.black {
+  color: #000000;
+}
+
+.dark-grey {
+  color: #333333;
+}
+
+.deep-pink {
+  color: #cc0066;
+}
+
+.line-spc-1 {
+  line-height: .55em;
+}
+
+.line-spc-2 {
+  line-height: .85em;
+}
+
+.line-spc-3 {
+  line-height: .95em;
+}
+
+.line-spc-4 {
+  line-height: 1.2em;
+}
+
+.line-spc-5 {
+  line-height: 1.95em;
+}
+/*CSS for images ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.img-shadow {
+  min-width: 222px;
+  min-height: 160px;
+  box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3);
+  margin-bottom: 1.15em;
 }
