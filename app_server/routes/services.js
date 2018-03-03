@@ -19,20 +19,25 @@ router.post(
   '/profile/:serviceUri/add',
   images.multer.single('fileAdd'),
   images.sendUploadToFirebase,
-  (req, res, next) => {
+  (req, res) => {
+    // console.log(req);
     if (req.file && req.file.storageObject) {
       // Get the corresponding Service from the serviceUri
+      console.log('req.file.storageObject = ' + req.file.storageObject);
       Service.findOneAndUpdate(
         { uri: req.params.serviceUri },
         { $push: { img: req.file.storageObject } },
-        { runValidators: true }
+        { runValidators: true },
       ).exec()
         .then(() => {
-          res.redirect('back');
+          images.getImageForService(req.file.storageObject).then((image) => {
+            res.json({ error: false, mediaLink: image });
+          });
         });
+    } else if (!req.file) {
+      res.send('Not req.file');
     } else {
-      // File did not upload - TODO rerender page with error message (AJAX)
-      res.redirect('back');
+      res.send('Not req.file.storageObject');
     }
   },
 );
@@ -41,13 +46,13 @@ router.post(
   '/profile/:serviceUri/logo/add',
   images.multer.single('logoAdd'),
   images.sendUploadToFirebase,
-  (req, res, next) => {
+  (req, res) => {
     if (req.file && req.file.storageObject) {
       // Get the corresponding Service from the serviceUri
       Service.findOneAndUpdate(
         { uri: req.params.serviceUri },
         { $set: { logo: req.file.storageObject } },
-        { runValidators: true }
+        { runValidators: true },
       ).exec()
         .then(() => {
           res.redirect('back');

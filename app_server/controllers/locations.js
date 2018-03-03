@@ -60,10 +60,10 @@ module.exports.showLocations = (req, res) => {
       for (let i = 0; i < services.length; i += 1) {
         if (services[i].available) {
           available.push(services[i]);
-          availableImagePromises.push(images.getLogoForService(services[i].logo));
+          availableImagePromises.push(images.getImageForService(services[i].logo));
         } else {
           unavailable.push(services[i]);
-          unavailableImagePromises.push(images.getLogoForService(services[i].logo));
+          unavailableImagePromises.push(images.getImageForService(services[i].logo));
         }
       }
 

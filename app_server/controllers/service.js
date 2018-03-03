@@ -105,7 +105,7 @@ module.exports.profile = (req, res) => {
   Service.findOne({ uri: req.params.serviceUri }, 'name img logo').exec().then((service) => {
     Promise.all([
       images.getImagesForService(service, req.params.serviceUri),
-      images.getLogoForService(service.logo, req.params.serviceUri),
+      images.getImageForService(service.logo, req.params.serviceUri),
     ]).then(([imgs, logo]) => {
       const params = imgs;
       params.logo = logo;
