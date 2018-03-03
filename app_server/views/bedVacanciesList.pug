@@ -5,81 +5,72 @@ block content
 
   #banner.page-header
     .row
-      .col-lg-6
+      .col-md-6
         h1.bang LET'S FIND A
         h1.bang HOME FOR
           span.sec-color.bang  NOW.
-  .row
-    .col-xs-12.col-sm-6
-        .panel#user-panel
-          .panel-body
-            #userloc
-            |
+      .col-md-6
+        #userloc
   .row
     each location in locations
       +contactModal(location.name, location._id, location.available, location.phoneNumber, location.uri)
       .col-xs-12
         .panel.panel-default
           .row
-            .col-md-3.col-sm-4.col-xs-12
+            .col-md-3
               a(href='/location/'+location.uri)
                 if locationImgs != null && locationImgs[locations.indexOf(location)] != null
-                  img.img-responsive.img-square.pb-1(src=locationImgs[locations.indexOf(location)])
+                  img.img-responsive.img-square.pb-2(src=locationImgs[locations.indexOf(location)])
                 else
-                  img.img-responsive.img-square.pb-1(src='/images/placeholder.png')
+                  img.img-responsive.img-square.pb-2(src='/images/placeholder.png')
               h2.panel-title= location.name
-            .col-md-3.hidden-sm.hidden-xs
-              .panel-body.text-justify
-                |  #{location.description}
-                h2.location-address= location.address.suburb
-
-            .col-md-3.col-sm-4.col-xs-12
-              .panel-body.text-center
-                a(href='#',data-toggle="modal",data-target="#contactmodal"+location.uri)
-                  button.btn.btn-primary
-                    | Apply Now
-                a(href='#',data-toggle="modal",data-target="#contactmodal"+location.uri)
-                  button.btn.btn-secondary
-                    | More Info
-                if location.available
-                  h4
-                    span.text-success
-                      span.glyphicon.glyphicon-ok
-                      | &nbsp;Avaliable
+            .col-md-9
+              .row
+                .col-md-6
+                  .col-md-8
+                    .locations-text
+                      |  #{location.description}
+                .col-md-6
+                  .panel-body
+                    a.mr-1(href='#',data-toggle="modal",data-target="#contactmodal"+location.uri)
+                      button.btn.btn-primary
+                        | Apply Now
+                    a(href='#',data-toggle="modal",data-target="#contactmodal"+location.uri)
+                      button.btn.btn-secondary
+                        | More Info
+              .row
+                .panel-body
+                  .col-md-6
+                      h2.location-address= location.address.suburb  
+                  .col-md-6
+                    if location.available
+                      h2.available-bed Available
     each dlocation in dlocations
-      +contactModal(dlocation.name, dlocation._id, dlocation.available, dlocation.phoneNumber, dlocation.uri)
       .col-xs-12
         .panel.panel-default
-          .panel-heading
-            a(href='/location/'+dlocation.uri, style="text-decoration: none; color: inherit;")
-              h2.panel-title= dlocation.name + ', ' + dlocation.address.suburb
           .row
-            .col-md-3.col-sm-4.col-xs-12
+            .col-md-3
               a(href='/location/'+dlocation.uri)
                 if dlocationImgs != null && dlocationImgs[dlocations.indexOf(dlocation)] != null
-                  img.img-responsive.img-square(src=dlocationImgs[dlocations.indexOf(dlocation)])
+                  img.img-responsive.img-square.pb-2(src=dlocationImgs[dlocations.indexOf(dlocation)])
                 else
-                  img.img-responsive.img-square(src='/images/placeholder.png')            
-            .col-md-3.hidden-sm.hidden-xs
-              .panel-body.text-justify
-                | #{dlocation.description}
-            .col-md-3.col-sm-4.col-xs-12
-              .panel-body.text-center
-                if dlocation.available
-                  h4
-                    span.text-success
-                      span.glyphicon.glyphicon-ok
-                      | &nbsp;Avaliable
-                else
-                  h4
-                    span.text-danger
-                      span.glyphicon.glyphicon-remove
-                      | &nbsp;Not Avaliable
-            .col-md-3.col-sm-4.col-xs-12
-              .panel-body.text-center
-                a(href='#',data-toggle="modal",data-target="#contactmodal"+dlocation.uri)
-                  button.btn.btn-lg.btn-default
-                    | Contact
+                  img.img-responsive.img-square.pb-2(src='/images/placeholder.png')
+              h2.panel-title= dlocation.name
+            .col-md-9
+              .row
+                .col-md-6
+                  .col-md-8
+                    .locations-text
+                      |  #{dlocation.description}
+                .col-md-6
+                  .panel-body
+                      a(href='#',data-toggle="modal",data-target="#contactmodal"+dlocation.uri)
+                        button.btn.btn-secondary.btn-more-info
+                          | More Info
+              .row
+                .panel-body
+                  .col-md-6
+                    h2.location-address= dlocation.address.suburb  
   script.
     /**
     * Map that displays on the user location
