@@ -6,9 +6,9 @@ block content
   #banner.page-header
     .row
       .col-lg-6
-        h1= title
-          br
-          small #{tagline}
+        h1.bang LET'S FIND A
+        h1.bang HOME FOR
+          span.sec-color.bang  NOW.
   .row
     .col-xs-12.col-sm-6
         .panel#user-panel
@@ -20,36 +20,32 @@ block content
       +contactModal(location.name, location._id, location.available, location.phoneNumber, location.uri)
       .col-xs-12
         .panel.panel-default
-          .panel-heading
-            a(href='/location/'+location.uri, style="text-decoration: none; color: inherit;")
-              h2.panel-title= location.name + ', ' + location.address.suburb
           .row
             .col-md-3.col-sm-4.col-xs-12
               a(href='/location/'+location.uri)
                 if locationImgs != null && locationImgs[locations.indexOf(location)] != null
-                  img.img-responsive.img-square(src=locationImgs[locations.indexOf(location)])
+                  img.img-responsive.img-square.pb-1(src=locationImgs[locations.indexOf(location)])
                 else
-                  img.img-responsive.img-square(src='/images/placeholder.png')
+                  img.img-responsive.img-square.pb-1(src='/images/placeholder.png')
+              h2.panel-title= location.name
             .col-md-3.hidden-sm.hidden-xs
               .panel-body.text-justify
                 |  #{location.description}
+                h2.location-address= location.address.suburb
+
             .col-md-3.col-sm-4.col-xs-12
               .panel-body.text-center
+                a(href='#',data-toggle="modal",data-target="#contactmodal"+location.uri)
+                  button.btn.btn-primary
+                    | Apply Now
+                a(href='#',data-toggle="modal",data-target="#contactmodal"+location.uri)
+                  button.btn.btn-secondary
+                    | More Info
                 if location.available
                   h4
                     span.text-success
                       span.glyphicon.glyphicon-ok
                       | &nbsp;Avaliable
-                else
-                  h4
-                    span.text-danger
-                      span.glyphicon.glyphicon-remove
-                      | &nbsp;Not Avaliable
-            .col-md-3.col-sm-4.col-xs-12
-              .panel-body.text-center
-                a(href='#',data-toggle="modal",data-target="#contactmodal"+location.uri)
-                  button.btn.btn-lg.btn-default
-                    | Contact
     each dlocation in dlocations
       +contactModal(dlocation.name, dlocation._id, dlocation.available, dlocation.phoneNumber, dlocation.uri)
       .col-xs-12
