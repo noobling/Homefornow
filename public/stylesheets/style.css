@@ -3,11 +3,24 @@ body {
     font-family: 'Roboto', sans-serif;
     /*use roboto*/
     font-style: normal;
-    color: #999999;
+    color: #333333;
 }
 
 h1 {
     font-size: 62pt;
+}
+
+.sec-color{
+    color: #cc0066;
+}
+
+.bang {
+    font-family: 'Bangers', sans-serif;
+    /*use roboto*/
+}
+
+.bold {
+    font-weight: bold;
 }
 
 /*div[class="row"] {
@@ -20,21 +33,35 @@ div[class^="col-"] {
 }*/
 
 .spacer-sm {
-    height: 2em;
+    height: 32px;
 }
 
 .spacer-md {
-    height: 10em;
+    height: 160px;
 }
 
 .spacer-lg {
-    height: 20em;
+    height: 320px;
 }
 
 .page-header {
-    margin-top: 7em;
+    margin-top: 112px;
     border: none;
 }
+
+@media (max-width: 768px) {
+    .nav-justified > li {
+        display: table-cell;
+        width: 1%;
+    }
+    .nav-justified > li > a  {
+        border-bottom: 1px solid #ddd !important;
+        border-radius: 4px 4px 0 0 !important;
+    }
+    .nav-justified > .active > a  {
+        border-bottom-color: transparent !important;
+    }
+  }
 
 /*CSS for custom buttons ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -45,13 +72,25 @@ div[class^="col-"] {
 }
 
 .btn-primary {
-    background-color: #cc66cc;
-    border-color: #cc66cc;
+    background-color: #cc0066;
+    border-color: #cc0066;
+}
+
+.btn-secondary {
+    background-color: #ffffff;
+    border: 2px solid #cc0066;
+    color:#cc0066;
 }
 
 .btn-primary:hover {
     background-color: #862d86;
     border-color: #862d86;
+}
+
+.btn-secondary:hover {
+    background-color: #ffffff;
+    border: 2px solid #862d86;
+    color:#862d86;
 }
 
 .btn-sm {
@@ -82,6 +121,9 @@ div[class^="col-"] {
   border-radius: 8px;
 }*/
 
+/*CSS for Service Creation ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+#serveDesc, #serveAbout, #serveRules { resize: none; }
+
 /*CSS for user map ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 #userloc {
     border-radius: 5%;
@@ -100,7 +142,7 @@ div[class^="col-"] {
     height: 50%;
   }
 
-/*CSS for email ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*CSS for email/SMS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 #msg, #mail { resize: none; }
 
 #email-info, #sms-info {
@@ -170,11 +212,6 @@ div[class^="col-"] {
     background-color: #862d86;
 }
 
-.navbar-primary {
-    background-color: #cc66cc;
-    border-color: #cc66cc;
-}
-
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
     color: #262626;
     text-decoration: none;
@@ -185,6 +222,16 @@ div[class^="col-"] {
     color: white; /*Change active text color here*/
 }
 
+.navbar-default {
+    background-color: white;
+    border: 0;
+}
+
+.material-nav {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .05);
+    z-index: 10;
+}
+
 /*CSS for custom panels ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 .panel.panel-spaced {
@@ -192,16 +239,28 @@ div[class^="col-"] {
 }
 
 .panel-primary > .panel-heading {
-    background-color: #cc66cc;
-    border-color: #cc66cc;
+    background-color: white;
+    border-color: none;
 }
 
 .panel-primary {
-    border-color: #cc66cc;
+    border-color: white;
 }
 
 .panel {
     border-radius: 0px;
+    border: none;
+    box-shadow: none;
+}
+
+.panel-body {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.panel-default > .panel-heading {
+    border: none;
+    background-color: white;
 }
 
 .panel-body.scroll {
@@ -223,12 +282,12 @@ ul {
 
 footer {
     position: static;
-    right: 0;
     bottom: 0;
     left: 0;
-    max-height: 65px;
-    padding: 1em;
-    background-color: #f8f8f8;
+    right: 0;
+    min-height: 100px;
+    width: 100%;
+    padding: 16px;
     text-align: center;
 }
 
@@ -255,11 +314,65 @@ footer {
 /*Styles for services ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 #serviceno {
-    margin-left: 1em;
+    margin-left: 16px;
 }
 
 #serviceyes {
-    margin-right: 1em;
+    margin-right: 16px;
+}
+
+/*Styles for images ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.image {
+    position:relative;
+    overflow:hidden;
+    padding-bottom:100%;
+}
+
+.highlight {
+    transition: .3s ease;
+}
+
+.image img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.middle {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.middle form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.highlight:hover img {
+    opacity: 0.3;
+}
+
+.highlight:hover .middle {
+    opacity: 1;
+}
+
+#imagerow {
+    padding-top: 10px;
+}
+
+#logoRow {
+    padding-top: 10px;
 }
 
 /*Styles for images ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -268,6 +381,13 @@ footer {
   position:relative;
   overflow:hidden;
   padding-bottom:100%;
+}
+
+.img-shadow {
+  min-width: 222px;
+  min-height: 160px;
+  box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3);
+  margin-bottom: 1.15em;
 }
 
 .highlight {
@@ -371,4 +491,80 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+/*CSS for text styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.bangers-heading {
+  font-family: 'Bangers', sans-serif;
+  font-size: 42px;
+  text-align: left;
+}
+
+.roboto-heading {
+  font-family: 'Roboto', sans-serif;
+  font-size: 30px;
+  font-weight: 900;
+  text-align: left;
+}
+
+.phone-num {
+  letter-spacing: 1.5px;
+}
+
+.roboto-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24.7px;
+  font-weight: 900;
+  text-align: left;
+}
+
+.roboto-desc {
+  font-family: 'Roboto', sans-serif;
+  font-size: 17.9px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.roboto-sub-heading {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+}
+
+.black {
+  color: #000000;
+}
+
+.dark-grey {
+  color: #333333;
+}
+
+.deep-pink {
+  color: #cc0066;
+}
+
+.line-spc-1 {
+  line-height: .55em;
+}
+
+.line-spc-2 {
+  line-height: .85em;
+}
+
+.line-spc-3 {
+  line-height: .95em;
+}
+
+.line-spc-4 {
+  line-height: 1.2em;
+}
+
+.line-spc-5 {
+  line-height: 1.95em;
 }

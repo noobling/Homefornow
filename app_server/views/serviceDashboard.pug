@@ -9,13 +9,13 @@ block content
           .panel.panel-default
             .panel-body
               .col-xs-9
-                h4 Youth Accommodation Support Service
-                h5 Victoria Park
+                h4 #{service.name}
+                h5 #{service.address.suburb}
               .col-xs-3
                 .pull-right
                   h4
                     | Available Beds:&nbsp;
-                    span.badge.badge-success 7
+                    span.badge.badge-success #{numAvailableBeds}
       .row
         .col-xs-12.col-md-6
           .thumbnail
