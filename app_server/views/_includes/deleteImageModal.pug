@@ -10,4 +10,4 @@ mixin deleteImageModal(uri, imageReference, index)
                   img.img.img-responsive(id='deleteImg' + index, src=imageReference)
               .modal-body.text-center
                 form(action="/service/dashboard/profile/" + uri + "/" + index + "/delete", method="post")
-                  input(type='submit', value='Delete').btn.btn-danger
+                  input(type='submit', value='Delete', id="deleteimagebutton-image"+index).btn.btn-danger
