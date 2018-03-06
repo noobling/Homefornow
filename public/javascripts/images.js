@@ -28,11 +28,9 @@ $('#fileAdd').on('change', function (event) {
         $('#plus-img').show();
         $('#spinner-gif').hide();
         if (index === 5) {
-          $('#itemAdd').animate({width: "toggle", opacity: "toggle"}, 600);
-          $('#item' + index).animate({width: "toggle", opacity: "toggle"}, 800);
-        } else {
-          $('#item' + index).animate({width: "toggle", opacity: "toggle"}, 800);
+          $('#itemAdd').toggle('slide')
         }
+        $('#item' + index).toggle('slide');
       } else {
         $('#alertBox').html("<strong>Error! </strong>Image failed to upload!").show();
         $('#plus-img').show();
