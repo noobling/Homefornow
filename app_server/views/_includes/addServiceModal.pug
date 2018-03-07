@@ -1,0 +1,92 @@
+.modal.fade(id='addservicemodal',role='dialog')
+    .modal-dialog.modal-lg
+        .modal-content
+            .modal-header
+                button(type='button',data-dismiss='modal').close &times;
+                h4.modal-title.bang.sec-color Add Service
+            .modal-body
+                form(action='/register', method='post', role='form', id='addServiceForm')
+                    .row
+                        .form-group#serveName_LocForm
+                            .col-xs-12.col-sm-8(style='margin-bottom: 15px;')
+                                .row
+                                    .col-xs-12
+                                        label(for='serveName') SERVICE NAME
+                                        input(type='text', name='serveName', id='serveName', required='').form-control
+                            .col-xs-12.col-sm-4(style='margin-bottom: 15px;')
+                                .row
+                                    .col-xs-12
+                                        label(for='serveName') SUBURB
+                                        input(type='text', name='serveName', id='serveSuburb', required='', autocomplete='on').form-control
+                    .form-group#serveDescForm
+                        .row
+                            .col-xs-12
+                                label(for='serveDesc') BRIEF DESCRIPTION
+                                textarea(rows="5", name='serveDesc',id='serveDesc', spellcheck="true", placeholder="Enter Description").form-control
+                    .form-group#serveAboutForm
+                        .row
+                            .col-xs-12
+                                label(for='serveAbout') ABOUT
+                                textarea(rows="5", name='serveAbout',id='serveAbout', spellcheck="true", placeholder="Enter Description").form-control
+                    .form-group#serveRulesForm
+                        .row
+                            .col-xs-12
+                                label(for='serveRules') HOUSE RULES
+                                textarea(rows="5", name='serveRules',id='serveRules', spellcheck="true", placeholder="Enter Description").form-control
+                    .form-group#serveAmenitiesForm
+                        .row
+                            .col-xs-12
+                                label AMENITIES
+                                .row
+                                    .col-xs-12.col-md-6
+                                        .well
+                                            .form-inline
+                                                .col-xs-10.col-xs-offset-1
+                                                    label TV
+                                                .col-xs-1
+                                                    input#TV(type="radio", name="TV")
+                                            .input-group
+                                                label LAUNDRY/WASHER 
+                                                input.pull-right(type='radio')
+                                            .input-group
+                                                label WIFI
+                                                input.pull-right(type='radio')
+                                            .input-group
+                                                label SMOKING 
+                                                input.pull-right(type='radio')
+                                            .input-group
+                                                label AIRCON 
+                                                input.pull-right(type='radio')
+                                            .input-group
+                                                label GAMES/CONSOLE 
+                                                input.pull-right(type='radio')
+                                            .input-group
+                                                label GYM 
+                                                input.pull-right(type='radio')
+                                            .input-group
+                                                label STUDY 
+                                                input.pull-right(type='radio')
+                                            .input-group
+                                                label KITCHEN 
+                                                input.pull-right(type='radio')
+                                            .input-group
+                                                label PHONE 
+                                                input.pull-right(type='radio')
+                                            .input-group
+                                                label CURFEW 
+                                                input.pull-right(type='radio')
+                                            .input-group
+                                                label SECURE
+                                                input.pull-right(type='radio')
+                                            .input-group
+                                                label OUTDOOR/GARDEN
+                                                input.pull-right(type='radio')
+                                            .input-group
+                                                label BATHROOM
+                                                span.small SHARED
+                                                input.pull-right(type='radio')
+                                                span.small PRIVATE
+                                                input.pull-right(type='radio')
+                    .text-right
+                        input(type='submit', value='ADD SERVICE').btn.btn-primary#addService
+    

@@ -2,78 +2,80 @@ const mongoose = require('mongoose');
 
 const Request = mongoose.model('Request');
 const Service = mongoose.model('Service');
+const User = mongoose.model('User');
+
+/**
+ * Prints an error to the console and sends a json repsonse
+ * that contains the error message.
+ * @param  {Object} res    Express response object.
+ * @param  {String} err    The error message.
+ * @param  {number} status The HTTP status to set.
+ */
+function errorHandler(res, err, status) {
+  if (err) {
+    console.log('[ERROR] RequestsController: '.concat(err));
+    res.status(status).json({ message: err });
+  }
+}
 
 /**
  * Saves a youth person's request (mongo document) to the database.
- * Redirects to the bed vacancies page.
+ * The requestId is appended to the service provider's open requests and
+ * the user's collection of requests.
  * @param {Object} req Express request object.
  * @param {Object} res Express response object.
  */
-module.exports.addRequest = (req, res) => {
+module.exports.openRequest = (req, res) => {
   const request = new Request();
 
-  request.firstName = req.body.fName;
-  request.lastName = req.body.lName;
-  request.gender = req.body.gender;
-  request.age = req.body.age;
-  request.hasChild = req.body.child === 'yes';
+  request.youth = req.user.id;
+  request.service = req.body.serviceId;
   request.isLongTerm = req.params.lengthOfStay === 'long_term';
 
-  request.save((err, doc) => {
-    if (err) {
-      res.status(500).json({ message: err });
-    } else {
-      req.session.requestId = doc.id;
-      req.session.coordinates = [req.body.long, req.body.lat];
-      res.redirect('/locations/'.concat(req.params.lengthOfStay));
-    }
-  });
+  let requestId;
+
+  request.save() // Save the request
+    .then((savedReq) => {
+      requestId = savedReq.id;
+      // Append request to user's array of requests
+      return User.findOneAndUpdate(
+        { _id: req.user.id },
+        { $push: { requests: requestId } },
+        { runValidators: true, new: true },
+      );
+    })
+    .then(() => {
+      // Append request to service's open requests
+      return Service.findOneAndUpdate(
+        { _id: req.body.serviceId },
+        { $push: { openRequests: requestId } },
+        { runValidators: true, new: true },
+      );
+    })
+    .then(() => { res.status(201).end(); })
+    .catch((err) => { errorHandler(res, err, 500); });
 };
 
 /**
- * Adds a youth person's phone number to their request (mongo document) and
- * adds that request to a service provider.
+ * Closes a youth person's request (mongo document).
+ * The requestId is removed from the service provider's collection of open requests.
  * @param {Object} req Express request object.
  * @param {Object} res Express response object.
  */
-module.exports.addPhoneToRequest = (req, res) => {
-  if (req.session.requestId) {
-    // Add phone number to request
-    Request.findOneAndUpdate(
-      { _id: req.session.requestId },
-      {
-        $set:
-        {
-          phoneNumber: req.body.number,
-          email: req.body.email,
-        },
-      },
-      { runValidators: true, new: true },
-      (err) => {
-        if (err) {
-          console.log('[ERROR] RequestsController: '.concat(err));
-          res.status(500).json({ message: 'Could not add phone number to request.' });
-        }
-      }
-    );
-    // Add request to service
-    Service.findOneAndUpdate(
-      { _id: req.body.serviceId },
-      { $push: { requests: req.session.requestId } },
-      { runValidators: true, new: true },
-      (err) => {
-        if (err) {
-          console.log('[ERROR] RequestsController: '.concat(err));
-          res.status(500).json({ message: 'Could not submit request to service provider.' });
-        }
-      }
-    );
-  } else {
-    // TODO: Handle this case
-    //    Tell the user to submit a new request?
-    //    Use a 'token' system where the youth are provided a token to
-    //    access the results of their request
-    res.status(400).json({ message: 'Your session has expired. Please submit a new request.' });
-  }
-  res.status(201).end();
+module.exports.closeRequest = (req, res) => {
+  Request.findOneAndUpdate( // Update the request
+    { _id: req.body.requestId },
+    { $set: { closedAt: Date.now(), status: req.body.status } },
+    { runValidators: true, new: true },
+  ).exec()
+    .then((request) => {
+      // Remove request from service provider's open requests
+      Service.findOneAndUpdate(
+        { _id: request.service },
+        { $pull: { openRequests: req.body.requestId } },
+        { runValidators: true, new: true },
+      );
+    })
+    .then(() => { res.status(201).end(); })
+    .catch((err) => { errorHandler(res, err, 500); });
 };

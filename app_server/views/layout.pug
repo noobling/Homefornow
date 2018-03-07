@@ -1,5 +1,3 @@
-include _includes/loginModal
-
 doctype html
 head
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
@@ -7,17 +5,18 @@ head
         | Home For Now:&nbsp;
         | #{title}
     link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Roboto:300,400")
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Bangers')
     link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
-script(src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous")
-script(src='/bootstrap/js/bootstrap.min.js')
-script(src='/javascripts/app.js')
+script(src='/javascripts/jquery.js')
 script(src='/javascripts/validation.js')
+script(src='/javascripts/auth.js')
+script(src='/bootstrap/js/bootstrap.min.js')
 body
 block navbar
 footer
-  .container-fluid
-    ul.list-inline
+  .container-fluid(style='padding: 0px;')
+    ul.list-inline(style='margin: 0px;')
       li
         a(href="/about") About us
       li
@@ -26,6 +25,8 @@ footer
         a(href="/support") Support
       li
         a(href="/contact") Contact us
-      p
+      li
+        a(href='/addServiceCreation') Service Creation
+      p(style='margin: 0px;')
         | HomeForNow &copy; 2018
-        | &nbsp;
+include _includes/regloginModal
