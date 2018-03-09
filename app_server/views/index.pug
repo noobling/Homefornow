@@ -1,36 +1,35 @@
 extends navbarDefault
 
 block content
-    include _includes/signupModal
-
     #banner.page-header
         include _includes/messages/error
         include _includes/messages/info
         .row
             .col-md-8
-                h1= title
+                h1.bang= title1
+                h1.sec-color.bang= title2
     form(id='locationForm')
         .form-group
             .row
                 .col-md-8.col-xs-12
-                    input.form-control.input-lg(type='text', name='location', placeholder='Location e.g. Subiaco' autocomplete='on')#location
-                    input(type='hidden', name='lat', id='lat')
-                    input(type='hidden', name='long', id='long')
+                    input.form-control.input-lg(type='text', name='location', placeholder='Where are you now - e.g. Subiaco', autocomplete='on')#location
+                    if user
+                      input(type='hidden', name='userId', id='userId', value=user.id)
                     .spacer-sm
                       .row
-                          .col-md-6.col-sm-8.text-left(style='margin-top: 3px;')
+                          .col-md-6.col-sm-8.text-left(style='margin-top: 3px; color: #999;')
                             a(style='padding-left: 18px;')
                             | Use
                             a(href='javascript: geoloc();', class='geoloc' style='color: #999;')#get_location
-                                | current location
+                                | my current location
+                    .spacer-sm
+                    .spacer-sm
                 .col-md-2.col-xs-6.text-right
-                    a(href='#',data-toggle='modal',data-target='#signupmodalshort')
-                        button.btn.btn-lg.btn-primary#shortBtn
-                            | For now
+                    button(type='button').btn.btn-lg.btn-primary#shortBtn
+                        | Right now
                 .col-md-2.col-xs-6.text-left
-                    a(href='#',data-toggle='modal',data-target='#signupmodallong')
-                        button.btn.btn-lg.btn-default#longBtn
-                            | Long term
+                    button(type='button').btn.btn-lg.btn-secondary#longBtn
+                        | Long term
     .spacer-lg
     .row
       .col-sm-12
@@ -40,20 +39,26 @@ block content
           .roboto-sub-heading.dark-grey
             | Nearest crisis accommodation services.
     .row
-        each location in locations
+        each location in [crisis, transitional, long]
           if location
             .col-lg-4.col-md-4.col-sm-12
                 .panel.panel-default.panel-spaced
-                    a(href='location/'+location.uri)
-                      if images[locations.indexOf(location)] != null
-                        img.img-responsive.img-square.img-shadow.center-block(src=images[locations.indexOf(location)])
-                      else
-                        img.img-responsive.img-square.img-shadow.center-block(src='images/placeholder.png')
-                    p
-                    a(href='/location/'+location.uri, style='text-decoration: none; color: inherit;')
-                        .panel-title.text-center.roboto-title.black.line-spc-2= location.name
-                    .panel-body.text-justify.text-center.roboto-desc.dark-grey.line-spc-4
-                        | #{location.description}
+                    .panel-heading
+                        a(href='/location/'+location.uri, style='text-decoration: none; color: inherit;')
+                            h2.panel-title= location.name
+                    .row
+                        .col-lg-12.col-sm-5
+                            a(href='location/'+location.uri)
+                              if images[[crisis, transitional, long].indexOf(location)] != null
+                                img.img-responsive.img-square(src=images[[crisis, transitional, long].indexOf(location)])
+                              else
+                                img.img-responsive.img-square(src='images/placeholder.png')
+                        .col-lg-12.col-sm-4
+                            .panel-body.text-justify
+                                | #{location.description}
+                        .col-lg-12.col-sm-3
+                            .panel-body
+                                | Contact: #{location.phoneNumber}
 
     .row
       .col-sm-12
@@ -79,6 +84,7 @@ block content
             | 9223 1111
             p.line-spc-2
             | 1800 199 008
-
-    script(src='/javascripts/other.js')
+                    
+    script(src='/javascripts/search.js')
+    script(src='/javascripts/location.js')
     script(async='', defer='',  src='https://maps.googleapis.com/maps/api/js?key='+process.env.embed_maps_api+'&libraries=places&callback=initialize')

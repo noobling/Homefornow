@@ -21,6 +21,7 @@ module.exports.service = (req, res) => {
 module.exports.addService = (req, res) => {
   if (!req.user) {
     res.status(401).json({ message: 'You must be logged in to create a new service provider.' });
+    return;
   }
 
   const service = new Service();
@@ -55,13 +56,48 @@ module.exports.addService = (req, res) => {
   });
 };
 
+function countAvailableBeds(beds) {
+  let count = 0;
+  for (let i = 0; i < beds.length; i += 1) {
+    if (!beds[i].isOccupied) count += 1;
+  }
+  return count;
+}
+
 /**
  * Renders a service provider's dashboard.
  * @param  {Object} req Express request object.
  * @param  {Object} res Express response object.
  */
 module.exports.dashboard = (req, res) => {
-  res.render('serviceDashboard');
+  // console.log("hey");
+  // if (!req.user || req.user.role !== 'service_provider') {
+  //   res.status(401).json({ message: 'You are not authorised to view this page. Please log in with your service provider account.' });
+  //   return;
+  // }
+  //
+  // Service.findById(
+  //   req.user.service[0],
+  //   'name address.suburb beds tags openRequests'
+  // ).exec()
+  //   .then((service) => {
+  //     res.render('serviceDashboard', {
+  //       service: service,
+  //       numAvailableBeds: countAvailableBeds(service.beds),
+  //
+  //     });
+  //   })
+  //   .catch((err) => { res.status(401).json({ message: err }); });
+
+  res.render('serviceDashboard', {
+    service: {
+      name: 'Youngle Group',
+      address: {
+        suburb: 'Cannington',
+      }
+    },
+    numAvailableBeds: 10
+  });
 };
 
 /**
