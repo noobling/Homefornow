@@ -1,0 +1,36 @@
+mixin vacancyPanel(serviceName, suburb, available, description, uri, image)
+    .panel.panel-default
+        .panel-body
+          .row
+              .col-sm-3
+                a(href='/location/'+uri)
+                  if image != null
+                    img.img-responsive.img-square(src=image)
+                  else
+                    img.img-responsive.img-square(src='/images/placeholder.png')
+              .col-sm-9
+                .row
+                  .col-md-6.col-xs-12
+                    .col-md-8
+                      .locations-text= description
+                  .col-md-6.col-xs-12
+                      .col-xs-6
+                          if available
+                              a(href='#',data-toggle="modal",data-target="#contactmodal"+uri)
+                                button.btn.btn-primary
+                                  | Apply Now
+                      .col-xs-6
+                          a(href='#',data-toggle="modal",data-target="#contactmodal"+uri).text-right
+                            button.btn.btn-secondary
+                              | More Info
+                .row
+                    .col-xs-6
+                        .col-xs-12
+                            h2.location-address= suburb  
+                    .col-xs-6
+                        .col-xs-12
+                          if available
+                            h2.panel-panel-important(style="color: #cc0066;") Available
+          .row
+            .container-fluid
+              h2.panel-panel-important= serviceName
