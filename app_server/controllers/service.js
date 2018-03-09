@@ -70,7 +70,6 @@ function countAvailableBeds(beds) {
  * @param  {Object} res Express response object.
  */
 module.exports.dashboard = (req, res) => {
-  // console.log("hey");
   // if (!req.user || req.user.role !== 'service_provider') {
   //   res.status(401).json({ message: 'You are not authorised to view this page. Please log in with your service provider account.' });
   //   return;
@@ -78,25 +77,43 @@ module.exports.dashboard = (req, res) => {
   //
   // Service.findById(
   //   req.user.service[0],
-  //   'name address.suburb beds tags openRequests'
+  //   'name address.suburb beds tags openRequests',
   // ).exec()
   //   .then((service) => {
   //     res.render('serviceDashboard', {
-  //       service: service,
+  //       service,
   //       numAvailableBeds: countAvailableBeds(service.beds),
-  //
   //     });
-  //   })
-  //   .catch((err) => { res.status(401).json({ message: err }); });
+  //   }).catch((err) => {
+  //     res.status(401).json({ message: err });
+  //   });
 
   res.render('serviceDashboard', {
     service: {
       name: 'Youngle Group',
       address: {
         suburb: 'Cannington',
-      }
+      },
+      beds: [
+        {
+          gender: 'Male',
+          isOccupied: 'false',
+        },
+        {
+          gender: 'Female',
+          isOccupied: 'false',
+        },
+        {
+          gender: 'Male',
+          isOccupied: 'true',
+        },
+        {
+          gender: 'Female',
+          isOccupied: 'true',
+        },
+      ],
     },
-    numAvailableBeds: 10
+    numAvailableBeds: 10,
   });
 };
 

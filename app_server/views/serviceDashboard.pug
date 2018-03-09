@@ -1,500 +1,103 @@
 extends navbarDefault
 
 block content
-
-    .container-fluid
-      h2 Service Dashboard
-      .row
-        .col-xs-12
-          .panel.panel-default
-            .panel-body
-              .col-xs-9
-                h4 #{service.name}
-                h5 #{service.address.suburb}
-              .col-xs-3
-                .pull-right
-                  h4
-                    | Available Beds:&nbsp;
-                    span.badge.badge-success #{numAvailableBeds}
-      .row
-        .col-xs-12.col-md-6
-          .thumbnail
-            .panel-body.scroll
-              .mid-width.wrapItems
-                h4 Vacancies
-                .pull-right
-                  .dropdown
-                    button#menu1.btn.btn-primary.dropdown-toggle(type='button', data-toggle='dropdown')
-                      | Filter by
-                      span.caret
-                    ul.dropdown-menu(role='menu', aria-labelledby='menu1')
-                      li(role='presentation')
-                        a(role='menuitem', href='#') All
-                      li(role='presentation')
-                        a(role='menuitem', href='#') Male
-                      li(role='presentation')
-                        a(role='menuitem', href='#') Female
-                      li(role='presentation')
-                        a(role='menuitem', href='#') Both
-                      li(role='presentation')
-                        a(role='menuitem', href='#') Child
-                      li(role='presentation')
-                        a(role='menuitem', href='#') Disability
-                ul.nav.nav-tabs
-                  li.active
-                    a(data-toggle='tab', href='#vacancies') Vacancies
-                  li
-                    a(data-toggle='tab', href='#tags') Tags
-                  li
-                    a(data-toggle='tab', href='#beds') Beds
-                  li
-                    a(data-toggle='tab', href='#edit') Edit
-                .tab-content
-                  #vacancies.tab-pane.fade.in.active
-                    h3 Vacancies
-                    table.table
-                      thead
-                        tr
-                          th(style='width: 28%') Description
-                          th(style='width: 18%') Male
-                          th(style='width: 18%') Female
-                          th(style='width: 18%') Disability
-                          th(style='width: 18%') Child
-                      tbody
-                        tr
-                          td Placeholder
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                        tr.active
-                          td Placeholder
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                        tr
-                          td Placeholder
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                        tr.active
-                          td Placeholder
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                        tr
-                          td Placeholder
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                        tr.active
-                          td Placeholder
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                        tr
-                          td Placeholder
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                        tr.active
-                          td Placeholder
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                        tr
-                          td Placeholder
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                        tr.active
-                          td Placeholder
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                        tr
-                          td Placeholder
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                        tr.active
-                          td Placeholder
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                        tr
-                          td Placeholder
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                        tr.active
-                          td Placeholder
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                          td
-                            label.switch
-                              input(type='checkbox')
-                              span.slider.round
-                  #tags.tab-pane.fade
-                    h3 Tags
-                    p
-                      | Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
-                  #beds.tab-pane.fade
-                    h3 Beds
-                    p
-                      | Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                  #edit.tab-pane.fade
-                    h3 Edit
-                    p
-                      | Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-        .col-xs-12.col-md-6
-          .thumbnail
-            .panel-body.scroll
-              .mid-width.wrapItems
-                h4 Requests
-                table.table
-                  thead
-                    tr
-                      th
-                        | Name
-                        br
-                        | Status
-                      th
-                        | Mobile Number
-                        br
-                        | Email Address
-                      th Date Contacted
-                  tbody
-                    tr
-                      td
-                        | Christine T
-                        br
-                        | Female
-                      td
-                        a(href='') 0491 570 156
-                        br
-                        a(href='') someone@example.com
-                      td
-                        | 4 hours ago
-                    tr.active
-                      td Johnny S
-                      td
-                        a(href='') 0491 570 156
-                        br
-                        a(href='') someone@example.com
-                      td
-                        | 10 hours ago
-                    tr
-                      td
-                        | Brenda W
-                        br
-                        | Female
-                      td
-                        a(href='') 0491 570 156
-                        br
-                        a(href='') someone@example.com
-                      td
-                        | 4 days ago
-                    tr.active
-                      td
-                        | Sara W
-                        br
-                        | Female
-                      td
-                        a(href='') 0491 570 156
-                        br
-                        a(href='') someone@example.com
-                      td
-                        | 2 weeks ago
-                    tr
-                      td
-                        | Diana H
-                        br
-                        | Female/Disability
-                      td
-                        a(href='') 0491 570 156
-                        br
-                        a(href='') someone@example.com
-                      td
-                        | 2018/01/4
-                    tr.active
-                      td
-                        | Billy G
-                        br
-                        | Male
-                      td
-                        a(href='') 0491 570 156
-                        br
-                        a(href='') someone@example.com
-                      td
-                        | 2018/01/2
-                    tr
-                      td
-                        | Adam G
-                        br
-                        | Male
-                      td
-                        a(href='') 0491 570 156
-                        br
-                        a(href='') someone@example.com
-                      td
-                        | 2018/01/1
-                    tr.active
-                      td
-                        | Doris H
-                        br
-                        | Female
-                      td
-                        a(href='') 0491 570 156
-                        br
-                        a(href='') someone@example.com
-                      td
-                        | 2017/12/21
-                    tr
-                      td
-                        | Bobby N
-                        br
-                        | Male
-                      td
-                        a(href='') 0491 570 156
-                        br
-                        a(href='') someone@example.com
-                      td
-                        | 2017/12/15
-                    tr.active
-                      td
-                        | Steven C
-                        br
-                        | Male
-                      td
-                        a(href='') 0491 570 156
-                        br
-                        a(href='') someone@example.com
-                      td
-                        | 2017/12/4
-                    tr
-                      td
-                        | Patrick H
-                        br
-                        | Male
-                      td
-                        a(href='') 0491 570 156
-                        br
-                        a(href='') someone@example.com
-                      td
-                        | 2017/11/22
-                    tr.active
-                      td
-                        | Edward T
-                        br
-                        | Male/Disability
-                      td
-                        a(href='') 0491 570 156
-                        br
-                        a(href='') someone@example.com
-                      td
-                        | 2017/11/8
-                    tr
-                      td
-                        | Lisa S
-                        br
-                        | Female
-                      td
-                        a(href='') 0491 570 156
-                        br
-                        a(href='') someone@example.com
-                      td
-                        | 2017/11/3
-                    tr.active
-                      td
-                        | Rose E
-                        br
-                        | Unspecified
-                      td
-                        a(href='') 0491 570 156
-                        br
-                        a(href='') someone@example.com
-                      td
-                        | 1650 BC
-        .col-xs-12
-          .thumbnail
-            .panel-body.scroll
-              h2 Data
+    
+    .page-header-sm
+        .container
+                h1 #{service.name}
+        .container
+            .row
+                .col-sm-8.col-xs-12
+                    h2 #{service.address.suburb}
+                .col-sm-4.col-xs-12
+                    h2
+                        | Available Beds:&nbsp;
+                        span.badge.badge-success #{numAvailableBeds}
+                        
+    .container
+        ul.nav.nav-tabs.nav-justified.service-tabs
+          li.active.text-center
+            a(data-toggle='tab', href='#bedManagement') Our Beds
+          li.text-center
+            a(data-toggle='tab', href='#serviceProfile') Service Profile
+          li.text-center
+            a(data-toggle='tab', href='#bedsAvaliable') Other Services
+        .tab-content.service-tab-content
+            #bedManagement.tab-pane.fade.in.active
+                .container-fluid
+                    .row
+                        .col-xs-12.col-md-6
+                          h3 Our Bed Count
+                            .panel-body.scroll
+                              .mid-width.wrapItems
+                                table.table
+                                  tbody
+                                    each bed in service.beds
+                                        tr
+                                          td Bed #{service.beds.indexOf(bed) + 1}
+                                          td
+                                            label.switch
+                                              input(type='checkbox')
+                                              span.slider.round
+                                          td
+                                            label.switch
+                                              input(type='checkbox')
+                                              span.slider.round
+                                          td
+                                            label.switch
+                                              input(type='checkbox')
+                                              span.slider.round
+                        .col-xs-12.col-md-6
+                            h3 Requests
+                            .thumbnail
+                              .panel-body.scroll
+                                .mid-width.wrapItems
+                                  table.table
+                                    thead
+                                      tr
+                                        th
+                                          | Name
+                                          br
+                                          | Status
+                                        th
+                                          | Mobile Number
+                                          br
+                                          | Email Address
+                                        th Date Contacted
+                                    tbody
+                                      tr
+                                        td
+                                          | Christine T
+                                          br
+                                          | Female
+                                        td
+                                          a(href='') 0491 570 156
+                                          br
+                                          a(href='') someone@example.com
+                                        td
+                                          | 4 hours ago
+                                      tr.active
+                                        td Johnny S
+                                        td
+                                          a(href='') 0491 570 156
+                                          br
+                                          a(href='') someone@example.com
+                                        td
+                                          | 10 hours ago
+                                      tr
+                                        td
+                                          | Brenda W
+                                          br
+                                          | Female
+                                        td
+                                          a(href='') 0491 570 156
+                                          br
+                                          a(href='') someone@example.com
+                                        td
+                                          | 4 days ago
+            #serviceProfile.tab-pane.fade.in
+                .container
+                    h3 //TODO
+            #bedsAvaliable.tab-pane.fade.in
+                .container
+                    h3 //TODO
