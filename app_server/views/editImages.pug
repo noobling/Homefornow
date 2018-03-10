@@ -1,6 +1,7 @@
 extends navbarDefault
 include _includes/deleteImageModal
 include _includes/deleteLogoModal
+include _includes/imageThumbnail
 
 block content
 
@@ -49,21 +50,12 @@ block content
                 label(style='margin: 0px;')
                   img.img-responsive#plus-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
                   img.img-responsive#spinner-gif(src='/images/loading_spinner.gif', style='display: none;')
-                  input#fileAdd(type='file', accept="image/*", hidden='', name="fileAdd", onchange='event.preventDefault();')
+                  input#fileAdd(type='file', accept='image/*', hidden='', name='fileAdd', onchange='event.preventDefault();')
       -for (index = 0; index < 6; index += 1)
-        +deleteImageModal(uri, images[index], index)
         if (index < length)
-          .item.col-xs-4.col-sm-2(id='item' + index)
-            .thumbnail
-              .image.highlight
-                  a(href='#',data-toggle="modal",data-target="#deleteimagemodal-image" + index)
-                    img.img-responsive(src=images[index], id='img' + index)
+          +imageThumbnail(images[index], index, false)
         else
-          .item.col-xs-4.col-sm-2(style='display: none' id='item' + index)
-            .thumbnail
-              .image.highlight
-                  a(href='#',data-toggle="modal",data-target="#deleteimagemodal-image" + index)
-                    img.img-responsive(src='', id='img' + index)
+          +imageThumbnail('', index, true)
               
     else
       .item.col-xs-4.col-sm-2
@@ -77,9 +69,9 @@ block content
       .row
         h5.text-center There are currently no images
 
-    script(src='/javascripts/images.js')
-    script.
-        $('#logoAdd').on('change', function () {
-            $('#plusLogo-img').hide();
-            $('#spinnerLogo-gif').show();
-        });
+  script(src='/javascripts/images.js')
+  script.
+      $('#logoAdd').on('change', function () {
+          $('#plusLogo-img').hide();
+          $('#spinnerLogo-gif').show();
+      });

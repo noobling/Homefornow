@@ -1,0 +1,14 @@
+mixin imageThumbnail(image, index, isHidden)
+  +deleteImageModal(image, index)
+  -if (isHidden)
+    .item.col-xs-4.col-sm-2(style='display: none;', id='item' + index)
+      .thumbnail
+        .image.highlight
+            a(href='#', id='imagethumbnailmodal' + index, data-toggle="modal", data-target="#deleteimagemodal-image" + index)
+              img.img-responsive(src=image, id='img' + index)
+  -else
+    .item.col-xs-4.col-sm-2(id='item' + index)
+      .thumbnail
+        .image.highlight
+            a(href='#', id='imagethumbnailmodal' + index, data-toggle="modal", data-target="#deleteimagemodal-image" + index)
+              img.img-responsive(src=image, id='img' + index)

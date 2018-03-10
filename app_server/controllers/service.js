@@ -71,15 +71,16 @@ module.exports.dashboard = (req, res) => {
  * @param  {Object} res Express response object.
  */
 module.exports.deleteImage = (req, res) => {
+  console.log(`Index = ${req.params.index}`);
   Service.findOne({ uri: req.params.serviceUri }, 'name img').exec().then((service) => {
     images.deleteImageFromService(service, req.params.serviceUri, req.params.index).then(() => {
-      res.redirect('back');
+      res.json({ error: false });
     }).catch((err) => {
-      res.status(500).json({ message: err });
+      res.status(500).json({ error: true, message: err });
     });
   }).catch((err) => {
     console.log('[ERROR]: Could not find image in mongoDB: '.concat(err));
-    res.status(500).json({ message: err });
+    res.status(500).json({ error: true, message: err });
   });
 };
 
