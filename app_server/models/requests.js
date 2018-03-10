@@ -38,7 +38,7 @@ const requestSchema = new mongoose.Schema({
     required: true,
     enum: ['Unseen', 'Seen', 'Accepted', 'Rejected'],
     default: 'Unseen',
-  }
+  },
 });
 
 mongoose.model('Request', requestSchema);

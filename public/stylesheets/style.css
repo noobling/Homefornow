@@ -56,7 +56,7 @@ div[class^="col-"] {
     margin-bottom: 50px;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .nav-justified > li {
         display: table-cell;
         width: 1%;
@@ -68,7 +68,7 @@ div[class^="col-"] {
     .nav-justified > .active > a  {
         border-bottom-color: transparent !important;
     }
-  }
+  } */
 
 /*CSS for custom buttons ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /*
@@ -302,7 +302,7 @@ div[class^="col-"] {
 
 .panel-body.scroll {
     overflow-y: scroll;
-    height: 550px;
+    max-height: 500px;
 }
 
 .panel-default {
@@ -374,8 +374,8 @@ footer {
 }
 
 .service-tabs.nav > li {
-    padding-left: 1px;
-    padding-right: 1px;
+    /* padding-left: 1px;
+    padding-right: 1px; */
     box-shadow: 0px 1px 6.9px 0.1px rgba(0, 0, 0, 0.16);
     border: none;
     border-radius: 0px;

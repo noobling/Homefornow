@@ -285,7 +285,7 @@ const serviceSchema = new mongoose.Schema({
   openRequests: {
     type: [mongoose.Schema.Types.ObjectId],
     required: false,
-  }
+  },
 });
 
 mongoose.model('Service', serviceSchema);

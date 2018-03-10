@@ -58,6 +58,7 @@ module.exports.addService = (req, res) => {
 
 function countAvailableBeds(beds) {
   let count = 0;
+  console.log(beds.length);
   for (let i = 0; i < beds.length; i += 1) {
     if (!beds[i].isOccupied) count += 1;
   }
@@ -71,7 +72,7 @@ function countAvailableBeds(beds) {
  */
 module.exports.dashboard = (req, res) => {
   // if (!req.user || req.user.role !== 'service_provider') {
-  //   res.status(401).json({ message: 'You are not authorised to view this page. Please log in with your service provider account.' });
+  //   res.status(401).json({ message: 'You are not authorised to view this page.' });
   //   return;
   // }
   //
@@ -88,32 +89,68 @@ module.exports.dashboard = (req, res) => {
   //     res.status(401).json({ message: err });
   //   });
 
+  const beds = [
+    {
+      gender: 'Male',
+      isOccupied: false,
+    },
+    {
+      gender: 'Female',
+      isOccupied: false,
+    },
+    {
+      gender: 'Male',
+      isOccupied: true,
+    },
+    {
+      gender: 'Female',
+      isOccupied: true,
+    },
+    {
+      gender: 'Male',
+      isOccupied: false,
+    },
+    {
+      gender: 'Female',
+      isOccupied: false,
+    },
+    {
+      gender: 'Male',
+      isOccupied: true,
+    },
+    {
+      gender: 'Female',
+      isOccupied: true,
+    },
+    {
+      gender: 'Male',
+      isOccupied: false,
+    },
+    {
+      gender: 'Female',
+      isOccupied: false,
+    },
+    {
+      gender: 'Male',
+      isOccupied: true,
+    },
+    {
+      gender: 'Female',
+      isOccupied: true,
+    },
+  ];
+
+  // beds.sort();
+
   res.render('serviceDashboard', {
     service: {
       name: 'Youngle Group',
       address: {
         suburb: 'Cannington',
       },
-      beds: [
-        {
-          gender: 'Male',
-          isOccupied: 'false',
-        },
-        {
-          gender: 'Female',
-          isOccupied: 'false',
-        },
-        {
-          gender: 'Male',
-          isOccupied: 'true',
-        },
-        {
-          gender: 'Female',
-          isOccupied: 'true',
-        },
-      ],
+      beds,
     },
-    numAvailableBeds: 10,
+    numAvailableBeds: countAvailableBeds(beds),
   });
 };
 
