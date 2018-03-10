@@ -63,9 +63,11 @@ block content
           .thumbnail
             .image.highlight
               label(style='margin: 0px;')
-                img.img-responsive(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
-                img.img-responsive(src='/images/loading_spinner.gif', style='display: none;')
+                img.img-responsive#plus-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
+                img.img-responsive#spinner-gif(src='/images/loading_spinner.gif', style='display: none;')
                 input#fileAdd(type='file', accept="image/*", hidden='', name="fileAdd", onchange='event.preventDefault();')
+      -for (index = 0; index < 6; index += 1)
+        +imageThumbnail('', index, true)      
       .row
         h5.text-center There are currently no images
 
