@@ -58,11 +58,24 @@ module.exports.addService = (req, res) => {
 
 function countAvailableBeds(beds) {
   let count = 0;
-  console.log(beds.length);
   for (let i = 0; i < beds.length; i += 1) {
     if (!beds[i].isOccupied) count += 1;
   }
   return count;
+}
+
+function getAge(date) {
+  const today = Date.now();
+  const age = new Date(today - date.getTime());
+  return Math.abs(age.getUTCFullYear() - 1970);
+}
+
+function returnAges(requests) {
+  const newRequests = requests;
+  for (let i = 0; i < requests.length; i += 1) {
+    newRequests[i].youth.dob = getAge(new Date(requests[i].youth.dob));
+  }
+  return newRequests;
 }
 
 /**
@@ -102,45 +115,34 @@ module.exports.dashboard = (req, res) => {
       gender: 'Male',
       isOccupied: true,
     },
+  ];
+
+  let requests = [
     {
-      gender: 'Female',
-      isOccupied: true,
+      youth: {
+        name: 'Steve Steveson',
+        email: 'steve@steve.steve',
+        phoneNumber: '00110100010',
+        dob: '1995-12-17T00:00:00',
+        gender: 'Male',
+      },
+      openedAt: '2018-02-05T03:24:00',
+      status: 'Unseen',
     },
     {
-      gender: 'Male',
-      isOccupied: false,
-    },
-    {
-      gender: 'Female',
-      isOccupied: false,
-    },
-    {
-      gender: 'Male',
-      isOccupied: true,
-    },
-    {
-      gender: 'Female',
-      isOccupied: true,
-    },
-    {
-      gender: 'Male',
-      isOccupied: false,
-    },
-    {
-      gender: 'Female',
-      isOccupied: false,
-    },
-    {
-      gender: 'Male',
-      isOccupied: true,
-    },
-    {
-      gender: 'Female',
-      isOccupied: true,
+      youth: {
+        name: 'Janet McJanet',
+        email: 'janet@janet.janet',
+        phoneNumber: '013585717193',
+        dob: '1998-07-12T00:00:00',
+        gender: 'Female',
+      },
+      openedAt: '2018-02-09T12:24:00',
+      status: 'Unseen',
     },
   ];
 
-  // beds.sort();
+  requests = returnAges(requests);
 
   res.render('serviceDashboard', {
     service: {
@@ -149,6 +151,7 @@ module.exports.dashboard = (req, res) => {
         suburb: 'Cannington',
       },
       beds,
+      requests,
     },
     numAvailableBeds: countAvailableBeds(beds),
   });

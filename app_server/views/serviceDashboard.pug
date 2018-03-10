@@ -14,7 +14,7 @@ block content
                         | Available Beds:&nbsp;
                         span.badge.badge-success #{numAvailableBeds}
                         
-    .container
+    .container-fluid
         ul.nav.nav-tabs.nav-justified.service-tabs
           li.active.text-center
             a(data-toggle='tab', href='#bedManagement') Our Beds
@@ -27,40 +27,49 @@ block content
                 .container-fluid
                     .row
                         .col-xs-12
-                          h3 Our Bed Count
-                            .panel-body
-                                each bed in service.beds
-                                    .panel
-                                        .panel-body
-                                            .row.text-center
-                                                .col-xs-2
-                                                    h4 ICON
-                                                .col-xs-4
-                                                    h4 #{bed.gender} Bed #{service.beds.indexOf(bed) + 1}
-                                                .col-xs-3
-                                                    h6 Avaliable
-                                                    input(type='radio', name=service.beds.indexOf(bed), checked=!bed.isOccupied)
-                                                .col-xs-3
-                                                    h6 Occupied
-                                                    input(type='radio', name=service.beds.indexOf(bed), checked=bed.isOccupied)
+                            h3 Our Bed Count
+                            each bed in service.beds
+                                .panel
+                                    .panel-body
+                                        .row.text-center
+                                            .col-xs-2
+                                                h4 ICON
+                                            .col-xs-4
+                                                h4 #{bed.gender} Bed #{service.beds.indexOf(bed) + 1}
+                                            .col-xs-3
+                                                h6 Avaliable
+                                                input(type='radio', name=service.beds.indexOf(bed), checked=!bed.isOccupied)
+                                            .col-xs-3
+                                                h6 Occupied
+                                                input(type='radio', name=service.beds.indexOf(bed), checked=bed.isOccupied)
                     .row
                         .col-xs-12
-                            h3 Requests
-                            .panel-body
-                                each bed in service.beds
-                                    .panel
-                                        .panel-body
-                                            .row.text-center
-                                                .col-xs-2
-                                                    h4 ICON
-                                                .col-xs-4
-                                                    h4 #{bed.gender} #{service.beds.indexOf(bed) + 1}
-                                                .col-xs-2
-                                                    h6 Phone Number
-                                                .col-xs-2
-                                                    h6 Email
-                                                .col-xs-2
-                                                    h6 Name
+                            h3 Our Requests
+                            each request in service.requests
+                                .panel
+                                    .panel-body
+                                        .row.text-center
+                                            .col-sm-1.col-xs-3
+                                                if (request.youth.gender == 'Male')
+                                                    h4 MALE ICON
+                                                else
+                                                    h4 FEM ICON
+                                            .col-sm-2.col-xs-6
+                                                h4 #{request.youth.name}
+                                            .col-sm-1.col-xs-3
+                                                h6 #{request.youth.dob}
+                                            .clearfix.visible-xs-block
+                                            .col-sm-2.col-xs-6
+                                                h6 #{request.youth.email}
+                                                h6 #{request.youth.phoneNumber}
+                                            .col-sm-2.col-xs-6
+                                                h6 #{new Date(request.openedAt).toLocaleDateString()}
+                                                h6 #{new Date(request.openedAt).toLocaleTimeString()}
+                                            .col-sm-2.col-xs-6
+                                                h6 Contacted
+                                                input(type='checkbox', name=request.email+'check')
+                                            .col-sm-2.col-xs-6
+                                                button.btn.btn-default(value='Remove', name=request.email+'remove') Remove
             #serviceProfile.tab-pane.fade.in
                 .container
                     h3 //TODO
