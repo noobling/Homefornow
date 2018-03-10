@@ -5,6 +5,7 @@
 $('#fileAdd').on('change', function (event) {
   $('#plus-img').hide();
   $('#spinner-gif').show();
+  $('#alertBox').hide('slide');
   toggleInputs();
 
   let uploadedFile = $('#fileAdd').prop("files")[0];
@@ -32,21 +33,52 @@ $('#fileAdd').on('change', function (event) {
         }
         $('#item' + index).toggle('slide');
       } else {
-        $('#alertBox').html("<strong>Error! </strong>Image failed to upload!").show();
+        $('#alertBox').html("<strong>" + data.errorTitle + " </strong>" + data.errorDescription).show('slide');
         $('#plus-img').show();
         $('#spinner-gif').hide();
         toggleInputs();
       }
     },
-    error: function(jqXHR, textStatus, errorThrown){
-      // TODO: Fix this so it doesn't print a stack trace
-      $('#alertBox').html("<strong>Failure! </strong>" + jqXHR.responseText);
+    error: function(jqXHR, textStatus, errorThrown) {
+      if (jqXHR.responseText.indexOf("File too large") !== -1) {
+        $('#alertBox').html("<strong>File too large!</strong> Maximum file size is 2MB").show('slide');
+      } else {
+          $('#alertBox').html("<strong>Failure! </strong>" + errorThrown).show('slide');
+      }
       $('#plus-img').show();
       $('#spinner-gif').hide();
       toggleInputs();
     }
   });
 });
+
+/*$('deleteimagebutton-image0').bind('click', function() { deleteImage(0) });
+$('deleteimagebutton-image1').bind('click', function() { deleteImage(1) });
+$('deleteimagebutton-image2').bind('click', function() { deleteImage(2) });
+$('deleteimagebutton-image3').bind('click', function() { deleteImage(3) });
+$('deleteimagebutton-image4').bind('click', function() { deleteImage(4) });
+$('deleteimagebutton-image5').bind('click', function() { deleteImage(5) });
+
+function deleteImage(imageIndex) {
+  alert('deleteImage called!');
+  toggleInputs();
+  let url = '/service/dashboard/profile/' + $('#uri').text() + '/' + imageIndex + '/delete';
+  $.post(url, function(data) {
+    if (!data.error) {
+      // Update the UI
+      alert('No error!');
+      toggleInputs();
+    } else {
+      // Display error
+      alert('Error occurred!');
+      toggleInputs();
+    }
+  }).fail(function(xhr, status, error) {
+    // Display error TODO Potentially log information here
+    alert('Failure occurred!');
+    toggleInputs();
+  });
+}*/
 
 function toggleInputs() {
   $('#fileAdd').prop('disabled', function(i, v) { return !v; });

@@ -15,9 +15,7 @@ admin.initializeApp({
 const bucket = admin.storage().bucket();
 
 function sendUploadToFirebase(req, res, next) {
-  console.log('Got to sendUploadToFirebase()');
   if (!req.file) {
-    console.log('No files uploaded!');
     return next();
   }
 

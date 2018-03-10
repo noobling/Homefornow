@@ -18,8 +18,8 @@ block content
       else
         span.badge.badge-primary(style='cursor: default;') 0/6
   .row
-    .alert.alert-danger#alertBox(style='display: none')
-      | Blah!
+    .col-xs-12
+      .alert.alert-danger#alertBox(style='display: none')
   .row#logorow
     if logo != null
       +deleteLogoModal(uri, logo)

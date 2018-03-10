@@ -23,7 +23,7 @@ router.post(
     // console.log(req);
     if (req.file && req.file.storageObject) {
       // Get the corresponding Service from the serviceUri
-      console.log('req.file.storageObject = ' + req.file.storageObject);
+      console.log(`req.file.storageObject = ${req.file.storageObject}`);
       Service.findOneAndUpdate(
         { uri: req.params.serviceUri },
         { $push: { img: req.file.storageObject } },
@@ -35,9 +35,19 @@ router.post(
           });
         });
     } else if (!req.file) {
-      res.send('Not req.file');
+      // res.send('Not req.file');
+      res.json({
+        error: true,
+        errorTitle: 'File type not supported!',
+        errorDescription: 'Please upload a valid image file.',
+      });
     } else {
-      res.send('Not req.file.storageObject');
+      // res.send('Not req.file.storageObject');
+      res.json({
+        error: true,
+        errorTitle: 'Upload error!',
+        errorDescription: 'Unable to upload file to HomeForNow',
+      });
     }
   },
 );
