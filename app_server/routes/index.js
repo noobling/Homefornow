@@ -7,6 +7,7 @@ const ctrlService = require('../controllers/service');
 const ctrlAuth = require('../controllers/authentication');
 const ctrlRequests = require('../controllers/requests');
 const ctrlComm = require('../controllers/communications');
+const ctrlAdmin = require('../controllers/admin');
 
 
 const router = express.Router();
@@ -67,6 +68,6 @@ router.post('/notification', ctrlComm.notification);
  */
 router.post('/addService', ctrlService.addService);
 
-router.get('/admin', (req, res) => { res.render('admin'); });
+router.get('/admin', ctrlAdmin.admin);
 
 module.exports = router;
