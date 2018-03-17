@@ -7,7 +7,7 @@ mixin deleteLogoModal(uri, logoReference)
                 h3 Delete this logo?
               .modal-header.text-center
                 .image
-                  img.img.img-responsive(src=logoReference)
+                  img.img.img-responsive(id='deleteLogoImg', src=logoReference)
               .modal-body.text-center
                 form(action="/service/dashboard/profile/" + uri + "/logo/delete", method="post")
                   input(type='submit', value='Delete', id="deletelogobutton").btn.btn-danger

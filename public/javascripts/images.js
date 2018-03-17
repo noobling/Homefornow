@@ -51,6 +51,51 @@ $('#fileAdd').on('change', function (event) {
   });
 });
 
+$('#logoAdd').on('change', function (event) {
+  $('#plusLogo-img').hide();
+  $('#spinnerLogo-gif').show();
+  $('#alertBox').hide('slide');
+  toggleInputs();
+
+  let uploadedFile = $('#logoAdd').prop("files")[0];
+  var formData = new FormData();
+  formData.append('logoAdd', uploadedFile, uploadedFile.name);
+
+  $.ajax({
+    url: "/service/dashboard/profile/" + $('#uri').text() + "/logo/add",
+    type: 'post',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(data) {
+      if (!data.error) {
+        $('#logoImg').attr('src', data.mediaLink);
+        console.log(data.mediaLink);
+        $('#deleteLogoImg').attr('src', data.mediaLink);
+        $('#logoLink').show();
+        $('#logoLabel').hide();
+        $('#spinnerLogo-gif').hide();
+        toggleInputs();
+      } else {
+        $('#alertBox').html("<strong>" + data.errorTitle + " </strong>" + data.errorDescription).show('slide');
+        $('#plusLogo-img').show();
+        $('#spinnerLogo-gif').hide();
+        toggleInputs();
+      }
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      if (jqXHR.responseText.indexOf("File too large") !== -1) {
+        $('#alertBox').html("<strong>File too large!</strong> Maximum file size is 2MB").show('slide');
+      } else {
+          $('#alertBox').html("<strong>Failure! </strong>" + errorThrown).show('slide');
+      }
+      $('#plusLogo-img').show();
+      $('#spinnerLogo-gif').hide();
+      toggleInputs();
+    }
+  });
+})
+
 function deleteImage(index) {
   $('#plus-img').hide();
   $('#spinner-gif').show();

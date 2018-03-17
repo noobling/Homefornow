@@ -22,22 +22,26 @@ block content
     .col-xs-12
       .alert.alert-danger#alertBox(style='display: none')
   .row#logorow
-    if logo != null
-      +deleteLogoModal(uri, logo)
-      .item.col-xs-4.col-sm-2
+    +deleteLogoModal(uri, logo)
+    .item.col-xs-4.col-sm-2
+      form(action="/service/dashboard/profile/" + uri + "/logo/add", method="post", enctype="multipart/form-data")
         .thumbnail
           .image.highlight
-            a(href='#',data-toggle="modal",data-target="#deletelogomodal")
-              img.img-responsive(src=logo)
-    else
-      .item.col-xs-4.col-sm-2
-        form(action="/service/dashboard/profile/" + uri + "/logo/add", method="post", enctype="multipart/form-data")
-          .thumbnail
-            .image.highlight
-              label(style='margin: 0px;')
+            if logo == null
+              -console.log('logo is null');
+              a#logoLink(style='display: none;' href='#',data-toggle="modal",data-target="#deletelogomodal")
+                img.img-responsive#logoImg()
+              label#logoLabel(style='margin: 0px;')
                 img.img-responsive#plusLogo-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
                 img.img-responsive#spinnerLogo-gif(src='/images/loading_spinner.gif', style='display: none;')
-                input#logoAdd(type='file', accept="image/*", hidden='', name="logoAdd", onchange="form.submit()")
+                input#logoAdd(type='file', accept="image/*", hidden='', name="logoAdd", onchange="event.preventDefault();")
+            else
+              a#logoImg(href='#',data-toggle="modal",data-target="#deletelogomodal")
+                img.img-responsive#logoImg(src=logo)
+              label#logoLabel(style='margin: 0px; display: none;')
+                img.img-responsive#plusLogo-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
+                img.img-responsive#spinnerLogo-gif(src='/images/loading_spinner.gif', style='display: none;')
+                input#logoAdd(type='file', accept="image/*", hidden='', name="logoAdd", onchange="event.preventDefault();")
   .row#imagerow
     if images != null && images.length > 0
       -var index = 1;
@@ -67,9 +71,7 @@ block content
                 img.img-responsive#spinner-gif(src='/images/loading_spinner.gif', style='display: none;')
                 input#fileAdd(type='file', accept="image/*", hidden='', name="fileAdd", onchange='event.preventDefault();')
       -for (index = 0; index < 6; index += 1)
-        +imageThumbnail('', index, true)      
-      .row
-        h5.text-center There are currently no images
+        +imageThumbnail('', index, true)
 
   script(src='/javascripts/images.js')
   script.

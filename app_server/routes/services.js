@@ -65,11 +65,23 @@ router.post(
         { runValidators: true },
       ).exec()
         .then(() => {
-          res.redirect('back');
+          images.getImageForService(req.file.storageObject).then((image) => {
+            res.json({ error: false, mediaLink: image });
+          });
         });
+    } else if (!req.file) {
+      // res.send('Not req.file');
+      res.json({
+        error: true,
+        errorTitle: 'File type not supported!',
+        errorDescription: 'Please upload a valid image file.',
+      });
     } else {
-      // File did not upload - TODO rerender page with error message (AJAX)
-      res.redirect('back');
+      res.json({
+        error: true,
+        errorTitle: 'Upload error!',
+        errorDescription: 'Unable to upload file to HomeForNow',
+      });
     }
   },
 );
