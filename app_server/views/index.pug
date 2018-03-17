@@ -33,43 +33,37 @@ block content
     .spacer-lg
     .row
       .col-sm-12
+        .panel.panel-default.panel-spaced
           .bangers-heading.black.line-spc-3
             | CLOSE TO YOU.
           .roboto-sub-heading.dark-grey
             | Nearest crisis accommodation services.
-    .panel-body
-      .row
+    .row
         each location in [crisis, transitional, long]
           if location
             .col-md-4.col-sm-12
                 .panel.panel-default.panel-spaced
+                    a(href='location/'+location.uri)
+                      if images[[crisis, transitional, long].indexOf(location)] != null
+                        img.img-responsive.img-square.img-shadow.center-block(src=images[[crisis, transitional, long].indexOf(location)])
+                      else
+                        img.img-responsive.img-square.img-shadow.center-block(src='images/placeholder.png')
+                    p
                     a(href='/location/'+location.uri, style='text-decoration: none; color: inherit;')
-                        .panel-heading
-                            h2.panel-title= location.name
-                    .panel-body
-                        .row
-                            .col-md-12.col-sm-5
-                                a(href='location/'+location.uri)
-                                  if images[[crisis, transitional, long].indexOf(location)] != null
-                                    img.img-responsive.img-square(src=images[[crisis, transitional, long].indexOf(location)])
-                                  else
-                                    img.img-responsive.img-square(src='images/placeholder.png')
-                            .col-md-12.col-sm-4
-                                .panel-body.text-justify
-                                    | #{location.description}
-                            .col-md-12.col-sm-3
-                                .panel-body
-                                    | Contact: #{location.phoneNumber}
-
+                      .panel-title.text-center.roboto-title.black.line-spc-2= location.name
+                    .panel-body.text-justify.text-center.roboto-desc.dark-grey.line-spc-4
+                        | #{location.description}
+                        
     .row
       .col-sm-12
+        .panel.panel-default.panel-spaced
           .bangers-heading.black.line-spc-3
             | WHO TO CALL.
           .roboto-sub-heading.dark-grey
             | Numbers to call if you need help.
     .row
       .col-sm-6
-        .panel-spaced
+        .panel.panel-default.panel-spaced
           .roboto-heading.black.line-spc-5
             | Entry Point
           .roboto-heading.phone-num.deep-pink.line-spc-2
@@ -77,14 +71,14 @@ block content
             p.line-spc-2
             | 1800 124 684
       .col-sm-6
-        .panel-spaced
+        .panel.panel-default.panel-spaced
           .roboto-heading.black.line-spc-5
             | Crisis Care
           .roboto-heading.phone-num.deep-pink.line-spc-2
             | 9223 1111
             p.line-spc-2
             | 1800 199 008
-                    
+
     script(src='/javascripts/search.js')
     script(src='/javascripts/location.js')
     script(async='', defer='',  src='https://maps.googleapis.com/maps/api/js?key='+process.env.embed_maps_api+'&libraries=places&callback=initialize')
