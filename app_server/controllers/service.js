@@ -65,6 +65,77 @@ module.exports.dashboard = (req, res) => {
 };
 
 /**
+ *  Adds a new image to Firebase, storing a reference to it in the database.
+ *  @param  {Object} req Express request object.
+ *  @param  {Object} res Express response object.
+ */
+module.exports.uploadImage = (req, res) => {
+  // console.log(req);
+  if (req.file && req.file.storageObject) {
+    // Get the corresponding Service from the serviceUri
+    console.log(`req.file.storageObject = ${req.file.storageObject}`);
+    Service.findOneAndUpdate(
+      { uri: req.params.serviceUri },
+      { $push: { img: req.file.storageObject } },
+      { runValidators: true },
+    ).exec()
+      .then(() => {
+        images.getImageForService(req.file.storageObject).then((image) => {
+          res.json({ error: false, mediaLink: image });
+        });
+      });
+  } else if (!req.file) {
+    // res.send('Not req.file');
+    res.json({
+      error: true,
+      errorTitle: 'File type not supported!',
+      errorDescription: 'Please upload a valid image file.',
+    });
+  } else {
+    // res.send('Not req.file.storageObject');
+    res.json({
+      error: true,
+      errorTitle: 'Upload error!',
+      errorDescription: 'Unable to upload file to HomeForNow',
+    });
+  }
+};
+
+/**
+ *  Adds a new logo to Firebase, storing a reference to it in the database.
+ *  @param  {Object} req Express request object.
+ *  @param  {Object} res Express response object.
+ */
+module.exports.uploadLogo = (req, res) => {
+  if (req.file && req.file.storageObject) {
+    // Get the corresponding Service from the serviceUri
+    Service.findOneAndUpdate(
+      { uri: req.params.serviceUri },
+      { $set: { logo: req.file.storageObject } },
+      { runValidators: true },
+    ).exec()
+      .then(() => {
+        images.getImageForService(req.file.storageObject).then((image) => {
+          res.json({ error: false, mediaLink: image });
+        });
+      });
+  } else if (!req.file) {
+    // res.send('Not req.file');
+    res.json({
+      error: true,
+      errorTitle: 'File type not supported!',
+      errorDescription: 'Please upload a valid image file.',
+    });
+  } else {
+    res.json({
+      error: true,
+      errorTitle: 'Upload error!',
+      errorDescription: 'Unable to upload file to HomeForNow',
+    });
+  }
+};
+
+/**
  * Used by deleteImageModal to delete an image stored in Firebase from a service
  * provider's profile.
  * @param  {Object} req Express request object.
