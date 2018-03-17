@@ -89,11 +89,11 @@ module.exports.deleteLogo = (req, res) => {
     images.deleteLogoFromService(service.logo, req.params.serviceUri).then(() => {
       res.redirect('back');
     }).catch((err) => {
-      res.status(500).json({ message: err });
+      res.status(500).json({ error: true, message: err });
     });
   }).catch((err) => {
     console.log('[ERROR]: Could not find image in mongoDB: '.concat(err));
-    res.status(500).json({ message: err });
+    res.status(500).json({ error: true, message: err });
   });
 };
 

@@ -106,17 +106,6 @@ function deleteImage(index) {
   let url = '/service/dashboard/profile/' + $('#uri').text() + '/' + index + '/delete';
   $.post(url, function(data) {
     if (!data.error) {
-      /* Update the UI
-      alert('No error!');
-      $('#deleteimagemodal-image' + index).modal('hide').toggleClass('disabled').prop('disabled', function(i, v) { return !v; });
-      $('#deleteimagebutton-image' + index).attr('onclick', 'deleteImage(' + index + ')')
-      let len = $('.item:visible').length - 2;
-      $('#img' + index).attr('src', '#');
-      $('#item' + index).toggle('slide');
-      $('#deleteImg' + index).attr('src', '#');
-      $('#imageCount').text((len - 1) + "/6")
-      toggleInputs();*/
-
       // Hide the UI
       $('#item' + index).toggle('slide', function() {
         // Delete the old image HTML
@@ -148,6 +137,42 @@ function deleteImage(index) {
         toggleInputs();
       });
 
+    } else {
+      // Display error
+      $('#plus-img').show();
+      $('#spinner-gif').hide();
+      response = xhr.responseText ? JSON.parse(xhr.responseText) : JSON.parse(xhr.responseXML);
+      $('#alertBox').html("<strong>Error! </strong>" + response.message).show('slide');
+      toggleInputs();
+    }
+  }).fail(function(xhr, status, error) {
+    // Display error TODO Potentially log information here
+    $('#plus-img').show();
+    $('#spinner-gif').hide();
+    response = JSON.parse(xhr.responseText);
+    $('#alertBox').html("<strong>Failure! </strong>" + response.message).show('slide');
+    toggleInputs();
+  });
+}
+
+function deleteLogo() {
+  $('#plusLogo-img').hide();
+  $('#spinnerLogo-gif').show();
+  $('#logoLink').hide();
+  $('#logoLabel').show();
+  $('#alertBox').hide('slide');
+  $('#deletelogomodal').modal('hide');
+  toggleInputs();
+
+  let url = '/service/dashboard/profile/' + $('#uri').text() + '/logo/delete';
+  $.post(url, function(data) {
+    if (!data.error) {
+      // Update UI
+      $('#logoImg').attr('src', '');
+      $('#deleteLogoImg').attr('src', '');
+      $('#spinnerLogo-gif').hide();
+      $('#plusLogo-img').show();
+      toggleInputs();
     } else {
       // Display error
       $('#plus-img').show();
