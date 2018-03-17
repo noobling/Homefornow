@@ -36,7 +36,7 @@ block content
                 img.img-responsive#spinnerLogo-gif(src='/images/loading_spinner.gif', style='display: none;')
                 input#logoAdd(type='file', accept="image/*", hidden='', name="logoAdd", onchange="event.preventDefault();")
             else
-              a#logoImg(href='#',data-toggle="modal",data-target="#deletelogomodal")
+              a#logoLink(href='#',data-toggle="modal",data-target="#deletelogomodal")
                 img.img-responsive#logoImg(src=logo)
               label#logoLabel(style='margin: 0px; display: none;')
                 img.img-responsive#plusLogo-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
@@ -74,8 +74,3 @@ block content
         +imageThumbnail('', index, true)
 
   script(src='/javascripts/images.js')
-  script.
-      $('#logoAdd').on('change', function () {
-          $('#plusLogo-img').hide();
-          $('#spinnerLogo-gif').show();
-      });
