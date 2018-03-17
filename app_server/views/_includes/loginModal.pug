@@ -6,11 +6,17 @@
                 h4.modal-title Log In
             .modal-body
                 form(action='/login', method='post', role='form')
-                    .form-group
-                        label(for='email') Email
-                        input(type='email',placeholder='e.g. example@example.com',name='email').form-control#email
-                    .form-group
-                        label(for='pwd') Password
-                        input(type='password', name='password').form-control#pwd
-                    .text-center
-                        input(type='submit', value='Submit').btn.btn-default
+                    .form-group#Login_email
+                        .col-xs-12(style='padding: 0px;')
+                            label(for='Lemail') Email
+                            input(type='email',placeholder='e.g. example@example.com',name='email').form-control#Lemail
+                            span#Login_EFeed
+                        .row
+                    .form-group#Login_pass
+                        .col-xs-12(style='padding: 0px;')
+                            label(for='pwd') Password
+                            input(type='password', name='password').form-control#pwd
+                            span#Login_PFeed
+                        .row
+                    .text-right
+                        input(type='submit', value='Submit', disabled='').btn.btn-primary#Login

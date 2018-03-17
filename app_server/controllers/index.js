@@ -18,7 +18,7 @@ function findServiceOfAvailability(isAvailable, type) {
         { serviceType: type },
       ],
     },
-    fields
+    fields,
   ).exec();
 }
 
@@ -63,16 +63,27 @@ module.exports.index = (req, res) => {
       if (err) {
         console.log('[ERROR] IndexController: '.concat(err));
       }
+      let user;
+      if (req.user) {
+        user = {
+          id: req.user.id,
+          name: req.user.name,
+        };
+      }
+
       Promise.all([
         images.getImageForService(services.crisis.logo, services.crisis.uri),
         images.getImageForService(services.transitional.logo, services.transitional.uri),
-        images.getImageForService(services.long.logo, services.long.uri)
+        images.getImageForService(services.long.logo, services.long.uri),
       ]).then(([result1, result2, result3]) => {
         res.render('index', {
           user: req.user,
-          locations: [services.crisis, services.transitional, services.long],
+          crisis: services.crisis,
+          transitional: services.transitional,
+          long: services.long,
           images: [result1, result2, result3],
-          title: 'Do you have a secure place to stay?',
+          title1: 'Let\'s find a',
+          title2: 'Home for now',
         });
       }).catch((error) => {
         console.log('[ERROR] IndexController: ', error);

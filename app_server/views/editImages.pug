@@ -15,7 +15,8 @@ block content
     .col-xs-12
       | Images uploaded:
       if images != null
-        span.badge.badge-primary#imageCount(style='cursor: default;') #{images.length}/6
+        span.badge.badge-primary#imageCount(style='cursor: default;')
+          | #{images.length}/6
       else
         span.badge.badge-primary(style='cursor: default;') 0/6
   .row
@@ -26,7 +27,7 @@ block content
     .item.col-xs-4.col-sm-2
       form(action="/service/dashboard/profile/" + uri + "/logo/add", method="post", enctype="multipart/form-data")
         .thumbnail
-          .image.highlight
+          .image.highlight(style='line-height: 0px;')
             if logo == null
               -console.log('logo is null');
               a#logoLink(style='display: none;' href='#',data-toggle="modal",data-target="#deletelogomodal")
@@ -50,7 +51,7 @@ block content
         .item.col-xs-4.col-sm-2(id='itemAdd')
           form(action="/service/dashboard/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
             .thumbnail
-              .image.highlight
+              .image.highlight(style='line-height: 0px; border: 0px;')
                 label(style='margin: 0px;')
                   img.img-responsive#plus-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
                   img.img-responsive#spinner-gif(src='/images/loading_spinner.gif', style='display: none;')

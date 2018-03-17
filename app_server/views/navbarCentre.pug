@@ -16,6 +16,15 @@ block navbar
                     li
                         a(href='#')
                             span.glyphicon.glyphicon-cog
-
     .container
         block content
+    script.
+        window.onscroll = function () {
+            const nav = document.querySelector('#navbar');
+            var navClass = 'navbar navbar-default navbar-fixed-top';
+            if (this.scrollY <= 10) {
+                nav.className = navClass;
+            } else {
+                nav.className = navClass + ' material-nav';
+            }
+        };

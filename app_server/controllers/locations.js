@@ -3,7 +3,6 @@ const admin = require('firebase-admin');
 const images = require('../middleware/images');
 
 const Service = mongoose.model('Service');
-const Request = mongoose.model('Request');
 
 /**
  * Renders the bed vacancies page with short term (crisis and
@@ -18,39 +17,36 @@ const Request = mongoose.model('Request');
  * @param  {Object} res Express response object.
  */
 module.exports.showLocations = (req, res) => {
-  Request.findById(req.session.requestId, 'hasChild hasDisability gender').exec()
-    .then((request) => {
-      const longTerm = (req.params.lengthOfStay === 'long_term');
-      const type = (longTerm ? ['long'] : ['crisis', 'transitional']);
-      const child = (request.hasChild ? [true] : [true, false]);
-      const disability = (request.hasDisability ? [true] : [true, false]);
+  const longTerm = (req.params.lengthOfStay === 'long_term');
+  const type = (longTerm ? ['long'] : ['crisis', 'transitional']);
+  const child = (req.body.hasChild ? [true] : [true, false]);
+  const disability = (req.user.hasDisability ? [true] : [true, false]);
 
-      let gender = ['Either']; // Other
-      if (gender === 'Male') {
-        gender = ['Male', 'Either'];
-      } else if (gender === 'Female') {
-        gender = ['Female', 'Either'];
-      }
+  let gender = ['Either']; // If 'Other'
+  if (req.user.gender === 'Male') {
+    gender = ['Male', 'Either'];
+  } else if (req.user.gender === 'Female') {
+    gender = ['Female', 'Either'];
+  }
 
-      return Service.find(
+  Service.find(
+    {
+      $and: [
+        { serviceType: { $in: type } },
+        { child: { $in: child } },
+        { disability: { $in: disability } },
+        { gender: { $in: gender } },
         {
-          $and: [
-            { serviceType: { $in: type } },
-            { child: { $in: child } },
-            { disability: { $in: disability } },
-            { gender: { $in: gender } },
-            {
-              'address.coordinates.coordinates': {
-                $near: {
-                  $geometry: { type: 'Point', coordinates: req.session.coordinates },
-                },
-              },
+          'address.coordinates.coordinates': {
+            $near: {
+              $geometry: { type: 'Point', coordinates: [req.body.long, req.body.lat] },
             },
-          ],
+          },
         },
-        'name available number phoneNumber description address uri logo'
-      );
-    })
+      ],
+    },
+    'name available number phoneNumber description address uri logo',
+  ).exec()
     .then((services) => {
       // Sort services into available and unavailable
       const available = [];
@@ -77,8 +73,8 @@ module.exports.showLocations = (req, res) => {
             dlocations: unavailable,
             dlocationImgs: unavailableImages,
             userCoords: {
-              long: req.session.coordinates[0],
-              lat: req.session.coordinates[1],
+              long: req.body.long,
+              lat: req.body.lat,
             },
           });
         }).catch(() => {
@@ -88,8 +84,8 @@ module.exports.showLocations = (req, res) => {
             locations: available,
             dlocations: unavailable,
             userCoords: {
-              long: req.session.coordinates[0],
-              lat: req.session.coordinates[1],
+              long: req.body.long,
+              lat: req.body.lat,
             },
           });
         });
@@ -100,8 +96,8 @@ module.exports.showLocations = (req, res) => {
           locations: available,
           dlocations: unavailable,
           userCoords: {
-            long: req.session.coordinates[0],
-            lat: req.session.coordinates[1],
+            long: req.body.long,
+            lat: req.body.lat,
           },
         });
       });
@@ -120,7 +116,7 @@ module.exports.showLocations = (req, res) => {
 module.exports.showLocation = (req, res) => {
   Service.findOne(
     { uri: req.params.serviceUri },
-    'name tagline address facilities restrictions additionalInfo website img hours'
+    'name tagline address facilities restrictions additionalInfo website img hours',
   ).exec().then((service) => {
     images.getImagesForService(service, req.params.serviceUri).then((result) => {
       res.render('showLocation', {
