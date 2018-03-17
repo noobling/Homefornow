@@ -70,29 +70,37 @@ module.exports.dashboard = (req, res) => {
  *  @param  {Object} res Express response object.
  */
 module.exports.uploadImage = (req, res) => {
-  // console.log(req);
   if (req.file && req.file.storageObject) {
-    // Get the corresponding Service from the serviceUri
-    console.log(`req.file.storageObject = ${req.file.storageObject}`);
+    // Get the corresponding Service from the serviceUri and push the image
+    // reference to the list of images
     Service.findOneAndUpdate(
       { uri: req.params.serviceUri },
       { $push: { img: req.file.storageObject } },
       { runValidators: true },
     ).exec()
       .then(() => {
+        // Get the mediaLink for the image from Firebase
         images.getImageForService(req.file.storageObject).then((image) => {
+          // Return the image
           res.json({ error: false, mediaLink: image });
+        }).catch(() => {
+          // Couldn't get the mediaLink for the image - return error
+          res.json({
+            error: true,
+            errorTitle: 'Error!',
+            errorDescription: 'Image could not be uploaded',
+          });
         });
       });
   } else if (!req.file) {
-    // res.send('Not req.file');
+    // If the user didn't upload a file, send an error
     res.json({
       error: true,
       errorTitle: 'File type not supported!',
       errorDescription: 'Please upload a valid image file.',
     });
   } else {
-    // res.send('Not req.file.storageObject');
+    // If there was some other error upload the image to Firebase, send an error
     res.json({
       error: true,
       errorTitle: 'Upload error!',
@@ -108,25 +116,35 @@ module.exports.uploadImage = (req, res) => {
  */
 module.exports.uploadLogo = (req, res) => {
   if (req.file && req.file.storageObject) {
-    // Get the corresponding Service from the serviceUri
+    // Get the corresponding Service from the serviceUri and update the logo reference
     Service.findOneAndUpdate(
       { uri: req.params.serviceUri },
       { $set: { logo: req.file.storageObject } },
       { runValidators: true },
     ).exec()
       .then(() => {
+        // Get the mediaLink for the logo from Firebase
         images.getImageForService(req.file.storageObject).then((image) => {
+          // Return the image
           res.json({ error: false, mediaLink: image });
+        }).catch(() => {
+          // Couldn't get the mediaLink for the logo - return error
+          res.json({
+            error: true,
+            errorTitle: 'Error!',
+            errorDescription: 'Image could not be uploaded',
+          });
         });
       });
   } else if (!req.file) {
-    // res.send('Not req.file');
+    // If the user didn't upload a file, send an error
     res.json({
       error: true,
       errorTitle: 'File type not supported!',
       errorDescription: 'Please upload a valid image file.',
     });
   } else {
+    // If there was some other error upload the logo to Firebase, send an error
     res.json({
       error: true,
       errorTitle: 'Upload error!',
@@ -142,34 +160,43 @@ module.exports.uploadLogo = (req, res) => {
  * @param  {Object} res Express response object.
  */
 module.exports.deleteImage = (req, res) => {
-  console.log(`Index = ${req.params.index}`);
+  // Get the Service corresponding to the serviceUri
   Service.findOne({ uri: req.params.serviceUri }, 'name img').exec().then((service) => {
+    // Delete the image specified by req.params.index from the Service
     images.deleteImageFromService(service, req.params.serviceUri, req.params.index).then(() => {
+      // Return successfully
       res.json({ error: false });
     }).catch((err) => {
+      // Failed to delete the image from Firebase and/or MongoDB - return error
       res.status(500).json({ error: true, message: err });
     });
   }).catch((err) => {
-    console.log('[ERROR]: Could not find image in mongoDB: '.concat(err));
+    // Failed to obtain the Service from MongoDB - return error
     res.status(500).json({ error: true, message: err });
   });
 };
 
 module.exports.deleteLogo = (req, res) => {
+  // Get the Service corresponding to the serviceUri
   Service.findOne({ uri: req.params.serviceUri }, 'name logo').exec().then((service) => {
+    // Delete the logo from the Service
     images.deleteLogoFromService(service.logo, req.params.serviceUri).then(() => {
-      res.redirect('back');
+      // Return successfully
+      res.json({ error: false });
     }).catch((err) => {
+      // Failed to delete the logo from Firebase and/or MongoDB - return error
       res.status(500).json({ error: true, message: err });
     });
   }).catch((err) => {
-    console.log('[ERROR]: Could not find image in mongoDB: '.concat(err));
+    // Failed to obtain the Service from MongoDB - return error
     res.status(500).json({ error: true, message: err });
   });
 };
 
 /**
- * Renders a service provider's profile page
+ * Renders a service provider's profile page.
+ * This is a test page used to test the image uploading page, and will unlikely
+ * be used in production
  * @param  {Object} req Express request object.
  * @param  {Object} res Express response object.
  */
