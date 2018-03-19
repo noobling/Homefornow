@@ -258,7 +258,7 @@ function seedAccomm(numToGen) {
     accomm.hours = genOpeningHours();
     accomm.ageRange = {
       minAge: randInt(14, 17),
-      maxAge: randInt(21, 25)
+      maxAge: randInt(21, 25),
     };
     accomm.uri = encodeURI(accomm.name);
     accomm.beds = genBeds(0, 50);

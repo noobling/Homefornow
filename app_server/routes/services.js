@@ -19,13 +19,13 @@ router.post(
   '/profile/:serviceUri/add',
   images.multer.single('fileAdd'),
   images.sendUploadToFirebase,
-  (req, res, next) => {
+  (req, res) => {
     if (req.file && req.file.storageObject) {
       // Get the corresponding Service from the serviceUri
       Service.findOneAndUpdate(
         { uri: req.params.serviceUri },
         { $push: { img: req.file.storageObject } },
-        { runValidators: true }
+        { runValidators: true },
       ).exec()
         .then(() => {
           res.redirect('back');
@@ -41,13 +41,13 @@ router.post(
   '/profile/:serviceUri/logo/add',
   images.multer.single('logoAdd'),
   images.sendUploadToFirebase,
-  (req, res, next) => {
+  (req, res) => {
     if (req.file && req.file.storageObject) {
       // Get the corresponding Service from the serviceUri
       Service.findOneAndUpdate(
         { uri: req.params.serviceUri },
         { $set: { logo: req.file.storageObject } },
-        { runValidators: true }
+        { runValidators: true },
       ).exec()
         .then(() => {
           res.redirect('back');

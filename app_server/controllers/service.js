@@ -64,39 +64,96 @@ function countAvailableBeds(beds) {
   return count;
 }
 
+function getAge(date) {
+  const today = Date.now();
+  const age = new Date(today - date.getTime());
+  return Math.abs(age.getUTCFullYear() - 1970);
+}
+
+function returnAges(requests) {
+  const newRequests = requests;
+  for (let i = 0; i < requests.length; i += 1) {
+    newRequests[i].youth.dob = getAge(new Date(requests[i].youth.dob));
+  }
+  return newRequests;
+}
+
 /**
  * Renders a service provider's dashboard.
  * @param  {Object} req Express request object.
  * @param  {Object} res Express response object.
  */
 module.exports.dashboard = (req, res) => {
-  // console.log("hey");
   // if (!req.user || req.user.role !== 'service_provider') {
-  //   res.status(401).json({ message: 'You are not authorised to view this page. Please log in with your service provider account.' });
+  //   res.status(401).json({ message: 'You are not authorised to view this page.' });
   //   return;
   // }
   //
   // Service.findById(
   //   req.user.service[0],
-  //   'name address.suburb beds tags openRequests'
+  //   'name address.suburb beds tags openRequests',
   // ).exec()
   //   .then((service) => {
   //     res.render('serviceDashboard', {
-  //       service: service,
+  //       service,
   //       numAvailableBeds: countAvailableBeds(service.beds),
-  //
   //     });
-  //   })
-  //   .catch((err) => { res.status(401).json({ message: err }); });
+  //   }).catch((err) => {
+  //     res.status(401).json({ message: err });
+  //   });
+
+  const beds = [
+    {
+      gender: 'Male',
+      isOccupied: false,
+    },
+    {
+      gender: 'Female',
+      isOccupied: false,
+    },
+    {
+      gender: 'Male',
+      isOccupied: true,
+    },
+  ];
+
+  let requests = [
+    {
+      youth: {
+        name: 'Steve Steveson',
+        email: 'steve@steve.steve',
+        phoneNumber: '00110100010',
+        dob: '1995-12-17T00:00:00',
+        gender: 'Male',
+      },
+      openedAt: '2018-02-05T03:24:00',
+      status: 'Unseen',
+    },
+    {
+      youth: {
+        name: 'Janet McJanet',
+        email: 'janet@janet.janet',
+        phoneNumber: '013585717193',
+        dob: '1998-07-12T00:00:00',
+        gender: 'Female',
+      },
+      openedAt: '2018-02-09T12:24:00',
+      status: 'Unseen',
+    },
+  ];
+
+  requests = returnAges(requests);
 
   res.render('serviceDashboard', {
     service: {
       name: 'Youngle Group',
       address: {
         suburb: 'Cannington',
-      }
+      },
+      beds,
+      requests,
     },
-    numAvailableBeds: 10
+    numAvailableBeds: countAvailableBeds(beds),
   });
 };
 
