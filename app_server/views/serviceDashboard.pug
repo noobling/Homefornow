@@ -17,11 +17,20 @@ block content
     .container-fluid
         ul.nav.nav-tabs.nav-justified.service-tabs
           li.active.text-center
-            a(data-toggle='tab', href='#bedManagement') Our Beds
+            a(data-toggle='tab', href='#bedManagement')
+              | Bed
+              br
+              | Management
           li.text-center
-            a(data-toggle='tab', href='#serviceProfile') Service Profile
+            a(data-toggle='tab', href='#serviceProfile')
+              | Service
+              br
+              | Profile
           li.text-center
-            a(data-toggle='tab', href='#bedsAvaliable') Other Services
+            a(data-toggle='tab', href='#bedsAvaliable')
+              | Beds
+              br
+              | Available
         .tab-content.service-tab-content
             #bedManagement.tab-pane.fade.in.active
                 .container-fluid
