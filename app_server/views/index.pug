@@ -1,9 +1,17 @@
 extends navbarDefault
 
+
+
 block content
+  
+    include _includes/messages/error
+    include _includes/messages/info
+    include _includes/signupModal
+    
+    +signupModal('Right Now.', '/locations/short_term')
+    +signupModal('Long Term.', '/locations/long_term')
+    
     #banner.page-header
-        include _includes/messages/error
-        include _includes/messages/info
         .row
             .col-md-8
                 h1.bang= title1
@@ -21,9 +29,7 @@ block content
                             a(style='padding-left: 18px;')
                             | Use
                             a(href='javascript: geoloc();', class='geoloc' style='color: #999;')#get_location
-                                | my current location
-                    .spacer-sm
-                    .spacer-sm
+                            | my current location
                 .col-md-2.col-xs-6.text-right
                     button(type='button').btn.btn-lg.btn-primary#shortBtn
                         | Right now

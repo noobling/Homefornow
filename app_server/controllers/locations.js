@@ -20,12 +20,13 @@ module.exports.showLocations = (req, res) => {
   const longTerm = (req.params.lengthOfStay === 'long_term');
   const type = (longTerm ? ['long'] : ['crisis', 'transitional']);
   const child = (req.body.hasChild ? [true] : [true, false]);
-  const disability = (req.user.hasDisability ? [true] : [true, false]);
+  const disability = false;
+  // (req.user.hasDisability ? [true] : [true, false]);
 
   let gender = ['Either']; // If 'Other'
-  if (req.user.gender === 'Male') {
+  if (req.body.gender === 'Male') {
     gender = ['Male', 'Either'];
-  } else if (req.user.gender === 'Female') {
+  } else if (req.body.gender === 'Female') {
     gender = ['Female', 'Either'];
   }
 
