@@ -69,7 +69,7 @@ router.post('/notification', ctrlComm.notification);
 
 router.get('/admin', ctrlAdmin.admin);
 router.get('/admin/addservice', ctrlAdmin.addService);
-router.post('/addService', ctrlService.addService);
+router.post('/addservice', ctrlService.addService);
 
 
 module.exports = router;
