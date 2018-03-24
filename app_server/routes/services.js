@@ -8,7 +8,7 @@ const Service = mongoose.model('Service');
 const serviceController = require('../controllers/service');
 
 // Services Dashboard route
-router.get('/', serviceController.dashboard);
+router.get('/dashboard/:serviceUri', serviceController.dashboard);
 
 
 // Services Profile Page route

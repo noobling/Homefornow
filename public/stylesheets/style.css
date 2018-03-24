@@ -36,7 +36,7 @@ select {
     box-shadow: none !important;
 }
 
-::placeholder {    
+::placeholder {
     color: #333333;
     opacity: 0.75;
 }
@@ -45,7 +45,7 @@ select {
     color: #333333;
     opacity: 0.75;
  }
- 
+
  ::-ms-input-placeholder { /* Microsoft Edge */
     color: #333333;
     opacity: 0.75;
@@ -163,7 +163,7 @@ div[class^="col-"] {
 .modal-content {
     border-radius: 3px;
 }
-  
+
 .modal-body .row {
   padding-bottom: 16px;
 }
@@ -747,4 +747,16 @@ input:checked + .slider:before {
 .accordion + .panel {
     display: none;
     overflow: hidden;
+}
+
+/* Carousel styling ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+.carousel-indicators > li, .carousel-indicators > li.active {
+  background-color: #333;
+}
+
+.carousel-control {
+  background-image: none !important;
+  background: rgba(0, 0, 0, 0.5);
+  width: 10%;
 }

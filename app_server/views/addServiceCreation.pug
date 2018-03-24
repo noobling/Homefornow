@@ -52,7 +52,7 @@ block content
                                                 img.img-responsive(src=logo)
                             else
                                 .item.col-xs-4.col-sm-2
-                                    form(action="/service/dashboard/profile/" + uri + "/logo/add", method="post", enctype="multipart/form-data")
+                                    form(action="/service/profile/" + uri + "/logo/add", method="post", enctype="multipart/form-data")
                                         .thumbnail
                                             .image.highlight
                                                 label(style='margin: 0px;')
@@ -69,7 +69,7 @@ block content
                                 -let length = Object.keys(images).length;
                                 if Object.keys(images).length <= 5
                                     .item.col-xs-4.col-sm-2
-                                        form(action="/service/dashboard/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
+                                        form(action="/service/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
                                             .thumbnail
                                                 .image.highlight
                                                     label(style='margin: 0px;')
@@ -85,7 +85,7 @@ block content
                                                     img.img-responsive(src=images[index])
                             else
                                 .item.col-xs-4.col-sm-2
-                                    form(action="/service/dashboard/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
+                                    form(action="/service/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
                                         .thumbnail
                                             .image.highlight
                                                 label(style='margin: 0px;')

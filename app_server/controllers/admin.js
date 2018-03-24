@@ -15,10 +15,25 @@ module.exports.admin = (req, res) => {
           services: service,
         });
       });
-  } else if (req.user.role === 'service-provider') {
-    return res.render('/service/dashboard');
+  } else if (req.user.role === 'service_provider') {
+    return res.redirect('/service/dashboard'.concat(req.user.service.uri));
+  } else if (req.user.role === 'youth') {
+    return res.redirect(prevPage);
+  } else {
+    return res.redirect(prevPage);
   }
-  return res.redirect(prevPage);
+};
+
+module.exports.addService = (req, res) => {
+  const prevPage = req.header('Referer') || '/';
+  if (!req.user) {
+    return res.redirect(prevPage);
+  }
+  if (req.user.role !== 'admin') {
+    return res.redirect(prevPage);
+  }
+
+  return res.render('addServiceCreation');
 };
 
 module.exports.adminData = (req, res) => {

@@ -64,10 +64,12 @@ router.post('/sms', ctrlComm.sms);
 router.post('/notification', ctrlComm.notification);
 
 /**
- * services API
+ * admin API
  */
-router.post('/addService', ctrlService.addService);
 
 router.get('/admin', ctrlAdmin.admin);
+router.get('/admin/addservice', ctrlAdmin.addService);
+router.post('/addService', ctrlService.addService);
+
 
 module.exports = router;

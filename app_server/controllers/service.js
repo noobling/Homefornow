@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const images = require('../middleware/images');
 
 const Service = mongoose.model('Service');
+const User = mongoose.model('User');
 
 /**
  * Renders the service page.
@@ -17,8 +18,9 @@ module.exports.service = (req, res) => {
  * Redirects to the service provider's page.
  * @param {Object} req Express request object.
  * @param {Object} res Express response object.
+ * @param  {Function} next Express next function.
  */
-module.exports.addService = (req, res) => {
+module.exports.addService = (req, res, next) => {
   if (!req.user) {
     res.status(401).json({ message: 'You must be logged in to create a new service provider.' });
     return;
@@ -47,12 +49,24 @@ module.exports.addService = (req, res) => {
     maxAge: req.body.maxAge,
   };
 
-  service.save((err) => {
-    if (err) {
-      res.status(500).json({ message: err });
-    } else {
+  service.save().then((newService) => {
+    const newUser = new User();
+
+    newUser.name = req.body.name;
+    newUser.email = req.body.email;
+    newUser.dob = new Date();
+    newUser.gender = 'Other';
+    newUser.role = 'service_provider';
+    newUser.service = newService.id;
+    newUser.setPassword(req.body.pwd);
+
+    newUser.save().then(() => {
       res.redirect('/location/'.concat(req.body.uri));
-    }
+    }).catch((err) => {
+      next(err);
+    });
+  }).catch((err) => {
+    next(err);
   });
 };
 
@@ -97,7 +111,8 @@ module.exports.dashboard = (req, res) => {
         service,
         numAvailableBeds: countAvailableBeds(service.beds),
       });
-    }).catch((err) => {
+    })
+    .catch((err) => {
       res.status(401).json({ message: err });
     });
   const beds = [
