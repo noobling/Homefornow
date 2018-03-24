@@ -84,24 +84,22 @@ function returnAges(requests) {
  * @param  {Object} res Express response object.
  */
 module.exports.dashboard = (req, res) => {
-  // if (!req.user || req.user.role !== 'service_provider') {
-  //   res.status(401).json({ message: 'You are not authorised to view this page.' });
-  //   return;
-  // }
-  //
-  // Service.findById(
-  //   req.user.service[0],
-  //   'name address.suburb beds tags openRequests',
-  // ).exec()
-  //   .then((service) => {
-  //     res.render('serviceDashboard', {
-  //       service,
-  //       numAvailableBeds: countAvailableBeds(service.beds),
-  //     });
-  //   }).catch((err) => {
-  //     res.status(401).json({ message: err });
-  //   });
-
+  if (!req.user || req.user.role !== 'service_provider') {
+    res.status(401).json({ message: 'You are not authorised to view this page.' });
+    return;
+  }
+  Service.findById(
+    req.user.service[0],
+    'name address.suburb beds tags openRequests',
+  ).exec()
+    .then((service) => {
+      res.render('serviceDashboard', {
+        service,
+        numAvailableBeds: countAvailableBeds(service.beds),
+      });
+    }).catch((err) => {
+      res.status(401).json({ message: err });
+    });
   const beds = [
     {
       gender: 'Male',
