@@ -32,6 +32,7 @@ module.exports.login = (req, res, next) => {
       }
       return res.redirect(prevPage);
     });
+    return res.redirect(prevPage);
   })(req, res, next);
 };
 

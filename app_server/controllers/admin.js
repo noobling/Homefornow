@@ -4,12 +4,21 @@ const mongoose = require('mongoose');
 const Service = mongoose.model('Service');
 
 module.exports.admin = (req, res) => {
-  Service.find({ }, { name: 1, beds: 1, requests: 1 }).exec()
-    .then((service) => {
-      res.render('admin', {
-        services: service,
+  const prevPage = req.header('Referer') || '/';
+  if (!req.user) {
+    return res.redirect(prevPage);
+  }
+  if (req.user.role === 'admin') {
+    Service.find({ }, { name: 1, beds: 1, requests: 1 }).exec()
+      .then((service) => {
+        res.render('admin', {
+          services: service,
+        });
       });
-    });
+  } else if (req.user.role === 'service-provider') {
+    return res.render('/service/dashboard');
+  }
+  return res.redirect(prevPage);
 };
 
 module.exports.adminData = (req, res) => {
