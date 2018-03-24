@@ -16,7 +16,9 @@ module.exports.admin = (req, res) => {
         });
       });
   } else if (req.user.role === 'service_provider') {
-    return res.redirect('/service/dashboard'.concat(req.user.service.uri));
+    Service.findById(req.user.service[0], 'uri').exec().then((service) => {
+      res.redirect('/service/dashboard/'.concat(service.uri));
+    });
   } else if (req.user.role === 'youth') {
     return res.redirect(prevPage);
   } else {

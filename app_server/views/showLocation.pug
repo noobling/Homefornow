@@ -42,31 +42,28 @@ block content
     .col-xs-12
       h1=location.name
     .col-xs-12
-      h3=location.tagline
+      h3=location.description
     .col-xs-12.col-md-9
   .row
     .col-xs-12
       h2 About
     .col-xs-12
-      h4=location.additionalInfo
-  .row.text-center
-    .col-xs-12
-      h2 Amenities
-    .col-xs-12
-      each facility in location.facilities
-        span.label.label-warning
-          span.glyphicon.glyphicon-ok 
-          | &nbsp;#{facility}
-        | &nbsp; 
+      h4=location.about
+  if location.amenities
+    .row.text-center
+      .col-xs-12
+        h2 Amenities
+      .col-xs-12
+        each facility in location.amenities
+          span.label.label-warning
+            span.glyphicon.glyphicon-ok 
+            | &nbsp;#{facility}
+          | &nbsp; 
   .row.text-center
     .col-xs-12
       h2 House Rules
     .col-xs-12
-      each restriction in location.restrictions
-        span.label.label-danger
-          span.glyphicon.glyphicon-remove 
-          | &nbsp;#{restriction}
-        | &nbsp;
+       h3= location.houseRules
   .row.text-center
     if location.hours
       .col-xs-12

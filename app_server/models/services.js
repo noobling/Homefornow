@@ -177,6 +177,23 @@ const serviceSchema = new mongoose.Schema({
     required: true,
     enum: ['crisis', 'transitional', 'long'],
   },
+  // Which genders the service provider accommodates
+  gender: {
+    type: String,
+    required: true,
+    enum: ['Male', 'Female', 'Either'],
+    default: 'Either',
+  },
+  // Does the service provider accommodate disabled youth
+  disability: {
+    type: Boolean,
+    required: true,
+  },
+  // Does the service provider accommodate parents with children
+  child: {
+    type: Boolean,
+    required: true,
+  },
   // Service provider's address
   address: {
     type: addressSchema,
@@ -270,5 +287,9 @@ const serviceSchema = new mongoose.Schema({
     required: false,
   },
 });
+
+serviceSchema.methods.encodeURI = function encodeURI(name) {
+  return name.toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_-]/g, ''); // TODO: Check for duplicates
+};
 
 mongoose.model('Service', serviceSchema);

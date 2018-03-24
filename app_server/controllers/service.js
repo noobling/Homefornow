@@ -28,40 +28,46 @@ module.exports.addService = (req, res, next) => {
 
   const service = new Service();
 
-  service.name = req.body.name;
-  service.phoneNumber = req.body.number;
-  service.serviceType = req.body.serviceType;
-  service.stayLength = req.body.stayLength;
-  service.available = req.body.available;
-  service.website = req.body.website;
-  service.uri = req.body.uri;
-  service.description = req.body.description;
+  service.name = req.body.serveName;
+  service.phoneNumber = req.body.servePhone;
+  service.serviceType = req.body.serveType;
   service.address = {
-    suburb: req.body.suburb,
-    postcode: req.body.postcode,
-    state: req.body.state,
+    suburb: req.body.serveSuburb,
+    state: req.body.serveState,
+    postcode: req.body.servePostcode,
     coordinates: {
-      coordinates: [req.body.long, req.body.lat],
+      coordinates: [0, 0],
     },
   };
+
   service.ageRange = {
-    minAge: req.body.minAge,
-    maxAge: req.body.maxAge,
+    minAge: req.body.serveMinAge,
+    maxAge: req.body.serveMaxAge,
   };
+
+  service.stayLength = req.body.serveStayLength;
+  service.available = true;
+  // service.website = req.body.website;
+  service.uri = service.encodeURI(req.body.serveName);
+  service.description = req.body.serveDesc;
+  service.about = req.body.serveAbout;
+  service.houseRules = req.body.serveRules;
+
+  // TODO ammenities
 
   service.save().then((newService) => {
     const newUser = new User();
 
-    newUser.name = req.body.name;
-    newUser.email = req.body.email;
+    newUser.name = req.body.serveName;
+    newUser.email = req.body.serveEmail;
     newUser.dob = new Date();
     newUser.gender = 'Other';
     newUser.role = 'service_provider';
     newUser.service = newService.id;
-    newUser.setPassword(req.body.pwd);
+    newUser.setPassword(req.body.servePass);
 
     newUser.save().then(() => {
-      res.redirect('/location/'.concat(req.body.uri));
+      res.redirect('/location/'.concat(newService.uri));
     }).catch((err) => {
       next(err);
     });
@@ -115,59 +121,59 @@ module.exports.dashboard = (req, res) => {
     .catch((err) => {
       res.status(401).json({ message: err });
     });
-  const beds = [
-    {
-      gender: 'Male',
-      isOccupied: false,
-    },
-    {
-      gender: 'Female',
-      isOccupied: false,
-    },
-    {
-      gender: 'Male',
-      isOccupied: true,
-    },
-  ];
-
-  let requests = [
-    {
-      youth: {
-        name: 'Steve Steveson',
-        email: 'steve@steve.steve',
-        phoneNumber: '00110100010',
-        dob: '1995-12-17T00:00:00',
-        gender: 'Male',
-      },
-      openedAt: '2018-02-05T03:24:00',
-      status: 'Unseen',
-    },
-    {
-      youth: {
-        name: 'Janet McJanet',
-        email: 'janet@janet.janet',
-        phoneNumber: '013585717193',
-        dob: '1998-07-12T00:00:00',
-        gender: 'Female',
-      },
-      openedAt: '2018-02-09T12:24:00',
-      status: 'Unseen',
-    },
-  ];
-
-  requests = returnAges(requests);
-
-  res.render('serviceDashboard', {
-    service: {
-      name: 'Youngle Group',
-      address: {
-        suburb: 'Cannington',
-      },
-      beds,
-      requests,
-    },
-    numAvailableBeds: countAvailableBeds(beds),
-  });
+  // const beds = [
+  //   {
+  //     gender: 'Male',
+  //     isOccupied: false,
+  //   },
+  //   {
+  //     gender: 'Female',
+  //     isOccupied: false,
+  //   },
+  //   {
+  //     gender: 'Male',
+  //     isOccupied: true,
+  //   },
+  // ];
+  //
+  // let requests = [
+  //   {
+  //     youth: {
+  //       name: 'Steve Steveson',
+  //       email: 'steve@steve.steve',
+  //       phoneNumber: '00110100010',
+  //       dob: '1995-12-17T00:00:00',
+  //       gender: 'Male',
+  //     },
+  //     openedAt: '2018-02-05T03:24:00',
+  //     status: 'Unseen',
+  //   },
+  //   {
+  //     youth: {
+  //       name: 'Janet McJanet',
+  //       email: 'janet@janet.janet',
+  //       phoneNumber: '013585717193',
+  //       dob: '1998-07-12T00:00:00',
+  //       gender: 'Female',
+  //     },
+  //     openedAt: '2018-02-09T12:24:00',
+  //     status: 'Unseen',
+  //   },
+  // ];
+  //
+  // requests = returnAges(requests);
+  //
+  // res.render('serviceDashboard', {
+  //   service: {
+  //     name: 'Youngle Group',
+  //     address: {
+  //       suburb: 'Cannington',
+  //     },
+  //     beds,
+  //     requests,
+  //   },
+  //   numAvailableBeds: countAvailableBeds(beds),
+  // });
 };
 
 /**
