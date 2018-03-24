@@ -1,102 +1,45 @@
-.modal.fade(id='signupmodalshort',role='dialog')
-    .modal-dialog.modal-sm
-        .modal-content
-            .modal-header
-                button(type='button',data-dismiss='modal').close &times;
-                h2.modal-title For Now.
-                h3.modal-title Help us find somewhere close to you.
-            .modal-body
-                form(action='/locations/short_term', method="post", id="shortTermForm")
-                    .form-group
-                        label(for="fName") First Name
-                        input(type="text", name="fName", placeholder="e.g. John").form-control#fName
-                    .form-group
-                        label(for="lName") Last Name
-                        input(type="text", name="lName", placeholder="e.g. Doe").form-control#lName
-                    .form-group
-                        label(for="pwd") Age
-                        select.form-control(name="age", placeholder="Select your age")#age
-                            option Select your age
-                            option 14
-                            option 15
-                            option 16
-                            option 17
-                            option 18
-                            option 19
-                            option 20
-                            option 21
-                            option 22
-                            option 23
-                            option 24
-                            option 25
-                    .form-group
-                        .row
-                            .col-xs-6
-                                select.form-control(name="gender", placeholder="Gender")#gender
-                                    option Gender
-                                    option Male
-                                    option Female
-                                    option Other
-                            .col-xs-6
-                                label.checkbox-inline
-                                    input(type="checkbox", name="child", value="yes")#child
-                                    | Parent with child?
-                    .form-group
-                        input(name="location", type="hidden", value="test location")
-                        input(name="lat", type="hidden")
-                        input(name="long", type="hidden")
-                    .form-group
-                        .text-center
-                            button.btn.btn-default(name="Submit", type="button", onclick='return submitRequest(document.getElementById("shortTermForm"))') Submit
-
-.modal.fade(id='signupmodallong',role='dialog')
-    .modal-dialog.modal-sm
-        .modal-content
-            .modal-header
-                button(type='button',data-dismiss='modal').close &times;
-                h2.modal-title For Future.
-                h3.modal-title Help us find somewhere close to you.
-            .modal-body
-                form(action='/locations/long_term', method="post", id="longTermForm")
-                    .form-group
-                        label(for="fName") First Name
-                        input(type="text", name="fName", placeholder="e.g. John").form-control#fName
-                    .form-group
-                        label(for="lName") Last Name
-                        input(type="text", name="lName", placeholder="e.g. Doe").form-control#lName
-                    .form-group
-                        label(for="pwd") Age
-                        select.form-control(name="age", placeholder="Select your age")#age
-                            option Select your age
-                            option 14
-                            option 15
-                            option 16
-                            option 17
-                            option 18
-                            option 19
-                            option 20
-                            option 21
-                            option 22
-                            option 23
-                            option 24
-                            option 25
-                    .form-group
-                        .row
-                            .col-xs-6
-                                select.form-control(name="gender", placeholder="Gender")#gender
-                                    option Gender
-                                    option Male
-                                    option Female
-                                    option Other
-                            .col-xs-6
-                                label.checkbox-inline
-                                    input(type="checkbox", name="child", value="yes")
-                                    | Parent with child?
-                    .form-group
-                        input(name="location", type="hidden")
-                        input(name="lat", type="hidden")
-                        input(name="long", type="hidden")
-                    .form-group
-                        .text-center
-                            button.btn.btn-default(name="Submit", type="button", onclick='submitRequest(document.getElementById("longTermForm"))') Submit
-script(src='/javascripts/requests.js')
+mixin signupModal(title, route)
+    .modal.fade(id=title,role='dialog')
+        .modal-dialog.modal-sm
+            .modal-content
+                .modal-header(style='padding-bottom: 25px;')
+                    button(type='button',data-dismiss='modal').close &times;
+                    h2.sec-color.bang.modal-title= title
+                    h4.modal-title(style='color: #606060;') Help us find 
+                    h4.modal-title(style='color: #606060; padding-bottom:5px;') somewhere close to you.
+                    h5.modal-title(style='color: #606060;') Fill These Details To Get The
+                    h5.modal-title(style='color: #606060;') Vacancies Suited To You
+                .modal-body(style='padding-top: 0px;')
+                    form(action=route, method="post")
+                        .form-group
+                            label(for="fName") First Name
+                            input(type="text", name="fName", placeholder="e.g. John").form-control#fName
+                        .form-group
+                            label(for="lName") Last Name
+                            input(type="text", name="lName", placeholder="e.g. Doe").form-control#lName
+                        .form-group
+                            label(for="dob") Date of Birth
+                            input(type="date", name="dob").form-control#ldob
+                        .form-group
+                            .row
+                                .col-xs-6
+                                    select.form-control(name="gender", placeholder="Gender")#gender
+                                        option(hidden='true') Gender
+                                        option Male
+                                        option Female
+                                        option Other
+                                .col-xs-6
+                                    label.checkbox-inline
+                                        input(type="checkbox", name="child", value="yes")#child
+                                        | Parent with child?
+                        .form-group
+                            //- input(name="location", type="hidden", value="test location")
+                            input(name="lat", type="hidden", id='latitude '+title)
+                            input(name="long", type="hidden", id='longitude '+title)
+                            input(type='hidden', name='lengthOfStay', id='los '+title)
+                        .form-group
+                            .text-center
+                                input.btn-primary(type="submit", value="Get Suitable Vacancies", style='width: 200px; margin-bottom: 10px;')
+                            .text-center
+                                a(href='#', style='font-size: 11px;color: #282828; text-decoration: underline;') Privacy Info
+//- script(src='/javascripts/requests.js')

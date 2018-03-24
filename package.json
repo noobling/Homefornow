@@ -44,7 +44,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-mocha": "^4.11.0",
     "mocha": "^4.0.1",
-    "nodemon": "^1.12.5",
+    "nodemon": "^1.17.2",
     "pug-lint": "^2.5.0",
     "pug-lint-config-clock": "^2.0.0",
     "superagent": "^3.8.2",

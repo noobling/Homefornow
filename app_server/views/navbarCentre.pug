@@ -1,11 +1,12 @@
 extends layout
 
 block navbar
-    .navbar.navbar-default.navbar-fixed-top
+    .navbar.navbar-default.navbar-fixed-top#navbar-cent
         .container-fluid
             .navbar-header
-                a.navbar-brand.navbar-left(href='/', style="display:inline;")
-                    img.navbar-left.img-rounded(style="height:120%;", src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
+                a.navbar-brand.navbar-left(href='/', style='padding: 10px;')
+                    span
+                        img.navbar-left(style="height: 100%;", src='https://static.pexels.com/photos/164516/pexels-photo-164516.jpeg')
                     | &nbsp;#{user.name}
                 button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
                     span.icon-bar
@@ -20,7 +21,7 @@ block navbar
         block content
     script.
         window.onscroll = function () {
-            const nav = document.querySelector('#navbar');
+            const nav = document.querySelector('#navbar-cent');
             var navClass = 'navbar navbar-default navbar-fixed-top';
             if (this.scrollY <= 10) {
                 nav.className = navClass;

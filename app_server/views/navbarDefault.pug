@@ -2,9 +2,9 @@ extends layout
 
 block navbar
     .navbar.navbar-default.navbar-fixed-top#navbar
-      .container
+      .container-fluid
         .navbar-header
-          a.navbar-brand(href='/') HomeForNow
+          a.navbar-brand(href='/', style='padding-left: 20px;') HomeForNow
           button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
             span.icon-bar
             span.icon-bar
@@ -15,12 +15,12 @@ block navbar
               li
                 a(href='/admin') Welcome #{user.name}
               li
-                a(href='/logout') Logout
+                a(href='/logout', style='padding-right: 20px;') Logout
             else
               li
-                a(href='javascript: login()') Login
-              li
-                a(href='javascript: register()') Register
+                a(href='#', data-toggle='modal', data-target='#loginmodal', style='padding-right: 20px;') Service Login
+              //- li
+              //-   a(href='javascript: register()') Register
     .container
         block content
     script.

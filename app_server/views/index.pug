@@ -1,13 +1,29 @@
 extends navbarDefault
 
+
+
 block content
+  
+    include _includes/messages/error
+    include _includes/messages/info
+    include _includes/signupModal
+    
+    +signupModal('Right Now.', '/locations/short_term')
+    +signupModal('Long Term.', '/locations/long_term')
+    
+    style.
+      #location::placeholder {
+        font-size: 19px;
+        font-weight: 300;
+      }
+
     #banner.page-header
-        include _includes/messages/error
-        include _includes/messages/info
         .row
             .col-md-8
                 h1.bang= title1
                 h1.sec-color.bang= title2
+                h3.bold(style='margin-bottom: 0px;')= 'Youth Accomodation'
+                h3.bold(style='margin: 0px;')= 'Options in Perth, Western Australia'
     form(id='locationForm')
         .form-group
             .row
@@ -19,11 +35,9 @@ block content
                       .row
                           .col-md-6.col-sm-8.text-left(style='margin-top: 3px; color: #999;')
                             a(style='padding-left: 18px;')
-                            | Use
+                            | Use 
                             a(href='javascript: geoloc();', class='geoloc' style='color: #999;')#get_location
                                 | my current location
-                    .spacer-sm
-                    .spacer-sm
                 .col-md-2.col-xs-6.text-right
                     button(type='button').btn.btn-lg.btn-primary#shortBtn
                         | Right now
@@ -32,12 +46,13 @@ block content
                         | Long term
     .spacer-lg
     .row
-      .col-sm-12
-        .panel.panel-default.panel-spaced
-          .bangers-heading.black.line-spc-3
-            | CLOSE TO YOU.
-          .roboto-sub-heading.dark-grey
-            | Nearest crisis accommodation services.
+        .col-xs-12
+            img.img-responsive(src='images/landing head.png', style='height: 120px;')
+    .spacer-sm
+    .row
+        .col-xs-12
+                h2.bang(style="margin:0px;")="CLOSE TO YOU."
+                h3(style="margin:0px;")="Nearest crisis accommodation services."
     .row
         each location in [crisis, transitional, long]
           if location
@@ -53,31 +68,22 @@ block content
                       .panel-title.text-center.roboto-title.black.line-spc-2= location.name
                     .panel-body.text-justify.text-center.roboto-desc.dark-grey.line-spc-4
                         | #{location.description}
-                        
+    .spacer-xs
     .row
       .col-sm-12
-        .panel.panel-default.panel-spaced
-          .bangers-heading.black.line-spc-3
-            | WHO TO CALL.
-          .roboto-sub-heading.dark-grey
-            | Numbers to call if you need help.
+            h2.bang(style="margin: 0px;")="WHO TO CALL."
+            h3(style="margin: 0px;")="Numbers to call if you need help."
+    .spacer-xs
     .row
-      .col-sm-6
-        .panel.panel-default.panel-spaced
-          .roboto-heading.black.line-spc-5
-            | Entry Point
-          .roboto-heading.phone-num.deep-pink.line-spc-2
-            | 6496 0001
-            p.line-spc-2
-            | 1800 124 684
-      .col-sm-6
-        .panel.panel-default.panel-spaced
-          .roboto-heading.black.line-spc-5
-            | Crisis Care
-          .roboto-heading.phone-num.deep-pink.line-spc-2
-            | 9223 1111
-            p.line-spc-2
-            | 1800 199 008
+        .col-xs-6
+            h3.bold='Entry Point'
+            h4.bold.sec-color='6496 0001'
+            h4.bold.sec-color='1800 124 684'
+        .col-xs-6
+            h3.bold='Crisis Care'
+            h4.bold.sec-color='9223 1111'
+            h4.bold.sec-color='1800 199 008'
+    .spacer-xs
 
     script(src='/javascripts/search.js')
     script(src='/javascripts/location.js')
