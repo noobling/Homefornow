@@ -3,193 +3,331 @@ include _includes/deleteImageModal
 include _includes/deleteLogoModal
 
 block content
+
+    style.
+        select {
+            border: solid 2px #333333 !important;
+            border-radius: 3px !important;
+            box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3) !important;
+            box-shadow: 0px 2px 7.8px 0.2px var(--black-30) !important;
+        }
+        textarea {
+            border-radius: 3px !important;
+            background-color: #ffffff !important;
+            box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3) !important;
+            box-shadow: 0px 2px 7.8px 0.2px var(--black-30) !important;
+            border: solid 2px #333333 !important;
+        }
+        .well {
+            box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3) !important;
+            box-shadow: 0px 2px 7.8px 0.2px var(--black-30) !important;
+            border: solid 2px #333333 !important;
+            border-radius: 3px !important;
+            background-color: #ebebeb;
+        }
+        #serveDesc, #serveAbout, #serveRules { resize: none; }
     
     #banner.page-header        
         .container-fluid
             .row
-                h1.bang.sec-color= title
+                h1.bang.sec-color= 'Add Service'
                 .spacer-sm
             .row
-                form(action='/register', method='post', role='form', id='addServiceForm')
-                    .row
-                        .form-group#serveName_LocForm
-                            .col-xs-12.col-sm-8(style='margin-bottom: 15px;')
+                form(action='/addservice', method='post', role='form', id='addServiceForm')
+                    .row                        
+                        .form-group#serveName
+                            .col-xs-12.col-sm-7(style='margin-bottom: 15px;')
+                                label(for='serveName') SERVICE NAME
+                                input(type='text', name='serveName', id='serveName', required='').form-control
+                            .col-xs-12.col-sm-5(style='margin-bottom: 15px;')
+                                label(for='serveType') SERVICE TYPE
+                                select.form-control(name='serveType', id='serveType', style='padding: 6px 10px 6px 4px;', required='')
+                                            option(value='Crisis') CRISIS
+                                            option(value='Transitional') TRANSITIONAL
+                                            option(value='Long Term') LONG TERM
+                        .form-group#serveLocation
+                            .col-xs-12
+                                label LOCATION
+                            .col-xs-12.col-sm-5(style='margin-bottom: 15px;')
+                                input(type='text', name='serveSuburb', id='serveSuburb', required='', placeholder='SUBURB', autocomplete='on').form-control
+                            .col-xs-6.col-sm-3(style='margin-bottom: 15px;')
+                                select.form-control(name='serveState', id='serveState', style='padding: 6px 10px 6px 4px;', required='')
+                                    option(hidden='true') STATE
+                                    option ACT
+                                    option NSW
+                                    option QLD
+                                    option SA
+                                    option NT
+                                    option TAS
+                                    option VIC
+                                    option WA
+                            .col-xs-6.col-sm-4(style='margin-bottom: 15px;')
+                                input(type='text', name='servePostcode', id='servePostcode', required='', placeholder='POSTCODE', pattern="\d{4}").form-control
+                        .form-group#serveAge
+                            .col-xs-12.col-sm-8
                                 .row
                                     .col-xs-12
-                                        label(for='serveName') SERVICE NAME
-                                        input(type='text', name='serveName', id='serveName', required='').form-control
+                                        label AGE RANGE 
+                                    .col-xs-6(style='margin-bottom: 15px;')
+                                        select.form-control(name='serveMinAge', id='serveMinAge', style='padding: 6px 10px 6px 4px;', required='')
+                                            option(hidden='true') MIN. AGE
+                                            option 15
+                                            option 16
+                                            option 17
+                                            option 18
+                                            option 19
+                                            option 20
+                                            option 21
+                                            option 22
+                                            option 23
+                                            option 24
+                                            option 25
+                                    .col-xs-6(style='margin-bottom: 15px;')
+                                        select.form-control(name='serveMaxAge', id='serveMaxAge', style='padding: 6px 10px 6px 4px;', required='')
+                                            option(hidden='true') MAX. AGE
+                                            option 15
+                                            option 16
+                                            option 17
+                                            option 18
+                                            option 19
+                                            option 20
+                                            option 21
+                                            option 22
+                                            option 23
+                                            option 24
+                                            option 25
                             .col-xs-12.col-sm-4(style='margin-bottom: 15px;')
+                                label(for='serveStayLength') MAX. STAY LENGTH
+                                select.form-control(name='serveStayLength', id='serveStayLength', style='padding: 6px 10px 6px 4px;', required='')
+                                    option(hidden='true') (in months)
+                                    option 1
+                                    option 3
+                                    option 6
+                                    option 9
+                                    option 12
+                                    option 15
+                                    option 18
+                                    option 21
+                                    option 24
+                    .row
+                        .form-group#serveContact
+                            .col-xs-12
+                                label SERVICE CONTACT INFORMATION
+                            .col-xs-12.col-sm-8(style='margin-bottom: 15px;')
+                                input(type='email', name='serveEmail', id='serveEmail', placeholder='EMAIL', required='').form-control
+                            .col-xs-12.col-sm-4(style='margin-bottom: 15px;')
+                                input(type='tel', name='servePhone', id='servePhone', placeholder='PHONE NUMBER',required='').form-control
+                    .row
+                        .form-group#servePassword
+                            .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
                                 .row
                                     .col-xs-12
-                                        label(for='serveSuburb') SUBURB
-                                        input(type='text', name='serveName', id='serveSuburb', required='', autocomplete='on').form-control
-                    .form-group#serveDescForm
-                        .row
-                            .col-xs-12
-                                label(for='serveDesc') BRIEF DESCRIPTION
-                                textarea(rows="5", name='serveDesc',id='serveDesc', spellcheck="true", placeholder="Enter Description").form-control
-                    .form-group#serveAboutForm
-                        .row
-                            .col-xs-12
-                                label(for='serveAbout') ABOUT
-                                textarea(rows="5", name='serveAbout',id='serveAbout', spellcheck="true", placeholder="Enter Description").form-control
-                    .form-group#serveRulesForm
-                        .row
-                            .col-xs-12
-                                label(for='serveRules') HOUSE RULES
-                                textarea(rows="5", name='serveRules',id='serveRules', spellcheck="true", placeholder="Enter Description").form-control
-                    .form-group#serveLogoForm
-                        .row
-                            .col-xs-12
-                                label LOGO
-                        .row#logorow
-                            if logo != null
-                                +deleteLogoModal(uri, logo)
-                                .item.col-xs-4.col-sm-2
-                                    .thumbnail
-                                        .image.highlight
-                                            a(href='#',data-toggle="modal",data-target="#deletelogomodal")
-                                                img.img-responsive(src=logo)
-                            else
-                                .item.col-xs-4.col-sm-2
-                                    form(action="/service/profile/" + uri + "/logo/add", method="post", enctype="multipart/form-data")
+                                        label(for='servePass') PASSWORD
+                                        input(type='password', name='servePass', id='servePass', required='').form-control
+                            .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
+                                .row
+                                    .col-xs-12
+                                        label(for='serveCon') CONFIRM PASSWORD
+                                        input(type='password', name='serveCon', id='serveCon', required='').form-control
+                .row
+                    .col-xs-12.col-md-7
+                        .form-group#serveDescForm
+                            .row
+                                .col-xs-12
+                                    label(for='serveDesc') BRIEF DESCRIPTION
+                                    textarea(rows="5", name='serveDesc',id='serveDesc', spellcheck="true", placeholder="Enter Description").form-control
+                        .form-group#serveAboutForm
+                            .row
+                                .col-xs-12
+                                    label(for='serveAbout') ABOUT
+                                    textarea(rows="5", name='serveAbout',id='serveAbout', spellcheck="true", placeholder="Enter Description").form-control
+                        .form-group#serveRulesForm
+                            .row
+                                .col-xs-12
+                                    label(for='serveRules') HOUSE RULES
+                                    textarea(rows="5", name='serveRules',id='serveRules', spellcheck="true", placeholder="Enter Description").form-control
+                    .col-xs-12.col-md-4.col-md-offset-1
+                        .form-group#serveLogoForm
+                            .row
+                                .col-xs-12
+                                    label LOGO
+                            .row#logorow
+                                if logo != null
+                                    +deleteLogoModal(uri, logo)
+                                    .item.col-xs-4.col-sm-2
                                         .thumbnail
                                             .image.highlight
-                                                label(style='margin: 0px;')
-                                                    img.img-responsive#plusLogo-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
-                                                    img.img-responsive#spinnerLogo-gif(src='/images/loading_spinner.gif', style='display: none;')
-                                                    input#logoAdd(type='file', accept="image/*", hidden='', name="logoAdd", onchange="form.submit()")
-                    .form-group#servePhotoForm
-                        .row
-                            .col-xs-12
-                                label PHOTOS
-                        .row#imagerow
-                            if images != null && images.length > 0
-                                -var index = 1;
-                                -let length = Object.keys(images).length;
-                                if Object.keys(images).length <= 5
+                                                a(href='#',data-toggle="modal",data-target="#deletelogomodal")
+                                                    img.img-responsive(src=logo)
+                                else
                                     .item.col-xs-4.col-sm-2
-                                        form(action="/service/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
+                                        form(action="/service/dashboard/profile/" + uri + "/logo/add", method="post", enctype="multipart/form-data")
                                             .thumbnail
                                                 .image.highlight
                                                     label(style='margin: 0px;')
-                                                        img.img-responsive#plus-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
-                                                        img.img-responsive#spinner-gif(src='/images/loading_spinner.gif', style='display: none;')
-                                                        input#fileAdd(type='file', accept="image/*", hidden='', name="fileAdd", onchange="form.submit()")
-                                -for (index = 0; index < length; index += 1)
-                                    +deleteImageModal(uri, images[index], index)
+                                                        img.img-responsive#plusLogo-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
+                                                        img.img-responsive#spinnerLogo-gif(src='/images/loading_spinner.gif', style='display: none;')
+                                                        input#logoAdd(type='file', accept="image/*", hidden='', name="logoAdd", onchange="form.submit()")
+                        .form-group#servePhotoForm
+                            .row
+                                .col-xs-12
+                                    label PHOTOS
+                            .row#imagerow
+                                if images != null && images.length > 0
+                                    -var index = 1;
+                                    -let length = Object.keys(images).length;
+                                    if Object.keys(images).length <= 5
+                                        .item.col-xs-4.col-sm-2
+                                            form(action="/service/dashboard/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
+                                                .thumbnail
+                                                    .image.highlight
+                                                        label(style='margin: 0px;')
+                                                            img.img-responsive#plus-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
+                                                            img.img-responsive#spinner-gif(src='/images/loading_spinner.gif', style='display: none;')
+                                                            input#fileAdd(type='file', accept="image/*", hidden='', name="fileAdd", onchange="form.submit()")
+                                    -for (index = 0; index < length; index += 1)
+                                        +deleteImageModal(uri, images[index], index)
+                                        .item.col-xs-4.col-sm-2
+                                            .thumbnail
+                                                .image.highlight
+                                                    a(href='#',data-toggle="modal",data-target="#deleteimagemodal-image" + index)
+                                                        img.img-responsive(src=images[index])
+                                else
                                     .item.col-xs-4.col-sm-2
-                                        .thumbnail
-                                            .image.highlight
-                                                a(href='#',data-toggle="modal",data-target="#deleteimagemodal-image" + index)
-                                                    img.img-responsive(src=images[index])
-                            else
-                                .item.col-xs-4.col-sm-2
-                                    form(action="/service/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
-                                        .thumbnail
-                                            .image.highlight
-                                                label(style='margin: 0px;')
-                                                    img.img-responsive(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
-                                                    img.img-responsive(src='/images/loading_spinner.gif', style='display: none;')
-                                                    input#fileAdd(type='file', accept="image/*", hidden='', name="fileAdd", onchange="form.submit()")
-                    .form-group#serveAmenitiesForm
-                        .row
-                            .col-xs-12
-                                label AMENITIES
-                                .row
-                                    .col-xs-12.col-sm-8
-                                        .well
-                                            .row
-                                                .form-inline
-                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
-                                                        label TV
-                                                    .col-xs-1(style='padding: 0px;')
-                                                        input#TV(type="radio", name="TV")
-                                            .row
-                                                .form-inline
-                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
-                                                        label LAUNDRY/WASHER
-                                                    .col-xs-1(style='padding: 0px;')
-                                                        input#Washing(type="radio", name="Washing")
-                                            .row
-                                                .form-inline
-                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
-                                                        label WIFI
-                                                    .col-xs-1(style='padding: 0px;')
-                                                        input#WIFI(type="radio", name="WIFI")
-                                            .row(style='margin-bottom: 2px;')
-                                                .col-xs-11.col-xs-offset-1(style='padding: 0px;')
-                                                    label(style='margin: 0px;') BATHROOM
-                                                .form-inline
-                                                    .col-xs-10.col-xs-offset-1(style='padding-left: 15px;')
-                                                        span.small SHARED
-                                                    .col-xs-1(style='padding: 0px;')
-                                                        input#BATHSHARED(type="radio", name="BATH")
-                                                .form-inline
-                                                    .col-xs-10.col-xs-offset-1(style='padding-left: 15px;')
-                                                        span.small PRIVATE
-                                                    .col-xs-1(style='padding: 0px;')
-                                                        input#BATHPRIVATE(type="radio", name="BATH")
-                                            .row
-                                                .form-inline
-                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
-                                                        label SMOKING
-                                                    .col-xs-1(style='padding: 0px;')
-                                                        input#SMOKE(type="radio", name="SMOKE")
-                                            .row
-                                                .form-inline
-                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
-                                                        label AIR-CONDITIONING
-                                                    .col-xs-1(style='padding: 0px;')
-                                                        input#AIRCON(type="radio", name="AIRCON")
-                                            .row
-                                                .form-inline
-                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
-                                                        label GAMES/CONSOLE
-                                                    .col-xs-1(style='padding: 0px;')
-                                                        input#GAMES(type="radio", name="GAMES")
-                                            .row
-                                                .form-inline
-                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
-                                                        label GYM
-                                                    .col-xs-1(style='padding: 0px;')
-                                                        input#GYM(type="radio", name="GYM")
-                                            .row
-                                                .form-inline
-                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
-                                                        label STUDY
-                                                    .col-xs-1(style='padding: 0px;')
-                                                        input#STUDY(type="radio", name="STUDY")
-                                            .row
-                                                .form-inline
-                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
-                                                        label KITCHEN
-                                                    .col-xs-1(style='padding: 0px;')
-                                                        input#KITCHEN(type="radio", name="KITCHEN")
-                                            .row
-                                                .form-inline
-                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
-                                                        label PHONE
-                                                    .col-xs-1(style='padding: 0px;')
-                                                        input#PHONE(type="radio", name="PHONE")
-                                            .row
-                                                .form-inline
-                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
-                                                        label CURFEW
-                                                    .col-xs-1(style='padding: 0px;')
-                                                        input#CURFEW(type="radio", name="CURFEW")
-                                            .row
-                                                .form-inline
-                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
-                                                        label SECURE
-                                                    .col-xs-1(style='padding: 0px;')
-                                                        input#SECURE(type="radio", name="SECURE")
-                                            .row
-                                                .form-inline
-                                                    .col-xs-10.col-xs-offset-1(style='padding: 0px;')
-                                                        label OUTDOOR/GARDEN
-                                                    .col-xs-1(style='padding: 0px;')
-                                                        input#OUTDOOR(type="radio", name="OUTDOOR")
+                                        form(action="/service/dashboard/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
+                                            .thumbnail
+                                                .image.highlight
+                                                    label(style='margin: 0px;')
+                                                        img.img-responsive(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
+                                                        img.img-responsive(src='/images/loading_spinner.gif', style='display: none;')
+                                                        input#fileAdd(type='file', accept="image/*", hidden='', name="fileAdd", onchange="form.submit()")
+                .form-group#serveAmenitiesForm
+                    .row
+                        .col-xs-12
+                            label AMENITIES
+                            .row
+                                .col-xs-12.col-sm-7
+                                    .well
+                                        .row
+                                            .form-inline
+                                                .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                                    i.material-icons.sec-color tv
+                                                .col-xs-9(style='padding-top: 3px;')
+                                                    label(for='TV') TV
+                                                .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                                    input#TV(type="radio", name="TV")
+                                        .row
+                                            .form-inline
+                                                .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                                    i.material-icons.sec-color local_laundry_service
+                                                .col-xs-9(style='padding-top: 3px;')
+                                                    label(for='Washing') LAUNDRY/WASHER
+                                                .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                                    input#Washing(type="radio", name="Washing")
+                                        .row
+                                            .form-inline
+                                                .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                                    i.material-icons.sec-color wifi
+                                                .col-xs-9(style='padding-top: 3px;')
+                                                    label(for='WIFI') WIFI
+                                                .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                                    input#WIFI(type="radio", name="WIFI")
+                                        .row(style='margin-bottom: 3px;')
+                                            .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                                i.material-icons.sec-color wc
+                                            .col-xs-9(style='padding-top: 3px;')
+                                                label BATHROOM
+                                            .form-inline
+                                                .col-xs-9.col-xs-offset-2(style='padding-left: 30px;')
+                                                    span.small.bold
+                                                        label(for='BATHSHARED') SHARED
+                                                .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                                    input#BATHSHARED(type="radio", name="BATH", value='shared')
+                                            .form-inline
+                                                .col-xs-9.col-xs-offset-2(style='padding-left: 30px;')
+                                                    span.small.bold PRIVATE
+                                                .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                                    input#BATHPRIVATE(type="radio", name="BATH", checked='', value='private')
+                                        .row
+                                            .form-inline
+                                                .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                                    i.material-icons.sec-color smoking_rooms
+                                                .col-xs-9(style='padding-top: 3px;')
+                                                    label SMOKING
+                                                .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                                    input#SMOKE(type="radio", name="SMOKE")
+                                        .row
+                                            .form-inline
+                                                .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                                    i.material-icons.sec-color ac_unit
+                                                .col-xs-9(style='padding-top: 3px;')
+                                                    label AIR-CONDITIONING
+                                                .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                                    input#AIRCON(type="radio", name="AIRCON")
+                                        .row
+                                            .form-inline
+                                                .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                                    i.material-icons.sec-color videogame_asset
+                                                .col-xs-9(style='padding-top: 3px;')
+                                                    label GAMES/CONSOLE
+                                                .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                                    input#GAMES(type="radio", name="GAMES")
+                                        .row
+                                            .form-inline
+                                                .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                                    i.material-icons.sec-color fitness_center
+                                                .col-xs-9(style='padding-top: 3px;')
+                                                    label GYM
+                                                .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                                    input#GYM(type="radio", name="GYM")
+                                        .row
+                                            .form-inline
+                                                .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                                    i.material-icons.sec-color local_library
+                                                .col-xs-9(style='padding-top: 3px;')
+                                                    label STUDY
+                                                .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                                    input#STUDY(type="radio", name="STUDY")
+                                        .row
+                                            .form-inline
+                                                .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                                    i.material-icons.sec-color local_dining
+                                                .col-xs-9(style='padding-top: 3px;')
+                                                    label KITCHEN
+                                                .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                                    input#KITCHEN(type="radio", name="KITCHEN")
+                                        .row
+                                            .form-inline
+                                                .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                                    i.material-icons.sec-color phone
+                                                .col-xs-9(style='padding-top: 3px;')
+                                                    label PHONE
+                                                .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                                    input#PHONE(type="radio", name="PHONE")
+                                        .row
+                                            .form-inline
+                                                .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                                    i.material-icons.sec-color schedule
+                                                .col-xs-9(style='padding-top: 3px;')
+                                                    label CURFEW
+                                                .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                                    input#CURFEW(type="radio", name="CURFEW")
+                                        .row
+                                            .form-inline
+                                                .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                                    i.material-icons.sec-color lock
+                                                .col-xs-9(style='padding-top: 3px;')
+                                                    label SECURE
+                                                .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                                    input#SECURE(type="radio", name="SECURE")
+                                        .row
+                                            .form-inline
+                                                .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                                    i.material-icons.sec-color local_florist
+                                                .col-xs-9(style='padding-top: 3px;')
+                                                    label OUTDOOR/GARDEN
+                                                .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                                    input#OUTDOOR(type="radio", name="OUTDOOR")
                     .text-right
                         input(type='submit', value='ADD SERVICE').btn.btn-primary#addService
                     .spacer-sm

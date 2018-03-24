@@ -20,6 +20,7 @@ const addressSchema = new mongoose.Schema({
   state: {
     type: String,
     required: true,
+    enum: ['ACT', 'NSW', 'QLD', 'SA', 'NT', 'TAS', 'VIC', 'WA'],
   },
   // GeoJSON object for longitude and latitude. Longitude is listed first.
   coordinates: {
@@ -119,18 +120,14 @@ const bedSchema = new mongoose.Schema({
   // Intended use of the bed
   bedType: {
     type: String,
-    required: false,
-    enum: ['Single', 'ParentChild', 'Couple', 'Family'],
+    required: true,
+    enum: ['Single', 'ParentChild'],
   },
   // Is the bed occupied
   isOccupied: {
-    type: Boolean,
+    type: String,
     required: true,
-  },
-  // User creatable tags that describe the bed, as an array
-  tags: {
-    type: [String],
-    required: false,
+    enum: ['Unavailable', 'Pending', 'Available'],
   },
 });
 
@@ -150,6 +147,21 @@ const ageSchema = new mongoose.Schema({
 });
 
 /**
+ * Schema for the amenities that a service provides.
+ * @type {mongoose.Schema}
+ */
+const amenitiesSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  icon: {
+    type: String,
+    required: true,
+  },
+});
+
+/**
  * Schema for storing a service provider.
  * @type {mongoose.Schema}
  */
@@ -159,44 +171,15 @@ const serviceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // Service provider's address
-  address: {
-    type: addressSchema,
-    required: true,
-  },
-  // Service provider's phone number
-  phoneNumber: {
-    type: String,
-    required: true,
-  },
   // The type of service provider
   serviceType: {
     type: String,
     required: true,
     enum: ['crisis', 'transitional', 'long'],
   },
-  // Which genders the service provider accommodates
-  gender: {
-    type: String,
-    required: true,
-    enum: ['Male', 'Female', 'Either'],
-    default: 'Either',
-  },
-  // Does the service provider accommodate disabled youth
-  disability: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-  // Does the service provider accommodate parents with children
-  child: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
-  // Average length of stay for the user, in weeks
-  stayLength: {
-    type: Number,
+  // Service provider's address
+  address: {
+    type: addressSchema,
     required: true,
   },
   // Age range for stay
@@ -204,10 +187,15 @@ const serviceSchema = new mongoose.Schema({
     type: ageSchema,
     required: true,
   },
-  // Tags that describe the service provider's beds, as an array
-  tags: {
-    type: [String],
-    required: false,
+  // Average length of stay for the user, in weeks
+  stayLength: {
+    type: Number,
+    required: true,
+  },
+  // Service provider's phone number
+  phoneNumber: {
+    type: String,
+    required: true,
   },
   // Are any beds available
   available: {
@@ -248,21 +236,6 @@ const serviceSchema = new mongoose.Schema({
     type: hoursSchema,
     required: false,
   },
-  // Words that describe the service provider's facilities, as an array. E.g. 'Showers'.
-  facilities: {
-    type: [String],
-    required: false,
-  },
-  // Restrictions that the service provider may impose, as an array. E.g. 'No drugs'.
-  restrictions: {
-    type: [String],
-    required: false,
-  },
-  // Short sentence that describes the service provider
-  tagline: {
-    type: String,
-    required: false,
-  },
   // Description of the service provider.
   // Displayed on the bed vacancies list page.
   description: {
@@ -271,7 +244,13 @@ const serviceSchema = new mongoose.Schema({
   },
   // Additional information that the service provider may want to include.
   // Displayed on the service provider's info page.
-  additionalInfo: {
+  about: {
+    type: String,
+    required: false,
+  },
+  // House Rules that the service provider may have.
+  // Displayed on the service provider's info page.
+  houseRules: {
     type: String,
     required: false,
   },
@@ -284,6 +263,10 @@ const serviceSchema = new mongoose.Schema({
   // The requests submitted to the service provider that are currently open
   openRequests: {
     type: [mongoose.Schema.Types.ObjectId],
+    required: false,
+  },
+  ammenities: {
+    type: [amenitiesSchema],
     required: false,
   },
 });
