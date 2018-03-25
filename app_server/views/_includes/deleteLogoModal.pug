@@ -9,5 +9,5 @@ mixin deleteLogoModal(uri, logoReference)
                 .image
                   img.img.img-responsive(src=logoReference)
               .modal-body.text-center
-                form(action="/service/dashboard/profile/" + uri + "/logo/delete", method="post")
+                form(action="/service/profile/" + uri + "/logo/delete", method="post")
                   input(type='submit', value='Delete').btn.btn-danger

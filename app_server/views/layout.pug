@@ -4,11 +4,11 @@ head
     title
         | Home For Now:&nbsp;
         | #{title}
-    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Roboto:500,900")
-    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Bangers')
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Bangers|Roboto:500,900")
+    link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
     link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
-script(src='/javascripts/jquery.js')
+script(src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous")
 script(src='/javascripts/validation.js')
 script(src='/javascripts/auth.js')
 script(src='/bootstrap/js/bootstrap.min.js')
@@ -25,8 +25,7 @@ footer
         a(href="/support") Support
       li
         a(href="/contact") Contact us
-      li
-        a(href='/addServiceCreation') Service Creation
       p(style='margin: 0px;')
         | HomeForNow &copy; 2018
-include _includes/regloginModal
+//- include _includes/regloginModal
+include _includes/loginModal

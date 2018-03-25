@@ -22,6 +22,42 @@ h1 {
 .bold {
     font-weight: bold;
 }
+/* CSS for inputs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+input[type=text], input[type=password], input[type=email], input[type=tel], input[type=date] {
+    border-radius: 3px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 7.8px 0.2px var(--black-30);
+    border: solid 2px #333333;
+}
+
+textarea {
+    border-radius: 3px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 7.8px 0.2px var(--black-30);
+    border: solid 2px #333333;
+}
+
+select {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+::placeholder {
+    color: #333333;
+    opacity: 0.75;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #333333;
+    opacity: 0.75;
+ }
+
+ ::-ms-input-placeholder { /* Microsoft Edge */
+    color: #333333;
+    opacity: 0.75;
+ }
 
 /*div[class="row"] {
     border: 1px solid blue;
@@ -31,6 +67,10 @@ div[class^="col-"] {
     background-clip: content-box;
     background-color: rgba(255, 0, 0, 0.2);
 }*/
+
+.spacer-xs {
+    height: 32px;
+}
 
 .spacer-sm {
     height: 100px;
@@ -94,7 +134,6 @@ div[class^="col-"] {
 .btn-secondary {
     width: 153px;
     height: 42px;
-    mix-blend-mode: undefined;
     border-radius: 3px;
     background-color: #ffffff;
     border: solid 2px #cc0066;
@@ -104,15 +143,15 @@ div[class^="col-"] {
     color: #cc0066;
 }
 
-.btn-primary:hover {
-    background-color: #862d86;
-    border-color: #862d86;
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #ff3399 !important;
+    border-color: #ff3399 !important;
 }
 
-.btn-secondary:hover {
-    background-color: #ffffff;
-    border: 2px solid #862d86;
-    color:#862d86;
+.btn-secondary:hover, .btn-secondary:focus {
+    background-color: white;
+    border: 2px solid #ff3399 !important;
+    color:#ff3399 !important;
 }
 
 .btn-sm {
@@ -126,12 +165,21 @@ div[class^="col-"] {
 .btn-more-info {
     margin-left: 163px;
 }
+
 /* CSS for modals ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.modal-content {
+    border-radius: 3px;
+}
 
 .modal-body .row {
   padding-bottom: 16px;
 }
 
+.modal-header {
+    border: none !important;
+    border-radius: 3px !important;
+}
 /*CSS for places autocomplete ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .pac-icon {
   width: 0;
@@ -145,9 +193,6 @@ div[class^="col-"] {
 /*.pac-container{
   border-radius: 8px;
 }*/
-
-/*CSS for Service Creation ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-#serveDesc, #serveAbout, #serveRules { resize: none; }
 
 /*CSS for user map ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 #userloc {
@@ -417,60 +462,6 @@ footer {
 /*Styles for images ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 .image {
-    position:relative;
-    overflow:hidden;
-    padding-bottom:100%;
-}
-
-.highlight {
-    transition: .3s ease;
-}
-
-.image img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-}
-
-.middle {
-    opacity: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    text-align: center;
-}
-
-.middle form {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    text-align: center;
-}
-
-.highlight:hover img {
-    opacity: 0.3;
-}
-
-.highlight:hover .middle {
-    opacity: 1;
-}
-
-#imagerow {
-    padding-top: 10px;
-}
-
-#logoRow {
-    padding-top: 10px;
-}
-
-/*Styles for images ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-.image {
   position:relative;
   overflow:hidden;
   padding-bottom:100%;
@@ -707,4 +698,16 @@ input:checked + .slider:before {
 .accordion + .panel {
     display: none;
     overflow: hidden;
+}
+
+/* Carousel styling ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+.carousel-indicators > li, .carousel-indicators > li.active {
+  background-color: #333;
+}
+
+.carousel-control {
+  background-image: none !important;
+  background: rgba(0, 0, 0, 0.5);
+  width: 10%;
 }

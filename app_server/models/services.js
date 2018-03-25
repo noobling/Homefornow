@@ -20,6 +20,7 @@ const addressSchema = new mongoose.Schema({
   state: {
     type: String,
     required: true,
+    enum: ['ACT', 'NSW', 'QLD', 'SA', 'NT', 'TAS', 'VIC', 'WA'],
   },
   // GeoJSON object for longitude and latitude. Longitude is listed first.
   coordinates: {
@@ -105,6 +106,12 @@ const hoursSchema = new mongoose.Schema({
  * @type {mongoose.Schema}
  */
 const bedSchema = new mongoose.Schema({
+  // Name of the bed
+  name: {
+    type: String,
+    required: true,
+    default: 'Bed',
+  },
   // Beds avaialable for the gender
   gender: {
     type: String,
@@ -119,18 +126,15 @@ const bedSchema = new mongoose.Schema({
   // Intended use of the bed
   bedType: {
     type: String,
-    required: false,
-    enum: ['Single', 'ParentChild', 'Couple', 'Family'],
+    required: true,
+    enum: ['Single', 'ParentChild'],
   },
   // Is the bed occupied
   isOccupied: {
-    type: Boolean,
+    type: String,
     required: true,
-  },
-  // User creatable tags that describe the bed, as an array
-  tags: {
-    type: [String],
-    required: false,
+    enum: ['Unavailable', 'Pending', 'Available'],
+    default: 'Available',
   },
 });
 
@@ -150,22 +154,34 @@ const ageSchema = new mongoose.Schema({
 });
 
 /**
+ * Schema for the amenities that a service provides.
+ * name is for the radio buttons,
+ * label is the name on the amenities list,
+ * icon is the name of the icon on material icons
+ * @type {mongoose.Schema}
+ */
+const amenitiesSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  label: {
+    type: String,
+    required: true,
+  },
+  icon: {
+    type: String,
+    required: true,
+  },
+});
+
+/**
  * Schema for storing a service provider.
  * @type {mongoose.Schema}
  */
 const serviceSchema = new mongoose.Schema({
   // Service privider's name
   name: {
-    type: String,
-    required: true,
-  },
-  // Service provider's address
-  address: {
-    type: addressSchema,
-    required: true,
-  },
-  // Service provider's phone number
-  phoneNumber: {
     type: String,
     required: true,
   },
@@ -194,9 +210,9 @@ const serviceSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
-  // Average length of stay for the user, in weeks
-  stayLength: {
-    type: Number,
+  // Service provider's address
+  address: {
+    type: addressSchema,
     required: true,
   },
   // Age range for stay
@@ -204,10 +220,15 @@ const serviceSchema = new mongoose.Schema({
     type: ageSchema,
     required: true,
   },
-  // Tags that describe the service provider's beds, as an array
-  tags: {
-    type: [String],
-    required: false,
+  // Average length of stay for the user, in months
+  stayLength: {
+    type: Number,
+    required: true,
+  },
+  // Service provider's phone number
+  phoneNumber: {
+    type: String,
+    required: true,
   },
   // Are any beds available
   available: {
@@ -248,21 +269,6 @@ const serviceSchema = new mongoose.Schema({
     type: hoursSchema,
     required: false,
   },
-  // Words that describe the service provider's facilities, as an array. E.g. 'Showers'.
-  facilities: {
-    type: [String],
-    required: false,
-  },
-  // Restrictions that the service provider may impose, as an array. E.g. 'No drugs'.
-  restrictions: {
-    type: [String],
-    required: false,
-  },
-  // Short sentence that describes the service provider
-  tagline: {
-    type: String,
-    required: false,
-  },
   // Description of the service provider.
   // Displayed on the bed vacancies list page.
   description: {
@@ -271,7 +277,13 @@ const serviceSchema = new mongoose.Schema({
   },
   // Additional information that the service provider may want to include.
   // Displayed on the service provider's info page.
-  additionalInfo: {
+  about: {
+    type: String,
+    required: false,
+  },
+  // House Rules that the service provider may have.
+  // Displayed on the service provider's info page.
+  houseRules: {
     type: String,
     required: false,
   },
@@ -286,6 +298,14 @@ const serviceSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     required: false,
   },
+  amenities: {
+    type: [amenitiesSchema],
+    required: false,
+  },
 });
+
+serviceSchema.methods.encodeURI = function encodeURI(name) {
+  return name.toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_-]/g, ''); // TODO: Check for duplicates
+};
 
 mongoose.model('Service', serviceSchema);

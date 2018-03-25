@@ -15,12 +15,13 @@ const router = express.Router();
 router.get('/', ctrlIndex.index);
 
 router.get('/about', ctrlOthers.about);
-router.get('/addServiceCreation', ctrlOthers.addServiceCreation); // MUST BE CHANGED LATER
 
 router.get('/location/:serviceUri', ctrlLocations.showLocation);
 
 router.post('/locations/:lengthOfStay', ctrlLocations.showLocations);
-router.post('/locations/:lengthOfStay/contact', ctrlRequests.openRequest);
+
+router.post('/request/update', ctrlRequests.addPhoneToRequest);
+router.post('/locations/contact/:lengthOfStay', ctrlRequests.addRequest);
 /**
  * Authentication
  */
@@ -64,10 +65,12 @@ router.post('/sms', ctrlComm.sms);
 router.post('/notification', ctrlComm.notification);
 
 /**
- * services API
+ * admin API
  */
-router.post('/addService', ctrlService.addService);
 
 router.get('/admin', ctrlAdmin.admin);
+router.get('/admin/addservice', ctrlAdmin.addService);
+router.post('/addservice', ctrlService.addService);
+
 
 module.exports = router;

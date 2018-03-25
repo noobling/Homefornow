@@ -3,13 +3,13 @@
         .modal-content
             .modal-header
                 button(type='button',data-dismiss='modal').close &times;
-                h4.modal-title Log In
+                h3.bang.sec-color.modal-title Service Log-In
             .modal-body
                 form(action='/login', method='post', role='form')
                     .form-group#Login_email
                         .col-xs-12(style='padding: 0px;')
                             label(for='Lemail') Email
-                            input(type='email',placeholder='e.g. example@example.com',name='email').form-control#Lemail
+                            input(type='email',placeholder='example@example.com',name='email').form-control#Lemail
                             span#Login_EFeed
                         .row
                     .form-group#Login_pass
@@ -19,4 +19,4 @@
                             span#Login_PFeed
                         .row
                     .text-right
-                        input(type='submit', value='Submit', disabled='').btn.btn-primary#Login
+                        input(type='submit', value='Submit').btn.btn-primary#Login
