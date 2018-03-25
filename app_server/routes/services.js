@@ -14,6 +14,10 @@ router.get('/dashboard/:serviceUri', serviceController.dashboard);
 // Services Profile Page route
 router.get('/profile/:serviceUri', serviceController.profile);
 
+router.get('/beds', serviceController.getBeds);
+
+router.post('/beds/update/:serviceUri', serviceController.updateBeds);
+
 // Upload new image to service
 router.post(
   '/profile/:serviceUri/add',

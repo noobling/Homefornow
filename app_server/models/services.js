@@ -106,6 +106,12 @@ const hoursSchema = new mongoose.Schema({
  * @type {mongoose.Schema}
  */
 const bedSchema = new mongoose.Schema({
+  // Name of the bed
+  name: {
+    type: String,
+    required: true,
+    default: 'Bed',
+  },
   // Beds avaialable for the gender
   gender: {
     type: String,
@@ -128,6 +134,7 @@ const bedSchema = new mongoose.Schema({
     type: String,
     required: true,
     enum: ['Unavailable', 'Pending', 'Available'],
+    default: 'Available',
   },
 });
 

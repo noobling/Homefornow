@@ -6,7 +6,7 @@ const Service = mongoose.model('Service');
 module.exports.admin = (req, res) => {
   const prevPage = req.header('Referer') || '/';
   if (!req.user) {
-    return res.redirect(prevPage);
+    res.redirect(prevPage);
   }
   if (req.user.role === 'admin') {
     Service.find({ }, { name: 1, beds: 1, requests: 1 }).exec()
@@ -20,9 +20,9 @@ module.exports.admin = (req, res) => {
       res.redirect('/service/dashboard/'.concat(service.uri));
     });
   } else if (req.user.role === 'youth') {
-    return res.redirect(prevPage);
+    res.redirect(prevPage);
   } else {
-    return res.redirect(prevPage);
+    res.redirect(prevPage);
   }
 };
 

@@ -1,18 +1,15 @@
 extends navbarDefault
 
 block content
+  include _includes/addBedModal
   
   .page-header-sm
     .container
-        h2 #{service.name}
+        h1 #{service.name}
     .container
       .row
-        .col-sm-8.col-xs-12
+        .col-xs-12
           h3 #{service.address.suburb}
-        .col-sm-4.col-xs-12
-          h3
-            | Available Beds:&nbsp;
-            span.badge.badge-success #{numAvailableBeds}
             
   .container-fluid
     ul.nav.nav-tabs.nav-justified.service-tabs
@@ -35,22 +32,33 @@ block content
       #bedManagement.tab-pane.fade.in.active
         .container-fluid
           .row
-            .col-xs-12
+            .col-xs-10
               h3 Our Bed Count
-              each bed in service.beds
-                .panel.shadow
-                  .panel-body
-                    .row.text-center
-                      .col-xs-2
-                        h4 ICON
-                      .col-xs-4
-                        h4 #{bed.gender} Bed #{service.beds.indexOf(bed) + 1}
-                      .col-xs-3
-                        h6 Avaliable
-                        input(type='radio', name=service.beds.indexOf(bed), checked=!bed.isOccupied)
-                      .col-xs-3
-                        h6 Occupied
-                        input(type='radio', name=service.beds.indexOf(bed), checked=bed.isOccupied)
+            .col-xs-2
+              a.pull-right(href='#', data-toggle='modal', data-target='#editBedModal')
+                h6 Edit 
+                  span
+                    i.material-icons.btn-other(style='font-size: inherit;') edit 
+            .col-xs-12
+              form(action='/service/beds/update/'+service.uri, method='post')
+                each bed in service.beds
+                  .panel.shadow
+                    .panel-body
+                      .row.text-center
+                        .col-xs-2
+                          h4 ICON
+                        .col-xs-4
+                          h4 #{bed.name}
+                        .col-xs-2
+                          h6 Avaliable
+                          input(type='radio', name='beds['+service.beds.indexOf(bed)+'][isOccupied]', checked=bed.isOccupied==='Available', value='Available')
+                        .col-xs-2
+                          h6 Pending
+                          input(type='radio', name='beds['+service.beds.indexOf(bed)+'][isOccupied]', checked=bed.isOccupied==='Pending', value='Pending')
+                        .col-xs-2
+                          h6 Occupied
+                          input(type='radio', name='beds['+service.beds.indexOf(bed)+'][isOccupied]', checked=bed.isOccupied==='Unavailable', value='Unavailable')
+                input.btn.btn-secondary.pull-right(type='submit', name='Submit', value='Update Beds')
           .row
             .col-xs-12
               h3 Our Requests
@@ -93,3 +101,6 @@ block content
       #bedsAvaliable.tab-pane.fade.in
         .container
           h3 //TODO
+  script.
+    
+  script(src='/javascripts/service.js')

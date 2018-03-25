@@ -65,7 +65,7 @@ function getImagesForService(service, serviceUri) {
 
     if (service.img != null && service.img.length > 0) {
       listCount = service.img.length;
-      const bucket = admin.storage().bucket();
+      // const bucket = admin.storage().bucket();
 
       service.img.forEach((image) => {
         // Get the metadata for each image reference
@@ -99,7 +99,7 @@ function getImagesForService(service, serviceUri) {
 function deleteImageFromService(service, serviceUri, index) {
   return new Promise((resolve, reject) => {
     // Delete the image specified by 'index' from Firebase
-    const bucket = admin.storage().bucket();
+    // const bucket = admin.storage().bucket();
     bucket.file(service.img[index]).delete().then(() => {
       // After deleting the image from Firebase, delete the image from MongoDB
       const len = service.img.length;
@@ -120,7 +120,7 @@ function deleteImageFromService(service, serviceUri, index) {
       Service.findOneAndUpdate(
         { uri: serviceUri },
         { $set: { img: result } },
-        { runValidators: true, new: true }
+        { runValidators: true, new: true },
       ).exec().then(() => {
         resolve();
       }).catch((err) => {
@@ -136,7 +136,7 @@ function deleteImageFromService(service, serviceUri, index) {
 
 function deleteLogoFromService(serviceLogo, serviceUri) {
   return new Promise((resolve, reject) => {
-    const bucket = admin.storage().bucket();
+    // const bucket = admin.storage().bucket();
     bucket.file(serviceLogo).delete().then(() => {
       // Update the MongoDB database with the new list of images, returning
       // when succesful
@@ -159,10 +159,10 @@ function deleteLogoFromService(serviceLogo, serviceUri) {
 
 function getLogoForService(serviceLogo, serviceUri) {
   return new Promise((resolve, reject) => {
-    if (serviceLogo == null || serviceLogo == '') {
+    if (serviceLogo == null || serviceLogo === '') {
       resolve(null);
     }
-    const bucket = admin.storage().bucket();
+    // const bucket = admin.storage().bucket();
     bucket.file(serviceLogo).getMetadata().then((data) => {
       resolve(data[0].mediaLink);
     }).catch((err) => {

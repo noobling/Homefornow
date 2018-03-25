@@ -76,14 +76,6 @@ module.exports.addService = (req, res, next) => {
   });
 };
 
-function countAvailableBeds(beds) {
-  let count = 0;
-  for (let i = 0; i < beds.length; i += 1) {
-    if (!beds[i].isOccupied) count += 1;
-  }
-  return count;
-}
-
 function getAge(date) {
   const today = Date.now();
   const age = new Date(today - date.getTime());
@@ -110,12 +102,11 @@ module.exports.dashboard = (req, res) => {
   }
   Service.findById(
     req.user.service[0],
-    'name address.suburb beds tags openRequests',
+    'name address.suburb beds tags openRequests uri',
   ).exec()
     .then((service) => {
       res.render('serviceDashboard', {
         service,
-        numAvailableBeds: countAvailableBeds(service.beds),
       });
     })
     .catch((err) => {
@@ -174,6 +165,79 @@ module.exports.dashboard = (req, res) => {
   //   },
   //   numAvailableBeds: countAvailableBeds(beds),
   // });
+};
+
+module.exports.getBeds = (req, res) => {
+  const prevPage = req.header('Referer') || '/';
+  if (!req.user) {
+    res.redirect(prevPage);
+  }
+  if (req.user.role !== 'service_provider') {
+    res.redirect(prevPage);
+  }
+  if (req.user.service) {
+    Service.findById(req.user.service[0], 'beds').exec()
+      .then((service) => {
+        res.send(service.beds);
+      }).catch((err) => {
+        console.log(err);
+        res.redirect(prevPage);
+      });
+  } else {
+    res.redirect(prevPage);
+  }
+};
+
+module.exports.updateBeds = (req, res) => {
+  const prevPage = req.header('Referer') || '/';
+  console.log(req.body.beds);
+
+  if (!req.body.beds) {
+    console.log('no beds');
+    res.redirect(prevPage);
+  }
+  const { beds } = req.body;
+
+  Service.findOne({ uri: req.params.serviceUri }, 'beds')
+    .exec()
+    .then((service) => {
+      const oldBeds = service.beds;
+      let index;
+      if (oldBeds.length <= beds.length) {
+        index = oldBeds.length;
+      } else {
+        index = beds.length;
+      }
+      for (let i = 0; i < index; i += 1) {
+        if (beds[i].name === undefined) {
+          beds[i].name = oldBeds[i].name;
+        }
+        if (beds[i].gender === undefined) {
+          beds[i].gender = oldBeds[i].gender;
+        }
+        if (beds[i].bedType === undefined) {
+          beds[i].bedType = oldBeds[i].bedType;
+        }
+        if (beds[i].isOccupied === undefined) {
+          beds[i].isOccupied = oldBeds[i].isOccupied;
+        }
+      }
+    }).then(() => {
+      Service.findOneAndUpdate(
+        { uri: req.params.serviceUri },
+        {
+          $set: {
+            beds,
+          },
+        },
+        { runValidators: true },
+      ).exec().then(() => {
+        res.redirect('/service/dashboard/'.concat(req.params.serviceUri));
+      }).catch((err) => {
+        console.log(err);
+        res.redirect(prevPage);
+      });
+    });
 };
 
 /**
