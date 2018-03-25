@@ -39,9 +39,7 @@ mixin signupModal(title, route, id)
                             input(type='hidden', name='lengthOfStay', id='los '+title)
                         .form-group
                             .text-center
-                              button.btn.btn-default(name="Submit", type="button", onclick='return submitRequest(document.getElementById(\"'+id+'form\"))') Submit
-                              
-                              //- input.btn-primary(type="submit", value="Get Suitable Vacancies", style='width: 200px; margin-bottom: 10px;')
+                              button.btn.btn-primary(name="Submit", type="button", onclick='return submitRequest(document.getElementById(\"'+id+'form\"))', style='width: 200px; margin-bottom: 10px;') Get Suitable Vacancies
                             .text-center
                                 a(href='#', style='font-size: 11px; color: #282828; text-decoration: underline;') Privacy Info
 //- script(src='/javascripts/requests.js')

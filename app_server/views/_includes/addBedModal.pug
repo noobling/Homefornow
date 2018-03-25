@@ -7,9 +7,9 @@
       .modal-body
         form(action='/service/beds/update/'+service.uri, method='post')#bedForm
           .form-group
-            a#addBed
+            a(href='#')#addBed
               i.material-icons.btn-other add_circle_outline
           .form-group#bedList
-          a#removeBed
+          a(href='#')#removeBed
             i.material-icons.btn-other remove_circle_outline
           input.pull-right(type="submit", value="Send").btn.btn-default

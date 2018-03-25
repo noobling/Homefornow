@@ -155,10 +155,17 @@ const ageSchema = new mongoose.Schema({
 
 /**
  * Schema for the amenities that a service provides.
+ * name is for the radio buttons,
+ * label is the name on the amenities list,
+ * icon is the name of the icon on material icons
  * @type {mongoose.Schema}
  */
 const amenitiesSchema = new mongoose.Schema({
   name: {
+    type: String,
+    required: true,
+  },
+  label: {
     type: String,
     required: true,
   },
@@ -195,11 +202,13 @@ const serviceSchema = new mongoose.Schema({
   disability: {
     type: Boolean,
     required: true,
+    default: false,
   },
   // Does the service provider accommodate parents with children
   child: {
     type: Boolean,
     required: true,
+    default: false,
   },
   // Service provider's address
   address: {
@@ -211,7 +220,7 @@ const serviceSchema = new mongoose.Schema({
     type: ageSchema,
     required: true,
   },
-  // Average length of stay for the user, in weeks
+  // Average length of stay for the user, in months
   stayLength: {
     type: Number,
     required: true,
@@ -289,7 +298,7 @@ const serviceSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     required: false,
   },
-  ammenities: {
+  amenities: {
     type: [amenitiesSchema],
     required: false,
   },

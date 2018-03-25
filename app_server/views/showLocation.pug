@@ -40,30 +40,29 @@ block content
             | Contact
   .row.text-center
     .col-xs-12
-      h1=location.name
+      h1.text-center=location.name
     .col-xs-12
-      h3=location.description
+      h3.text-center= location.description
     .col-xs-12.col-md-9
-  .row
+  .row.text-center
     .col-xs-12
       h2 About
     .col-xs-12
-      h4=location.about
-  if location.amenities
+      h4.text-center= location.about
+  if location.amenities != null
     .row.text-center
       .col-xs-12
         h2 Amenities
       .col-xs-12
-        each facility in location.amenities
-          span.label.label-warning
-            span.glyphicon.glyphicon-ok 
-            | &nbsp;#{facility}
-          | &nbsp; 
+        each amenity in location.amenities
+          i.material-icons.sec-color.text-center(style='font-size: 50px;') #{amenity.icon}
+            | &nbsp;
+          //- | #{amenity.label} &nbsp; 
   .row.text-center
     .col-xs-12
       h2 House Rules
     .col-xs-12
-       h3= location.houseRules
+       h3.text-center= location.houseRules
   .row.text-center
     if location.hours
       .col-xs-12
@@ -82,3 +81,4 @@ block content
         | Saturday: #{location.hours.sat.open} - #{location.hours.sat.close}
         br
         | Sunday: #{location.hours.sun.open} - #{location.hours.sun.close}
+  .spacer-xs
