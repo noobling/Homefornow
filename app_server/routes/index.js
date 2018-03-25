@@ -20,7 +20,9 @@ router.get('/addServiceCreation', ctrlOthers.addServiceCreation); // MUST BE CHA
 router.get('/location/:serviceUri', ctrlLocations.showLocation);
 
 router.post('/locations/:lengthOfStay', ctrlLocations.showLocations);
-router.post('/locations/:lengthOfStay/contact', ctrlRequests.openRequest);
+
+router.post('/request/update', ctrlRequests.addPhoneToRequest);
+router.post('/locations/contact/:lengthOfStay', ctrlRequests.addRequest);
 /**
  * Authentication
  */

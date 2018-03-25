@@ -20,7 +20,7 @@ mixin vacancyPanel(serviceName, suburb, available, description, uri, image)
                                 button.btn.btn-primary
                                   | Apply Now
                       .col-xs-6
-                          a(href='#',data-toggle="modal",data-target="#contactmodal"+uri).text-right
+                          a(href='/location/'+uri).text-right
                             button.btn.btn-secondary
                               | More Info
                 .row

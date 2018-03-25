@@ -82,17 +82,17 @@ block content
                   .panel-body
                     .row.text-center
                       .col-xs-2
-                        if (request.youth.gender == 'Male')
+                        if (request.gender == 'Male')
                           h4 MALE ICON
                         else
                           h4 FEM ICON
                       .col-xs-3
-                        h6 #{request.youth.email}
-                        h6 #{request.youth.phoneNumber}
+                        h6 #{request.email}
+                        h6 #{request.phoneNumber}
                       .col-xs-3
-                        h4 #{request.youth.name}
+                        h4 #{request.name}
                       .col-xs-2
-                        h6 #{request.youth.dob}
+                        h6 #{request.dob}
                       .col-xs-2
                         input(type='checkbox', name=request.email+'check')
       #serviceProfile.tab-pane.fade.in

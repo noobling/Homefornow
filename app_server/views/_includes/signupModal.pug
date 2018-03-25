@@ -1,5 +1,5 @@
-mixin signupModal(title, route)
-    .modal.fade(id=title,role='dialog')
+mixin signupModal(title, route, id)
+    .modal.fade(id=id,role='dialog')
         .modal-dialog.modal-sm
             .modal-content
                 .modal-header(style='padding-bottom: 25px;')
@@ -10,7 +10,7 @@ mixin signupModal(title, route)
                     h5.modal-title(style='color: #606060;') Fill These Details To Get The
                     h5.modal-title(style='color: #606060;') Vacancies Suited To You
                 .modal-body(style='padding-top: 0px;')
-                    form(action=route, method="post")
+                    form(action=route, method="post", id=id+'form')
                         .form-group
                             label(for="fName") First Name
                             input(type="text", name="fName", placeholder="e.g. John").form-control#fName
@@ -39,7 +39,9 @@ mixin signupModal(title, route)
                             input(type='hidden', name='lengthOfStay', id='los '+title)
                         .form-group
                             .text-center
-                                input.btn-primary(type="submit", value="Get Suitable Vacancies", style='width: 200px; margin-bottom: 10px;')
+                              button.btn.btn-default(name="Submit", type="button", onclick='return submitRequest(document.getElementById(\"'+id+'form\"))') Submit
+                              
+                              //- input.btn-primary(type="submit", value="Get Suitable Vacancies", style='width: 200px; margin-bottom: 10px;')
                             .text-center
                                 a(href='#', style='font-size: 11px; color: #282828; text-decoration: underline;') Privacy Info
 //- script(src='/javascripts/requests.js')

@@ -30,6 +30,8 @@ module.exports.showLocations = (req, res) => {
     gender = ['Female', 'Either'];
   }
 
+  console.log(req.body);
+
   Service.find(
     {
       $and: [

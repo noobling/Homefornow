@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const images = require('../middleware/images');
 
 const Service = mongoose.model('Service');
+const Request = mongoose.model('Request');
 const User = mongoose.model('User');
 
 /**

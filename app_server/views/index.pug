@@ -8,14 +8,14 @@ block content
     include _includes/messages/info
     include _includes/signupModal
     
-    +signupModal('Right Now.', '/locations/short_term')
-    +signupModal('Long Term.', '/locations/long_term')
+    +signupModal('Right Now.', '/locations/contact/short_term', 'shortTermModal')
+    +signupModal('Long Term.', '/locations/contact/long_term', 'longTermModal')
     
-    style.
-      #location::placeholder {
-        font-size: 19px;
-        font-weight: 300;
-      }
+    //- style.
+    //-   #location::placeholder {
+    //-     font-size: 19px;
+    //-     font-weight: 300;
+    //-   }
 
     #banner.page-header
         .row
@@ -39,9 +39,11 @@ block content
                             a(href='javascript: geoloc();', class='geoloc' style='color: #999;')#get_location
                                 | my current location
                 .col-md-2.col-xs-6.text-right
+                  a(href='#',data-toggle='modal',data-target='#shortTermModal')
                     button(type='button').btn.btn-lg.btn-primary#shortBtn
                         | Right now
                 .col-md-2.col-xs-6.text-left
+                  a(href='#',data-toggle='modal',data-target='#longTermModal')
                     button(type='button').btn.btn-lg.btn-secondary#longBtn
                         | Long term
     .spacer-md
@@ -87,4 +89,5 @@ block content
 
     script(src='/javascripts/search.js')
     script(src='/javascripts/location.js')
+    script(src='/javascripts/requests.js')
     script(async='', defer='',  src='https://maps.googleapis.com/maps/api/js?key='+process.env.embed_maps_api+'&libraries=places&callback=initialize')
