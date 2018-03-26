@@ -205,19 +205,19 @@ module.exports.addService = (req, res, next) => {
     });
 };
 
-function getAge(date) {
-  const today = Date.now();
-  const age = new Date(today - date.getTime());
-  return Math.abs(age.getUTCFullYear() - 1970);
-}
+// function getAge(date) {
+//   const today = Date.now();
+//   const age = new Date(today - date.getTime());
+//   return Math.abs(age.getUTCFullYear() - 1970);
+// }
 
-function returnAges(requests) {
-  const newRequests = requests;
-  for (let i = 0; i < requests.length; i += 1) {
-    newRequests[i].youth.dob = getAge(new Date(requests[i].youth.dob));
-  }
-  return newRequests;
-}
+// function returnAges(requests) {
+//   const newRequests = requests;
+//   for (let i = 0; i < requests.length; i += 1) {
+//     newRequests[i].youth.dob = getAge(new Date(requests[i].youth.dob));
+//   }
+//   return newRequests;
+// }
 
 /**
  * Renders a service provider's dashboard.
@@ -234,12 +234,20 @@ module.exports.dashboard = (req, res) => {
     'name address.suburb address.state address.postcode phoneNumber serviceType ageRange.minAge ageRange.maxAge stayLength available description about houseRules amenities.name beds openRequests uri',
   ).exec()
     .then((service) => {
-      res.render('serviceDashboard', {
-        service,
-      });
-    })
-    .catch((err) => {
-      res.status(401).json({ message: err });
+      console.log(service.openRequests);
+      Request.find({
+        _id: service.openRequests,
+      }, 'firstName lastName gender phoneNumber email dob').exec()
+        .then((requests) => {
+          console.log(requests);
+          res.render('serviceDashboard', {
+            service,
+            requests,
+          });
+        })
+        .catch((err) => {
+          res.status(401).json({ message: err });
+        });
     });
 };
 

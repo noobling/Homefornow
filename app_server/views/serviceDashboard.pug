@@ -93,7 +93,7 @@ block content
                     .col-xs-2
                       h4 CALLED
                   
-              each request in service.openRequests
+              each request in requests
                 .panel.shadow
                   .panel-body
                     .row.text-center
@@ -106,7 +106,7 @@ block content
                         h6 #{request.email}
                         h6 #{request.phoneNumber}
                       .col-xs-3
-                        h4 #{request.name}
+                        h4 #{request.firstName} #{request.lastName}
                       .col-xs-2
                         h6 #{request.dob}
                       .col-xs-2
