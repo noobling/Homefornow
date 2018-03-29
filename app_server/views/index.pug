@@ -1,13 +1,29 @@
 extends navbarDefault
 
+
+
 block content
+  
+    include _includes/messages/error
+    include _includes/messages/info
+    include _includes/signupModal
+    
+    +signupModal('Right Now.', '/locations/contact/short_term', 'shortTermModal')
+    +signupModal('Long Term.', '/locations/contact/long_term', 'longTermModal')
+    
+    //- style.
+    //-   #location::placeholder {
+    //-     font-size: 19px;
+    //-     font-weight: 300;
+    //-   }
+
     #banner.page-header
-        include _includes/messages/error
-        include _includes/messages/info
         .row
             .col-md-8
                 h1.bang= title1
                 h1.sec-color.bang= title2
+                h3.bold(style='margin-bottom: 0px;')= 'Youth Accomodation'
+                h3.bold(style='margin: 0px;')= 'Options in Perth, Western Australia'
     form(id='locationForm')
         .form-group
             .row
@@ -22,45 +38,54 @@ block content
                             | Use 
                             a(href='javascript: geoloc();', class='geoloc' style='color: #999;')#get_location
                                 | my current location
-                    .spacer-sm
-                    .spacer-sm
                 .col-md-2.col-xs-6.text-right
+                  a(href='#',data-toggle='modal',data-target='#shortTermModal')
                     button(type='button').btn.btn-lg.btn-primary#shortBtn
                         | Right now
                 .col-md-2.col-xs-6.text-left
+                  a(href='#',data-toggle='modal',data-target='#longTermModal')
                     button(type='button').btn.btn-lg.btn-secondary#longBtn
                         | Long term
-    .spacer-lg
+    .spacer-md
+    .row
+        .col-xs-12
+            img.img-responsive(src='images/landing head.png', style='height: 120px;')
+    .spacer-sm
+    .row
+        .col-xs-12
+                h2.bang(style="margin:0px;")="CLOSE TO YOU."
+                h3(style="margin:0px;")="Nearest crisis accommodation services."
     .row
         each location in [crisis, transitional, long]
           if location
-            .col-lg-4.col-md-12
+            .col-md-4.col-sm-12
                 .panel.panel-default.panel-spaced
-                    .panel-heading
-                        a(href='/location/'+location.uri, style='text-decoration: none; color: inherit;')
-                            h2.panel-title= location.name
-                    .row
-                        .col-lg-12.col-sm-5
-                            a(href='location/'+location.uri)
-                              if images[[crisis, transitional, long].indexOf(location)] != null
-                                img.img-responsive.img-square(src=images[[crisis, transitional, long].indexOf(location)])
-                              else
-                                img.img-responsive.img-square(src='images/placeholder.png')
-                        .col-lg-12.col-sm-4
-                            .panel-body.text-justify
-                                | #{location.description}
-                        .col-lg-12.col-sm-3
-                            .panel-body
-                                if location.available
-                                    span.text-success
-                                        span.glyphicon.glyphicon-ok
-                                        | &nbsp;Avaliable
-                                else
-                                    span.text-danger
-                                        span.glyphicon.glyphicon-remove
-                                        | &nbsp;Not Avaliable
-                            .panel-body
-                                | Contact: #{location.phoneNumber}
-    script(src='/javascripts/search.js')
+                    a(href='location/'+location.uri)
+                      if images[[crisis, transitional, long].indexOf(location)] != null
+                        img.img-responsive.img-square.img-shadow.center-block(src=images[[crisis, transitional, long].indexOf(location)])
+                      else
+                        img.img-responsive.img-square.img-shadow.center-block(src='images/placeholder.png')
+                    p
+                    a(href='/location/'+location.uri, style='text-decoration: none; color: inherit;')
+                      .panel-title.text-center.roboto-title.black.line-spc-2= location.name
+                    .panel-body.text-justify.text-center.roboto-desc.dark-grey.line-spc-4
+                        | #{location.description}
+    .spacer-xs
+    .row
+      .col-sm-12
+            h2.bang(style="margin: 0px;")="WHO TO CALL."
+            h3(style="margin: 0px;")="Numbers to call if you need help."
+    .spacer-xs
+    .row
+        .col-xs-6
+            h3.bold='Entry Point'
+            h4.bold.sec-color='6496 0001'
+            h4.bold.sec-color='1800 124 684'
+        .col-xs-6
+            h3.bold='Crisis Care'
+            h4.bold.sec-color='9223 1111'
+            h4.bold.sec-color='1800 199 008'
+    .spacer-xs
     script(src='/javascripts/location.js')
+    script(src='/javascripts/requests.js')
     script(async='', defer='',  src='https://maps.googleapis.com/maps/api/js?key='+process.env.embed_maps_api+'&libraries=places&callback=initialize')

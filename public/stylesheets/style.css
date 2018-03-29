@@ -22,6 +22,42 @@ h1 {
 .bold {
     font-weight: bold;
 }
+/* CSS for inputs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+input[type=text], input[type=password], input[type=email], input[type=tel], input[type=date] {
+    border-radius: 3px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 7.8px 0.2px var(--black-30);
+    border: solid 2px #333333;
+}
+
+textarea {
+    border-radius: 3px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 7.8px 0.2px var(--black-30);
+    border: solid 2px #333333;
+}
+
+select {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+::placeholder {
+    color: #333333;
+    opacity: 0.75;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #333333;
+    opacity: 0.75;
+ }
+
+ ::-ms-input-placeholder { /* Microsoft Edge */
+    color: #333333;
+    opacity: 0.75;
+ }
 
 /*div[class="row"] {
     border: 1px solid blue;
@@ -32,8 +68,12 @@ div[class^="col-"] {
     background-color: rgba(255, 0, 0, 0.2);
 }*/
 
-.spacer-sm {
+.spacer-xs {
     height: 32px;
+}
+
+.spacer-sm {
+    height: 100px;
 }
 
 .spacer-md {
@@ -50,7 +90,13 @@ div[class^="col-"] {
     margin-bottom: 150px;
 }
 
-@media (max-width: 768px) {
+.page-header-sm {
+    margin-top: 112px;
+    border: none;
+    margin-bottom: 50px;
+}
+
+/* @media (max-width: 768px) {
     .nav-justified > li {
         display: table-cell;
         width: 1%;
@@ -62,7 +108,7 @@ div[class^="col-"] {
     .nav-justified > .active > a  {
         border-bottom-color: transparent !important;
     }
-  }
+  } */
 
 /*CSS for custom buttons ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 /*
@@ -88,7 +134,6 @@ div[class^="col-"] {
 .btn-secondary {
     width: 153px;
     height: 42px;
-    mix-blend-mode: undefined;
     border-radius: 3px;
     background-color: #ffffff;
     border: solid 2px #cc0066;
@@ -98,15 +143,15 @@ div[class^="col-"] {
     color: #cc0066;
 }
 
-.btn-primary:hover {
-    background-color: #862d86;
-    border-color: #862d86;
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #ff3399 !important;
+    border-color: #ff3399 !important;
 }
 
-.btn-secondary:hover {
-    background-color: #ffffff;
-    border: 2px solid #862d86;
-    color:#862d86;
+.btn-secondary:hover, .btn-secondary:focus {
+    background-color: white;
+    border: 2px solid #ff3399 !important;
+    color:#ff3399 !important;
 }
 
 .btn-sm {
@@ -120,12 +165,21 @@ div[class^="col-"] {
 .btn-more-info {
     margin-left: 163px;
 }
+
 /* CSS for modals ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.modal-content {
+    border-radius: 3px;
+}
 
 .modal-body .row {
   padding-bottom: 16px;
 }
 
+.modal-header {
+    border: none !important;
+    border-radius: 3px !important;
+}
 /*CSS for places autocomplete ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .pac-icon {
   width: 0;
@@ -139,9 +193,6 @@ div[class^="col-"] {
 /*.pac-container{
   border-radius: 8px;
 }*/
-
-/*CSS for Service Creation ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-#serveDesc, #serveAbout, #serveRules { resize: none; }
 
 /*CSS for user map ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 #userloc {
@@ -241,7 +292,12 @@ div[class^="col-"] {
     color: white; /*Change active text color here*/
 }
 
-.navbar-default {
+.nav-container{
+    border-width:0;
+    box-shadow:none;
+    background-color: white;
+}
+.navbar {
     background-color: white;
     border: 0;
 }
@@ -253,35 +309,56 @@ div[class^="col-"] {
 
 /*CSS for custom panels ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+ @media (max-width:420px) {
+  .panel-spaced {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
 .panel.panel-spaced {
     margin: 60px;
 }
 
-.panel-primary > .panel-heading {
-    background-color: #cc66cc;
-    border-color: #cc66cc;
+/*.panel-primary > .panel-heading {
+    background-color: white;
+    border-color: none;
 }
 
 .panel-primary {
-    border-color: #cc66cc;
-}
+    border-color: white;
+} */
 
 .panel {
     border-radius: 0px;
-    margin-bottom: 120px;
+    border: none;
     box-shadow: none;
+}
+
+.panel.shadow {
+    box-shadow: 0px 1px 6.9px 0.1px rgba(0, 0, 0, 0.16);
+}
+
+.panel-body {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.panel-default > .panel-heading {
+    border: none;
+    background-color: white;
 }
 
 .panel-body.scroll {
     overflow-y: scroll;
-    height: 550px;
+    max-height: 500px;
 }
 
 .panel-default {
     border: none;
 }
 
-.panel-title {
+.panel-important {
     font-weight: bold;
     font-size: 25.5px;
     font-family: Roboto;
@@ -339,6 +416,41 @@ footer {
 
 /*Styles for services ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+.service-tabs.nav {
+    border: none;
+    border-color: white;
+
+}
+
+.service-tabs.nav > li {
+    /* padding-left: 1px;
+    padding-right: 1px; */
+    box-shadow: 0px 1px 6.9px 0.1px rgba(0, 0, 0, 0.16);
+    border: none;
+    border-radius: 0px;
+    border-color: white;
+
+}
+
+.service-tabs.nav > li > a {
+    background-color: #c4c4c4;
+    text-transform: uppercase;
+    color: #676767;
+    border: none !important;
+    border-radius: 0px;
+    font-size: 24px;
+}
+
+.service-tabs.nav > li.active > a, .service-tabs.nav > li > a:focus,
+.service-tabs.nav > li > a:hover{
+    background-color: #ffffff;
+    border: none;
+}
+
+.tab-content.service-tab-content {
+    box-shadow: 0px 1px 6.9px 0.1px rgba(0, 0, 0, 0.16);
+}
+
 #serviceno {
     margin-left: 16px;
 }
@@ -353,6 +465,13 @@ footer {
   position:relative;
   overflow:hidden;
   padding-bottom:100%;
+}
+
+.img-shadow {
+  min-width: 222px;
+  min-height: 160px;
+  box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3);
+  margin-bottom: 1.15em;
 }
 
 .highlight {
@@ -458,30 +577,137 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-/*Helper css classes ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-.pb-1 {
-    padding-bottom: 10px;
+/*CSS for text styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.bangers-heading {
+  font-family: 'Bangers', sans-serif;
+  font-size: 42px;
+  text-align: left;
 }
 
-.pb-2 {
-    padding-bottom: 20px;
+.roboto-heading {
+  font-family: 'Roboto', sans-serif;
+  font-size: 30px;
+  font-weight: 900;
+  text-align: left;
 }
 
-.mr-1 {
-    margin-right: 10px;
+.phone-num {
+  letter-spacing: 1.5px;
 }
 
-/*Custom text styles ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-.available-bed {
-    font-size: 25.5px;
-    font-weight: bold;
-    font-style: italic;
-    color: #cc0066;
+.roboto-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24.7px;
+  font-weight: 900;
+  text-align: left;
 }
 
-.locations-text {
-    font-weight: 500;
-    font-family: Roboto;
-    font-size: 17.9px;
-    color: #333333;
+.roboto-desc {
+  font-family: 'Roboto', sans-serif;
+  font-size: 17.9px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.roboto-sub-heading {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+}
+
+.black {
+  color: #000000;
+}
+
+.dark-grey {
+  color: #333333;
+}
+
+.deep-pink {
+  color: #cc0066;
+}
+
+.line-spc-1 {
+  line-height: .55em;
+}
+
+.line-spc-2 {
+  line-height: .85em;
+}
+
+.line-spc-3 {
+  line-height: .95em;
+}
+
+.line-spc-4 {
+  line-height: 1.2em;
+}
+
+.line-spc-5 {
+  line-height: 1.95em;
+}
+/*CSS for images ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+.img-shadow {
+  min-width: 222px;
+  min-height: 160px;
+  box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3);
+  margin-bottom: 1.15em;
+}
+
+/*Accordion ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+/* Style the buttons that are used to open and close the accordion panel */
+
+.accordion {
+    background-color: inherit;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid grey;
+    outline: none;
+    transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.accordian.active, .accordion:hover {
+    background-color: #ccc;
+}
+
+.accordion:after {
+    content: '\02795'; /* Unicode character for "plus" sign (+) */
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
+}
+
+.accordion.active:after {
+    content: "\2796"; /* Unicode character for "minus" sign (-) */
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.accordion + .panel {
+    display: none;
+    overflow: hidden;
+}
+
+/* Carousel styling ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+.carousel-indicators > li, .carousel-indicators > li.active {
+  background-color: #333;
+}
+
+.carousel-control {
+  background-image: none !important;
+  background: rgba(0, 0, 0, 0.5);
+  width: 10%;
 }

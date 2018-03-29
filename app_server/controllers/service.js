@@ -1,7 +1,125 @@
 const mongoose = require('mongoose');
+const googleMapsClient = require('@google/maps').createClient({
+  key: process.env.embed_maps_api,
+  Promise: Promise, // 'Promise' is the native constructor.
+})
 const images = require('../middleware/images');
 
 const Service = mongoose.model('Service');
+const Request = mongoose.model('Request');
+const User = mongoose.model('User');
+
+function amenities(service) {
+  let amen = [];
+
+  if (service.TV === 'on') {
+    amen.push({
+      label: 'TV',
+      name: 'TV',
+      icon: 'tv',
+    });
+  }
+  if (service.WASHER === 'on') {
+    amen.push({
+      label: 'LAUNDRY/WASHER',
+      name: 'WASHER',
+      icon: 'local_laundry_service',
+    });
+  }
+  if (service.WIFI === 'on') {
+    amen.push({
+      label: 'WIFI',
+      name: 'WIFI',
+      icon: 'wifi',
+    });
+  }
+  if (service.BATH === 'on') { //////////////////////////////////////////////////////////////////
+    amen.push({
+      label: 'BATHROOM',
+      name: 'BATH',
+      icon: 'wc',
+    });
+  }
+  if (service.SMOKE === 'on') {
+    amen.push({
+      label: 'SMOKING',
+      name: 'SMOKE',
+      icon: 'smoking_rooms',
+    });
+  } else {
+    amen.push({
+      label: 'NO SMOKING',
+      name: 'SMOKE',
+      icon: 'smoke_free',
+    });
+  }
+  if (service.AIRCON === 'on') {
+    amen.push({
+      label: 'AIR-CONDITIONING',
+      name: 'AIRCON',
+      icon: 'ac_unit',
+    });
+  }
+  if (service.GAMES === 'on') {
+    amen.push({
+      label: 'GAMES/CONSOLE',
+      name: 'GAMES',
+      icon: 'videogame_asset',
+    });
+  }
+  if (service.GYM === 'on') {
+    amen.push({
+      label: 'GYM',
+      name: 'GYM',
+      icon: 'fitness_center',
+    });
+  }
+  if (service.STUDY === 'on') {
+    amen.push({
+      label: 'STUDY',
+      name: 'STUDY',
+      icon: 'local_library',
+    });
+  }
+  if (service.KITCHEN === 'on') {
+    amen.push({
+      label: 'KITCHEN',
+      name: 'KITCHEN',
+      icon: 'local_dining',
+    });
+  }
+  if (service.PHONE === 'on') {
+    amen.push({
+      label: 'PHONE',
+      name: 'PHONE',
+      icon: 'phone',
+    });
+  }
+  if (service.CURFEW === 'on') {
+    amen.push({
+      label: 'CURFEW',
+      name: 'CURFEW',
+      icon: 'schedule',
+    });
+  }
+  if (service.SECURE === 'on') {
+    amen.push({
+      label: 'SECURE',
+      name: 'SECURE',
+      icon: 'lock',
+    });
+  }
+  if (service.OUTDOOR === 'on') {
+    amen.push({
+      label: 'OUTDOOR/GARDEN',
+      name: 'OUTDOOR',
+      icon: 'local_florist',
+    });
+  }
+  console.log(amen);
+  return amen;
+//   ['BATHROOM', '', 'wc']; ///////////////////////////////////////////
+}
 
 /**
  * Renders the service page.
@@ -17,8 +135,9 @@ module.exports.service = (req, res) => {
  * Redirects to the service provider's page.
  * @param {Object} req Express request object.
  * @param {Object} res Express response object.
+ * @param  {Function} next Express next function.
  */
-module.exports.addService = (req, res) => {
+module.exports.addService = (req, res, next) => {
   if (!req.user) {
     res.status(401).json({ message: 'You must be logged in to create a new service provider.' });
     return;
@@ -26,43 +145,79 @@ module.exports.addService = (req, res) => {
 
   const service = new Service();
 
-  service.name = req.body.name;
-  service.phoneNumber = req.body.number;
-  service.serviceType = req.body.serviceType;
-  service.stayLength = req.body.stayLength;
-  service.available = req.body.available;
-  service.website = req.body.website;
-  service.uri = req.body.uri;
-  service.description = req.body.description;
-  service.address = {
-    suburb: req.body.suburb,
-    postcode: req.body.postcode,
-    state: req.body.state,
-    coordinates: {
-      coordinates: [req.body.long, req.body.lat],
-    },
-  };
-  service.ageRange = {
-    minAge: req.body.minAge,
-    maxAge: req.body.maxAge,
-  };
+  // Geocode an address with a promise
+  googleMapsClient.geocode({address: req.body.serveSuburb.concat(', ').concat(req.body.serveState).concat(', ').concat(req.body.serveState)}).asPromise()
+    .then((response) => {
 
-  service.save((err) => {
-    if (err) {
-      res.status(500).json({ message: err });
-    } else {
-      res.redirect('/location/'.concat(req.body.uri));
-    }
-  });
+      const temp = response.json.results[0].geometry.location;
+
+      service.name = req.body.serveName;
+      service.phoneNumber = req.body.servePhone;
+      service.serviceType = req.body.serveType;
+      service.address = {
+        suburb: req.body.serveSuburb,
+        state: req.body.serveState,
+        postcode: req.body.servePostcode,
+        coordinates: {
+          type: 'Point',
+          coordinates: [temp.lng, temp.lat],
+        },
+      };
+
+      service.ageRange = {
+        minAge: req.body.serveMinAge,
+        maxAge: req.body.serveMaxAge,
+      };
+
+      service.stayLength = req.body.serveStayLength;
+      service.available = true;
+      // service.website = req.body.website;
+      service.uri = service.encodeURI(req.body.serveName);
+      service.description = req.body.serveDesc;
+      service.about = req.body.serveAbout;
+      service.houseRules = req.body.serveRules;
+      service.amenities = amenities(req.body);
+
+      console.log(service.amenities);
+
+      service.save().then((newService) => {
+        const newUser = new User();
+
+        newUser.name = req.body.serveName;
+        newUser.email = req.body.serveEmail;
+        newUser.dob = new Date();
+        newUser.gender = 'Other';
+        newUser.role = 'service_provider';
+        newUser.service = newService.id;
+        newUser.setPassword(req.body.servePass);
+
+        newUser.save().then(() => {
+          res.redirect('/location/'.concat(newService.uri));
+        }).catch((err) => {
+          next(err);
+        });
+      }).catch((err) => {
+        next(err);
+      });
+    })
+    .catch((err) => {
+      next(err);
+    });
 };
 
-function countAvailableBeds(beds) {
-  let count = 0;
-  for (let i = 0; i < beds.length; i += 1) {
-    if (!beds[i].isOccupied) count += 1;
-  }
-  return count;
-}
+// function getAge(date) {
+//   const today = Date.now();
+//   const age = new Date(today - date.getTime());
+//   return Math.abs(age.getUTCFullYear() - 1970);
+// }
+
+// function returnAges(requests) {
+//   const newRequests = requests;
+//   for (let i = 0; i < requests.length; i += 1) {
+//     newRequests[i].youth.dob = getAge(new Date(requests[i].youth.dob));
+//   }
+//   return newRequests;
+// }
 
 /**
  * Renders a service provider's dashboard.
@@ -70,34 +225,103 @@ function countAvailableBeds(beds) {
  * @param  {Object} res Express response object.
  */
 module.exports.dashboard = (req, res) => {
-  // console.log("hey");
-  // if (!req.user || req.user.role !== 'service_provider') {
-  //   res.status(401).json({ message: 'You are not authorised to view this page. Please log in with your service provider account.' });
-  //   return;
-  // }
-  //
-  // Service.findById(
-  //   req.user.service[0],
-  //   'name address.suburb beds tags openRequests'
-  // ).exec()
-  //   .then((service) => {
-  //     res.render('serviceDashboard', {
-  //       service: service,
-  //       numAvailableBeds: countAvailableBeds(service.beds),
-  //
-  //     });
-  //   })
-  //   .catch((err) => { res.status(401).json({ message: err }); });
+  if (!req.user || req.user.role !== 'service_provider') {
+    res.status(401).json({ message: 'You are not authorised to view this page.' });
+    return;
+  }
+  Service.findById(
+    req.user.service[0],
+    'name address.suburb address.state address.postcode phoneNumber serviceType ageRange.minAge ageRange.maxAge stayLength available description about houseRules amenities.name beds openRequests uri',
+  ).exec()
+    .then((service) => {
+      console.log(service.openRequests);
+      Request.find({
+        _id: service.openRequests,
+      }, 'firstName lastName gender phoneNumber email dob').exec()
+        .then((requests) => {
+          console.log(requests);
+          res.render('serviceDashboard', {
+            service,
+            requests,
+          });
+        })
+        .catch((err) => {
+          res.status(401).json({ message: err });
+        });
+    });
+};
 
-  res.render('serviceDashboard', {
-    service: {
-      name: 'Youngle Group',
-      address: {
-        suburb: 'Cannington',
+module.exports.getBeds = (req, res) => {
+  const prevPage = req.header('Referer') || '/';
+  if (!req.user) {
+    res.redirect(prevPage);
+  }
+  if (req.user.role !== 'service_provider') {
+    res.redirect(prevPage);
+  }
+  if (req.user.service) {
+    Service.findById(req.user.service[0], 'beds').exec()
+      .then((service) => {
+        res.send(service.beds);
+      }).catch((err) => {
+        console.log(err);
+        res.redirect(prevPage);
+      });
+  } else {
+    res.redirect(prevPage);
+  }
+};
+
+module.exports.updateBeds = (req, res) => {
+  const prevPage = req.header('Referer') || '/';
+  console.log(req.body.beds);
+
+  if (!req.body.beds) {
+    console.log('no beds');
+    res.redirect(prevPage);
+  }
+  const { beds } = req.body;
+
+  Service.findOne({ uri: req.params.serviceUri }, 'beds')
+    .exec()
+    .then((service) => {
+      const oldBeds = service.beds;
+      let index;
+      if (oldBeds.length <= beds.length) {
+        index = oldBeds.length;
+      } else {
+        index = beds.length;
       }
-    },
-    numAvailableBeds: 10
-  });
+      for (let i = 0; i < index; i += 1) {
+        if (beds[i].name === undefined) {
+          beds[i].name = oldBeds[i].name;
+        }
+        if (beds[i].gender === undefined) {
+          beds[i].gender = oldBeds[i].gender;
+        }
+        if (beds[i].bedType === undefined) {
+          beds[i].bedType = oldBeds[i].bedType;
+        }
+        if (beds[i].isOccupied === undefined) {
+          beds[i].isOccupied = oldBeds[i].isOccupied;
+        }
+      }
+    }).then(() => {
+      Service.findOneAndUpdate(
+        { uri: req.params.serviceUri },
+        {
+          $set: {
+            beds,
+          },
+        },
+        { runValidators: true },
+      ).exec().then(() => {
+        res.redirect('/service/dashboard/'.concat(req.params.serviceUri));
+      }).catch((err) => {
+        console.log(err);
+        res.redirect(prevPage);
+      });
+    });
 };
 
 /**

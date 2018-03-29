@@ -1,0 +1,15 @@
+.modal.fade(id="editBedModal",role="dialog")
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        button(type="button",data-dismiss="modal").close &times;
+        h4.modal-title OUR BEDS
+      .modal-body
+        form(action='/service/beds/update/'+service.uri, method='post')#bedForm
+          .form-group
+            a(href='#')#addBed
+              i.material-icons.btn-other add_circle_outline
+          .form-group#bedList
+          a(href='#')#removeBed
+            i.material-icons.btn-other remove_circle_outline
+          input.pull-right(type="submit", value="Send").btn.btn-default

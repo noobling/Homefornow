@@ -21,16 +21,18 @@ function sendJSONresponse(res, status, content) {
 module.exports.login = (req, res, next) => {
   const prevPage = req.header('Referer') || '/';
   passport.authenticate('local', (err, user) => {
-    if (err) { return next(err); }
+    if (err) {
+      next(err);
+    }
     if (!user) {
-      return res.redirect(prevPage);
+      res.redirect(prevPage);
     }
     req.logIn(user, (err2) => {
-      if (err2) { return next(err); }
+      if (err2) { next(err); }
       if (req.body.lengthOfStay) {
-        return res.redirect(307, '/locations/'.concat(req.body.lengthOfStay)); // show vacancies
+        res.redirect(307, '/locations/'.concat(req.body.lengthOfStay)); // show vacancies
       }
-      return res.redirect(prevPage);
+      res.redirect('/admin');
     });
   })(req, res, next);
 };
@@ -57,9 +59,9 @@ module.exports.register = (req, res, next) => {
     return;
   }
 
-  // Default req.body.role to 'youth'
+  // Default req.body.role to 'service_provider'
   if (!req.body.role) {
-    req.body.role = 'youth';
+    req.body.role = 'service_provider';
   }
 
   // Check for a valid role

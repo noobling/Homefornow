@@ -73,33 +73,33 @@ function geoloc()
     navigator.geolocation.getCurrentPosition(success, error);
 }
 
-/**
- * Create and submit a form with the searched lat, long and length of stay.
- * @param  {Object} coords       JSON object containing lat and long coordinates of searched location.
- * @param  {String} lengthOfStay If the user is searching for 'short_term' or 'long_term' accommodation.
- */
-function signedInSearch(coords, lengthOfStay)
-{
-  const form = document.createElement('form');
-  const lat = document.createElement('input');
-  const long = document.createElement('input');
-
-  lat.name = 'lat';
-  long.name = 'long';
-
-  lat.value = coords.lat;
-  long.value = coords.long;
-
-  form.appendChild(lat);
-  form.appendChild(long);
-
-  form.method = 'POST';
-  form.action = '/locations/' + lengthOfStay;
-
-  document.body.appendChild(form);
-
-  form.submit();
-}
+// /**
+//  * Create and submit a form with the searched lat, long and length of stay.
+//  * @param  {Object} coords       JSON object containing lat and long coordinates of searched location.
+//  * @param  {String} lengthOfStay If the user is searching for 'short_term' or 'long_term' accommodation.
+//  */
+// function signedInSearch(coords, lengthOfStay)
+// {
+//   const form = document.createElement('form');
+//   const lat = document.createElement('input');
+//   const long = document.createElement('input');
+//
+//   lat.name = 'lat';
+//   long.name = 'long';
+//
+//   lat.value = coords.lat;
+//   long.value = coords.long;
+//
+//   form.appendChild(lat);
+//   form.appendChild(long);
+//
+//   form.method = 'POST';
+//   form.action = '/locations/' + lengthOfStay;
+//
+//   document.body.appendChild(form);
+//
+//   form.submit();
+// }
 
 /**
  * Append lat, long and length of stay to the login and register forms,
@@ -109,18 +109,25 @@ function signedInSearch(coords, lengthOfStay)
  */
 function unsignedInSearch(coords, lengthOfStay)
 {
-  const loginForm = document.getElementById('loginForm');
-  const regForm = document.getElementById('registerForm');
+  if (lengthOfStay == 'long_term') {
+    const longTerm = document.getElementById('Long Term.');
 
-  loginForm.elements['lat'].value = coords.lat;
-  loginForm.elements['long'].value = coords.long;
-  loginForm.elements['lengthOfStay'].value = lengthOfStay;
 
-  regForm.elements['lat'].value = coords.lat;
-  regForm.elements['long'].value = coords.long;
-  regForm.elements['lengthOfStay'].value = lengthOfStay;
+    document.getElementById('latitude Long Term.').value = coords.lat;
+    document.getElementById('longitude Long Term.').value = coords.long;
+    document.getElementById('los Long Term.').value = lengthOfStay;
 
-  $('#regloginmodal').modal('show');
+    $(longTerm).modal('show');
+  } else if (lengthOfStay == 'short_term') {
+    const shortTerm = document.getElementById('Right Now.');
+
+    document.getElementById('latitude Right Now.').value = coords.lat;
+    document.getElementById('longitude Right Now.').value = coords.long;
+    document.getElementById('los Right Now.').value = lengthOfStay;
+
+    $(shortTerm).modal('show');
+  }
+
 }
 
 /**
@@ -131,7 +138,7 @@ function unsignedInSearch(coords, lengthOfStay)
  */
 function search(autocomplete, isLongTerm) // Fills form with lat and long from the Google Maps API
 {
-  const user = document.getElementById('userId');
+  // const user = document.getElementById('userId');
   const lengthOfStay = isLongTerm ? 'long_term' : 'short_term';
 
   const address = document.getElementById('location').value;
@@ -151,11 +158,11 @@ function search(autocomplete, isLongTerm) // Fills form with lat and long from t
         lat: results[0].geometry.location.lat(),
         long: results[0].geometry.location.lng()
       }
-      if(user) {
-        signedInSearch(coords, lengthOfStay);
-      } else {
-        unsignedInSearch(coords, lengthOfStay);
-      }
+      // if(user) {
+        // signedInSearch(coords, lengthOfStay);
+      // } else {
+      unsignedInSearch(coords, lengthOfStay);
+      // }
     } else {
       console.log('Geocode was not successful for the following reason: ' + status);
       return;

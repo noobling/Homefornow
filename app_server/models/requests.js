@@ -5,14 +5,45 @@ const mongoose = require('mongoose');
  * @type {mongoose.Schema}
  */
 const requestSchema = new mongoose.Schema({
-  // Youth person that made the request
-  youth: {
-    type: mongoose.Schema.Types.ObjectId,
+  // Youth's first name
+  firstName: {
+    type: String,
     required: true,
   },
-  // Service provider where the youth person is requesting accommodation
-  service: {
-    type: mongoose.Schema.Types.ObjectId,
+  // Youth's last name
+  lastName: {
+    type: String,
+    required: true,
+  },
+  // Gender
+  gender: {
+    type: String,
+    required: true,
+    enum: ['Male', 'Female', 'Other'],
+  },
+  // Age
+  dob: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+  // Phone Number
+  phoneNumber: {
+    type: String,
+    required: false,
+  },
+  email: {
+    type: String,
+    required: false,
+  },
+  // Does the youth have a disability
+  hasDisability: {
+    type: Boolean,
+    required: false,
+  },
+  // Child
+  hasChild: {
+    type: Boolean,
     required: true,
   },
   // True if requesting long term service, false otherwise
@@ -33,12 +64,12 @@ const requestSchema = new mongoose.Schema({
     required: false,
   },
   // The status of the request
-  status: {
-    type: String,
-    required: true,
-    enum: ['Unseen', 'Seen', 'Accepted', 'Rejected'],
-    default: 'Unseen',
-  }
+  // status: {
+  //   type: String,
+  //   required: true,
+  //   enum: ['Unseen', 'Seen', 'Accepted', 'Rejected'],
+  //   default: 'Unseen',
+  // },
 });
 
 mongoose.model('Request', requestSchema);

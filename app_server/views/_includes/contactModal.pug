@@ -3,27 +3,7 @@ mixin contactModal(serviceName, serviceId, available, phoneNumber, uri)
         .modal-dialog.modal-sm
             .modal-content
                 .modal-header
-                    button(type='button',data-dismiss='modal').close &times;
-                    img.img.img-responsive.img-squared(src='https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png')
-                .modal-body
-                    .text-center
-                        h4=phoneNumber
-                        h5= serviceName.replace(/\s/g,'').toLowerCase() + '.com'
-                        a(href='#')
-                            button.btn.btn-default Call Us
-                        if available
-                          a(data-toggle="modal", href="#numbermodal"+uri)
-                              button(type="button", data-dismiss="modal").btn.btn-default Call You
-
-    .modal.fade(id="numbermodal"+uri,role="dialog")
-        .modal-dialog.modal-sm
-            .modal-content
-                .modal-header
                     button(type='button', data-dismiss='modal').close &times;
-                    span.pull-left
-                        a(data-toggle="modal", href="#contactmodal"+uri)
-                            button(type="button", data-dismiss="modal").close
-                                span.glyphicon.glyphicon-arrow-left
                         //- a(data-toggle='modal', href='#numbermodal')
                         //-     button(type='button', data-dismiss='modal').btn.btn-default Calls us
                     img.img.img-responsive.img-squared(src='https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png')
@@ -31,18 +11,18 @@ mixin contactModal(serviceName, serviceId, available, phoneNumber, uri)
                     form
                         .form-group
                             label(for="number") Phone Number
-                            input.form-control(type="text", name="number")
+                            input.form-control(type="tel", name="number", minlength='10')
                         .text-center
                             label - and/or - 
                         .form-group
                             label(for="email") Email
-                            input.form-control(type="text", name="email")
+                            input.form-control(type="email", name="email")
                         .form-group
                             input(type="hidden", name="serviceId", value=serviceId)
                         .form-group
                             .text-right                                
                                 a(data-toggle="modal", href="#waitmodal"+uri)
-                                    button(data-dismiss="modal", onclick='return submitPhoneNumber(this.parentNode.parentNode.parentNode.parentNode)').btn.btn-default Submit
+                                    button(data-dismiss="modal", onclick='return submitPhoneNumber(this.parentNode.parentNode.parentNode.parentNode)').btn.btn-primary Submit
     .modal.fade(id="waitmodal"+uri,role="dialog")
         .modal-dialog.modal-sm
             .modal-content

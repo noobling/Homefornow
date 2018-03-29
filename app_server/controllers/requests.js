@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Request = mongoose.model('Request');
 const Service = mongoose.model('Service');
-const User = mongoose.model('User');
+// const User = mongoose.model('User');
 
 /**
  * Prints an error to the console and sends a json repsonse
@@ -18,42 +18,69 @@ function errorHandler(res, err, status) {
   }
 }
 
-/**
- * Saves a youth person's request (mongo document) to the database.
- * The requestId is appended to the service provider's open requests and
- * the user's collection of requests.
- * @param {Object} req Express request object.
- * @param {Object} res Express response object.
- */
-module.exports.openRequest = (req, res) => {
+module.exports.addRequest = (req, res) => {
   const request = new Request();
 
-  request.youth = req.user.id;
-  request.service = req.body.serviceId;
+  request.firstName = req.body.fName;
+  request.lastName = req.body.lName;
+  request.gender = req.body.gender;
+  request.dob = req.body.dob;
+  request.hasChild = req.body.child === 'yes';
   request.isLongTerm = req.params.lengthOfStay === 'long_term';
 
-  let requestId;
+  request.save((err, doc) => {
+    if (err) {
+      res.status(500).json({ message: err });
+    } else {
+      req.session.requestId = doc.id;
+      req.session.coordinates = [req.body.long, req.body.lat];
+      res.redirect(307, '/locations/'.concat(req.params.lengthOfStay));
+    }
+  });
+};
 
-  request.save() // Save the request
-    .then((savedReq) => {
-      requestId = savedReq.id;
-      // Append request to user's array of requests
-      return User.findOneAndUpdate(
-        { _id: req.user.id },
-        { $push: { requests: requestId } },
-        { runValidators: true, new: true },
-      );
-    })
-    .then(() => {
-      // Append request to service's open requests
-      return Service.findOneAndUpdate(
-        { _id: req.body.serviceId },
-        { $push: { openRequests: requestId } },
-        { runValidators: true, new: true },
-      );
-    })
-    .then(() => { res.status(201).end(); })
-    .catch((err) => { errorHandler(res, err, 500); });
+module.exports.addPhoneToRequest = (req, res) => {
+  console.log('yee');
+  if (req.session.requestId) {
+    console.log('yeet');
+    // Add phone number to request
+    Request.findOneAndUpdate(
+      { _id: req.session.requestId },
+      {
+        $set:
+        {
+          phoneNumber: req.body.number,
+          email: req.body.email,
+        },
+      },
+      { runValidators: true, new: true },
+      (err) => {
+        if (err) {
+          console.log('[ERROR] RequestsController: '.concat(err));
+          res.status(500).json({ message: 'Could not add phone number to request.' });
+        }
+      },
+    );
+    // Add request to service
+    Service.findOneAndUpdate(
+      { _id: req.body.serviceId },
+      { $push: { openRequests: req.session.requestId } },
+      { runValidators: true, new: true },
+      (err) => {
+        if (err) {
+          console.log('[ERROR] RequestsController: '.concat(err));
+          res.status(500).json({ message: 'Could not submit request to service provider.' });
+        }
+      },
+    );
+  } else {
+    // TODO: Handle this case
+    //    Tell the user to submit a new request?
+    //    Use a 'token' system where the youth are provided a token to
+    //    access the results of their request
+    res.status(400).json({ message: 'Your session has expired. Please submit a new request.' });
+  }
+  res.status(201).end();
 };
 
 /**
