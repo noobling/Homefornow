@@ -272,6 +272,9 @@ $('a[href="#serviceProfile"]').on('click', function() {
       insertPhotos($('#uri').text(), data.data.logo, data.data.images)
     );
     setImageListeners();
+    $('#loadingPhotoUploadRow').fadeOut(400, function() {
+      $('#photoUploadRow').slideDown(1000);
+    });
   });
 });
 
@@ -400,7 +403,6 @@ function insertImage(uri, images) {
 
     for (let index = 0; index < 6; index += 1) {
       if (index < images.length) {
-        alert(images[index]);
         result += insertImageThumbnail(images[index], index, false);
       }
       else {
