@@ -8,8 +8,11 @@ const serviceController = require('../controllers/service');
 // Services Dashboard route
 router.get('/dashboard/:serviceUri', serviceController.dashboard);
 
-router.get('/dashboard/:serviceUri/beds', serviceController.dashboardBeds);
-router.get('/dashboard/:serviceUri/requests', serviceController.dashboardRequests);
+router.get('/dashboard/:serviceUri/beds/show', serviceController.dashboardBeds);
+router.post('/dashboard/:serviceUri/beds/update', serviceController.updateBeds);
+
+router.get('/dashboard/:serviceUri/requests/show', serviceController.dashboardRequests);
+router.post('/dashboard/:serviceUri/requests/update', serviceController.updateRequests);
 
 router.get('/dashboard/:serviceUri/profile', serviceController.dashboardProfile);
 router.get('/dashboard/:serviceUri/images', serviceController.dashboardImages);
@@ -17,11 +20,8 @@ router.get('/dashboard/:serviceUri/available', serviceController.dashboardAvaila
 
 
 // Services Profile Page route
+// TODO remove
 router.get('/profile/:serviceUri', serviceController.profile);
-
-router.get('/beds', serviceController.getBeds);
-
-router.post('/beds/update/:serviceUri', serviceController.updateBeds);
 
 // Upload new image to service
 router.post(

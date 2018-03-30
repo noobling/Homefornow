@@ -4,7 +4,7 @@ $('#editBedModal').on('show.bs.modal', function() {
   $('#spinnerAddBeds').show();
   $('#bedList').hide();
   $.ajax({
-    url: '/service/dashboard/' + $('#uri').text() + '/beds',
+    url: '/service/dashboard/' + $('#uri').text() + '/beds/show',
     method: 'GET',
     success: function(data) {
       for (bed of data.service.beds) {
@@ -51,8 +51,8 @@ $('#bedForm').submit(function( event ) {
     type: request_method,
     data : form_data,
   }).done(function(response) {
-    spinner.hide(100);
-    submit_button.show(100);
+    spinner.hide();
+    submit_button.show();
     $('#editBedModal').modal('hide');
     updateBeds();
     return;
@@ -86,28 +86,7 @@ const BedPanel = ({ index, name }) => `
   </div>
 `;
 
-$('#updateBeds').submit(function(event) {
-  event.preventDefault();
-  const submit_button = $(this).find(':submit');
-  const spinner = $(this).find('#spinnerUpdateBeds');
 
-  submit_button.hide();
-  spinner.show();
-
-  const post_url = $(this).attr("action"); //get form action url
-  const request_method = $(this).attr("method"); //get form GET/POST method
-  const form_data = $(this).serialize(); //Encode form elements for submission
-
-  $.ajax({
-    url : post_url,
-    type: request_method,
-    data : form_data,
-  }).done(function(response) {
-    spinner.hide();
-    submit_button.show();
-    return;
-  });
-});
 
 /**
  *  TODO: COMMENT
@@ -131,7 +110,7 @@ function updateBeds() {
   $('#updateBeds > .form-group').html('');
   $('#updateBeds > .form-group').hide();
   $('#spinnerLoadBeds').show();
-  $.get('/service/dashboard/' + $('#uri').text() + '/beds', function(data) {
+  $.get('/service/dashboard/' + $('#uri').text() + '/beds/show', function(data) {
     let index = 0;
     for (bed of data.service.beds) {
       $('#updateBeds > .form-group').append(UpdatePanel({
@@ -148,24 +127,74 @@ function updateBeds() {
   });
 }
 
+$('#updateBeds').submit(function(event) {
+  event.preventDefault();
+  const submit_button = $(this).find(':submit');
+  const spinner = $(this).find('#spinnerUpdateBeds');
+
+  submit_button.hide();
+  spinner.show();
+
+  const post_url = $(this).attr("action"); //get form action url
+  const request_method = $(this).attr("method"); //get form GET/POST method
+  const form_data = $(this).serialize(); //Encode form elements for submission
+
+  $.ajax({
+    url : post_url,
+    type: request_method,
+    data : form_data,
+  }).done(function(response) {
+    spinner.hide();
+    submit_button.show();
+    return;
+  });
+});
+
 function updateRequests() {
-  $('#requestList').html('');
-  $('#requestList').hide();
+  $('#updateRequests > .form-group').html('');
+  $('#updateRequests > .form-group').hide();
   $('#spinnerLoadRequests').show();
-  $.get('/service/dashboard/' + $('#uri').text() + '/requests', function(data) {
+  $.get('/service/dashboard/' + $('#uri').text() + '/requests/show', function(data) {
+    let index = 0;
     for (request of data.requests) {
-      $('#requestList').append(RequestPanel({
-        index: 0,
+      $('#updateRequests > .form-group').append(RequestPanel({
+        index,
         name: request.firstName + ' ' + request.lastName,
         email: request.email,
         number: request.phoneNumber,
         age: getAge(request.dob),
+        id: request._id,
       }));
+      index++;
     }
     $('#spinnerLoadRequests').hide();
-    $('#requestList').slideDown(500);
+    $('#updateRequests > .form-group').slideDown(500);
   });
 }
+
+$('#updateRequests').submit(function(event) {
+  event.preventDefault();
+  const submit_button = $(this).find(':submit');
+  const spinner = $(this).find('#spinnerUpdateRequests');
+
+  submit_button.hide();
+  spinner.show();
+
+  const post_url = $(this).attr("action"); //get form action url
+  const request_method = $(this).attr("method"); //get form GET/POST method
+  const form_data = $(this).serialize(); //Encode form elements for submission
+
+  $.ajax({
+    url : post_url,
+    type: request_method,
+    data : form_data,
+  }).done(function(response) {
+    spinner.hide();
+    submit_button.show();
+    updateRequests();
+    return;
+  });
+});
 
 function getAge(date) {
   const today = Date.now();
@@ -200,7 +229,7 @@ const UpdatePanel = ({ index, name }) => `
   </div>
 `;
 
-const RequestPanel = ({ index, name, email, number, age }) => `
+const RequestPanel = ({ index, name, email, number, age, id }) => `
   <div class="panel shadow">
     <div class="panel-body">
       <div class="row text-center">
@@ -218,7 +247,7 @@ const RequestPanel = ({ index, name, email, number, age }) => `
           <h6>${age}</h6>
         </div>
         <div class="col-xs-2">
-          <input type="checkbox"/>
+          <input type="checkbox" name='requests[${index}]' value='${id}' />
         </div>
       </div>
     </div>
@@ -264,10 +293,10 @@ $('a[href="#serviceProfile"]').on('click', function() {
     $('#addServiceForm').slideDown(1000);
   });
   $.get('/service/dashboard/' + $('#uri').text() + '/images', function(data) {
-    console.log(data);
-    console.log(data.data.images);
-    console.log(data.data.logo);
-    console.log(insertPhotos($('#uri').text(), data.data.logo, data.data.images));
+    // console.log(data);
+    // console.log(data.data.images);
+    // console.log(data.data.logo);
+    // console.log(insertPhotos($('#uri').text(), data.data.logo, data.data.images));
     $('#photoUploadRow').append(
       insertPhotos($('#uri').text(), data.data.logo, data.data.images)
     );
@@ -276,13 +305,6 @@ $('a[href="#serviceProfile"]').on('click', function() {
       $('#photoUploadRow').slideDown(1000);
     });
   });
-});
-
-/**
- *  When the user clicks the Beds Available tab
- */
-$('a[href="#bedsAvaliable"]').on('click', function() {
-  console.log('What a meme');
 });
 
 function insertPhotos(uri, logo, images) {
@@ -420,3 +442,10 @@ function insertImage(uri, images) {
             thumbnails;
   }
 }
+
+/**
+ *  When the user clicks the Beds Available tab
+ */
+$('a[href="#bedsAvaliable"]').on('click', function() {
+  console.log('What a meme');
+});

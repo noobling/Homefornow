@@ -228,20 +228,12 @@ module.exports.dashboard = (req, res) => {
     'name uri',
   ).exec()
     .then((service) => {
-      console.log(service.openRequests);
-      Request.find({
-        _id: service.openRequests,
-      }, 'firstName lastName gender phoneNumber email dob').exec()
-        .then((requests) => {
-          console.log(requests);
-          res.render('serviceDashboard', {
-            service,
-            requests,
-          });
-        })
-        .catch((err) => {
-          res.status(401).json({ message: err });
-        });
+      res.render('serviceDashboard', {
+        service,
+      });
+    })
+    .catch((err) => {
+      res.status(401).json({ message: err });
     });
 };
 
@@ -260,7 +252,7 @@ module.exports.dashboardBeds = (req, res) => {
     'beds',
   ).exec()
     .then((service) => {
-      console.log(service);
+      // console.log(service);
       res.send({
         service,
       });
@@ -280,12 +272,15 @@ module.exports.dashboardRequests = (req, res) => {
     'openRequests',
   ).exec()
     .then((service) => {
-      console.log(service.openRequests);
-      Request.find({
-        _id: service.openRequests,
-      }, 'firstName lastName gender phoneNumber email dob').exec()
+      // console.log(service.openRequests);
+      Request.find(
+        {
+          _id: service.openRequests,
+        },
+        '_id firstName lastName gender phoneNumber email dob',
+      ).exec()
         .then((requests) => {
-          console.log(requests);
+          // console.log(requests);
           res.send({
             requests,
           });
@@ -311,7 +306,7 @@ module.exports.dashboardProfile = (req, res) => {
     'name address.suburb address.state address.postcode phoneNumber serviceType ageRange.minAge ageRange.maxAge stayLength description about houseRules amenities.name',
   ).exec()
     .then((service) => {
-      console.log(`service = ${service}`);
+      // console.log(`service = ${service}`);
       res.send({
         service,
         email: req.user.email,
@@ -354,34 +349,18 @@ module.exports.dashboardAvailable = (req, res) => {
     });
 };
 
-module.exports.getBeds = (req, res) => {
-  const prevPage = req.header('Referer') || '/';
-  if (!req.user) {
-    res.redirect(prevPage);
-  }
-  if (req.user.role !== 'service_provider') {
-    res.redirect(prevPage);
-  }
-  if (req.user.service) {
-    Service.findById(req.user.service[0], 'beds').exec()
-      .then((service) => {
-        res.send(service.beds);
-      }).catch((err) => {
-        console.log(err);
-        res.redirect(prevPage);
-      });
-  } else {
-    res.redirect(prevPage);
-  }
-};
-
 module.exports.updateBeds = (req, res) => {
+  if (!req.user || req.user.role !== 'service_provider') {
+    res.status(401).json({ message: 'You are not authorised to view this page.' });
+    return;
+  }
+
   const prevPage = req.header('Referer') || '/';
-  console.log(req.body.beds);
 
   if (!req.body.beds) {
     console.log('no beds');
     res.redirect(prevPage);
+    return;
   }
   const { beds } = req.body;
 
@@ -425,6 +404,42 @@ module.exports.updateBeds = (req, res) => {
         res.redirect(prevPage);
       });
     });
+};
+
+module.exports.updateRequests = (req, res) => {
+  if (!req.user || req.user.role !== 'service_provider') {
+    res.status(401).json({ message: 'You are not authorised to view this page.' });
+    return;
+  }
+
+  const prevPage = req.header('Referer') || '/';
+
+  if (!req.body.requests) {
+    console.log('no requests');
+    res.redirect(prevPage);
+    return;
+  }
+  console.log(req.body.requests);
+  // const removedRequests = req.body.requests;
+  Service.findOneAndUpdate(
+    { uri: req.params.serviceUri },
+    {
+      $pullAll: {
+        openRequests: req.body.requests,
+      },
+      $addToSet: {
+        requests: {
+          $each: req.body.requests,
+        },
+      },
+    },
+    { runValidators: true },
+  ).exec().then(() => {
+    res.redirect('/service/dashboard/'.concat(req.params.serviceUri));
+  }).catch((err) => {
+    console.log(err);
+    res.redirect(prevPage);
+  });
 };
 
 /**

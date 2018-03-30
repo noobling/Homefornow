@@ -5,7 +5,7 @@
         button(type="button",data-dismiss="modal").close &times;
         h4.modal-title OUR BEDS
       .modal-body
-        form(action='/service/beds/update/'+service.uri, method='post')#bedForm
+        form(action='/service/dashboard/'+service.uri+'/beds/update/', method='post')#bedForm
           .form-group
             a(href='#')#addBed
               i.material-icons.btn-other add_circle_outline
