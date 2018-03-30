@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const googleMapsClient = require('@google/maps').createClient({
   key: process.env.embed_maps_api,
-  Promise: Promise, // 'Promise' is the native constructor.
-})
+  Promise, // 'Promise' is the native constructor.
+});
 const images = require('../middleware/images');
 
 const Service = mongoose.model('Service');
@@ -10,7 +10,7 @@ const Request = mongoose.model('Request');
 const User = mongoose.model('User');
 
 function amenities(service) {
-  let amen = [];
+  const amen = [];
 
   if (service.TV === 'on') {
     amen.push({
@@ -33,7 +33,7 @@ function amenities(service) {
       icon: 'wifi',
     });
   }
-  if (service.BATH === 'on') { //////////////////////////////////////////////////////////////////
+  if (service.BATH === 'on') {
     amen.push({
       label: 'BATHROOM',
       name: 'BATH',
@@ -146,9 +146,8 @@ module.exports.addService = (req, res, next) => {
   const service = new Service();
 
   // Geocode an address with a promise
-  googleMapsClient.geocode({address: req.body.serveSuburb.concat(', ').concat(req.body.serveState).concat(', ').concat(req.body.serveState)}).asPromise()
+  googleMapsClient.geocode({ address: req.body.serveSuburb.concat(', ').concat(req.body.serveState).concat(', ').concat(req.body.serveState) }).asPromise()
     .then((response) => {
-
       const temp = response.json.results[0].geometry.location;
 
       service.name = req.body.serveName;

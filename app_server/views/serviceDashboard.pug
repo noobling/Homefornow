@@ -59,7 +59,7 @@ block content
                   span
                     i.material-icons.btn-other(style='font-size: inherit;') edit 
             .col-xs-12
-              form(action='/service/beds/update/'+service.uri, method='post')
+              form(action='/service/beds/update/'+service.uri, method='post')#updateBeds
                 each bed in service.beds
                   .panel.shadow
                     .panel-body
@@ -78,6 +78,8 @@ block content
                           h6 Occupied
                           input(type='radio', name='beds['+service.beds.indexOf(bed)+'][isOccupied]', checked=bed.isOccupied==='Unavailable', value='Unavailable')
                 input.btn.btn-secondary.pull-right(type='submit', name='Submit', value='Update Beds')
+                img.img-responsive.pull-right#spinnerLogo-gif(src='/images/loading_spinner.gif', style='display: none')
+                
           .row
             .col-xs-12
               h3 Our Requests

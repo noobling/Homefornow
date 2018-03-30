@@ -18,7 +18,7 @@ $('#fileAdd').on('change', function (event) {
 
   // Upload the FormData object to the server in a POST request
   $.ajax({
-    url: "/service/dashboard/profile/" + $('#uri').text() + "/add",
+    url: "/service/profile/" + $('#uri').text() + "/add",
     type: 'post',
     data: formData,
     processData: false,
@@ -83,7 +83,7 @@ $('#logoAdd').on('change', function (event) {
 
   // Upload the FormData object to the server in a POST request
   $.ajax({
-    url: "/service/dashboard/profile/" + $('#uri').text() + "/logo/add",
+    url: "/service/profile/" + $('#uri').text() + "/logo/add",
     type: 'post',
     data: formData,
     processData: false,
@@ -137,7 +137,7 @@ function deleteImage(index) {
   toggleInputs();
 
   // Make an AJAX POST request to delete the image at 'index'
-  let url = '/service/dashboard/profile/' + $('#uri').text() + '/' + index + '/delete';
+  let url = '/service/profile/' + $('#uri').text() + '/' + index + '/delete';
   $.post(url, function(data) {
     // If the image was successfully deleted
     if (!data.error) {
@@ -211,7 +211,7 @@ function deleteLogo() {
   $('#deletelogomodal').modal('hide');
   toggleInputs();
 
-  let url = '/service/dashboard/profile/' + $('#uri').text() + '/logo/delete';
+  let url = '/service/profile/' + $('#uri').text() + '/logo/delete';
   $.post(url, function(data) {
     if (!data.error) {
       // Disable the old image thumbnail, and re-enable the add image button
