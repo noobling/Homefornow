@@ -1,14 +1,13 @@
 var bedIndex = 0;
 
 $('#editBedModal').on('show.bs.modal', function() {
-  console.log('hello world');
+  $('#spinnerAddBeds').show();
+  $('#bedList').hide();
   $.ajax({
-    url: '/service/beds',
+    url: '/service/dashboard/' + $('#uri').text() + '/beds',
     method: 'GET',
     success: function(data) {
-      console.log('success');
-      console.log(data);
-      for (bed of data) {
+      for (bed of data.service.beds) {
         $('#bedList').append(BedPanel({
           index: bedIndex,
           name: bed.name,
@@ -17,12 +16,13 @@ $('#editBedModal').on('show.bs.modal', function() {
         $('#bedType'.concat(bedIndex)).val(bed.bedType);
         bedIndex++;
       }
+      $('#spinnerAddBeds').hide();
+      $('#bedList').slideDown(500);
     },
   });
 });
 
 $('#editBedModal').on('hidden.bs.modal', function() {
-  console.log('goodbye world');
   $('#bedList').html('');
   bedIndex = 0;
 })
@@ -32,16 +32,32 @@ $('#addBed').click(function() {
 })
 
 $('#removeBed').click(function() {
-  console.log('remove');
-  // $(this).parent().parent().parent().remove();
   $('#bedList').children().last().remove();
 })
 
-// $('#bedForm').submit(function( event ) {
-//   console.log('caught');
-//
-//   event.preventDefault();
-// })
+$('#bedForm').submit(function( event ) {
+  event.preventDefault();
+  const submit_button = $(this).find(':submit');
+  const spinner = $(this).find('#spinnerConfirmBeds');
+  submit_button.hide(100);
+  spinner.show(100);
+
+  const post_url = $(this).attr("action"); //get form action url
+  const request_method = $(this).attr("method"); //get form GET/POST method
+  const form_data = $(this).serialize(); //Encode form elements for submission
+
+  $.ajax({
+    url : post_url,
+    type: request_method,
+    data : form_data,
+  }).done(function(response) {
+    spinner.hide(100);
+    submit_button.show(100);
+    $('#editBedModal').modal('hide');
+    updateBeds();
+    return;
+  });
+})
 
 const BedPanel = ({ index, name }) => `
   <div class="panel shadow">
@@ -74,8 +90,9 @@ $('#updateBeds').submit(function(event) {
   event.preventDefault();
   const submit_button = $(this).find(':submit');
   const spinner = $(this).find('#spinnerUpdateBeds');
-  submit_button.hide(100);
-  spinner.show(100);
+
+  submit_button.hide();
+  spinner.show();
 
   const post_url = $(this).attr("action"); //get form action url
   const request_method = $(this).attr("method"); //get form GET/POST method
@@ -86,59 +103,35 @@ $('#updateBeds').submit(function(event) {
     type: request_method,
     data : form_data,
   }).done(function(response) {
-    spinner.hide(100);
-    submit_button.show(100);
+    spinner.hide();
+    submit_button.show();
     return;
   });
-})
+});
 
 /**
  *  TODO: COMMENT
  */
 $(document).ready(function() {
-  // AJAX for first tab
-  $('#updateBeds > .form-group').html('');
-  $('#spinnerLoadBeds').show();
-  $.get('/service/dashboard/' + $('#uri').text() + '/beds', function(data) {
-    $('#spinnerLoadBeds').hide();
-    let index = 0;
-    for (bed of data.service.beds) {
-      $('#updateBeds > .form-group').append(UpdatePanel({
-        index,
-        name: bed.name
-      }));
-      $('#avaliable'+index).prop('checked', bed.isOccupied === 'Available');
-      $('#pending'+index).prop('checked', bed.isOccupied === 'Pending');
-      $('#unavailable'+index).prop('checked', bed.isOccupied === 'Unavailable');
-      index++;
-    }
-  });
+  updateBeds();
 
-  $('#requestList').html('');
-  $('#spinnerLoadRequests').show();
-  $.get('/service/dashboard/' + $('#uri').text() + '/requests', function(data) {
-    $('#spinnerLoadRequests').hide();
-    for (request of data.requests) {
-      $('#requestList').append(RequestPanel({
-        index: 0,
-        name: request.firstName + ' ' + request.lastName,
-        email: request.email,
-        number: request.phoneNumber,
-        age: getAge(request.dob),
-      }));
-    }
-  });
+  updateRequests();
 });
 
 /**
  *  When the user clicks the Bed Management tab
  */
 $('a[href="#bedManagement"]').on('click', function() {
+  updateBeds();
 
+  updateRequests();
+});
+
+function updateBeds() {
   $('#updateBeds > .form-group').html('');
+  $('#updateBeds > .form-group').hide();
   $('#spinnerLoadBeds').show();
   $.get('/service/dashboard/' + $('#uri').text() + '/beds', function(data) {
-    $('#spinnerLoadBeds').hide();
     let index = 0;
     for (bed of data.service.beds) {
       $('#updateBeds > .form-group').append(UpdatePanel({
@@ -150,12 +143,16 @@ $('a[href="#bedManagement"]').on('click', function() {
       $('#unavailable'+index).prop('checked', bed.isOccupied === 'Unavailable');
       index++;
     }
+    $('#spinnerLoadBeds').hide();
+    $('#updateBeds > .form-group').slideDown(500);
   });
+}
 
+function updateRequests() {
   $('#requestList').html('');
+  $('#requestList').hide();
   $('#spinnerLoadRequests').show();
   $.get('/service/dashboard/' + $('#uri').text() + '/requests', function(data) {
-    $('#spinnerLoadRequests').hide();
     for (request of data.requests) {
       $('#requestList').append(RequestPanel({
         index: 0,
@@ -165,8 +162,10 @@ $('a[href="#bedManagement"]').on('click', function() {
         age: getAge(request.dob),
       }));
     }
+    $('#spinnerLoadRequests').hide();
+    $('#requestList').slideDown(500);
   });
-});
+}
 
 function getAge(date) {
   const today = Date.now();
@@ -230,6 +229,8 @@ const RequestPanel = ({ index, name, email, number, age }) => `
  *  When the user clicks the Service Profile tab
  */
 $('a[href="#serviceProfile"]').on('click', function() {
+  $('#addServiceForm').hide();
+  $('#spinnerLoadProfile').show();
   $.get('/service/dashboard/' + $('#uri').text() + '/profile', function(data) {
 
     $('#serveName').val(data.service.name);
@@ -259,6 +260,8 @@ $('a[href="#serviceProfile"]').on('click', function() {
         }
       }
     });
+    $('#spinnerLoadProfile').hide();
+    $('#addServiceForm').slideDown(1000);
   });
   $.get('/service/dashboard/' + $('#uri').text() + '/images', function(data) {
     console.log(data);

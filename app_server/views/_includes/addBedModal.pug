@@ -9,7 +9,9 @@
           .form-group
             a(href='#')#addBed
               i.material-icons.btn-other add_circle_outline
+          img.img-responsive.center-block#spinnerAddBeds(src='/images/loading_spinner.gif', style='display: none')
           .form-group#bedList
           a(href='#')#removeBed
             i.material-icons.btn-other remove_circle_outline
-          input.pull-right(type="submit", value="Send").btn.btn-default
+          input.pull-right(type="submit", value="Confirm").btn.btn-default
+          img.img-responsive.pull-right#spinnerConfirmBeds(src='/images/loading_spinner.gif', style='display: none; max-height: 42px')
