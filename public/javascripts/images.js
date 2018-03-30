@@ -266,7 +266,7 @@ function addBlankThumbnail() {
         '</div>' +
       '</div>' +
     '</div>' +
-    '<div style="display: none;" id="item5" class="item col-xs-6">' +
+    '<div style="display: none;" id="item5" style="padding-top: 5px; padding-bottom: 5px;" class="item col-xs-6">' +
       '<div class="thumbnail">' +
         '<div class="image highlight"><a href="#" data-toggle="modal" data-target="#deleteimagemodal-image5"><img id="img5" class="img-responsive"/></a></div>' +
       '</div>' +
