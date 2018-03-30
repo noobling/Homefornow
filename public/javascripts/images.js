@@ -15,6 +15,12 @@ function setImageListeners() {
 
     // Get the uploaded file from the form and store it in a FormData object
     let uploadedFile = $('#fileAdd').prop("files")[0];
+    if(!uploadedFile) {
+      $('#plus-img').show();
+      $('#spinner-gif').hide();
+      toggleInputs();
+      return;
+    }
     var formData = new FormData();
     formData.append('fileAdd', uploadedFile, uploadedFile.name);
 
@@ -266,7 +272,7 @@ function addBlankThumbnail() {
         '</div>' +
       '</div>' +
     '</div>' +
-    '<div style="display: none;" id="item5" style="padding-top: 5px; padding-bottom: 5px;" class="item col-xs-6">' +
+    '<div style="display: none;" id="item5" style="padding-top: 5px; padding-bottom: 5px;" class="item col-xs-4">' +
       '<div class="thumbnail">' +
         '<div class="image highlight"><a href="#" data-toggle="modal" data-target="#deleteimagemodal-image5"><img id="img5" class="img-responsive"/></a></div>' +
       '</div>' +

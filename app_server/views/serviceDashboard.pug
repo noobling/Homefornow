@@ -68,7 +68,7 @@ block content
                 
           .row
             .col-xs-12
-              h3 Our Requests
+              h3 Our Open Requests
             .col-xs-12
               .panel
                 .panel-body
@@ -86,6 +86,29 @@ block content
             .col-xs-12
               form(action='/service/dashboard/'+service.uri+'/requests/update', method='post')#updateRequests
                 img.img-responsive.center-block#spinnerLoadRequests(src='/images/loading_spinner.gif', style='display: none')
+                .form-group
+                input.btn.btn-secondary.pull-right(type='submit', name='Submit', value='Update Requests')
+                img.img-responsive.pull-right#spinnerUpdateRequests(src='/images/loading_spinner.gif', style='display: none; max-height: 42px')
+          .row
+            .col-xs-12
+              h3 Our Closed Requests
+            .col-xs-12
+              .panel
+                .panel-body
+                  .row.text-center
+                    .col-xs-2
+                      h4 GENDER
+                    .col-xs-3
+                      h4 CONTACT
+                    .col-xs-3
+                      h4 NAME
+                    .col-xs-2
+                      h4 AGE
+                    .col-xs-2
+                      h4 CALLED
+            .col-xs-12
+              form(action='/service/dashboard/'+service.uri+'/requests/update', method='post')#closedRequests
+                img.img-responsive.center-block#spinnerLoadRequestsClosed(src='/images/loading_spinner.gif', style='display: none')
                 .form-group
                 input.btn.btn-secondary.pull-right(type='submit', name='Submit', value='Update Requests')
                 img.img-responsive.pull-right#spinnerUpdateRequests(src='/images/loading_spinner.gif', style='display: none; max-height: 42px')
@@ -191,7 +214,7 @@ block content
                       label(for='serveCon') CONFIRM PASSWORD
                       input(type='password', name='serveCon', id='serveCon', required='').form-control
             .row
-              .col-xs-12.col-md-7
+              .col-xs-12.col-md-6
                 .form-group
                   .row
                     .col-xs-12
@@ -207,170 +230,141 @@ block content
                     .col-xs-12
                       label(for='serveRules') HOUSE RULES
                       textarea(rows="5", name='serveRules',id='serveRules', spellcheck="true", placeholder="Enter Description").form-control
-              .col-xs-12.col-md-5
+              .col-md-6.col-xs-12
+                .form-group#serveAmenitiesForm
+                  .col-xs-12
+                    label AMENITIES
+                    .row
+                      .col-xs-12
+                        .well
+                          .row
+                            .form-inline
+                              .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                i.material-icons.sec-color tv
+                              .col-xs-9(style='padding-top: 3px;')
+                                label(for='TV') TV
+                              .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                input#TV(type="checkbox", name="TV")
+                          .row
+                            .form-inline
+                              .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                i.material-icons.sec-color local_laundry_service
+                              .col-xs-9(style='padding-top: 3px;')
+                                label(for='Washing') LAUNDRY/WASHER
+                              .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                input#WASHER(type="checkbox", name="WASHER")
+                          .row
+                            .form-inline
+                              .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                i.material-icons.sec-color wifi
+                              .col-xs-9(style='padding-top: 3px;')
+                                label(for='WIFI') WIFI
+                              .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                input#WIFI(type="checkbox", name="WIFI")
+                          .row(style='margin-bottom: 3px;')
+                            .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                              i.material-icons.sec-color wc
+                            .col-xs-9(style='padding-top: 3px;')
+                              label BATHROOM
+                            .form-inline
+                              .col-xs-9.col-xs-offset-2(style='padding-left: 30px;')
+                                span.small.bold
+                                  label(for='BATHSHARED') SHARED
+                              .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                input#BATHSHARED(type="radio", name="BATH", value='shared')
+                            .form-inline
+                              .col-xs-9.col-xs-offset-2(style='padding-left: 30px;')
+                                span.small.bold PRIVATE
+                              .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                input#BATHPRIVATE(type="radio", name="BATH", checked='', value='private')
+                          .row
+                            .form-inline
+                              .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                i.material-icons.sec-color smoking_rooms
+                              .col-xs-9(style='padding-top: 3px;')
+                                label SMOKING
+                              .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                input#SMOKE(type="checkbox", name="SMOKE")
+                          .row
+                            .form-inline
+                              .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                i.material-icons.sec-color ac_unit
+                              .col-xs-9(style='padding-top: 3px;')
+                                label AIR-CONDITIONING
+                              .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                input#AIRCON(type="checkbox", name="AIRCON")
+                          .row
+                            .form-inline
+                              .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                i.material-icons.sec-color videogame_asset
+                              .col-xs-9(style='padding-top: 3px;')
+                                label GAMES/CONSOLE
+                              .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                input#GAMES(type="checkbox", name="GAMES")
+                          .row
+                            .form-inline
+                              .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                i.material-icons.sec-color fitness_center
+                              .col-xs-9(style='padding-top: 3px;')
+                                label GYM
+                              .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                input#GYM(type="checkbox", name="GYM")
+                          .row
+                            .form-inline
+                              .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                i.material-icons.sec-color local_library
+                              .col-xs-9(style='padding-top: 3px;')
+                                label STUDY
+                              .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                input#STUDY(type="checkbox", name="STUDY")
+                          .row
+                            .form-inline
+                              .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                i.material-icons.sec-color local_dining
+                              .col-xs-9(style='padding-top: 3px;')
+                                label KITCHEN
+                              .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                input#KITCHEN(type="checkbox", name="KITCHEN")
+                          .row
+                            .form-inline
+                              .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                i.material-icons.sec-color phone
+                              .col-xs-9(style='padding-top: 3px;')
+                                label PHONE
+                              .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                input#PHONE(type="checkbox", name="PHONE")
+                          .row
+                            .form-inline
+                              .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                i.material-icons.sec-color schedule
+                              .col-xs-9(style='padding-top: 3px;')
+                                label CURFEW
+                              .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                input#CURFEW(type="checkbox", name="CURFEW")
+                          .row
+                            .form-inline
+                              .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                i.material-icons.sec-color lock
+                              .col-xs-9(style='padding-top: 3px;')
+                                label SECURE
+                              .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                input#SECURE(type="checkbox", name="SECURE")
+                          .row
+                            .form-inline
+                              .col-xs-1.col-xs-offset-1(style='padding: 0px;')
+                                i.material-icons.sec-color local_florist
+                              .col-xs-9(style='padding-top: 3px;')
+                                label OUTDOOR/GARDEN
+                              .col-xs-1(style='padding: 0px; margin-top: 2px;')
+                                input#OUTDOOR(type="checkbox", name="OUTDOOR")
+              .col-xs-12
                 .row#loadingPhotoUploadRow
                   h5.text-center LOADING PHOTOS
                   img.img-responsive.center-block#loadingPhotos(src='/images/loading_spinner.gif')
                 .row#photoUploadRow
                   .col-xs-12
                     .alert.alert-danger#alertBox(style='display: none')
-                  //- label(for='imageRow') PHOTOS
-                  //- .row#imagerow
-                  //-   if images != null && images.length > 0
-                  //-     -var index = 1;
-                  //-     -let length = Object.keys(images).length;
-                  //-     if Object.keys(images).length <= 5
-                  //-       .item.col-xs-6(id='itemAdd')
-                  //-         form(action="/service/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
-                  //-           .thumbnail
-                  //-             .image.highlight(style='line-height: 0px; border: 0px;')
-                  //-               label(style='margin: 0px;')
-                  //-                 img.img-responsive#plus-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
-                  //-                 img.img-responsive#spinner-gif(src='/images/loading_spinner.gif', style='display: none;')
-                  //-                 input#fileAdd(type='file', accept='image/*', hidden='', name='fileAdd', onchange='event.preventDefault();')
-                  //-     -for (index = 0; index < 6; index += 1)
-                  //-       if (index < length)
-                  //-         +imageThumbnail(images[index], index, false)
-                  //-       else
-                  //-         +imageThumbnail('', index, true)
-                  //- 
-                  //-   else
-                  //-     .item.col-xs-6
-                  //-       form(action="/service/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
-                  //-         .thumbnail
-                  //-           .image.highlight(style='line-height: 0px; border: 0px;')
-                  //-             label(style='margin: 0px;')
-                  //-               img.img-responsive#plus-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
-                  //-               img.img-responsive#spinner-gif(src='/images/loading_spinner.gif', style='display: none;')
-                  //-               input#fileAdd(type='file', accept="image/*", hidden='', name="fileAdd", onchange='event.preventDefault();')
-                  //-     -for (index = 0; index < 6; index += 1)
-                  //-       +imageThumbnail('', index, true)
-              .form-group#serveAmenitiesForm
-                .col-xs-12
-                  label AMENITIES
-                  .row
-                    .col-xs-12.col-sm-7
-                      .well
-                        .row
-                          .form-inline
-                            .col-xs-1.col-xs-offset-1(style='padding: 0px;')
-                              i.material-icons.sec-color tv
-                            .col-xs-9(style='padding-top: 3px;')
-                              label(for='TV') TV
-                            .col-xs-1(style='padding: 0px; margin-top: 2px;')
-                              input#TV(type="checkbox", name="TV")
-                        .row
-                          .form-inline
-                            .col-xs-1.col-xs-offset-1(style='padding: 0px;')
-                              i.material-icons.sec-color local_laundry_service
-                            .col-xs-9(style='padding-top: 3px;')
-                              label(for='Washing') LAUNDRY/WASHER
-                            .col-xs-1(style='padding: 0px; margin-top: 2px;')
-                              input#WASHER(type="checkbox", name="WASHER")
-                        .row
-                          .form-inline
-                            .col-xs-1.col-xs-offset-1(style='padding: 0px;')
-                              i.material-icons.sec-color wifi
-                            .col-xs-9(style='padding-top: 3px;')
-                              label(for='WIFI') WIFI
-                            .col-xs-1(style='padding: 0px; margin-top: 2px;')
-                              input#WIFI(type="checkbox", name="WIFI")
-                        .row(style='margin-bottom: 3px;')
-                          .col-xs-1.col-xs-offset-1(style='padding: 0px;')
-                            i.material-icons.sec-color wc
-                          .col-xs-9(style='padding-top: 3px;')
-                            label BATHROOM
-                          .form-inline
-                            .col-xs-9.col-xs-offset-2(style='padding-left: 30px;')
-                              span.small.bold
-                                label(for='BATHSHARED') SHARED
-                            .col-xs-1(style='padding: 0px; margin-top: 2px;')
-                              input#BATHSHARED(type="radio", name="BATH", value='shared')
-                          .form-inline
-                            .col-xs-9.col-xs-offset-2(style='padding-left: 30px;')
-                              span.small.bold PRIVATE
-                            .col-xs-1(style='padding: 0px; margin-top: 2px;')
-                              input#BATHPRIVATE(type="radio", name="BATH", checked='', value='private')
-                        .row
-                          .form-inline
-                            .col-xs-1.col-xs-offset-1(style='padding: 0px;')
-                              i.material-icons.sec-color smoking_rooms
-                            .col-xs-9(style='padding-top: 3px;')
-                              label SMOKING
-                            .col-xs-1(style='padding: 0px; margin-top: 2px;')
-                              input#SMOKE(type="checkbox", name="SMOKE")
-                        .row
-                          .form-inline
-                            .col-xs-1.col-xs-offset-1(style='padding: 0px;')
-                              i.material-icons.sec-color ac_unit
-                            .col-xs-9(style='padding-top: 3px;')
-                              label AIR-CONDITIONING
-                            .col-xs-1(style='padding: 0px; margin-top: 2px;')
-                              input#AIRCON(type="checkbox", name="AIRCON")
-                        .row
-                          .form-inline
-                            .col-xs-1.col-xs-offset-1(style='padding: 0px;')
-                              i.material-icons.sec-color videogame_asset
-                            .col-xs-9(style='padding-top: 3px;')
-                              label GAMES/CONSOLE
-                            .col-xs-1(style='padding: 0px; margin-top: 2px;')
-                              input#GAMES(type="checkbox", name="GAMES")
-                        .row
-                          .form-inline
-                            .col-xs-1.col-xs-offset-1(style='padding: 0px;')
-                              i.material-icons.sec-color fitness_center
-                            .col-xs-9(style='padding-top: 3px;')
-                              label GYM
-                            .col-xs-1(style='padding: 0px; margin-top: 2px;')
-                              input#GYM(type="checkbox", name="GYM")
-                        .row
-                          .form-inline
-                            .col-xs-1.col-xs-offset-1(style='padding: 0px;')
-                              i.material-icons.sec-color local_library
-                            .col-xs-9(style='padding-top: 3px;')
-                              label STUDY
-                            .col-xs-1(style='padding: 0px; margin-top: 2px;')
-                              input#STUDY(type="checkbox", name="STUDY")
-                        .row
-                          .form-inline
-                            .col-xs-1.col-xs-offset-1(style='padding: 0px;')
-                              i.material-icons.sec-color local_dining
-                            .col-xs-9(style='padding-top: 3px;')
-                              label KITCHEN
-                            .col-xs-1(style='padding: 0px; margin-top: 2px;')
-                              input#KITCHEN(type="checkbox", name="KITCHEN")
-                        .row
-                          .form-inline
-                            .col-xs-1.col-xs-offset-1(style='padding: 0px;')
-                              i.material-icons.sec-color phone
-                            .col-xs-9(style='padding-top: 3px;')
-                              label PHONE
-                            .col-xs-1(style='padding: 0px; margin-top: 2px;')
-                              input#PHONE(type="checkbox", name="PHONE")
-                        .row
-                          .form-inline
-                            .col-xs-1.col-xs-offset-1(style='padding: 0px;')
-                              i.material-icons.sec-color schedule
-                            .col-xs-9(style='padding-top: 3px;')
-                              label CURFEW
-                            .col-xs-1(style='padding: 0px; margin-top: 2px;')
-                              input#CURFEW(type="checkbox", name="CURFEW")
-                        .row
-                          .form-inline
-                            .col-xs-1.col-xs-offset-1(style='padding: 0px;')
-                              i.material-icons.sec-color lock
-                            .col-xs-9(style='padding-top: 3px;')
-                              label SECURE
-                            .col-xs-1(style='padding: 0px; margin-top: 2px;')
-                              input#SECURE(type="checkbox", name="SECURE")
-                        .row
-                          .form-inline
-                            .col-xs-1.col-xs-offset-1(style='padding: 0px;')
-                              i.material-icons.sec-color local_florist
-                            .col-xs-9(style='padding-top: 3px;')
-                              label OUTDOOR/GARDEN
-                            .col-xs-1(style='padding: 0px; margin-top: 2px;')
-                              input#OUTDOOR(type="checkbox", name="OUTDOOR")
+                      
             .row
               .col-xs-12.text-right
                 input(type='submit', value='SAVE CHANGES').btn-primary

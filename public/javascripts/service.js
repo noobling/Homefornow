@@ -382,9 +382,9 @@ function insertImageModal(img, index) {
 }
 
 function insertImageThumbnail(image, index, isHidden) {
-  column = "<div class='item col-xs-6' style='padding-top: 5px; padding-bottom: 5px;' id='item" + index + "'>";
+  column = "<div class='item col-xs-4' style='padding-top: 5px; padding-bottom: 5px;' id='item" + index + "'>";
   if (isHidden) {
-    column = "<div class='item col-xs-6' style='display: none;' id='item" + index + "'>"
+    column = "<div class='item col-xs-4' style='display: none;' id='item" + index + "'>"
   }
   return  insertImageModal(image, index) +
           column +
@@ -399,7 +399,7 @@ function insertImageThumbnail(image, index, isHidden) {
 }
 
 function insertImageAdd(uri) {
-  return  "<div class='item col-xs-6' id='itemAdd'>" +
+  return  "<div class='item col-xs-4' id='itemAdd'>" +
             "<form action='/service/profile/" + uri + "/add' method='post' enctype='multipart/form-data'>" +
                 "<div class='thumbnail'>" +
                     "<div class='image highlight' style='line-height: 0px; border: 0px;'>" +
@@ -435,7 +435,7 @@ function insertImage(uri, images) {
     for (let index = 0; index < 6; index += 1) {
       thumbnails += insertImageThumbnail('', index, true);
     }
-    return  "<div class='item col-xs-6'></div>" +
+    return  "<div class='item col-xs-4'></div>" +
             insertImageAdd(uri) +
             thumbnails;
   }
