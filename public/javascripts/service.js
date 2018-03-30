@@ -110,7 +110,9 @@ $('a[href="#bedManagement"]').on('click', function() {
  *  When the user clicks the Service Profile tab
  */
 $('a[href="#serviceProfile"]').on('click', function() {
-  console.log('What a meme');
+  $.get('/service/dashboard/' + $('#uri').text() + '/profile', function(data) {
+    console.log('Data = ' + data);
+  });
 });
 
 /**
