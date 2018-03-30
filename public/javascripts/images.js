@@ -1,71 +1,70 @@
-/**
- *  jQuery form listener to upload a new image.
- *
- *  Triggered when a file is selected using the file selection box
- */
-$('#fileAdd').on('change', function (event) {
-
-  // Show the loading spinner and toggle inputs
-  $('#plus-img').hide();
-  $('#spinner-gif').show();
-  $('#alertBox').hide('slide');
-  toggleInputs();
-
-  // Get the uploaded file from the form and store it in a FormData object
-  let uploadedFile = $('#fileAdd').prop("files")[0];
-  var formData = new FormData();
-  formData.append('fileAdd', uploadedFile, uploadedFile.name);
-
-  // Upload the FormData object to the server in a POST request
-  $.ajax({
-    url: "/service/profile/" + $('#uri').text() + "/add",
-    type: 'post',
-    data: formData,
-    processData: false,
-    contentType: false,
-    success: function(data) {
-      if (!data.error) {
-        // File upload successful - add the images mediaLink to the rightmost thumbnail and modal
-        let index = $('.item:visible').length - 2;
-        $('#img' + index).attr('src', data.mediaLink);
-        $('#deleteImg' + index).attr('src', data.mediaLink);
-        $('#imageCount').text((index + 1) + "/6")
-        $('#plus-img').show();
-        $('#spinner-gif').hide();
-        toggleInputs();
-
-        // If 5 (max-1) images have been uploaded, disable the file add button
-        if (index === 5) {
-          $('#itemAdd').toggle('slide')
-        }
-
-        // Display new image
-        $('#item' + index).toggle('slide');
-      } else {
-        // File upload unsuccessful - display the error and description in the alert box
-        $('#alertBox').html("<strong>" + data.errorTitle + " </strong>" + data.errorDescription).show('slide');
-        $('#plus-img').show();
-        $('#spinner-gif').hide();
-        toggleInputs();
-      }
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-      // If the response contained an error, print the error in the alert box
-      if (jqXHR.responseText.indexOf("File too large") !== -1) {
-        $('#alertBox').html("<strong>File too large!</strong> Maximum file size is 2MB").show('slide');
-      } else {
-          $('#alertBox').html("<strong>Failure! </strong>" + errorThrown).show('slide');
-      }
-      $('#plus-img').show();
-      $('#spinner-gif').hide();
-      toggleInputs();
-    }
-  });
-});
-
-
 function setImageListeners() {
-  
+
+  /**
+   *  jQuery form listener to upload a new image.
+   *
+   *  Triggered when a file is selected using the file selection box
+   */
+  $('#fileAdd').on('change', function (event) {
+
+    // Show the loading spinner and toggle inputs
+    $('#plus-img').hide();
+    $('#spinner-gif').show();
+    $('#alertBox').hide('slide');
+    toggleInputs();
+
+    // Get the uploaded file from the form and store it in a FormData object
+    let uploadedFile = $('#fileAdd').prop("files")[0];
+    var formData = new FormData();
+    formData.append('fileAdd', uploadedFile, uploadedFile.name);
+
+    // Upload the FormData object to the server in a POST request
+    $.ajax({
+      url: "/service/profile/" + $('#uri').text() + "/add",
+      type: 'post',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(data) {
+        if (!data.error) {
+          // File upload successful - add the images mediaLink to the rightmost thumbnail and modal
+          let index = $('.item:visible').length - 2;
+          $('#img' + index).attr('src', data.mediaLink);
+          $('#deleteImg' + index).attr('src', data.mediaLink);
+          $('#imageCount').text((index + 1) + "/6")
+          $('#plus-img').show();
+          $('#spinner-gif').hide();
+          toggleInputs();
+
+          // If 5 (max-1) images have been uploaded, disable the file add button
+          if (index === 5) {
+            $('#itemAdd').toggle('slide')
+          }
+
+          // Display new image
+          $('#item' + index).toggle('slide');
+        } else {
+          // File upload unsuccessful - display the error and description in the alert box
+          $('#alertBox').html("<strong>" + data.errorTitle + " </strong>" + data.errorDescription).show('slide');
+          $('#plus-img').show();
+          $('#spinner-gif').hide();
+          toggleInputs();
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        // If the response contained an error, print the error in the alert box
+        if (jqXHR.responseText.indexOf("File too large") !== -1) {
+          $('#alertBox').html("<strong>File too large!</strong> Maximum file size is 2MB").show('slide');
+        } else {
+            $('#alertBox').html("<strong>Failure! </strong>" + errorThrown).show('slide');
+        }
+        $('#plus-img').show();
+        $('#spinner-gif').hide();
+        toggleInputs();
+      }
+    });
+  });
+
   /**
    *  jQuery form listener to upload a new logo.
    *

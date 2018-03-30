@@ -134,7 +134,7 @@ $(document).ready(function() {
  *  When the user clicks the Bed Management tab
  */
 $('a[href="#bedManagement"]').on('click', function() {
-  
+
   $('#updateBeds > .form-group').html('');
   $('#spinnerLoadBeds').show();
   $.get('/service/dashboard/' + $('#uri').text() + '/beds', function(data) {
@@ -264,8 +264,9 @@ $('a[href="#serviceProfile"]').on('click', function() {
     console.log(data);
     console.log(data.data.images);
     console.log(data.data.logo);
+    console.log(insertPhotos($('#uri').text(), data.data.logo, data.data.images));
     $('#photoUploadRow').append(
-      insertPhotos($('#uri').text(), data.data.logo)
+      insertPhotos($('#uri').text(), data.data.logo, data.data.images)
     );
     setImageListeners();
   });
@@ -278,7 +279,7 @@ $('a[href="#bedsAvaliable"]').on('click', function() {
   console.log('What a meme');
 });
 
-function insertPhotos(uri, logo) {
+function insertPhotos(uri, logo, images) {
   return  "<div class='col-xs-12'>" +
             "<div class='alert alert-danger' id='alertBox' style='display: none;'></div>" +
           "</div>" +
@@ -294,7 +295,11 @@ function insertPhotos(uri, logo) {
                 "</div>" +
               "</form>" +
             "</div>" +
-          "</div>";
+          "</div>" +
+          "<label for='imageRow'>PHOTOS</label>" +
+            "<div class='row' id='imagerow'>" +
+              insertImage(uri, images) +
+            "</div>";
 }
 
 function insertLogoModal(logo) {
@@ -330,4 +335,83 @@ function insertLogo(logo) {
             "<img class='img-responsive' id='spinnerLogo-gif' src='/images/loading_spinner.gif' style='display: none;'/>" +
             "<input id='logoAdd' type='file' accept='image/*' hidden='' name='logoAdd' onchange='event.preventDefault();'/>" +
           "</label>";
+}
+
+function insertImageModal(img, index) {
+  return  "<div class='modal fade' id='deleteimagemodal-image" + index + "' role='dialog'>" +
+            "<div class='modal-dialog modal-sm'>" +
+                "<div class='modal-content'>" +
+                    "<div class='modal-header'><button class='close' type='button' data-dismiss='modal'>&times;</button>" +
+                        "<h3>Delete this image?</h3>" +
+                    "</div>" +
+                    "<div class='modal-header text-center'>" +
+                        "<div class='image'><img class='img img-responsive' id='deleteImg" + index + "' src='" + img + "' /></div>" +
+                    "</div>" +
+                    "<div class='modal-body text-center'>" +
+                        "<div class='btn btn-danger' id='deleteimagebutton-image'" + index + "' onclick='deleteImage(" + index + ")'>Delete</div>" +
+                    "</div>" +
+                "</div>" +
+            "</div>" +
+        "</div>";
+}
+
+function insertImageThumbnail(image, index, isHidden) {
+  column = "<div class='item col-xs-6' id='item" + index + "'>";
+  if (isHidden) {
+    column = "<div class='item col-xs-6' style='display: none;' id='item" + index + "'>"
+  }
+  return  insertImageModal(image, index) +
+          column +
+            "<div class='thumbnail'>" +
+              "<div class='image highlight'>" +
+                "<a href='#' id='imagethumbnailmodal" + index + "' data-toggle='modal' data-target='#deleteimagemodal-image" + index + "'>" +
+                  "<img class='img-responsive' src='" + image + "' id='img" + index + "'/>" +
+                "</a>" +
+              "</div>" +
+            "</div>" +
+          "</div>";
+}
+
+function insertImageAdd(uri) {
+  return  "<div class='item col-xs-6' id='itemAdd'>" +
+            "<form action='/service/profile/" + uri + "/add' method='post' enctype='multipart/form-data'>" +
+                "<div class='thumbnail'>" +
+                    "<div class='image highlight' style='line-height: 0px; border: 0px;'>" +
+                      "<label style='margin: 0px;'>" +
+                          "<img class='img-responsive' id='plus-img' src='/images/plus.png' alt='Add Image' style='cursor: pointer;'/>" +
+                          "<img class='img-responsive' id='spinner-gif' src='/images/loading_spinner.gif' style='display: none;'/>" +
+                          "<input id='fileAdd' type='file' accept='image/*' hidden='' name='fileAdd' onchange='event.preventDefault();'/>" +
+                      "</label>" +
+                    "</div>" +
+                "</div>" +
+            "</form>" +
+          "</div>";
+}
+
+function insertImage(uri, images) {
+  if (images != null && images.length > 0) {
+    result = "";
+    if (length <= 5) {
+      result += insertImageAdd(uri);
+    }
+
+    for (let index = 0; index < 6; index += 1) {
+      if (index < images.length) {
+        alert(images[index]);
+        result += insertImageThumbnail(images[index], index, false);
+      }
+      else {
+        result += insertImageThumbnail('', index, true);
+      }
+    }
+    return result;
+  } else {
+    thumbnails = "";
+    for (let index = 0; index < 6; index += 1) {
+      thumbnails += insertImageThumbnail('', index, true);
+    }
+    return  "<div class='item col-xs-6'></div>" +
+            insertImageAdd(uri) +
+            thumbnails;
+  }
 }
