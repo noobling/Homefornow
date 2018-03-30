@@ -11,7 +11,8 @@ router.get('/dashboard/:serviceUri', serviceController.dashboard);
 router.get('/dashboard/:serviceUri/beds/show', serviceController.dashboardBeds);
 router.post('/dashboard/:serviceUri/beds/update', serviceController.updateBeds);
 
-router.get('/dashboard/:serviceUri/requests/show', serviceController.dashboardRequests);
+router.get('/dashboard/:serviceUri/requests/show', serviceController.dashboardOpenRequests);
+router.get('/dashboard/:serviceUri/closed_requests/show', serviceController.dashboardClosedRequests);
 router.post('/dashboard/:serviceUri/requests/update', serviceController.updateRequests);
 
 router.get('/dashboard/:serviceUri/profile', serviceController.dashboardProfile);

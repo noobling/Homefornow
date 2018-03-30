@@ -262,7 +262,7 @@ module.exports.dashboardBeds = (req, res) => {
     });
 };
 
-module.exports.dashboardRequests = (req, res) => {
+module.exports.dashboardOpenRequests = (req, res) => {
   if (!req.user || req.user.role !== 'service_provider') {
     res.status(401).json({ message: 'You are not authorised to view this page.' });
     return;
@@ -278,6 +278,35 @@ module.exports.dashboardRequests = (req, res) => {
           _id: service.openRequests,
         },
         '_id firstName lastName gender phoneNumber email dob',
+      ).exec()
+        .then((requests) => {
+          // console.log(requests);
+          res.send({
+            requests,
+          });
+        })
+        .catch((err) => {
+          res.status(401).json({ message: err });
+        });
+    });
+};
+
+module.exports.dashboardClosedRequests = (req, res) => {
+  if (!req.user || req.user.role !== 'service_provider') {
+    res.status(401).json({ message: 'You are not authorised to view this page.' });
+    return;
+  }
+  Service.findById(
+    req.user.service[0],
+    'requests',
+  ).exec()
+    .then((service) => {
+      // console.log(service.openRequests);
+      Request.find(
+        {
+          _id: service.requests,
+        },
+        'firstName lastName gender phoneNumber email dob',
       ).exec()
         .then((requests) => {
           // console.log(requests);

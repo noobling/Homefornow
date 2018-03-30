@@ -170,6 +170,25 @@ function updateRequests() {
     $('#spinnerLoadRequests').hide();
     $('#updateRequests > .form-group').slideDown(500);
   });
+
+  $('#closedRequests > .form-group').html('');
+  $('#closedRequests > .form-group').hide();
+  $('#spinnerLoadRequestsClosed').show();
+  $.get('/service/dashboard/' + $('#uri').text() + '/closed_requests/show', function(data) {
+    let index = 0;
+    for (request of data.requests) {
+      $('#closedRequests > .form-group').append(ClosedRequestPanel({
+        index,
+        name: request.firstName + ' ' + request.lastName,
+        email: request.email,
+        number: request.phoneNumber,
+        age: getAge(request.dob),
+      }));
+      index++;
+    }
+    $('#spinnerLoadRequestsClosed').hide();
+    $('#closedRequests > .form-group').slideDown(500);
+  });
 }
 
 $('#updateRequests').submit(function(event) {
@@ -248,6 +267,28 @@ const RequestPanel = ({ index, name, email, number, age, id }) => `
         </div>
         <div class="col-xs-2">
           <input type="checkbox" name='requests[${index}]' value='${id}' />
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+
+const ClosedRequestPanel = ({ index, name, email, number, age }) => `
+  <div class="panel shadow">
+    <div class="panel-body">
+      <div class="row text-center">
+        <div class="col-xs-2">
+          <h4>ICON</h4>
+        </div>
+        <div class="col-xs-3">
+          <h6>${email}</h6>
+          <h6>${number}</h6>
+        </div>
+        <div class="col-xs-3">
+          <h4>${name}</h4>
+        </div>
+        <div class="col-xs-2">
+          <h6>${age}</h6>
         </div>
       </div>
     </div>

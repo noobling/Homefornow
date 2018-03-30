@@ -8,10 +8,13 @@
         form(action='/service/dashboard/'+service.uri+'/beds/update/', method='post')#bedForm
           .form-group
             a(href='#')#addBed
+              | Add Bed 
               i.material-icons.btn-other add_circle_outline
           img.img-responsive.center-block#spinnerAddBeds(src='/images/loading_spinner.gif', style='display: none')
           .form-group#bedList
-          a(href='#')#removeBed
-            i.material-icons.btn-other remove_circle_outline
-          input.pull-right(type="submit", value="Confirm").btn.btn-default
-          img.img-responsive.pull-right#spinnerConfirmBeds(src='/images/loading_spinner.gif', style='display: none; max-height: 42px')
+          .form-group
+            a(href='#')#removeBed
+              | Remove Bed 
+              i.material-icons.btn-other remove_circle_outline
+            input.pull-right(type="submit", value="Confirm").btn.btn-default
+            img.img-responsive.pull-right#spinnerConfirmBeds(src='/images/loading_spinner.gif', style='display: none; max-height: 42px')

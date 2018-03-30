@@ -52,13 +52,12 @@ block content
       #bedManagement.tab-pane.fade.in.active
         .container-fluid
           .row
-            .col-xs-10
+            .col-xs-6
               h3 Our Bed Count
-            .col-xs-2
-              a.pull-right(href='#', data-toggle='modal', data-target='#editBedModal')
-                h6 Edit 
-                  span
-                    i.material-icons.btn-other(style='font-size: inherit;') edit
+            .col-xs-6
+              a.btn.btn-primary.pull-right(href='#', data-toggle='modal', data-target='#editBedModal')
+                | Edit Beds 
+                i.material-icons.btn-other(style='font-size: inherit;') edit
             .col-xs-12
               form(action='/service/dashboard/'+service.uri+'/beds/update', method='post')#updateBeds
                 img.img-responsive.center-block#spinnerLoadBeds(src='/images/loading_spinner.gif', style='display: none')
@@ -104,10 +103,8 @@ block content
                       h4 NAME
                     .col-xs-2
                       h4 AGE
-                    .col-xs-2
-                      h4 CALLED
             .col-xs-12
-              form(action='/service/dashboard/'+service.uri+'/requests/update', method='post')#closedRequests
+              form(action='/service/dashboard/'+service.uri+'/closed_requests/update', method='post')#closedRequests
                 img.img-responsive.center-block#spinnerLoadRequestsClosed(src='/images/loading_spinner.gif', style='display: none')
                 .form-group
                 input.btn.btn-secondary.pull-right(type='submit', name='Submit', value='Update Requests')
