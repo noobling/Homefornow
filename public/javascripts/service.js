@@ -91,3 +91,31 @@ $('#updateBeds').submit(function(event) {
     return;
   });
 })
+
+/**
+ *  TODO: COMMENT
+ */
+$(document).ready(function() {
+  // AJAX for first tab
+});
+
+/**
+ *  When the user clicks the Bed Management tab
+ */
+$('a[href="#bedManagement"]').on('click', function() {
+  console.log('What a meme');
+});
+
+/**
+ *  When the user clicks the Service Profile tab
+ */
+$('a[href="#serviceProfile"]').on('click', function() {
+  console.log('What a meme');
+});
+
+/**
+ *  When the user clicks the Beds Available tab
+ */
+$('a[href="#bedsAvaliable"]').on('click', function() {
+  console.log('What a meme');
+});
