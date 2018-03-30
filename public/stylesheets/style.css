@@ -512,12 +512,9 @@ footer {
   opacity: 1;
 }
 
-#imagerow {
-  padding-top: 10px;
-}
-
-#logoRow {
-  padding-top: 10px;
+#photoUploadRow {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 /*Styles for toggle switch ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
