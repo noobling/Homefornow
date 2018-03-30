@@ -384,7 +384,7 @@ function insertImageModal(img, index) {
 }
 
 function insertImageThumbnail(image, index, isHidden) {
-  column = "<div class='item col-xs-6' id='item" + index + "'>";
+  column = "<div class='item col-xs-6' style='padding-top: 5px; padding-bottom: 5px;' id='item" + index + "'>";
   if (isHidden) {
     column = "<div class='item col-xs-6' style='display: none;' id='item" + index + "'>"
   }
