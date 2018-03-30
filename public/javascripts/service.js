@@ -263,6 +263,15 @@ $('a[href="#serviceProfile"]').on('click', function() {
     $('#spinnerLoadProfile').hide();
     $('#addServiceForm').slideDown(1000);
   });
+  $.get('/service/dashboard/' + $('#uri').text() + '/images', function(data) {
+    console.log(data);
+    console.log(data.data.images);
+    console.log(data.data.logo);
+    $('#photoUploadRow').append(
+      insertPhotos($('#uri').text(), data.data.logo)
+    );
+    setImageListeners();
+  });
 });
 
 /**
@@ -271,3 +280,57 @@ $('a[href="#serviceProfile"]').on('click', function() {
 $('a[href="#bedsAvaliable"]').on('click', function() {
   console.log('What a meme');
 });
+
+function insertPhotos(uri, logo) {
+  return  "<div class='col-xs-12'>" +
+            "<div class='alert alert-danger' id='alertBox' style='display: none;'></div>" +
+          "</div>" +
+          "<label for='logoRow'>LOGO</label>" +
+          "<div class='row' id='logorow'>" +
+            insertLogoModal(logo) +
+            "<div class='item col-xs-6'>" +
+              "<form action='/service/profile/" + uri + "/logo/add' method='post' enctype='multipart/form-data'>" +
+                "<div class='thumbnail'>" +
+                  "<div class='image highlight' style='line-height: 0px;'>" +
+                    insertLogo(logo) +
+                  "</div>" +
+                "</div>" +
+              "</form>" +
+            "</div>" +
+          "</div>";
+}
+
+function insertLogoModal(logo) {
+    return "<div class='modal fade' id='deletelogomodal' role='dialog'>" +
+              "<div class='modal-dialog modal-sm'>" +
+                "<div class='modal-content'>" +
+                    "<div class='modal-header'><button class='close' type='button' data-dismiss='modal'>&times;</button>" +
+                        "<h3>Delete this logo?</h3>" +
+                    "</div>" +
+                    "<div class='modal-header text-center'>" +
+                        "<div class='image'><img class='img img-responsive' id='deleteLogoImg' src='" + logo + "' /></div>" +
+                    "</div>" +
+                    "<div class='modal-body text-center'>" +
+                        "<div class='btn btn-danger' id='deletelogobutton' onclick='deleteLogo()'>Delete</div>" +
+                    "</div>" +
+                "</div>" +
+            "</div>" +
+        "</div>";
+}
+
+function insertLogo(logo) {
+  let visibility = "";
+  logolabel = "<label id='logoLabel' style='margin: 0px; display: none;'>";
+  if (logo == null) {
+    visibility = " style='display: none;'";
+    logolabel = "<label id='logoLabel' style='margin: 0px;'>"
+  }
+  return  "<a id='logoLink'" + visibility + " href='#' data-toggle='modal' data-target='#deletelogomodal'>" +
+            "<img class='img-responsive' id='logoImg' src='" + logo + "'/>" +
+          "</a>" +
+          logolabel +
+            "<img class='img-responsive' id='plusLogo-img' src='/images/plus.png' alt='Add Image' style='cursor: pointer;'/>" +
+            "<img class='img-responsive' id='spinnerLogo-gif' src='/images/loading_spinner.gif' style='display: none;'/>" +
+            "<input id='logoAdd' type='file' accept='image/*' hidden='' name='logoAdd' onchange='event.preventDefault();'/>" +
+          "</label>";
+}

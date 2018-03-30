@@ -12,7 +12,7 @@ router.get('/dashboard/:serviceUri/beds', serviceController.dashboardBeds);
 router.get('/dashboard/:serviceUri/requests', serviceController.dashboardRequests);
 
 router.get('/dashboard/:serviceUri/profile', serviceController.dashboardProfile);
-
+router.get('/dashboard/:serviceUri/images', serviceController.dashboardImages);
 router.get('/dashboard/:serviceUri/available', serviceController.dashboardAvailable);
 
 

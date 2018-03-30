@@ -579,3 +579,26 @@ module.exports.profile = (req, res) => {
     res.status(500).json({ message: err });
   });
 };
+
+/**
+ * Renders the images for a service provider's profile page.
+ * @param  {Object} req Express request object.
+ * @param  {Object} res Express response object.
+ */
+module.exports.dashboardImages = (req, res) => {
+  Service.findOne({ uri: req.params.serviceUri }, 'name img logo').exec().then((service) => {
+    Promise.all([
+      images.getImagesForService(service, req.params.serviceUri),
+      images.getImageForService(service.logo, req.params.serviceUri),
+    ]).then(([imgs, logo]) => {
+      const params = imgs;
+      params.logo = logo;
+      console.log(params);
+      res.json({ data: params });
+    }).catch((err) => {
+      res.status(500).json({ message: err });
+    });
+  }).catch((err) => {
+    res.status(500).json({ message: err });
+  });
+};

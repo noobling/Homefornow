@@ -203,32 +203,13 @@ block content
                     .col-xs-12
                       label(for='serveRules') HOUSE RULES
                       textarea(rows="5", name='serveRules',id='serveRules', spellcheck="true", placeholder="Enter Description").form-control
-              .col-xs-12.col-md-4.col-md-offset-1
-                .row
+              .col-xs-12.col-md-5
+                .row#loadingPhotoUploadRow
+                  h5.text-center LOADING PHOTOS
+                  img.img-responsive.center-block#loadingPhotos(src='/images/loading_spinner.gif')
+                .row#photoUploadRow
                   .col-xs-12
                     .alert.alert-danger#alertBox(style='display: none')
-                  label(for='logoRow') LOGO
-                  .row#logorow
-                    +deleteLogoModal(uri, logo)
-                    .item.col-xs-6
-                      form(action="/service/profile/" + uri + "/logo/add", method="post", enctype="multipart/form-data")
-                        .thumbnail
-                          .image.highlight(style='line-height: 0px;')
-                            if logo == null
-                              -console.log('logo is null');
-                              a#logoLink(style='display: none;' href='#',data-toggle="modal",data-target="#deletelogomodal")
-                                img.img-responsive#logoImg()
-                              label#logoLabel(style='margin: 0px;')
-                                img.img-responsive#plusLogo-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
-                                img.img-responsive#spinnerLogo-gif(src='/images/loading_spinner.gif', style='display: none;')
-                                input#logoAdd(type='file', accept="image/*", hidden='', name="logoAdd", onchange="event.preventDefault();")
-                            else
-                              a#logoLink(href='#',data-toggle="modal",data-target="#deletelogomodal")
-                                img.img-responsive#logoImg(src=logo)
-                              label#logoLabel(style='margin: 0px; display: none;')
-                                img.img-responsive#plusLogo-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
-                                img.img-responsive#spinnerLogo-gif(src='/images/loading_spinner.gif', style='display: none;')
-                                input#logoAdd(type='file', accept="image/*", hidden='', name="logoAdd", onchange="event.preventDefault();")
                   label(for='imageRow') PHOTOS
                   .row#imagerow
                     if images != null && images.length > 0
