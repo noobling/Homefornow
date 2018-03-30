@@ -69,3 +69,25 @@ const BedPanel = ({ index, name }) => `
     </div>
   </div>
 `;
+
+$('#updateBeds').submit(function(event) {
+  event.preventDefault();
+  const submit_button = $(this).find(':submit');
+  const spinner = $(this).find('#spinnerLogo-gif');
+  submit_button.hide(100);
+  spinner.show(100);
+
+  const post_url = $(this).attr("action"); //get form action url
+  const request_method = $(this).attr("method"); //get form GET/POST method
+  const form_data = $(this).serialize(); //Encode form elements for submission
+
+  $.ajax({
+    url : post_url,
+    type: request_method,
+    data : form_data,
+  }).done(function(response) {
+    spinner.hide(100);
+    submit_button.show(100);
+    return;
+  });
+})
