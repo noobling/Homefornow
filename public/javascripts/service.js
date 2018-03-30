@@ -73,7 +73,7 @@ const BedPanel = ({ index, name }) => `
 $('#updateBeds').submit(function(event) {
   event.preventDefault();
   const submit_button = $(this).find(':submit');
-  const spinner = $(this).find('#spinnerLogo-gif');
+  const spinner = $(this).find('#spinnerUpdateBeds');
   submit_button.hide(100);
   spinner.show(100);
 
@@ -97,21 +97,168 @@ $('#updateBeds').submit(function(event) {
  */
 $(document).ready(function() {
   // AJAX for first tab
+  $('#updateBeds > .form-group').html('');
+  $('#spinnerLoadBeds').show();
+  $.get('/service/dashboard/' + $('#uri').text() + '/beds', function(data) {
+    $('#spinnerLoadBeds').hide();
+    let index = 0;
+    for (bed of data.service.beds) {
+      $('#updateBeds > .form-group').append(UpdatePanel({
+        index,
+        name: bed.name
+      }));
+      $('#avaliable'+index).prop('checked', bed.isOccupied === 'Available');
+      $('#pending'+index).prop('checked', bed.isOccupied === 'Pending');
+      $('#unavailable'+index).prop('checked', bed.isOccupied === 'Unavailable');
+      index++;
+    }
+  });
+
+  $('#requestList').html('');
+  $('#spinnerLoadRequests').show();
+  $.get('/service/dashboard/' + $('#uri').text() + '/requests', function(data) {
+    $('#spinnerLoadRequests').hide();
+    for (request of data.requests) {
+      $('#requestList').append(RequestPanel({
+        index: 0,
+        name: request.firstName + ' ' + request.lastName,
+        email: request.email,
+        number: request.phoneNumber,
+        age: getAge(request.dob),
+      }));
+    }
+  });
 });
 
 /**
  *  When the user clicks the Bed Management tab
  */
 $('a[href="#bedManagement"]').on('click', function() {
-  console.log('What a meme');
+  
+  $('#updateBeds > .form-group').html('');
+  $('#spinnerLoadBeds').show();
+  $.get('/service/dashboard/' + $('#uri').text() + '/beds', function(data) {
+    $('#spinnerLoadBeds').hide();
+    let index = 0;
+    for (bed of data.service.beds) {
+      $('#updateBeds > .form-group').append(UpdatePanel({
+        index,
+        name: bed.name
+      }));
+      $('#avaliable'+index).prop('checked', bed.isOccupied === 'Available');
+      $('#pending'+index).prop('checked', bed.isOccupied === 'Pending');
+      $('#unavailable'+index).prop('checked', bed.isOccupied === 'Unavailable');
+      index++;
+    }
+  });
+
+  $('#requestList').html('');
+  $('#spinnerLoadRequests').show();
+  $.get('/service/dashboard/' + $('#uri').text() + '/requests', function(data) {
+    $('#spinnerLoadRequests').hide();
+    for (request of data.requests) {
+      $('#requestList').append(RequestPanel({
+        index: 0,
+        name: request.firstName + ' ' + request.lastName,
+        email: request.email,
+        number: request.phoneNumber,
+        age: getAge(request.dob),
+      }));
+    }
+  });
 });
+
+function getAge(date) {
+  const today = Date.now();
+  const age = new Date(today - new Date(date).getTime());
+  return Math.abs(age.getUTCFullYear() - 1970);
+}
+
+const UpdatePanel = ({ index, name }) => `
+  <div class="panel shadow">
+    <div class="panel-body">
+      <div class="row text-center">
+        <div class="col-xs-2">
+          <h4>ICON</h4>
+        </div>
+        <div class="col-xs-4">
+          <h4>${name}</h4>
+        </div>
+        <div class="col-xs-2">
+          <h6>Avaliable</h6>
+          <input type="radio" name="beds[${index}][isOccupied]" value="Available" id='avaliable${index}' />
+        </div>
+        <div class="col-xs-2">
+          <h6>Pending</h6>
+          <input type="radio" name="beds[${index}][isOccupied]" value="Pending" id='pending${index}' />
+        </div>
+        <div class="col-xs-2">
+          <h6>Occupied</h6>
+          <input type="radio" name="beds[${index}][isOccupied]" value="Unavailable" id='unavailable${index}' />
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+
+const RequestPanel = ({ index, name, email, number, age }) => `
+  <div class="panel shadow">
+    <div class="panel-body">
+      <div class="row text-center">
+        <div class="col-xs-2">
+          <h4>ICON</h4>
+        </div>
+        <div class="col-xs-3">
+          <h6>${email}</h6>
+          <h6>${number}</h6>
+        </div>
+        <div class="col-xs-3">
+          <h4>${name}</h4>
+        </div>
+        <div class="col-xs-2">
+          <h6>${age}</h6>
+        </div>
+        <div class="col-xs-2">
+          <input type="checkbox"/>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
 
 /**
  *  When the user clicks the Service Profile tab
  */
 $('a[href="#serviceProfile"]').on('click', function() {
   $.get('/service/dashboard/' + $('#uri').text() + '/profile', function(data) {
-    console.log('Data = ' + data);
+
+    $('#serveName').val(data.service.name);
+    $('#serveType').val(data.service.serviceType);
+
+    $('#serveSuburb').val(data.service.address.suburb);
+    $('#serveState').val(data.service.address.state);
+    $('#servePostcode').val(data.service.address.postcode);
+
+    $('#serveMinAge').val(data.service.ageRange.minAge);
+    $('#serveMaxAge').val(data.service.ageRange.maxAge);
+    $('#serveStayLength').val(data.service.stayLength);
+
+    $('#serveEmail').val(data.email);
+    $('#servePhone').val(data.service.phoneNumber);
+
+    $('#serveDesc').val(data.service.description);
+    $('#serveAbout').val(data.service.about);
+    $('#serveRules').val(data.service.houseRules);
+
+    let $inputs = $('#serveAmenitiesForm :input');
+
+    $inputs.each(function() {
+      for (amen of data.service.amenities) {
+        if (amen.name === this.id) {
+          $(this).prop('checked', true);
+        }
+      }
+    });
   });
 });
 

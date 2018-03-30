@@ -7,8 +7,12 @@ const serviceController = require('../controllers/service');
 
 // Services Dashboard route
 router.get('/dashboard/:serviceUri', serviceController.dashboard);
-router.get('/dashboard/:serviceUri/management', serviceController.dashboardManagement);
+
+router.get('/dashboard/:serviceUri/beds', serviceController.dashboardBeds);
+router.get('/dashboard/:serviceUri/requests', serviceController.dashboardRequests);
+
 router.get('/dashboard/:serviceUri/profile', serviceController.dashboardProfile);
+
 router.get('/dashboard/:serviceUri/available', serviceController.dashboardAvailable);
 
 

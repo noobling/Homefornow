@@ -204,12 +204,6 @@ module.exports.addService = (req, res, next) => {
     });
 };
 
-// function getAge(date) {
-//   const today = Date.now();
-//   const age = new Date(today - date.getTime());
-//   return Math.abs(age.getUTCFullYear() - 1970);
-// }
-
 // function returnAges(requests) {
 //   const newRequests = requests;
 //   for (let i = 0; i < requests.length; i += 1) {
@@ -225,12 +219,13 @@ module.exports.addService = (req, res, next) => {
  */
 module.exports.dashboard = (req, res) => {
   if (!req.user || req.user.role !== 'service_provider') {
-    res.status(401).json({ message: 'You are not authorised to view this page.' });
+    // res.status(401).json({ message: 'You are not authorised to view this page.' });
+    res.redirect('/');
     return;
   }
   Service.findById(
     req.user.service[0],
-    'name address.suburb address.state address.postcode phoneNumber serviceType ageRange.minAge ageRange.maxAge stayLength available description about houseRules amenities.name beds openRequests uri',
+    'name uri',
   ).exec()
     .then((service) => {
       console.log(service.openRequests);
@@ -255,14 +250,34 @@ module.exports.dashboard = (req, res) => {
  * @param  {Object} req Express request object.
  * @param  {Object} res Express response object.
  */
-module.exports.dashboardManagement = (req, res) => {
+module.exports.dashboardBeds = (req, res) => {
   if (!req.user || req.user.role !== 'service_provider') {
     res.status(401).json({ message: 'You are not authorised to view this page.' });
     return;
   }
   Service.findById(
     req.user.service[0],
-    'name address.suburb address.state address.postcode phoneNumber serviceType ageRange.minAge ageRange.maxAge stayLength available description about houseRules amenities.name beds openRequests uri',
+    'beds',
+  ).exec()
+    .then((service) => {
+      console.log(service);
+      res.send({
+        service,
+      });
+    })
+    .catch((err) => {
+      res.status(401).json({ message: err });
+    });
+};
+
+module.exports.dashboardRequests = (req, res) => {
+  if (!req.user || req.user.role !== 'service_provider') {
+    res.status(401).json({ message: 'You are not authorised to view this page.' });
+    return;
+  }
+  Service.findById(
+    req.user.service[0],
+    'openRequests',
   ).exec()
     .then((service) => {
       console.log(service.openRequests);
@@ -271,8 +286,7 @@ module.exports.dashboardManagement = (req, res) => {
       }, 'firstName lastName gender phoneNumber email dob').exec()
         .then((requests) => {
           console.log(requests);
-          res.render('serviceDashboard', {
-            service,
+          res.send({
             requests,
           });
         })
@@ -294,13 +308,13 @@ module.exports.dashboardProfile = (req, res) => {
   }
   Service.findById(
     req.user.service[0],
-    'name address.suburb address.state address.postcode phoneNumber serviceType ageRange.minAge ageRange.maxAge stayLength description about houseRules amenities.name uri',
+    'name address.suburb address.state address.postcode phoneNumber serviceType ageRange.minAge ageRange.maxAge stayLength description about houseRules amenities.name',
   ).exec()
     .then((service) => {
-      console.log(`Open requests = ${service.openRequests}`);
       console.log(`service = ${service}`);
-      res.json({
+      res.send({
         service,
+        email: req.user.email,
       });
     })
     .catch((err) => {

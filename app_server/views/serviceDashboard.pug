@@ -28,7 +28,7 @@ block content
     .container
       .row
         .col-xs-12
-          h3 #{service.address.suburb}
+          //- h3 #{service.address.suburb}
           p#uri(style='display: none') #{service.uri}
             
   .container-fluid
@@ -58,28 +58,13 @@ block content
               a.pull-right(href='#', data-toggle='modal', data-target='#editBedModal')
                 h6 Edit 
                   span
-                    i.material-icons.btn-other(style='font-size: inherit;') edit 
+                    i.material-icons.btn-other(style='font-size: inherit;') edit
             .col-xs-12
               form(action='/service/beds/update/'+service.uri, method='post')#updateBeds
-                each bed in service.beds
-                  .panel.shadow
-                    .panel-body
-                      .row.text-center
-                        .col-xs-2
-                          h4 ICON
-                        .col-xs-4
-                          h4 #{bed.name}
-                        .col-xs-2
-                          h6 Avaliable
-                          input(type='radio', name='beds['+service.beds.indexOf(bed)+'][isOccupied]', checked=bed.isOccupied==='Available', value='Available')
-                        .col-xs-2
-                          h6 Pending
-                          input(type='radio', name='beds['+service.beds.indexOf(bed)+'][isOccupied]', checked=bed.isOccupied==='Pending', value='Pending')
-                        .col-xs-2
-                          h6 Occupied
-                          input(type='radio', name='beds['+service.beds.indexOf(bed)+'][isOccupied]', checked=bed.isOccupied==='Unavailable', value='Unavailable')
+                img.img-responsive.center-block#spinnerLoadBeds(src='/images/loading_spinner.gif', style='display: none')
+                .form-group
                 input.btn.btn-secondary.pull-right(type='submit', name='Submit', value='Update Beds')
-                img.img-responsive.pull-right#spinnerLogo-gif(src='/images/loading_spinner.gif', style='display: none')
+                img.img-responsive.pull-right#spinnerUpdateBeds(src='/images/loading_spinner.gif', style='display: none')
                 
           .row
             .col-xs-12
@@ -98,47 +83,33 @@ block content
                       h4 AGE
                     .col-xs-2
                       h4 CALLED
-                  
-              each request in requests
-                .panel.shadow
-                  .panel-body
-                    .row.text-center
-                      .col-xs-2
-                        if (request.gender == 'Male')
-                          h4 MALE ICON
-                        else
-                          h4 FEM ICON
-                      .col-xs-3
-                        h6 #{request.email}
-                        h6 #{request.phoneNumber}
-                      .col-xs-3
-                        h4 #{request.firstName} #{request.lastName}
-                      .col-xs-2
-                        h6 #{request.dob}
-                      .col-xs-2
-                        input(type='checkbox', name=request.email+'check')
+            
+            .col-xs-12#requestList 
+              img.img-responsive.center-block#spinnerLoadRequests(src='/images/loading_spinner.gif', style='display: none')
+            
+                
       #serviceProfile.tab-pane.fade.in
         .container-fluid(style='padding: 15px;')
           .spacer-xs
           form(action='/addservice', method='post', role='form', id='addServiceForm')          
             .row
-              .form-group#serveName
+              .form-group
                 .col-xs-12.col-sm-7(style='margin-bottom: 15px;')
                   label(for='serveName') SERVICE NAME
-                  input(type='text', name='serveName', id='serveName', required='', value=service.name).form-control
+                  input(type='text', name='serveName', id='serveName', required='').form-control
                 .col-xs-12.col-sm-5(style='margin-bottom: 15px;')
                   label(for='serveType') SERVICE TYPE
                   select.form-control(name='serveType', id='serveType', style='padding: 6px 10px 6px 4px;', required='')
                     option(value='crisis') CRISIS
                     option(value='transitional') TRANSITIONAL
                     option(value='long') LONG TERM
-              .form-group#serveLocation
+              .form-group
                 .col-xs-12
                   label LOCATION
                 .col-xs-12.col-sm-5(style='margin-bottom: 15px;')
-                  input(type='text', name='serveSuburb', id='serveSuburb', required='', placeholder='SUBURB', autocomplete='on', value=service.address.suburb).form-control
+                  input(type='text', name='serveSuburb', id='serveSuburb', required='', placeholder='SUBURB', autocomplete='on').form-control
                 .col-xs-6.col-sm-3(style='margin-bottom: 15px;')
-                  select.form-control(name='serveState', id='serveState', style='padding: 6px 10px 6px 4px;', required='', selected=service.address.state)
+                  select.form-control(name='serveState', id='serveState', style='padding: 6px 10px 6px 4px;', required='')
                     option(hidden='true') STATE
                     option ACT
                     option NSW
@@ -149,8 +120,8 @@ block content
                     option VIC
                     option WA
                 .col-xs-6.col-sm-4(style='margin-bottom: 15px;')
-                  input(type='text', name='servePostcode', id='servePostcode', required='', placeholder='POSTCODE', pattern="\d{4}", , value=service.address.postcode).form-control
-              .form-group#serveAge
+                  input(type='text', name='servePostcode', id='servePostcode', required='', placeholder='POSTCODE', pattern="\d{4}").form-control
+              .form-group
                 .col-xs-12.col-sm-8
                   .row
                     .col-xs-12
@@ -197,15 +168,15 @@ block content
                     option 21
                     option 24
             .row
-              .form-group#serveContact
+              .form-group
                 .col-xs-12
                   label SERVICE CONTACT INFORMATION
                 .col-xs-12.col-sm-8(style='margin-bottom: 15px;')
-                  input(type='email', name='serveEmail', id='serveEmail', placeholder='EMAIL', required='', value=user.email).form-control
+                  input(type='email', name='serveEmail', id='serveEmail', placeholder='EMAIL', required='').form-control
                 .col-xs-12.col-sm-4(style='margin-bottom: 15px;')
-                  input(type='tel', name='servePhone', id='servePhone', placeholder='PHONE NUMBER',required='', value=service.phoneNumber).form-control
+                  input(type='tel', name='servePhone', id='servePhone', placeholder='PHONE NUMBER',required='').form-control
             .row
-              .form-group#servePassword
+              .form-group
                 .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
                   .row
                     .col-xs-12
@@ -218,23 +189,23 @@ block content
                       input(type='password', name='serveCon', id='serveCon', required='').form-control
             .row
               .col-xs-12.col-md-7
-                .form-group#serveDescForm
+                .form-group
                   .row
                     .col-xs-12
                       label(for='serveDesc') BRIEF DESCRIPTION
-                      textarea(rows="5", name='serveDesc',id='serveDesc', spellcheck="true", placeholder="Enter Description").form-control #{service.description}
-                .form-group#serveAboutForm
+                      textarea(rows="5", name='serveDesc',id='serveDesc', spellcheck="true", placeholder="Enter Description").form-control
+                .form-group
                   .row
                     .col-xs-12
                       label(for='serveAbout') ABOUT
-                      textarea(rows="5", name='serveAbout',id='serveAbout', spellcheck="true", placeholder="Enter Description").form-control #{service.about}
-                .form-group#serveRulesForm
+                      textarea(rows="5", name='serveAbout',id='serveAbout', spellcheck="true", placeholder="Enter Description").form-control
+                .form-group
                   .row
                     .col-xs-12
                       label(for='serveRules') HOUSE RULES
-                      textarea(rows="5", name='serveRules',id='serveRules', spellcheck="true", placeholder="Enter Description").form-control #{service.houseRules}
+                      textarea(rows="5", name='serveRules',id='serveRules', spellcheck="true", placeholder="Enter Description").form-control
               .col-xs-12.col-md-4.col-md-offset-1
-                .row#photoUploadRow
+                .row
                   .col-xs-12
                     .alert.alert-danger#alertBox(style='display: none')
                   label(for='logoRow') LOGO
@@ -422,7 +393,6 @@ block content
       #bedsAvaliable.tab-pane.fade.in
         .container
           h3 //TODO
-  script.
     
   script(src='/javascripts/service.js')
   script(src='/javascripts/images.js')
