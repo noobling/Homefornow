@@ -308,9 +308,7 @@ $('a[href="#serviceProfile"]').on('click', function() {
 });
 
 function insertPhotos(uri, logo, images) {
-  return  "<div class='col-xs-12'>" +
-            "<div class='alert alert-danger' id='alertBox' style='display: none;'></div>" +
-          "</div>" +
+  return  "<div class='alert alert-danger' id='alertBox' style='display: none;'></div>" +
           "<label for='logoRow'>LOGO</label>" +
           "<div class='row' id='logorow'>" +
             insertLogoModal(logo) +
@@ -376,7 +374,7 @@ function insertImageModal(img, index) {
                         "<div class='image'><img class='img img-responsive' id='deleteImg" + index + "' src='" + img + "' /></div>" +
                     "</div>" +
                     "<div class='modal-body text-center'>" +
-                        "<div class='btn btn-danger' id='deleteimagebutton-image'" + index + "' onclick='deleteImage(" + index + ")'>Delete</div>" +
+                        "<div class='btn btn-danger' id='deleteimagebutton-image" + index + "' onclick='deleteImage(" + index + ")'>Delete</div>" +
                     "</div>" +
                 "</div>" +
             "</div>" +
