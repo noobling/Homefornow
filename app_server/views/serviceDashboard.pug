@@ -64,7 +64,7 @@ block content
                 img.img-responsive.center-block#spinnerLoadBeds(src='/images/loading_spinner.gif', style='display: none')
                 .form-group
                 input.btn.btn-secondary.pull-right(type='submit', name='Submit', value='Update Beds')
-                img.img-responsive.pull-right#spinnerUpdateBeds(src='/images/loading_spinner.gif', style='display: none')
+                img.img-responsive.pull-right#spinnerUpdateBeds(src='/images/loading_spinner.gif', style='display: none; max-height: 42px')
                 
           .row
             .col-xs-12
@@ -83,15 +83,14 @@ block content
                       h4 AGE
                     .col-xs-2
                       h4 CALLED
-            
-            .col-xs-12#requestList 
               img.img-responsive.center-block#spinnerLoadRequests(src='/images/loading_spinner.gif', style='display: none')
+            .col-xs-12#requestList 
             
-                
       #serviceProfile.tab-pane.fade.in
         .container-fluid(style='padding: 15px;')
           .spacer-xs
-          form(action='/addservice', method='post', role='form', id='addServiceForm')          
+          img.img-responsive.center-block#spinnerLoadProfile(src='/images/loading_spinner.gif', style='display: none')
+          form(action='/addservice', method='post', role='form', id='addServiceForm')
             .row
               .form-group
                 .col-xs-12.col-sm-7(style='margin-bottom: 15px;')
