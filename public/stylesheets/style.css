@@ -119,9 +119,6 @@ div[class^="col-"] {
 } */
 
 .btn-primary {
-    width: 153px;
-    height: 42px;
-    mix-blend-mode: undefined;
     border-radius: 3px;
     background-color: #cc0066;
     font-size: 13.2px;
@@ -132,8 +129,6 @@ div[class^="col-"] {
 }
 
 .btn-secondary {
-    width: 153px;
-    height: 42px;
     border-radius: 3px;
     background-color: #ffffff;
     border: solid 2px #cc0066;

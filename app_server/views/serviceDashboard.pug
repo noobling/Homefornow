@@ -52,12 +52,11 @@ block content
       #bedManagement.tab-pane.fade.in.active
         .container-fluid
           .row
-            .col-xs-6
+            .col-xs-12
               h3 Our Bed Count
-            .col-xs-6
-              a.btn.btn-primary.pull-right(href='#', data-toggle='modal', data-target='#editBedModal')
-                | Edit Beds 
-                i.material-icons.btn-other(style='font-size: inherit;') edit
+                a.pull-right.btn.btn-primary.btn-sm(href='#', data-toggle='modal', data-target='#editBedModal') Edit 
+                  i.material-icons.btn-other(style='font-size: inherit;') edit
+          .row
             .col-xs-12
               form(action='/service/dashboard/'+service.uri+'/beds/update', method='post')#updateBeds
                 img.img-responsive.center-block#spinnerLoadBeds(src='/images/loading_spinner.gif', style='display: none')
@@ -364,7 +363,7 @@ block content
                       
             .row
               .col-xs-12.text-right
-                input(type='submit', value='SAVE CHANGES').btn-primary
+                input.btn.btn-primary(type='submit', value='SAVE CHANGES')
       #bedsAvaliable.tab-pane.fade.in
         .container
           h3 //TODO

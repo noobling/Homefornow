@@ -31,8 +31,9 @@ $('#addBed').click(function() {
   $('#bedList').append(BedPanel({ index: bedIndex++, name: "" }));
 })
 
-$('#removeBed').click(function() {
-  $('#bedList').children().last().remove();
+$('#bedList').on('click', '[href="Remove Bed"]', function(event) {
+  event.preventDefault();
+  $(this).closest('div.panel.shadow').remove();
 })
 
 $('#bedForm').submit(function( event ) {
@@ -63,10 +64,10 @@ const BedPanel = ({ index, name }) => `
   <div class="panel shadow">
     <div class="panel-body">
       <div class="row text-center">
-        <div class="col-xs-4">
+        <div class="col-sm-3 col-xs-6">
           <input type="text" name="beds[${index}][name]" id="bedName${index}" value="${name}" required placeholder="Bed Name" class="form-control"/>
         </div>
-        <div class="col-xs-4">
+        <div class="col-sm-3 col-xs-6">
           <select name="beds[${index}][gender]" id="bedGender${index}" required class="form-control">
             <option hidden='true'>Gender</option>
             <option value='Male'>Male</option>
@@ -74,12 +75,17 @@ const BedPanel = ({ index, name }) => `
             <option value='Either'>Either</option>
           </select>
         </div>
-        <div class="col-xs-4">
+        <div class="col-sm-3 col-xs-6">
           <select name="beds[${index}][bedType]" id="bedType${index}" required class="form-control">
             <option hidden='true'>Bed Type</option>
             <option value='Single'>Single</option>
             <option value='ParentChild'>Parent with Child</option>
           </select>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+          <a href="Remove Bed" class="btn btn-danger btn-block">
+             Remove Bed
+          </a>
         </div>
       </div>
     </div>
@@ -333,6 +339,7 @@ $('a[href="#serviceProfile"]').on('click', function() {
     $('#spinnerLoadProfile').hide();
     $('#addServiceForm').slideDown(1000);
   });
+
   $.get('/service/dashboard/' + $('#uri').text() + '/images', function(data) {
     // console.log(data);
     // console.log(data.data.images);
