@@ -27,14 +27,14 @@ router.get('/profile/:serviceUri', serviceController.profile);
 // Upload new image to service
 router.post(
   '/profile/:serviceUri/add',
-  images.multer.single('fileAdd'),
+  images.multer.single('file'),
   images.sendUploadToFirebase,
   serviceController.uploadImage,
 );
 
 router.post(
   '/profile/:serviceUri/logo/add',
-  images.multer.single('logoAdd'),
+  images.multer.single('file'),
   images.sendUploadToFirebase,
   serviceController.uploadLogo,
 );
