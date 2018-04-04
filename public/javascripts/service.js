@@ -63,7 +63,7 @@ $('#bedForm').submit(function( event ) {
 const BedPanel = ({ index, name }) => `
   <div class="panel shadow">
     <div class="panel-body">
-      <div class="row text-center">
+      <div class="row text-center" style='padding-top: 16px;'>
         <div class="col-sm-3 col-xs-6">
           <input type="text" name="beds[${index}][name]" id="bedName${index}" value="${name}" required placeholder="Bed Name" class="form-control"/>
         </div>
@@ -83,7 +83,7 @@ const BedPanel = ({ index, name }) => `
           </select>
         </div>
         <div class="col-sm-3 col-xs-6">
-          <a href="Remove Bed" class="btn btn-danger btn-block">
+          <a href="Remove Bed" class="btn btn-primary">
              Remove Bed
           </a>
         </div>
@@ -255,15 +255,19 @@ const UpdatePanel = ({ index, name }) => `
 `;
 
 const RequestPanel = ({ index, name, email, number, age, id }) => `
-  <div class="panel shadow">
+  <div class="panel shadow" style='height: 10vh; min-height: 80px;'>
     <div class="panel-body">
       <div class="row text-center">
         <div class="col-xs-2">
           <h4>ICON</h4>
         </div>
         <div class="col-xs-3">
-          <h6>${email}</h6>
-          <h6>${number}</h6>
+          <a href='#'>
+            <h5>${email}</h6>
+          </a>
+          <a href='#'>
+            <h5>${number}</h6>
+          </a>
         </div>
         <div class="col-xs-3">
           <h4>${name}</h4>
@@ -280,15 +284,19 @@ const RequestPanel = ({ index, name, email, number, age, id }) => `
 `;
 
 const ClosedRequestPanel = ({ index, name, email, number, age }) => `
-  <div class="panel shadow">
+  <div class="panel shadow" style='height: 10vh; min-height: 80px;'>
     <div class="panel-body">
       <div class="row text-center">
         <div class="col-xs-2">
           <h4>ICON</h4>
         </div>
         <div class="col-xs-3">
-          <h6>${email}</h6>
-          <h6>${number}</h6>
+          <a href='#'>
+            <h5>${email}</h6>
+          </a>
+          <a href='#'>
+            <h5>${number}</h6>
+          </a>
         </div>
         <div class="col-xs-3">
           <h4>${name}</h4>
@@ -436,8 +444,8 @@ $('#logoSpace').on('change', 'input:file', function(event) {
       } else {
         // File upload unsuccessful - display the error and description in the alert box
         $('#alertBox').html("<strong>" + data.errorTitle + " </strong>" + data.errorDescription).show('slide');
-        plus.show();
-        spinner.hide();
+        $plus.show();
+        $spinner.hide();
         toggleInputs();
       }
     },
@@ -448,8 +456,8 @@ $('#logoSpace').on('change', 'input:file', function(event) {
       } else {
         $('#alertBox').html("<strong>Failure! </strong>" + errorThrown).show('slide');
       }
-      plus.show();
-      spinner.hide();
+      $plus.show();
+      $spinner.hide();
       toggleInputs();
     }
   });
@@ -557,8 +565,8 @@ $('#photoSpace').on('change', 'input:file', function(event) {
         } else {
           // File upload unsuccessful - display the error and description in the alert box
           $('#alertBox').html("<strong>" + data.errorTitle + " </strong>" + data.errorDescription).show('slide');
-          plus.show();
-          spinner.hide();
+          $plus.show();
+          $spinner.hide();
           toggleInputs();
         }
       },
@@ -569,8 +577,8 @@ $('#photoSpace').on('change', 'input:file', function(event) {
         } else {
           $('#alertBox').html("<strong>Failure! </strong>" + errorThrown).show('slide');
         }
-        plus.show();
-        spinner.hide();
+        $plus.show();
+        $spinner.hide();
         toggleInputs();
       }
     });
@@ -583,8 +591,9 @@ $('#photoSpace').on('click', '[id^=deleteimagebutton-image]', function(event) {
   const $element = $(this);
 
   const index = $('#photoSpace').find('div[data=image]').index($element.closest('div[data=image]'));
+  const count = $('#photoSpace').find('div[data=image]').length;
 
-  console.log(index);
+  console.log(count);
 
   toggleInputs();
 
@@ -596,7 +605,7 @@ $('#photoSpace').on('click', '[id^=deleteimagebutton-image]', function(event) {
 
       toggleInputs();
 
-      if (index == 5) {
+      if (count == 6) {
         $('#photoSpace').prepend(AddImagePanel({
           uri : $('#uri').text(),
           route: '/add',
@@ -658,11 +667,11 @@ const ImagePanel = ({ uri, image, index }) => `
               </div>
             </div>
           </div>
-        </div>
-        <div class='modal-body text-center'>
-          <a class='btn btn-danger btn-lg' id='deleteimagebutton-image${index}'>
-            Delete
-          </a>
+          <div class='modal-body text-center'>
+            <a class='btn btn-danger btn-lg' id='deleteimagebutton-image${index}'>
+              Delete
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -680,7 +689,7 @@ const AddImagePanel = ({ uri, route }) => `
   <div class="col-sm-4 col-xs-6" data="addImage" style="display: none;">
     <form action='/service/profile/${uri}${route}' method='post' enctype='multipart/form-data'>
       <div class='thumbnail' style='line-height: 0px;'>
-        <div class='highlight'>
+        <div class='image highlight'>
           <label style="margin: 0px;">
             <img class='img-responsive' id='plus-img' src='/images/plus.png' alt='Add Image' style='cursor: pointer;'/>
             <img class='img-responsive' id='spinner-gif' src='/images/loading_spinner.gif' style='display: none;'/>
