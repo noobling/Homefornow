@@ -1,35 +1,35 @@
 extends layout
 
 block navbar
-    .navbar.navbar-default.navbar-fixed-top#navbar
-      .container-fluid
-        .navbar-header
-          a.navbar-brand(href='/', style='padding-left: 20px;') HomeForNow
-          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-        #navbar-main.navbar-collapse.collapse
-          ul.nav.navbar-nav.navbar-right
-            if user
-              li
-                a(href='/admin') Welcome #{user.name}
-              li
-                a(href='/logout', style='padding-right: 20px;') Logout
-            else
-              li
-                a(href='#', data-toggle='modal', data-target='#loginmodal', style='padding-right: 20px;') Service Login
-              //- li
-              //-   a(href='javascript: register()') Register
-    .container
-        block content
-    script.
-      window.onscroll = function () {
-        const nav = document.querySelector('#navbar');
-        var navClass = 'navbar navbar-default navbar-fixed-top';
-        if (this.scrollY <= 10) {
-          nav.className = navClass;
-        } else {
-          nav.className = navClass + ' material-nav';
-        }
-      };
+  .navbar.navbar-default.navbar-fixed-top(style='z-index:99;')#navbar
+    .container-fluid
+      .navbar-header
+        a.navbar-brand(href='/', style='padding-left: 20px;') HomeForNow
+        button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+      #navbar-main.navbar-collapse.collapse
+        ul.nav.navbar-nav.navbar-right
+          if user
+            li
+              a(href='/admin') Welcome #{user.name}
+            li
+              a(href='/logout', style='padding-right: 20px;') Logout
+          else
+            li
+              a(href='#', data-toggle='modal', data-target='#loginmodal', style='padding-right: 20px;') Service Login
+            //- li
+            //-   a(href='javascript: register()') Register
+  .container
+      block content
+  script.
+    window.onscroll = function () {
+      const nav = document.querySelector('#navbar');
+      var navClass = 'navbar navbar-default navbar-fixed-top';
+      if (this.scrollY <= 10) {
+        nav.className = navClass;
+      } else {
+        nav.className = navClass + ' material-nav';
+      }
+    };

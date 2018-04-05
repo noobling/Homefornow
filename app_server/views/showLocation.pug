@@ -1,84 +1,101 @@
 extends navbarDefault
 
 block content
-  .row.page-header
-    if images != null && images.length > 0
-      .col-xs-12
-        .panel.panel-default
-          .panel-body
-            #myCarousel.carousel.slide(data-ride='carousel', data-interval='false')
-              // Indicators
-              ol.carousel-indicators
-                -var index = 0
-                each image in images
-                  if index == 0
-                    li.active(data-target='#myCarousel', data-slide-to=index++)
-                  else
-                    li(data-target='#myCarousel', data-slide-to=index++)
-              // Wrapper for slides
-              .carousel-inner
-                -var index = 1
-                each image in images
-                  if index == 1
-                    .item.active
-                      img.img-responsive.center-block(src=image, alt='Image ' + index++, style='height: 400px;')
-                  else
-                    .item
-                      img.img-responsive.center-block(src=image, alt='Image ' + index++, style='height: 400px;')
-                // Left and right controls
-                a.left.carousel-control(href='#myCarousel', data-slide='prev')
-                  span.glyphicon.glyphicon-chevron-left
-                  span.sr-only Previous
-                a.right.carousel-control(href='#myCarousel', data-slide='next')
-                  span.glyphicon.glyphicon-chevron-right
-                  span.sr-only Next
-  
-  .row.text-center
-    .col-xs-12
-        a(href='#',data-toggle="modal",data-target="#contactmodal"+uri)
-          button.btn.btn-primary
-            | Contact
-  .row.text-center
-    .col-xs-12
-      h1.text-center=location.name
-    .col-xs-12
-      h3.text-center= location.description
-    .col-xs-12.col-md-9
-  .row.text-center
-    .col-xs-12
-      h2 About
-    .col-xs-12
-      h4.text-center= location.about
-  if location.amenities != null
+  style.
+    .HTMLify {
+      white-space: pre-wrap;
+    }
+  .container-fuid
+    if images != null || logo != null
+      .spacer-xs
+      .spacer-xs
+      .row      
+        if images != null && images.length > 0
+          .col-xs-12
+            .panel.panel-default
+              .panel-body
+                #myCarousel.carousel.slide(data-ride='carousel', data-interval='false')
+                  // Indicators
+                  ol.carousel-indicators
+                    -var index = 0
+                    each image in images
+                      if index == 0
+                        li.active(data-target='#myCarousel', data-slide-to=index++)
+                      else
+                        li(data-target='#myCarousel', data-slide-to=index++)
+                  // Wrapper for slides
+                  .carousel-inner
+                    -var index = 1
+                    each image in images
+                      if index == 1
+                        .item.active
+                          img.img-responsive.center-block(src=image, alt='Image ' + index++, style='height: 400px;')
+                      else
+                        .item
+                          img.img-responsive.center-block(src=image, alt='Image ' + index++, style='height: 400px;')
+                    // Left and right controls
+                    a.left.carousel-control(href='#myCarousel', data-slide='prev')
+                      span.glyphicon.glyphicon-chevron-left(style='color: #333333; text-shadow: -5px 0 white, 0 5px white, 5px 0 white, 0 -5px white')
+                      span.sr-only Previous
+                    a.right.carousel-control(href='#myCarousel', data-slide='next')
+                      span.glyphicon.glyphicon-chevron-right(style='color: #333333; text-shadow: -5px 0 white, 0 5px white, 5px 0 white, 0 -5px white')
+                      span.sr-only Next
+          .col-xs-12
+            .panel-default
+              .panel-body
+                if logo != null
+                  img.img-responsive.center-block(src=logo)
+    else
+      .spacer-md
+
     .row.text-center
       .col-xs-12
-        h2 Amenities
+          a(href='#',data-toggle="modal",data-target="#contactmodal"+uri)
+            button.btn.btn-primary.btn-lg Contact
+    .spacer-xs
+    .row.text-center
       .col-xs-12
-        each amenity in location.amenities
-          i.material-icons.sec-color.text-center(style='font-size: 50px;') #{amenity.icon}
-            | &nbsp;
-          //- | #{amenity.label} &nbsp; 
-  .row.text-center
-    .col-xs-12
-      h2 House Rules
-    .col-xs-12
-       h3.text-center= location.houseRules
-  .row.text-center
-    if location.hours
+        h1.text-center= location.name
       .col-xs-12
-        h2 Office Hours
+        h3.text-justify.HTMLify #{location.description}
+      .col-xs-12.col-md-9
+    .row.text-center
       .col-xs-12
-        | Monday: #{location.hours.mon.open} - #{location.hours.mon.close}
-        br
-        | Tuesday: #{location.hours.tue.open} - #{location.hours.tue.close}
-        br
-        | Wednesday: #{location.hours.wed.open} - #{location.hours.wed.close}   
-        br
-        | Thursday: #{location.hours.thu.open} - #{location.hours.thu.close}
-        br
-        | Friday: #{location.hours.fri.open} - #{location.hours.fri.close}
-        br
-        | Saturday: #{location.hours.sat.open} - #{location.hours.sat.close}
-        br
-        | Sunday: #{location.hours.sun.open} - #{location.hours.sun.close}
-  .spacer-xs
+        h2 About
+      .col-xs-12
+        h4.text-justify.HTMLify #{location.about}
+    if location.amenities != null
+      .row.text-center
+        .col-xs-12
+          h2(style='margin-bottom: 30px;') Amenities
+        .col-xs-12
+          each amenity in location.amenities
+            .row
+              .col-xs-2.col-xs-offset-3.text-right
+                i.material-icons.sec-color.text-center(style='font-size: 50px;') #{amenity.icon} &nbsp;&nbsp;
+              .col-xs-7.text-left.no-wrap(style='padding-top: 15px;')
+                h4(style='display: inline;') #{amenity.label}
+    .row.text-center
+      .col-xs-12
+        h2 House Rules
+      .col-xs-12
+        h4.text-justify.HTMLify #{location.houseRules}
+    .row.text-center
+      if location.hours
+        .col-xs-12
+          h2 Office Hours
+        .col-xs-12
+          | Monday: #{location.hours.mon.open} - #{location.hours.mon.close}
+          br
+          | Tuesday: #{location.hours.tue.open} - #{location.hours.tue.close}
+          br
+          | Wednesday: #{location.hours.wed.open} - #{location.hours.wed.close}   
+          br
+          | Thursday: #{location.hours.thu.open} - #{location.hours.thu.close}
+          br
+          | Friday: #{location.hours.fri.open} - #{location.hours.fri.close}
+          br
+          | Saturday: #{location.hours.sat.open} - #{location.hours.sat.close}
+          br
+          | Sunday: #{location.hours.sun.open} - #{location.hours.sun.close}
+    .spacer-xs

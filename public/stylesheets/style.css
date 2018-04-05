@@ -706,6 +706,7 @@ input:checked + .slider:before {
 
 .carousel-control {
   background-image: none !important;
-  background: rgba(0, 0, 0, 0.5);
-  width: 10%;
+  /* background: rgba(0, 0, 0, 0.5); */
+  background: transparent;
+  width: 7%;
 }

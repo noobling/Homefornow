@@ -7,6 +7,12 @@ block content
   include _includes/deleteImageModal
   
   style.
+    #beds, #beds > i {
+      color: #333333;
+    }
+    #beds:hover {
+      color: #cc0066;
+    }
     select, textarea, .thumbnail {
       border: solid 2px #333333 !important;
       border-radius: 3px !important;
@@ -51,12 +57,12 @@ block content
     .tab-content.service-tab-content
       #bedManagement.tab-pane.fade.in.active
         .container-fluid
-          .row
-            .col-xs-12
+          .row(style='margin-top: 20px;')
+            .col-xs-6
               h3 Our Bed Count
-                a.pull-right.btn.btn-primary.btn-sm(href='#', data-toggle='modal', data-target='#editBedModal') Edit 
-                  i.material-icons.btn-other(style='font-size: inherit;') edit
-          .row
+            .col-xs-6(style='padding-top: 30px;')
+              a.pull-right( href='#', data-toggle='modal', data-target='#editBedModal')#beds Edit Beds
+                i.material-icons.btn-other(style='font-size: inherit; color: inherit;') edit
             .col-xs-12
               form(action='/service/dashboard/'+service.uri+'/beds/update', method='post')#updateBeds
                 img.img-responsive.center-block#spinnerLoadBeds(src='/images/loading_spinner.gif', style='display: none')
@@ -372,8 +378,13 @@ block content
               .col-xs-12.text-right
                 input.btn.btn-primary(type='submit', value='SAVE CHANGES')
       #bedsAvaliable.tab-pane.fade.in
-        .container
-          h3 //TODO
+        .container-fluid
+          .row
+            .col-xs-12
+              h3.text-center CRISIS CARE
+          .row
+            .col-xs-12
+              h3.text-center TRANSITIONAL
     
   script(src='/javascripts/service.js')
   script(src='/javascripts/images.js')

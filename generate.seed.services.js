@@ -213,7 +213,7 @@ function genBeds(min, max) {
       isDisability: Math.random() < 0.5,
       bedType: choose(BED_TYPE),
       isOccupied: Math.random() < 0.5,
-      tags: getBedTags(coloured)
+      tags: getBedTags(coloured),
     };
     beds.push(bed);
   }
