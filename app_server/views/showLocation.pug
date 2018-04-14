@@ -24,21 +24,21 @@ block content
                       else
                         li(data-target='#myCarousel', data-slide-to=index++)
                   // Wrapper for slides
-                  .carousel-inner
+                  .carousel-inner(style='height: 50vh;')
                     -var index = 1
                     each image in images
                       if index == 1
                         .item.active
-                          img.img-responsive.center-block(src=image, alt='Image ' + index++, style='height: 400px;')
+                          img.img-responsive.img-square.center-block(src=image, alt='Image ' + index++)
                       else
                         .item
-                          img.img-responsive.center-block(src=image, alt='Image ' + index++, style='height: 400px;')
+                          img.img-responsive.img-square.center-block(src=image, alt='Image ' + index++)
                     // Left and right controls
                     a.left.carousel-control(href='#myCarousel', data-slide='prev')
-                      span.glyphicon.glyphicon-chevron-left(style='color: #333333; text-shadow: -5px 0 white, 0 5px white, 5px 0 white, 0 -5px white')
+                      span.glyphicon.glyphicon-chevron-left(style='color: #b3b3b3;')
                       span.sr-only Previous
                     a.right.carousel-control(href='#myCarousel', data-slide='next')
-                      span.glyphicon.glyphicon-chevron-right(style='color: #333333; text-shadow: -5px 0 white, 0 5px white, 5px 0 white, 0 -5px white')
+                      span.glyphicon.glyphicon-chevron-right(style='color: #b3b3b3;')
                       span.sr-only Next
           .col-xs-12
             .panel-default
@@ -69,15 +69,16 @@ block content
         .col-xs-12
           h2(style='margin-bottom: 30px;') Amenities
         .col-xs-12
-          each amenity in location.amenities
-            .row
-              .col-xs-2.col-xs-offset-3.text-right
-                i.material-icons.sec-color.text-center(style='font-size: 50px;') #{amenity.icon} &nbsp;&nbsp;
-              .col-xs-7.text-left.no-wrap(style='padding-top: 15px;')
-                h4(style='display: inline;') #{amenity.label}
+          .row
+            each amenity in location.amenities
+              .col-xs-12.col-md-4.col-sm-6
+                .col-xs-3.text-right
+                  i.material-icons.sec-color.text-center(style='font-size: 50px;') #{amenity.icon} &nbsp;&nbsp;
+                .col-xs-9.text-left.no-wrap(style='padding-top: 15px;')
+                  h4(style='display: inline;') #{amenity.label}
     .row.text-center
       .col-xs-12
-        h2 House Rules
+        h2 House Expectations
       .col-xs-12
         h4.text-justify.HTMLify #{location.houseRules}
     .row.text-center

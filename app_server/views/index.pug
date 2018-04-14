@@ -58,16 +58,17 @@ block content
         if location
           .col-md-4.col-sm-12
             .panel.panel-default.panel-spaced
-              a(href='location/'+location.uri)
-                if images[[crisis, transitional, long].indexOf(location)] != null
-                  img.img-responsive.img-square.img-shadow.center-block(src=images[[crisis, transitional, long].indexOf(location)])
-                else
-                  img.img-responsive.img-square.img-shadow.center-block(src='images/placeholder.png')
-                p
-                  a(href='/location/'+location.uri, style='text-decoration: none; color: inherit;')
-                    .panel-title.text-center.roboto-title.black.line-spc-2= location.name
-                  .panel-body.text-justify.text-center.roboto-desc.dark-grey.line-spc-4
-                      | #{location.description}
+              .panel-header.image.img-shadow
+                a(href='location/'+location.uri)
+                  if images[[crisis, transitional, long].indexOf(location)] != null
+                    img.img-responsive.img-square.center-block(src=images[[crisis, transitional, long].indexOf(location)])
+                  else
+                    img.img-responsive.img-square.center-block(src='images/placeholder-image.png')
+              .panel-header
+                a(href='/location/'+location.uri)
+                  .panel-title.text-center.roboto-title.black.line-spc-2= location.name
+                .text-justify.text-center.roboto-desc.dark-grey.line-spc-4(style='padding-top: 5px;')
+                    | #{location.description}
     .spacer-xs
     .row
       .col-sm-12

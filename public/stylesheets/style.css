@@ -25,23 +25,25 @@ h1 {
 /* CSS for inputs~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 input[type=text], input[type=password], input[type=email], input[type=tel], input[type=date] {
     border-radius: 3px;
+    box-shadow: 0px 1px 6.9px 0.1px rgba(0, 0, 0, 0.16);
     background-color: #ffffff;
-    box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3);
-    box-shadow: 0px 2px 7.8px 0.2px var(--black-30);
-    border: solid 2px #333333;
+    border: solid 2px #ebebeb;
 }
 
 textarea {
     border-radius: 3px;
+    box-shadow: 0px 1px 6.9px 0.1px rgba(0, 0, 0, 0.16);
     background-color: #ffffff;
-    box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3);
-    box-shadow: 0px 2px 7.8px 0.2px var(--black-30);
-    border: solid 2px #333333;
+    border: solid 2px #ebebeb;
 }
 
 select {
     border: none !important;
     box-shadow: none !important;
+}
+
+input:checked {
+  background-color: #cc0066;
 }
 
 ::placeholder {

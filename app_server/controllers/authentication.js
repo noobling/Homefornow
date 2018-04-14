@@ -27,6 +27,7 @@ module.exports.login = (req, res, next) => {
     if (!user) {
       console.log('no user');
       res.redirect('/');
+      return;
     }
     req.logIn(user, (err2) => {
       if (err2) { next(err); }

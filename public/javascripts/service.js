@@ -553,12 +553,14 @@ $('#photoSpace').on('change', 'input:file', function(event) {
           }));
           $('#photoSpace').children('div[data=image]').last().show(500);
 
+          console.log(photoCount);
+
           // Enable the images and hide the spinner, then toggle the inputs
           if (photoCount < 6) {
             $plus.show();
             $spinner.hide();
           } else {
-            $element.closest('.col-sm-4.col-xs-6').hide(500, function() {
+            $element.closest('div[data=addImage]').hide(500, function() {
               $(this).remove();
             });
           }
@@ -654,7 +656,7 @@ $('#photoUploadRow').on('click', 'a[id^=imagethumbnailmodal]', function() {
 })
 
 const ImagePanel = ({ uri, image, index }) => `
-  <div class="col-sm-4 col-xs-6" data='image' style='display: none;'>
+  <div class="col-sm-2 col-xs-6" data='image' style='display: none;'>
     <div class='modal fade' id='deleteimagemodal-image${index}' role='dialog'>
       <div class='modal-dialog modal-sm'>
         <div class='modal-content'>
@@ -686,7 +688,7 @@ const ImagePanel = ({ uri, image, index }) => `
 `;
 
 const AddImagePanel = ({ uri, route }) => `
-  <div class="col-sm-4 col-xs-6" data="addImage" style="display: none;">
+  <div class="col-sm-2 col-xs-6" data="addImage" style="display: none;">
     <form action='/service/profile/${uri}${route}' method='post' enctype='multipart/form-data'>
       <div class='thumbnail' style='line-height: 0px;'>
         <div class='image highlight'>

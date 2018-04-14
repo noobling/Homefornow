@@ -14,23 +14,22 @@ block content
       color: #cc0066;
     }
     select, textarea, .thumbnail {
-      border: solid 2px #333333 !important;
-      border-radius: 3px !important;
-      box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3) !important;
-      box-shadow: 0px 2px 7.8px 0.2px var(--black-30) !important;
+      border-radius: 3px;
+      box-shadow: 0px 1px 6.9px 0.1px rgba(0, 0, 0, 0.16) !important;
+      background-color: #ffffff;
+      border: solid 2px #ebebeb !important;
     }
     .well {
-      box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3) !important;
-      box-shadow: 0px 2px 7.8px 0.2px var(--black-30) !important;
-      border: solid 2px #333333 !important;
-      border-radius: 3px !important;
-      background-color: #ebebeb;
+      border-radius: 3px;
+      box-shadow: 0px 1px 6.9px 0.1px rgba(0, 0, 0, 0.16) !important;
+      background-color: #ffffff;
+      border: solid 2px #ebebeb !important;
     }
     #serveDesc, #serveAbout, #serveRules { resize: none; }
 
   .page-header-sm
     .container
-        h1 #{service.name}
+        h1.bang #{service.name}
     .container
       .row
         .col-xs-12
@@ -65,7 +64,7 @@ block content
                 i.material-icons.btn-other(style='font-size: inherit; color: inherit;') edit
             .col-xs-12
               form(action='/service/dashboard/'+service.uri+'/beds/update', method='post')#updateBeds
-                img.img-responsive.center-block#spinnerLoadBeds(src='/images/loading_spinner.gif', style='display: none')
+                img.img-responsive.center-block#spinnerLoadBeds(src='/images/loading_street.gif', style='display: none')
                 .form-group
                 input.btn.btn-secondary.pull-right(type='submit', name='Submit', value='Update Availability')
                 img.img-responsive.pull-right#spinnerUpdateBeds(src='/images/loading_spinner.gif', style='display: none; max-height: 42px')
@@ -89,7 +88,7 @@ block content
                       h4 CALLED
             .col-xs-12
               form(action='/service/dashboard/'+service.uri+'/requests/update', method='post')#updateRequests
-                img.img-responsive.center-block#spinnerLoadRequests(src='/images/loading_spinner.gif', style='display: none')
+                img.img-responsive.center-block#spinnerLoadRequests(src='/images/loading_street.gif', style='display: none')
                 .form-group
                 input.btn.btn-secondary.pull-right(type='submit', name='Submit', value='Update Requests')
                 img.img-responsive.pull-right#spinnerUpdateRequests(src='/images/loading_spinner.gif', style='display: none; max-height: 42px')
@@ -110,7 +109,7 @@ block content
                       h4 AGE
             .col-xs-12
               form(action='/service/dashboard/'+service.uri+'/closed_requests/update', method='post')#closedRequests
-                img.img-responsive.center-block#spinnerLoadRequestsClosed(src='/images/loading_spinner.gif', style='display: none')
+                img.img-responsive.center-block#spinnerLoadRequestsClosed(src='/images/loading_street.gif', style='display: none')
                 .form-group
                 input.btn.btn-secondary.pull-right(type='submit', name='Submit', value='Update Requests')
                 img.img-responsive.pull-right#spinnerUpdateRequests(src='/images/loading_spinner.gif', style='display: none; max-height: 42px')
@@ -118,7 +117,7 @@ block content
       #serviceProfile.tab-pane.fade.in
         .container-fluid(style='padding: 15px;')
           .spacer-xs
-          img.img-responsive.center-block#spinnerLoadProfile(src='/images/loading_spinner.gif', style='display: none')
+          img.img-responsive.center-block#spinnerLoadProfile(src='/images/loading_street.gif', style='display: none')
           form(action='/addservice', method='post', role='form', id='addServiceForm')
             .row
               .form-group
@@ -230,7 +229,7 @@ block content
                 .form-group
                   .row
                     .col-xs-12
-                      label(for='serveRules') HOUSE RULES
+                      label(for='serveRules') HOUSE EXPECTATIONS
                       textarea(rows="5", name='serveRules',id='serveRules', spellcheck="true", placeholder="Enter Description").form-control
               .col-md-6.col-xs-12
                 .form-group#serveAmenitiesForm
@@ -362,7 +361,7 @@ block content
               .col-xs-12
                 .row#loadingPhotoUploadRow
                   h5.text-center LOADING PHOTOS
-                  img.img-responsive.center-block#loadingPhotos(src='/images/loading_spinner.gif')
+                  img.img-responsive.center-block#loadingPhotos(src='/images/loading_street.gif')
                 .row#photoUploadRow
                   .col-xs-12
                     .alert.alert-danger#alertBox(style='display: none')
