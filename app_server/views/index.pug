@@ -22,11 +22,11 @@ block content
           h1.sec-color.bang= title2
           h3.bold(style='margin-bottom: 0px;')= 'Youth Accomodation'
           h3.bold(style='margin: 0px;')= 'Options in Perth, Western Australia'
-    form(id='locationForm')
+    form(id='locationForm', onsubmit="event.preventDefault()")
       .form-group
         .row
           .col-md-8.col-xs-12
-            input.form-control.input-lg(type='text', name='location', placeholder='Where are you now - e.g. Subiaco', autocomplete='on')#location
+            input.form-control.input-lg(type='text', name='location', placeholder='Where are you now - e.g. Subiaco', autocomplete='on', required)#location
             if user
               input(type='hidden', name='userId', id='userId', value=user.id)
             .spacer-sm
@@ -37,13 +37,11 @@ block content
                   a(href='javascript: geoloc();', class='geoloc' style='color: #999;')#get_location
                     | my current location
           .col-md-2.col-xs-6.text-right
-            a(href='#',data-toggle='modal',data-target='#shortTermModal')
-              button(type='button').btn.btn-lg.btn-primary#shortBtn
-                | Right now
+            button(type='submit', data-toggle='modal',data-target='#shortTermModal').btn.btn-lg.btn-primary#shortBtn
+              | Right now
           .col-md-2.col-xs-6.text-left
-            a(href='#',data-toggle='modal',data-target='#longTermModal')
-              button(type='button').btn.btn-lg.btn-secondary#longBtn
-                | Long term
+            button(type='submit', data-toggle='modal',data-target='#longTermModal').btn.btn-lg.btn-secondary#longBtn
+              | Long term
     .spacer-md
     .row
       .col-xs-12
