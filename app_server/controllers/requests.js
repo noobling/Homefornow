@@ -19,15 +19,6 @@ function errorHandler(res, err, status) {
 }
 
 module.exports.addRequest = (req, res) => {
-  console.log(req.body);
-
-  Object.keys(req.body).forEach((key) => {
-    console.log(key, req.body[key]);
-    if (req.body[key] === '') {
-      res.redirect('/');
-    }
-  });
-
   const request = new Request();
 
   request.firstName = req.body.fName;
