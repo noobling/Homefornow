@@ -19,13 +19,15 @@ function sendJSONresponse(res, status, content) {
  * @param  {Function} next Express next function.
  */
 module.exports.login = (req, res, next) => {
-  const prevPage = req.header('Referer') || '/';
+  // const prevPage = req.header('Referer') || '/';
   passport.authenticate('local', (err, user) => {
     if (err) {
       next(err);
     }
     if (!user) {
-      res.redirect(prevPage);
+      console.log('no user');
+      res.redirect('/');
+      return;
     }
     req.logIn(user, (err2) => {
       if (err2) { next(err); }

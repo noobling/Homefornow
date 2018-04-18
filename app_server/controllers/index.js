@@ -72,9 +72,9 @@ module.exports.index = (req, res) => {
       }
 
       Promise.all([
-        images.getLogoForService(services.crisis.logo, services.crisis.uri),
-        images.getLogoForService(services.transitional.logo, services.transitional.uri),
-        images.getLogoForService(services.long.logo, services.long.uri),
+        images.getImageForService(services.crisis.logo, services.crisis.uri),
+        images.getImageForService(services.transitional.logo, services.transitional.uri),
+        images.getImageForService(services.long.logo, services.long.uri),
       ]).then(([result1, result2, result3]) => {
         res.render('index', {
           user: req.user,

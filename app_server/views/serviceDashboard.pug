@@ -2,30 +2,39 @@ extends navbarDefault
 
 block content
   include _includes/addBedModal
+  include _includes/deleteLogoModal
+  include _includes/imageThumbnail
+  include _includes/deleteImageModal
   
   style.
+    #beds, #beds > i {
+      color: #333333;
+    }
+    #beds:hover {
+      color: #cc0066;
+    }
     select, textarea, .thumbnail {
-      border: solid 2px #333333 !important;
-      border-radius: 3px !important;
-      box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3) !important;
-      box-shadow: 0px 2px 7.8px 0.2px var(--black-30) !important;
+      border-radius: 3px;
+      box-shadow: 0px 1px 6.9px 0.1px rgba(0, 0, 0, 0.16) !important;
+      background-color: #ffffff;
+      border: solid 2px #ebebeb !important;
     }
     .well {
-      box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3) !important;
-      box-shadow: 0px 2px 7.8px 0.2px var(--black-30) !important;
-      border: solid 2px #333333 !important;
-      border-radius: 3px !important;
-      background-color: #ebebeb;
+      border-radius: 3px;
+      box-shadow: 0px 1px 6.9px 0.1px rgba(0, 0, 0, 0.16) !important;
+      background-color: #ffffff;
+      border: solid 2px #ebebeb !important;
     }
     #serveDesc, #serveAbout, #serveRules { resize: none; }
 
   .page-header-sm
     .container
-        h1 #{service.name}
+        h1.bang #{service.name}
     .container
       .row
         .col-xs-12
-          h3 #{service.address.suburb}
+          //- h3 #{service.address.suburb}
+          p#uri(style='display: none') #{service.uri}
             
   .container-fluid
     ul.nav.nav-tabs.nav-justified.service-tabs
@@ -47,37 +56,22 @@ block content
     .tab-content.service-tab-content
       #bedManagement.tab-pane.fade.in.active
         .container-fluid
-          .row
-            .col-xs-10
+          .row(style='margin-top: 20px;')
+            .col-xs-6
               h3 Our Bed Count
-            .col-xs-2
-              a.pull-right(href='#', data-toggle='modal', data-target='#editBedModal')
-                h6 Edit 
-                  span
-                    i.material-icons.btn-other(style='font-size: inherit;') edit 
+            .col-xs-6(style='padding-top: 30px;')
+              a.pull-right( href='#', data-toggle='modal', data-target='#editBedModal')#beds Edit Beds
+                i.material-icons.btn-other(style='font-size: inherit; color: inherit;') edit
             .col-xs-12
-              form(action='/service/beds/update/'+service.uri, method='post')
-                each bed in service.beds
-                  .panel.shadow
-                    .panel-body
-                      .row.text-center
-                        .col-xs-2
-                          h4 ICON
-                        .col-xs-4
-                          h4 #{bed.name}
-                        .col-xs-2
-                          h6 Avaliable
-                          input(type='radio', name='beds['+service.beds.indexOf(bed)+'][isOccupied]', checked=bed.isOccupied==='Available', value='Available')
-                        .col-xs-2
-                          h6 Pending
-                          input(type='radio', name='beds['+service.beds.indexOf(bed)+'][isOccupied]', checked=bed.isOccupied==='Pending', value='Pending')
-                        .col-xs-2
-                          h6 Occupied
-                          input(type='radio', name='beds['+service.beds.indexOf(bed)+'][isOccupied]', checked=bed.isOccupied==='Unavailable', value='Unavailable')
-                input.btn.btn-secondary.pull-right(type='submit', name='Submit', value='Update Beds')
+              form(action='/service/dashboard/'+service.uri+'/beds/update', method='post')#updateBeds
+                img.img-responsive.center-block#spinnerLoadBeds(src='/images/loading_street.gif', style='display: none')
+                .form-group
+                input.btn.btn-secondary.pull-right(type='submit', name='Submit', value='Update Availability')
+                img.img-responsive.pull-right#spinnerUpdateBeds(src='/images/loading_spinner.gif', style='display: none; max-height: 42px')
+                
           .row
             .col-xs-12
-              h3 Our Requests
+              h3 Our Open Requests
             .col-xs-12
               .panel
                 .panel-body
@@ -92,47 +86,57 @@ block content
                       h4 AGE
                     .col-xs-2
                       h4 CALLED
-                  
-              each request in requests
-                .panel.shadow
-                  .panel-body
-                    .row.text-center
-                      .col-xs-2
-                        if (request.gender == 'Male')
-                          h4 MALE ICON
-                        else
-                          h4 FEM ICON
-                      .col-xs-3
-                        h6 #{request.email}
-                        h6 #{request.phoneNumber}
-                      .col-xs-3
-                        h4 #{request.firstName} #{request.lastName}
-                      .col-xs-2
-                        h6 #{request.dob}
-                      .col-xs-2
-                        input(type='checkbox', name=request.email+'check')
+            .col-xs-12
+              form(action='/service/dashboard/'+service.uri+'/requests/update', method='post')#updateRequests
+                img.img-responsive.center-block#spinnerLoadRequests(src='/images/loading_street.gif', style='display: none')
+                .form-group
+                input.btn.btn-secondary.pull-right(type='submit', name='Submit', value='Update Requests')
+                img.img-responsive.pull-right#spinnerUpdateRequests(src='/images/loading_spinner.gif', style='display: none; max-height: 42px')
+          .row
+            .col-xs-12
+              h3 Our Closed Requests
+            .col-xs-12
+              .panel
+                .panel-body
+                  .row.text-center
+                    .col-xs-2
+                      h4 GENDER
+                    .col-xs-3
+                      h4 CONTACT
+                    .col-xs-3
+                      h4 NAME
+                    .col-xs-2
+                      h4 AGE
+            .col-xs-12
+              form(action='/service/dashboard/'+service.uri+'/closed_requests/update', method='post')#closedRequests
+                img.img-responsive.center-block#spinnerLoadRequestsClosed(src='/images/loading_street.gif', style='display: none')
+                .form-group
+                input.btn.btn-secondary.pull-right(type='submit', name='Submit', value='Update Requests')
+                img.img-responsive.pull-right#spinnerUpdateRequests(src='/images/loading_spinner.gif', style='display: none; max-height: 42px')
+          .spacer-sm
       #serviceProfile.tab-pane.fade.in
         .container-fluid(style='padding: 15px;')
           .spacer-xs
-          form(action='/addservice', method='post', role='form', id='addServiceForm')          
+          img.img-responsive.center-block#spinnerLoadProfile(src='/images/loading_street.gif', style='display: none')
+          form(action='/addservice', method='post', role='form', id='addServiceForm')
             .row
-              .form-group#serveName
+              .form-group
                 .col-xs-12.col-sm-7(style='margin-bottom: 15px;')
                   label(for='serveName') SERVICE NAME
-                  input(type='text', name='serveName', id='serveName', required='', value=service.name).form-control
+                  input(type='text', name='serveName', id='serveName', required='').form-control
                 .col-xs-12.col-sm-5(style='margin-bottom: 15px;')
                   label(for='serveType') SERVICE TYPE
                   select.form-control(name='serveType', id='serveType', style='padding: 6px 10px 6px 4px;', required='')
                     option(value='crisis') CRISIS
                     option(value='transitional') TRANSITIONAL
                     option(value='long') LONG TERM
-              .form-group#serveLocation
+              .form-group
                 .col-xs-12
                   label LOCATION
                 .col-xs-12.col-sm-5(style='margin-bottom: 15px;')
-                  input(type='text', name='serveSuburb', id='serveSuburb', required='', placeholder='SUBURB', autocomplete='on', value=service.address.suburb).form-control
+                  input(type='text', name='serveSuburb', id='serveSuburb', required='', placeholder='SUBURB', autocomplete='on').form-control
                 .col-xs-6.col-sm-3(style='margin-bottom: 15px;')
-                  select.form-control(name='serveState', id='serveState', style='padding: 6px 10px 6px 4px;', required='', selected=service.address.state)
+                  select.form-control(name='serveState', id='serveState', style='padding: 6px 10px 6px 4px;', required='')
                     option(hidden='true') STATE
                     option ACT
                     option NSW
@@ -143,8 +147,8 @@ block content
                     option VIC
                     option WA
                 .col-xs-6.col-sm-4(style='margin-bottom: 15px;')
-                  input(type='text', name='servePostcode', id='servePostcode', required='', placeholder='POSTCODE', pattern="\d{4}", , value=service.address.postcode).form-control
-              .form-group#serveAge
+                  input(type='text', name='servePostcode', id='servePostcode', required='', placeholder='POSTCODE', pattern="\d{4}").form-control
+              .form-group
                 .col-xs-12.col-sm-8
                   .row
                     .col-xs-12
@@ -191,15 +195,15 @@ block content
                     option 21
                     option 24
             .row
-              .form-group#serveContact
+              .form-group
                 .col-xs-12
                   label SERVICE CONTACT INFORMATION
                 .col-xs-12.col-sm-8(style='margin-bottom: 15px;')
-                  input(type='email', name='serveEmail', id='serveEmail', placeholder='EMAIL', required='', value=user.email).form-control
+                  input(type='email', name='serveEmail', id='serveEmail', placeholder='EMAIL', required='').form-control
                 .col-xs-12.col-sm-4(style='margin-bottom: 15px;')
-                  input(type='tel', name='servePhone', id='servePhone', placeholder='PHONE NUMBER',required='', value=service.phoneNumber).form-control
+                  input(type='tel', name='servePhone', id='servePhone', placeholder='PHONE NUMBER',required='').form-control
             .row
-              .form-group#servePassword
+              .form-group
                 .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
                   .row
                     .col-xs-12
@@ -211,82 +215,27 @@ block content
                       label(for='serveCon') CONFIRM PASSWORD
                       input(type='password', name='serveCon', id='serveCon', required='').form-control
             .row
-              .col-xs-12.col-md-7
-                .form-group#serveDescForm
+              .col-xs-12.col-md-6
+                .form-group
                   .row
                     .col-xs-12
                       label(for='serveDesc') BRIEF DESCRIPTION
-                      textarea(rows="5", name='serveDesc',id='serveDesc', spellcheck="true", placeholder="Enter Description").form-control #{service.description}
-                .form-group#serveAboutForm
+                      textarea(rows="5", name='serveDesc',id='serveDesc', spellcheck="true", placeholder="Enter Description").form-control
+                .form-group
                   .row
                     .col-xs-12
                       label(for='serveAbout') ABOUT
-                      textarea(rows="5", name='serveAbout',id='serveAbout', spellcheck="true", placeholder="Enter Description").form-control #{service.about}
-                .form-group#serveRulesForm
+                      textarea(rows="5", name='serveAbout',id='serveAbout', spellcheck="true", placeholder="Enter Description").form-control
+                .form-group
                   .row
                     .col-xs-12
-                      label(for='serveRules') HOUSE RULES
-                      textarea(rows="5", name='serveRules',id='serveRules', spellcheck="true", placeholder="Enter Description").form-control #{service.houseRules}
-              //- .col-xs-12.col-md-4.col-md-offset-1
-                .form-group#serveLogoForm
-                  .row
-                    .col-xs-12
-                      label LOGO
-                  .row#logorow
-                    if logo != null
-                      +deleteLogoModal(uri, logo)
-                      .item.col-xs-4.col-sm-2
-                        .thumbnail
-                          .image.highlight
-                            a(href='#',data-toggle="modal",data-target="#deletelogomodal")
-                              img.img-responsive(src=logo)
-                    else
-                      .item.col-xs-4.col-sm-2
-                        form(action="/service/dashboard/profile/" + uri + "/logo/add", method="post", enctype="multipart/form-data")
-                          .thumbnail
-                            .image.highlight
-                              label(style='margin: 0px;')
-                                img.img-responsive#plusLogo-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
-                                img.img-responsive#spinnerLogo-gif(src='/images/loading_spinner.gif', style='display: none;')
-                                input#logoAdd(type='file', accept="image/*", hidden='', name="logoAdd", onchange="form.submit()")
-                .form-group#servePhotoForm
-                  .row
-                    .col-xs-12
-                      label PHOTOS
-                  .row#imagerow
-                    if images != null && images.length > 0
-                      -var index = 1;
-                      -let length = Object.keys(images).length;
-                      if Object.keys(images).length <= 5
-                        .item.col-xs-4.col-sm-2
-                          form(action="/service/dashboard/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
-                            .thumbnail
-                              .image.highlight
-                                label(style='margin: 0px;')
-                                  img.img-responsive#plus-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
-                                  img.img-responsive#spinner-gif(src='/images/loading_spinner.gif', style='display: none;')
-                                  input#fileAdd(type='file', accept="image/*", hidden='', name="fileAdd", onchange="form.submit()")
-                      -for (index = 0; index < length; index += 1)
-                        +deleteImageModal(uri, images[index], index)
-                        .item.col-xs-4.col-sm-2
-                          .thumbnail
-                            .image.highlight
-                              a(href='#',data-toggle="modal",data-target="#deleteimagemodal-image" + index)
-                                img.img-responsive(src=images[index])
-                    else
-                      .item.col-xs-4.col-sm-2
-                        form(action="/service/dashboard/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
-                          .thumbnail
-                            .image.highlight
-                              label(style='margin: 0px;')
-                                img.img-responsive(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
-                                img.img-responsive(src='/images/loading_spinner.gif', style='display: none;')
-                                input#fileAdd(type='file', accept="image/*", hidden='', name="fileAdd", onchange="form.submit()")
-              .form-group#serveAmenitiesForm
-                .col-xs-12
+                      label(for='serveRules') HOUSE EXPECTATIONS
+                      textarea(rows="5", name='serveRules',id='serveRules', spellcheck="true", placeholder="Enter Description").form-control
+              .col-md-6.col-xs-12
+                .form-group#serveAmenitiesForm
                   label AMENITIES
                   .row
-                    .col-xs-12.col-sm-7
+                    .col-xs-12
                       .well
                         .row
                           .form-inline
@@ -409,11 +358,32 @@ block content
                             .col-xs-1(style='padding: 0px; margin-top: 2px;')
                               input#OUTDOOR(type="checkbox", name="OUTDOOR")
             .row
+              .col-xs-12
+                .row#loadingPhotoUploadRow
+                  h5.text-center LOADING PHOTOS
+                  img.img-responsive.center-block#loadingPhotos(src='/images/loading_street.gif')
+                .row#photoUploadRow
+                  .col-xs-12
+                    .alert.alert-danger#alertBox(style='display: none')
+                  .col-xs-12
+                    .row
+                      label LOGO
+                      #logoSpace
+                    .row
+                      label PHOTOS
+                      #photoSpace
+                      
+            .row
               .col-xs-12.text-right
-                input(type='submit', value='SAVE CHANGES').btn-primary
+                input.btn.btn-primary(type='submit', value='SAVE CHANGES')
       #bedsAvaliable.tab-pane.fade.in
-        .container
-          h3 //TODO
-  script.
+        .container-fluid
+          .row
+            .col-xs-12
+              h3.text-center CRISIS CARE
+          .row
+            .col-xs-12
+              h3.text-center TRANSITIONAL
     
   script(src='/javascripts/service.js')
+  script(src='/javascripts/images.js')

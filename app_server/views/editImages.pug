@@ -1,10 +1,12 @@
 extends navbarDefault
 include _includes/deleteImageModal
 include _includes/deleteLogoModal
+include _includes/imageThumbnail
 
 block content
 
   .page-header
+    p#uri(style='display: none') #{uri}
     if name != null
       h2 Images for #{name}
     else
@@ -13,64 +15,63 @@ block content
     .col-xs-12
       | Images uploaded:
       if images != null
-        span.badge.badge-primary(style='cursor: default;') #{images.length}/6
+        span.badge.badge-primary#imageCount(style='cursor: default;')
+          | #{images.length}/6
       else
         span.badge.badge-primary(style='cursor: default;') 0/6
+  .row
+    .col-xs-12
+      .alert.alert-danger#alertBox(style='display: none')
   .row#logorow
-    if logo != null
-      +deleteLogoModal(uri, logo)
-      .item.col-xs-4.col-sm-2
+    +deleteLogoModal(uri, logo)
+    .item.col-xs-4.col-sm-2
+      form(action="/service/profile/" + uri + "/logo/add", method="post", enctype="multipart/form-data")
         .thumbnail
-          .image.highlight
-            a(href='#',data-toggle="modal",data-target="#deletelogomodal")
-              img.img-responsive(src=logo)
-    else
-      .item.col-xs-4.col-sm-2
-        form(action="/service/profile/" + uri + "/logo/add", method="post", enctype="multipart/form-data")
-          .thumbnail
-            .image.highlight
-              label(style='margin: 0px;')
+          .image.highlight(style='line-height: 0px;')
+            if logo == null
+              -console.log('logo is null');
+              a#logoLink(style='display: none;' href='#',data-toggle="modal",data-target="#deletelogomodal")
+                img.img-responsive#logoImg()
+              label#logoLabel(style='margin: 0px;')
                 img.img-responsive#plusLogo-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
                 img.img-responsive#spinnerLogo-gif(src='/images/loading_spinner.gif', style='display: none;')
-                input#logoAdd(type='file', accept="image/*", hidden='', name="logoAdd", onchange="form.submit()")
+                input#logoAdd(type='file', accept="image/*", hidden='', name="logoAdd", onchange="event.preventDefault();")
+            else
+              a#logoLink(href='#',data-toggle="modal",data-target="#deletelogomodal")
+                img.img-responsive#logoImg(src=logo)
+              label#logoLabel(style='margin: 0px; display: none;')
+                img.img-responsive#plusLogo-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
+                img.img-responsive#spinnerLogo-gif(src='/images/loading_spinner.gif', style='display: none;')
+                input#logoAdd(type='file', accept="image/*", hidden='', name="logoAdd", onchange="event.preventDefault();")
   .row#imagerow
     if images != null && images.length > 0
       -var index = 1;
       -let length = Object.keys(images).length;
       if Object.keys(images).length <= 5
-        .item.col-xs-4.col-sm-2
+        .item.col-xs-4.col-sm-2(id='itemAdd')
           form(action="/service/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
             .thumbnail
-              .image.highlight
+              .image.highlight(style='line-height: 0px; border: 0px;')
                 label(style='margin: 0px;')
                   img.img-responsive#plus-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
                   img.img-responsive#spinner-gif(src='/images/loading_spinner.gif', style='display: none;')
-                  input#fileAdd(type='file', accept="image/*", hidden='', name="fileAdd", onchange="form.submit()")
-      -for (index = 0; index < length; index += 1)
-        +deleteImageModal(uri, images[index], index)
-        .item.col-xs-4.col-sm-2
-          .thumbnail
-            .image.highlight
-              a(href='#',data-toggle="modal",data-target="#deleteimagemodal-image" + index)
-                img.img-responsive(src=images[index])
+                  input#fileAdd(type='file', accept='image/*', hidden='', name='fileAdd', onchange='event.preventDefault();')
+      -for (index = 0; index < 6; index += 1)
+        if (index < length)
+          +imageThumbnail(images[index], index, false)
+        else
+          +imageThumbnail('', index, true)
+              
     else
       .item.col-xs-4.col-sm-2
         form(action="/service/profile/" + uri + "/add", method="post", enctype="multipart/form-data")
           .thumbnail
             .image.highlight
               label(style='margin: 0px;')
-                img.img-responsive(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
-                img.img-responsive(src='/images/loading_spinner.gif', style='display: none;')
-                input#fileAdd(type='file', accept="image/*", hidden='', name="fileAdd", onchange="form.submit()")
-      .row
-        h5.text-center There are currently no images
+                img.img-responsive#plus-img(src='/images/plus.png', alt='Add Image', style='cursor: pointer;')
+                img.img-responsive#spinner-gif(src='/images/loading_spinner.gif', style='display: none;')
+                input#fileAdd(type='file', accept="image/*", hidden='', name="fileAdd", onchange='event.preventDefault();')
+      -for (index = 0; index < 6; index += 1)
+        +imageThumbnail('', index, true)
 
-    script.
-        $('#fileAdd').on('change', function () {
-            $('#plus-img').hide();
-            $('#spinner-gif').show();
-        });
-        $('#logoAdd').on('change', function () {
-            $('#plusLogo-img').hide();
-            $('#spinnerLogo-gif').show();
-        });
+  script(src='/javascripts/images.js')

@@ -1,66 +1,42 @@
 const express = require('express');
 const images = require('../middleware/images');
-const mongoose = require('mongoose');
 
 const router = express.Router();
-const Service = mongoose.model('Service');
 
 const serviceController = require('../controllers/service');
 
 // Services Dashboard route
 router.get('/dashboard/:serviceUri', serviceController.dashboard);
 
+router.get('/dashboard/:serviceUri/beds/show', serviceController.dashboardBeds);
+router.post('/dashboard/:serviceUri/beds/update', serviceController.updateBeds);
+
+router.get('/dashboard/:serviceUri/requests/show', serviceController.dashboardOpenRequests);
+router.get('/dashboard/:serviceUri/closed_requests/show', serviceController.dashboardClosedRequests);
+router.post('/dashboard/:serviceUri/requests/update', serviceController.updateRequests);
+
+router.get('/dashboard/:serviceUri/profile', serviceController.dashboardProfile);
+router.get('/dashboard/:serviceUri/images', serviceController.dashboardImages);
+router.get('/dashboard/:serviceUri/available', serviceController.dashboardAvailable);
+
 
 // Services Profile Page route
+// TODO remove
 router.get('/profile/:serviceUri', serviceController.profile);
-
-router.get('/beds', serviceController.getBeds);
-
-router.post('/beds/update/:serviceUri', serviceController.updateBeds);
 
 // Upload new image to service
 router.post(
   '/profile/:serviceUri/add',
-  images.multer.single('fileAdd'),
+  images.multer.single('file'),
   images.sendUploadToFirebase,
-  (req, res) => {
-    if (req.file && req.file.storageObject) {
-      // Get the corresponding Service from the serviceUri
-      Service.findOneAndUpdate(
-        { uri: req.params.serviceUri },
-        { $push: { img: req.file.storageObject } },
-        { runValidators: true },
-      ).exec()
-        .then(() => {
-          res.redirect('back');
-        });
-    } else {
-      // File did not upload - TODO rerender page with error message (AJAX)
-      res.redirect('back');
-    }
-  },
+  serviceController.uploadImage,
 );
 
 router.post(
   '/profile/:serviceUri/logo/add',
-  images.multer.single('logoAdd'),
+  images.multer.single('file'),
   images.sendUploadToFirebase,
-  (req, res) => {
-    if (req.file && req.file.storageObject) {
-      // Get the corresponding Service from the serviceUri
-      Service.findOneAndUpdate(
-        { uri: req.params.serviceUri },
-        { $set: { logo: req.file.storageObject } },
-        { runValidators: true },
-      ).exec()
-        .then(() => {
-          res.redirect('back');
-        });
-    } else {
-      // File did not upload - TODO rerender page with error message (AJAX)
-      res.redirect('back');
-    }
-  },
+  serviceController.uploadLogo,
 );
 
 router.post('/profile/:serviceUri/logo/delete', serviceController.deleteLogo);

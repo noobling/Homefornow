@@ -13,18 +13,18 @@ mixin signupModal(title, route, id)
                     form(action=route, method="post", id=id+'form')
                         .form-group
                             label(for="fName") First Name
-                            input(type="text", name="fName", placeholder="e.g. John").form-control#fName
+                            input(type="text", name="fName", placeholder="e.g. John", required).form-control#fName
                         .form-group
                             label(for="lName") Last Name
-                            input(type="text", name="lName", placeholder="e.g. Doe").form-control#lName
+                            input(type="text", name="lName", placeholder="e.g. Doe", required).form-control#lName
                         .form-group
                             label(for="dob") Date of Birth
-                            input(type="date", name="dob").form-control#ldob
+                            input(type="date", name="dob", required).form-control#ldob
                         .form-group
                             .row
                                 .col-xs-6
-                                    select.form-control(name="gender", placeholder="Gender")#gender
-                                        option(hidden='true') Gender
+                                    select.form-control(name="gender", placeholder="Gender", required)#gender
+                                        option(hidden='true', value='') Gender
                                         option Male
                                         option Female
                                         option Other
@@ -39,7 +39,7 @@ mixin signupModal(title, route, id)
                             input(type='hidden', name='lengthOfStay', id='los '+title)
                         .form-group
                             .text-center
-                              button.btn.btn-primary(name="Submit", type="button", onclick='return submitRequest(document.getElementById(\"'+id+'form\"))', style='width: 200px; margin-bottom: 10px;') Get Suitable Vacancies
+                              button.btn.btn-primary(name="Submit", type="submit", style='width: 200px; margin-bottom: 10px;') Get Suitable Vacancies
                             .text-center
                                 a(href='#', style='font-size: 11px; color: #282828; text-decoration: underline;') Privacy Info
 //- script(src='/javascripts/requests.js')

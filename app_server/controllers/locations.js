@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const admin = require('firebase-admin');
 const images = require('../middleware/images');
+const logo = require('../middleware/images');
 
 const Service = mongoose.model('Service');
 
@@ -18,7 +19,7 @@ const Service = mongoose.model('Service');
  */
 module.exports.showLocations = (req, res) => {
   const longTerm = (req.params.lengthOfStay === 'long_term');
-  const type = (longTerm ? ['long'] : ['crisis', 'transitional']);
+  const type = (longTerm ? ['long', 'transitional'] : ['crisis']);
   const child = (req.body.hasChild ? [true] : [true, false]);
   const disability = false;
   // (req.user.hasDisability ? [true] : [true, false]);
@@ -59,10 +60,10 @@ module.exports.showLocations = (req, res) => {
       for (let i = 0; i < services.length; i += 1) {
         if (services[i].available) {
           available.push(services[i]);
-          availableImagePromises.push(images.getLogoForService(services[i].logo));
+          availableImagePromises.push(images.getImageForService(services[i].logo));
         } else {
           unavailable.push(services[i]);
-          unavailableImagePromises.push(images.getLogoForService(services[i].logo));
+          unavailableImagePromises.push(images.getImageForService(services[i].logo));
         }
       }
 
@@ -119,12 +120,25 @@ module.exports.showLocations = (req, res) => {
 module.exports.showLocation = (req, res) => {
   Service.findOne(
     { uri: req.params.serviceUri },
-    'name description address amenities houseRules about img hours',
+    'name description address amenities houseRules about img logo hours',
   ).exec().then((service) => {
-    images.getImagesForService(service, req.params.serviceUri).then((result) => {
-      res.render('showLocation', {
-        location: service,
-        images: result.images,
+    images.getImagesForService(service, req.params.serviceUri).then((results) => {
+      logo.getImageForService(service.logo, req.params.serviceUri).then((result) => {
+        console.log(result);
+        res.render('showLocation', {
+          location: service,
+          images: results.images,
+          logo: result,
+        });
+      }).catch((err) => {
+        console.log('[ERROR] LocationsController: '.concat(err));
+        res.render('showLocation', {
+          location: service,
+          map: {
+            title: service.name,
+            suburb: service.address.suburb,
+          },
+        });
       });
     }).catch((err) => {
       console.log('[ERROR] LocationsController: '.concat(err));

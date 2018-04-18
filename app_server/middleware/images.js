@@ -2,9 +2,10 @@
 const admin = require('firebase-admin');
 const Multer = require('multer');
 const mongoose = require('mongoose');
+const serviceAccount = require('../../homefornow-fd495-firebase-adminsdk-xy17w-62ee8ab849.json');
+
 const Service = mongoose.model('Service');
 
-const serviceAccount = require('../../homefornow-fd495-firebase-adminsdk-xy17w-62ee8ab849.json');
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   storageBucket: 'homefornow-fd495.appspot.com',
@@ -25,7 +26,7 @@ function sendUploadToFirebase(req, res, next) {
   for (let i = 0; i < 5; i += 1) {
     result += possible.charAt(Math.floor(Math.random() * possible.length));
   }
-  splitName[splitName.length - 2] += '-' + result;
+  splitName[splitName.length - 2] += `-${result}`;
 
   let newName = '';
   for (let i = 0; i < splitName.length; i += 1) {
@@ -35,7 +36,9 @@ function sendUploadToFirebase(req, res, next) {
     newName += splitName[i];
   }
 
-  const firebaseName = 'images/' + req.params.serviceUri + "/" + newName;
+  console.log(`newName = ${newName}`);
+
+  const firebaseName = `images/${req.params.serviceUri}/${newName}`;
   const file = bucket.file(firebaseName);
 
   const stream = file.createWriteStream({
@@ -55,6 +58,7 @@ function sendUploadToFirebase(req, res, next) {
   });
 
   stream.end(req.file.buffer);
+  return null;
 }
 
 function getImagesForService(service, serviceUri) {
@@ -65,7 +69,6 @@ function getImagesForService(service, serviceUri) {
 
     if (service.img != null && service.img.length > 0) {
       listCount = service.img.length;
-      // const bucket = admin.storage().bucket();
 
       service.img.forEach((image) => {
         // Get the metadata for each image reference
@@ -99,7 +102,6 @@ function getImagesForService(service, serviceUri) {
 function deleteImageFromService(service, serviceUri, index) {
   return new Promise((resolve, reject) => {
     // Delete the image specified by 'index' from Firebase
-    // const bucket = admin.storage().bucket();
     bucket.file(service.img[index]).delete().then(() => {
       // After deleting the image from Firebase, delete the image from MongoDB
       const len = service.img.length;
@@ -136,14 +138,13 @@ function deleteImageFromService(service, serviceUri, index) {
 
 function deleteLogoFromService(serviceLogo, serviceUri) {
   return new Promise((resolve, reject) => {
-    // const bucket = admin.storage().bucket();
     bucket.file(serviceLogo).delete().then(() => {
       // Update the MongoDB database with the new list of images, returning
       // when succesful
       Service.findOneAndUpdate(
         { uri: serviceUri },
         { $set: { logo: '' } },
-        { runValidators: true, new: true }
+        { runValidators: true, new: true },
       ).exec().then(() => {
         resolve();
       }).catch((err) => {
@@ -157,13 +158,12 @@ function deleteLogoFromService(serviceLogo, serviceUri) {
   });
 }
 
-function getLogoForService(serviceLogo, serviceUri) {
+function getImageForService(serviceImage) {
   return new Promise((resolve, reject) => {
-    if (serviceLogo == null || serviceLogo === '') {
+    if (serviceImage == null || serviceImage === '') {
       resolve(null);
     }
-    // const bucket = admin.storage().bucket();
-    bucket.file(serviceLogo).getMetadata().then((data) => {
+    bucket.file(serviceImage).getMetadata().then((data) => {
       resolve(data[0].mediaLink);
     }).catch((err) => {
       console.log('[ERROR]: Could not get image from Firebase: '.concat(err));
@@ -196,7 +196,7 @@ module.exports = {
   sendUploadToFirebase,
   getImagesForService,
   deleteImageFromService,
-  getLogoForService,
+  getImageForService,
   deleteLogoFromService,
   multer,
 };
