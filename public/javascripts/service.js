@@ -842,5 +842,9 @@ const AddImagePanel = ({ uri, route }) => `
  *  When the user clicks the Beds Available tab
  */
 $('a[href="#bedsAvaliable"]').on('click', function() {
-  console.log('What a meme');
+  console.log('here')
+  $('#spinnerLoadProfile').show();
+	$.get('/beds/available', function(data) {
+		$('#spinnerLoadProfile').hide();
+	})
 });

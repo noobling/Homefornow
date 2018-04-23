@@ -381,7 +381,8 @@ module.exports.dashboardProfile = (req, res) => {
 };
 
 /**
- * Renders a service provider's dashboard.
+ * Renders a service provider's dashboard. [DEPRACATED]
+ * 
  * @param  {Object} req Express request object.
  * @param  {Object} res Express response object.
  */
@@ -410,6 +411,17 @@ module.exports.dashboardAvailable = (req, res) => {
           res.status(401).json({ message: err });
         });
     });
+};
+
+module.exports.bedsAvailable = (req, res) => {
+  if (!req.user || req.user.role !== 'service_provider') {
+    res.status(401).json({ message: 'You are not authorised to view this page.' });
+    return;
+  }
+
+  User.find({}, (err, users) => {
+    console.log(users);
+  })
 };
 
 module.exports.updateBeds = (req, res) => {
