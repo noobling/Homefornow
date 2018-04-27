@@ -71,6 +71,7 @@ router.post('/notification', ctrlComm.notification);
 router.get('/admin', ctrlAdmin.admin);
 router.get('/admin/addservice', ctrlAdmin.addService);
 router.post('/addservice', ctrlService.addService);
+router.post('/service/update/:serviceName', ctrlService.updateService);
 
 
 module.exports = router;

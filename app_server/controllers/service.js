@@ -118,7 +118,7 @@ function amenities(service) {
   }
   console.log(amen);
   return amen;
-//   ['BATHROOM', '', 'wc']; ///////////////////////////////////////////
+  //   ['BATHROOM', '', 'wc']; ///////////////////////////////////////////
 }
 
 /**
@@ -203,6 +203,40 @@ module.exports.addService = (req, res, next) => {
       next(err);
     });
 };
+
+module.exports.updateService = (req, res) => {
+  let service = new Service();
+
+  data = {
+    name: req.body.serveName,
+    description: req.body.serveDesc,
+    addresss: {
+      suburb: req.body.serveSuburb,
+      state: req.body.serveState,
+      postcode: req.body.servePostcode
+    },
+    serviceType: req.body.serveType,
+    ageRange: {
+      minAge: req.body.serveMinAge,
+      maxAge: req.body.serveMaxAge
+    },
+    stayLength: req.body.serveStayLength,
+    phoneNumber: req.body.servePhone,
+    about: req.body.serveAbout,
+    houseRules: req.body.serveRules,
+  };
+
+  try {
+    Service.findOneAndUpdate({ name: req.params.serviceName }, { $set: data }, (err, doc) => {
+      if (err) console.log(err+'\n');
+      res.redirect('/location/' + service.encodeURI(req.body.serveName));      
+    });
+    
+  } catch (e) {
+    res.redirect('/location/' + service.encodeURI(req.body.serveName));    
+    console.log(e);
+  }
+}
 
 // function returnAges(requests) {
 //   const newRequests = requests;
@@ -347,7 +381,8 @@ module.exports.dashboardProfile = (req, res) => {
 };
 
 /**
- * Renders a service provider's dashboard.
+ * Renders a service provider's dashboard. [DEPRACATED]
+ * 
  * @param  {Object} req Express request object.
  * @param  {Object} res Express response object.
  */
@@ -376,6 +411,17 @@ module.exports.dashboardAvailable = (req, res) => {
           res.status(401).json({ message: err });
         });
     });
+};
+
+module.exports.bedsAvailable = (req, res) => {
+  if (!req.user || req.user.role !== 'service_provider') {
+    res.status(401).json({ message: 'You are not authorised to view this page.' });
+    return;
+  }
+
+  User.find({}, (err, users) => {
+    console.log(users);
+  })
 };
 
 module.exports.updateBeds = (req, res) => {

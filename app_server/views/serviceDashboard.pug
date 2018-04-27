@@ -118,7 +118,7 @@ block content
         .container-fluid(style='padding: 15px;')
           .spacer-xs
           img.img-responsive.center-block#spinnerLoadProfile(src='/images/loading_street.gif', style='display: none')
-          form(action='/addservice', method='post', role='form', id='addServiceForm')
+          form(action='', method='post', role='form', id='addServiceForm')
             .row
               .form-group
                 .col-xs-12.col-sm-7(style='margin-bottom: 15px;')
@@ -147,7 +147,7 @@ block content
                     option VIC
                     option WA
                 .col-xs-6.col-sm-4(style='margin-bottom: 15px;')
-                  input(type='text', name='servePostcode', id='servePostcode', required='', placeholder='POSTCODE', pattern="\d{4}").form-control
+                  input(type='text', name='servePostcode', id='servePostcode', required='', placeholder='POSTCODE', pattern="\\d{4}").form-control
               .form-group
                 .col-xs-12.col-sm-8
                   .row
@@ -202,18 +202,6 @@ block content
                   input(type='email', name='serveEmail', id='serveEmail', placeholder='EMAIL', required='').form-control
                 .col-xs-12.col-sm-4(style='margin-bottom: 15px;')
                   input(type='tel', name='servePhone', id='servePhone', placeholder='PHONE NUMBER',required='').form-control
-            .row
-              .form-group
-                .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
-                  .row
-                    .col-xs-12
-                      label(for='servePass') PASSWORD
-                      input(type='password', name='servePass', id='servePass', required='').form-control
-                .col-xs-12.col-sm-6(style='margin-bottom: 15px;')
-                  .row
-                    .col-xs-12
-                      label(for='serveCon') CONFIRM PASSWORD
-                      input(type='password', name='serveCon', id='serveCon', required='').form-control
             .row
               .col-xs-12.col-md-6
                 .form-group
@@ -386,4 +374,5 @@ block content
               h3.text-center TRANSITIONAL
     
   script(src='/javascripts/service.js')
+  script(src='/javascripts/bedsAvailable.js')
   script(src='/javascripts/images.js')
