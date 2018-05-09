@@ -844,7 +844,8 @@ const AddImagePanel = ({ uri, route }) => `
 $('a[href="#bedsAvaliable"]').on('click', function() {
   console.log('here')
   $('#spinnerLoadProfile').show();
-	$.get('/service/beds/available', function(data) {
-		$('#spinnerLoadProfile').hide();
+	$.get('/service/beds/available', function(services) {
+    $('#spinnerLoadProfile').hide();
+    
 	})
 });

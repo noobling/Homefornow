@@ -419,9 +419,34 @@ module.exports.bedsAvailable = (req, res) => {
     return;
   }
 
-  User.find({}, (err, users) => {
-    console.log(users);
-  })
+    Service.find({}, (err, services) => {
+      if (err) throw err;
+      const data = []
+      services.forEach((service) => {
+        if (service.beds) {
+          serviceData = {
+            serviceName: service.name, 
+            phoneNumber: service.phoneNumber
+          }
+        
+          serviceData.numBeds = service.beds.length;
+          let numMale = 0;
+          let numFemale = 0;
+          let numEither = 0;
+          service.beds.forEach((bed) => {
+            if (bed.gender === 'Male') numMale++
+            if (bed.gender === 'Female') numFemale++
+            if (bed.gender === 'Either') numEither++
+          })
+          serviceData.numMale = numMale;
+          serviceData.numFemale = numFemale;
+          serviceData.numEither = numEither;
+          
+          data.push(serviceData)
+        }
+      })
+      res.send(data)
+    })
 };
 
 module.exports.updateBeds = (req, res) => {
