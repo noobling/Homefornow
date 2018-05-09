@@ -421,7 +421,10 @@ module.exports.bedsAvailable = (req, res) => {
 
     Service.find({}, (err, services) => {
       if (err) throw err;
-      const data = []
+      const data = {
+        crisis: [],
+        transitional: []
+      }
       services.forEach((service) => {
         if (service.beds) {
           serviceData = {
@@ -442,7 +445,11 @@ module.exports.bedsAvailable = (req, res) => {
           serviceData.numFemale = numFemale;
           serviceData.numEither = numEither;
           
-          data.push(serviceData)
+          if (service.serviceType == 'crisis') {
+            data.crisis.push(serviceData)
+          } else {
+            data.transitional.push(serviceData)
+          }
         }
       })
       res.send(data)

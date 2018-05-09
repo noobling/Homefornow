@@ -846,6 +846,28 @@ $('a[href="#bedsAvaliable"]').on('click', function() {
   $('#spinnerLoadProfile').show();
 	$.get('/service/beds/available', function(services) {
     $('#spinnerLoadProfile').hide();
-    
+    for (var i = 0; i < services.crisis.length; i++) {
+      var service = services.crisis[i];
+      $('#crisis-table').append(`
+      <tr>
+        <td>${service.serviceName}</td>
+        <td>${service.numBeds}</td>
+        <td>${service.numMale}</td>
+        <td>${service.numFemale}</td>
+        <td>${service.numEither}</td>
+        <td>${service.phoneNumber}</td>
+      </tr>
+      `)
+    }
+
+    for (var i = 0; i < services.transitional.length; i++) {
+      var service = services.transitional[i];
+      $('#transitional-table').append(`
+        <tr>
+          <td>${service.serviceName}</td>
+          <td>${service.phoneNumber}</td>
+        </tr>
+      `)
+    }
 	})
 });
