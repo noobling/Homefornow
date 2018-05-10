@@ -335,6 +335,7 @@ $('a[href="#serviceProfile"]').on('click', function() {
     $('#serveDesc').val(data.service.description);
     $('#serveAbout').val(data.service.about);
     $('#serveRules').val(data.service.houseRules);
+    $('#thankyouMessage').val(data.service.thankyouMessage);
 
     let $inputs = $('#serveAmenitiesForm :input');
 

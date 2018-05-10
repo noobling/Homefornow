@@ -49,7 +49,7 @@ module.exports.showLocations = (req, res) => {
         },
       ],
     },
-    'name available number phoneNumber description address uri logo',
+    'name available number phoneNumber description address uri logo thankyouMessage',
   ).exec()
     .then((services) => {
       // Sort services into available and unavailable

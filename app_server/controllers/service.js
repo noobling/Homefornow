@@ -224,6 +224,7 @@ module.exports.updateService = (req, res) => {
     phoneNumber: req.body.servePhone,
     about: req.body.serveAbout,
     houseRules: req.body.serveRules,
+    thankyouMessage: req.body.thankyouMessage
   };
 
   try {
@@ -366,7 +367,7 @@ module.exports.dashboardProfile = (req, res) => {
   }
   Service.findById(
     req.user.service[0],
-    'name address.suburb address.state address.postcode phoneNumber serviceType ageRange.minAge ageRange.maxAge stayLength description about houseRules amenities.name',
+    'name address.suburb address.state address.postcode phoneNumber serviceType ageRange.minAge ageRange.maxAge stayLength description about houseRules amenities.name thankyouMessage',
   ).exec()
     .then((service) => {
       // console.log(`service = ${service}`);

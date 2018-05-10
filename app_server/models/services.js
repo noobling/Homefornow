@@ -302,6 +302,10 @@ const serviceSchema = new mongoose.Schema({
     type: [amenitiesSchema],
     required: false,
   },
+  thankyouMessage: {
+    type: String,
+    required: false,
+  }
 });
 
 serviceSchema.methods.encodeURI = function encodeURI(name) {

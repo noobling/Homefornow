@@ -1,4 +1,4 @@
-mixin contactModal(serviceName, serviceId, available, phoneNumber, uri)
+mixin contactModal(serviceName, serviceId, available, phoneNumber, uri, thankyouMessage)
     .modal.fade(id="contactmodal"+uri,role="dialog")
         .modal-dialog.modal-sm
             .modal-content
@@ -37,4 +37,7 @@ mixin contactModal(serviceName, serviceId, available, phoneNumber, uri)
                     img.img.img-responsive.img-squared(src='https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png')
                 .modal-body
                     h4 Thank you
-                    | We will get back to you soon
+                    if thankyouMessage
+                        p #{thankyouMessage}
+                    else
+                        | We will get back to you soon

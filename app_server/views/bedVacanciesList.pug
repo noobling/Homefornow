@@ -14,7 +14,7 @@ block content
           #userloc
   .row
     each location in locations
-      +contactModal(location.name, location._id, location.available, location.phoneNumber, location.uri)
+      +contactModal(location.name, location._id, location.available, location.phoneNumber, location.uri, location.thankyouMessage)
       +vacancyPanel(location.name, location.address.suburb, location.available, location.description, location.uri, locationImgs[locations.indexOf(location)])
 
     each dlocation in dlocations
