@@ -1,6 +1,6 @@
-if messages.error
+if errors
 	.alert.alert-danger
 		a.close(href='#', data-dismiss='alert', aria-label='close') ×
 		ul
-			each message in messages.error
+			each message in errors
 				li= message

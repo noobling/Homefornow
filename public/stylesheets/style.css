@@ -712,3 +712,11 @@ input:checked + .slider:before {
   background: transparent;
   width: 7%;
 }
+
+/* Alert message styling ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+.alert {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    z-index: 9999;
+}
