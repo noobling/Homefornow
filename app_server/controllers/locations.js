@@ -49,38 +49,50 @@ module.exports.showLocations = (req, res) => {
         },
       ],
     },
-    'name available number phoneNumber description address uri logo thankyouMessage',
+    'name available number phoneNumber description address uri logo thankyouMessage img',
   ).exec()
     .then((services) => {
       // Sort services into available and unavailable
       const available = [];
       const availableImagePromises = [];
+      const availableLogosPromises = [];
       const unavailable = [];
+      const unavailableLogosPromises = [];
       const unavailableImagePromises = [];
       for (let i = 0; i < services.length; i += 1) {
         if (services[i].available) {
           available.push(services[i]);
-          availableImagePromises.push(images.getImageForService(services[i].logo));
+          availableImagePromises.push(images.getImageForService(services[i].img[0]));
+          availableLogosPromises.push(images.getImageForService(services[i].logo));
         } else {
           unavailable.push(services[i]);
-          unavailableImagePromises.push(images.getImageForService(services[i].logo));
+          unavailableImagePromises.push(images.getImageForService(services[i].img[0]));
+          unavailableLogosPromises.push(images.getImageForService(services[i].logo));
         }
       }
 
+     
+
       Promise.all(availableImagePromises).then((availableImages) => {
         Promise.all(unavailableImagePromises).then((unavailableImages) => {
-          res.render('bedVacanciesList', {
-            title: 'For Now',
-            tagline: 'A place to stay',
-            locations: available,
-            locationImgs: availableImages,
-            dlocations: unavailable,
-            dlocationImgs: unavailableImages,
-            userCoords: {
-              long: req.body.long,
-              lat: req.body.lat,
-            },
-          });
+          Promise.all(availableLogosPromises).then((availableLogos) => {
+            Promise.all(unavailableLogosPromises).then((unavailableLogos) => {
+              res.render('bedVacanciesList', {
+                title: 'For Now',
+                tagline: 'A place to stay',
+                locations: available,
+                locationImgs: availableImages,
+                locationLogos: availableLogos,
+                dlocations: unavailable,
+                dlocationImgs: unavailableImages,
+                dlocationLogos: unavailableLogos,
+                userCoords: {
+                  long: req.body.long,
+                  lat: req.body.lat,
+                },
+              })
+            })
+          })
         }).catch(() => {
           res.render('bedVacanciesList', {
             title: 'For Now',

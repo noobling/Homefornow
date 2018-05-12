@@ -520,6 +520,10 @@ footer {
   display: none;
 }
 
+.img-squared {
+    margin: auto;
+}
+
 /*Styles for toggle switch ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 .switch {

@@ -1,4 +1,4 @@
-mixin contactModal(serviceName, serviceId, available, phoneNumber, uri, thankyouMessage)
+mixin contactModal(serviceName, serviceId, available, phoneNumber, uri, thankyouMessage, logoUrl)
     .modal.fade(id="contactmodal"+uri,role="dialog")
         .modal-dialog.modal-sm
             .modal-content
@@ -6,7 +6,10 @@ mixin contactModal(serviceName, serviceId, available, phoneNumber, uri, thankyou
                     button(type='button', data-dismiss='modal').close &times;
                         //- a(data-toggle='modal', href='#numbermodal')
                         //-     button(type='button', data-dismiss='modal').btn.btn-default Calls us
-                    img.img.img-responsive.img-squared(src='https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png')
+                    if logoUrl
+                        img.img.img-responsive.img-squared(src=logoUrl)                    
+                    else
+                        img.img.img-responsive.img-squared(src='https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png')
                 .modal-body
                     form
                         .form-group
@@ -34,7 +37,10 @@ mixin contactModal(serviceName, serviceId, available, phoneNumber, uri, thankyou
                                 span.glyphicon.glyphicon-arrow-left
                         //- a(data-toggle='modal', href='#numbermodal')
                         //-     button(type='button', data-dismiss='modal').btn.btn-default Calls us
-                    img.img.img-responsive.img-squared(src='https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png')
+                    if logoUrl
+                        img.img-responsive.img-squared(src=logoUrl)
+                    else
+                        img.img.img-responsive.img-squared(src='https://www.oysterdiving.com/components/com_easyblog/themes/wireframe/images/placeholder-image.png')
                 .modal-body
                     h4 Thank you
                     if thankyouMessage

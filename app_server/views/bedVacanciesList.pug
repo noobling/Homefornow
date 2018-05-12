@@ -3,7 +3,6 @@ include _includes/contactModal
 include _includes/vacancyListPanel
 
 block content
-
   #banner.page-header
     .row
       .col-md-6
@@ -14,7 +13,7 @@ block content
           #userloc
   .row
     each location in locations
-      +contactModal(location.name, location._id, location.available, location.phoneNumber, location.uri, location.thankyouMessage)
+      +contactModal(location.name, location._id, location.available, location.phoneNumber, location.uri, location.thankyouMessage, locationLogos[locations.indexOf(location)])
       +vacancyPanel(location.name, location.address.suburb, location.available, location.description, location.uri, locationImgs[locations.indexOf(location)])
 
     each dlocation in dlocations
