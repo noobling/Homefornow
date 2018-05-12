@@ -17,11 +17,8 @@ block content
 
     #banner.page-header
       .row
-        .col-md-8
-          h1.bang= title1
-          h1.sec-color.bang= title2
-          h3.bold(style='margin-bottom: 0px;')= 'Youth Accomodation'
-          h3.bold(style='margin: 0px;')= 'Options in Perth, Western Australia'
+        .col-xs-12
+          img.img-responsive(src='/images/landing-img.png')
     form(id='locationForm', onsubmit="event.preventDefault()")
       .form-group
         .row
@@ -56,12 +53,12 @@ block content
         if location
           .col-md-4.col-sm-12
             .panel.panel-default.panel-spaced
-              .panel-header.image.img-shadow
-                a(href='location/'+location.uri)
-                  if images[[crisis, transitional, long].indexOf(location)] != null
-                    img.img-responsive.img-square.center-block(src=images[[crisis, transitional, long].indexOf(location)])
-                  else
-                    img.img-responsive.img-square.center-block(src='images/placeholder-image.png')
+              a(href='location/'+location.uri)
+                .panel-header.image.img-shadow
+                    if images[[crisis, transitional, long].indexOf(location)] != null
+                      img.img-responsive.img-square.center-block(src=images[[crisis, transitional, long].indexOf(location)])
+                    else
+                      img.img-responsive.img-square.center-block(src='images/placeholder-image.png')
               .panel-header
                 a(href='/location/'+location.uri)
                   .panel-title.text-center.roboto-title.black.line-spc-2= location.name
