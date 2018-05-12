@@ -132,7 +132,7 @@ module.exports.showLocations = (req, res) => {
 module.exports.showLocation = (req, res) => {
   Service.findOne(
     { uri: req.params.serviceUri },
-    'name description address amenities houseRules about img logo hours',
+    'name description address amenities houseRules about img logo hours thankyouMessage',
   ).exec().then((service) => {
     images.getImagesForService(service, req.params.serviceUri).then((results) => {
       logo.getImageForService(service.logo, req.params.serviceUri).then((result) => {

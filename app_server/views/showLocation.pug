@@ -1,4 +1,5 @@
 extends navbarDefault
+include _includes/contactModal
 
 block content
   style.
@@ -50,8 +51,11 @@ block content
 
     .row.text-center
       .col-xs-12
-          a(href='#',data-toggle="modal",data-target="#contactmodal"+uri)
-            button.btn.btn-primary.btn-lg Contact
+        a(href='#',data-toggle="modal",data-target="#contactmodal"+location.uri)
+          button.btn.btn-primary
+            | Contact
+        +contactModal(location.name, location._id, location.available, location.phoneNumber, location.uri, location.thankyouMessage, logo)
+
     .spacer-xs
     .row.text-center
       .col-xs-12
@@ -100,3 +104,5 @@ block content
           br
           | Sunday: #{location.hours.sun.open} - #{location.hours.sun.close}
     .spacer-xs
+
+  script(src='/javascripts/requests.js')
