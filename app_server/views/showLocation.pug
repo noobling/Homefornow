@@ -29,11 +29,11 @@ block content
                     -var index = 1
                     each image in images
                       if index == 1
-                        .item.active
-                          img.img-responsive.img-square.center-block(src=image, alt='Image ' + index++)
+                        .item.active.img-carousel
+                          img.img-square.center-block.img-carousel(src=image, alt='Image ' + index++)
                       else
-                        .item
-                          img.img-responsive.img-square.center-block(src=image, alt='Image ' + index++)
+                        .item.img-carousel
+                          img.img-square.center-block.img-carousel(src=image, alt='Image ' + index++)
                     // Left and right controls
                     a.left.carousel-control(href='#myCarousel', data-slide='prev')
                       span.glyphicon.glyphicon-chevron-left(style='color: #b3b3b3;')
@@ -120,4 +120,7 @@ block content
   style.
     #back:hover {
       cursor: pointer;
+    }
+    .img-carousel {
+      height: 100% !important;
     }
