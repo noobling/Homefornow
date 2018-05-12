@@ -49,6 +49,9 @@ block content
     else
       .spacer-md
 
+    a#back
+      img(src="/images/backarrow.svg", alt="")
+      | Back to vacancies
     .row.text-center
       .col-xs-12
         a(href='#',data-toggle="modal",data-target="#contactmodal"+location.uri)
@@ -104,5 +107,17 @@ block content
           br
           | Sunday: #{location.hours.sun.open} - #{location.hours.sun.close}
     .spacer-xs
+    a#back
+      img(src="/images/backarrow.svg", alt="")
+      | Back to vacancies
 
   script(src='/javascripts/requests.js')
+  script.
+    $('#back').click(function() {
+      history.back()
+    })
+
+  style.
+    #back:hover {
+      cursor: pointer;
+    }
