@@ -184,16 +184,20 @@ function updateRequests() {
   $('#closedRequests > .form-group').html('');
   $('#closedRequests > .form-group').hide();
   $('#spinnerLoadRequestsClosed').show();
+  
   $.get('/service/dashboard/' + $('#uri').text() + '/closed_requests/show', function(data) {
     let index = 0;
     for (request of data.requests) {
+      let closedAt = new Date(request.closedAt);
+      closedAt = closedAt.toLocaleDateString();
       $('#closedRequests > .form-group').append(ClosedRequestPanel({
         index,
         name: request.firstName + ' ' + request.lastName,
         email: request.email,
         number: request.phoneNumber,
         age: getAge(request.dob),
-        gender: request.gender
+        gender: request.gender,
+        closedAt
       }));
       index++;
     }
@@ -203,6 +207,7 @@ function updateRequests() {
 }
 
 $('#updateRequests').submit(function(event) {
+  console.log('here')
   event.preventDefault();
   const submit_button = $(this).find(':submit');
   const spinner = $(this).find('#spinnerUpdateRequests');
@@ -261,6 +266,7 @@ function addListenersForUpdateNotes(index) {
       type: 'post',
       data: data,
       success: function(data) {
+        $('#requestModal'+index).modal('toggle');
       }
     });
   })
@@ -294,40 +300,39 @@ const UpdatePanel = ({ index, name }) => `
 `;
 
 const RequestPanel = ({ index, name, email, number, age, id, gender }) => `
-<a data-toggle="modal" data-target="#requestModal${index}" class="hover-panel">  		
 
 <div class="panel shadow" style='height: 10vh; min-height: 80px;'>
 
   <div class="panel-body">
  		
     <div class="row text-center">
-    
-      <div class="col-xs-2">
-        <h4>${gender}</h4>
-      </div>
-      
-      <div class="col-xs-3">
-          <h5>${email}</h5>
-          <h5>${number}</h5>
-      </div>
-      
-      <div class="col-xs-3">
-        <h4>${name}</h4>
-      </div>
-      <div class="col-xs-2">
-        <h6>${age}</h6>
-      </div>
+      <a data-toggle="modal" data-target="#requestModal${index}" class="hover-panel">  		
+        <div class="col-xs-2">
+          <h4>${gender}</h4>
+        </div>
+        
+        <div class="col-xs-3">
+            <h5>${email}</h5>
+            <h5>${number}</h5>
+        </div>
+        
+        <div class="col-xs-3">
+          <h4>${name}</h4>
+        </div>
+        <div class="col-xs-2">
+          <h6>${age}</h6>
+        </div>
+        </a> 
       <div class="col-xs-2">
         <input type="checkbox" name='requests[${index}]' value='${id}' />
       </div>
     </div>
   </div>
 </div>
-</a> 
 
 `;
 
-const ClosedRequestPanel = ({ index, name, email, number, age, gender }) => `
+const ClosedRequestPanel = ({ index, name, email, number, age, gender, closedAt }) => `
   <div class="panel shadow" style='height: 10vh; min-height: 80px;'>
     <div class="panel-body">
       <div class="row text-center">
@@ -346,8 +351,10 @@ const ClosedRequestPanel = ({ index, name, email, number, age, gender }) => `
           <h4>${name}</h4>
         </div>
         <div class="col-xs-2">
-          <h6>${age}</h6>
+          <h5>${age}</h5>
         </div>
+        <div class="col-xs-2">
+          <h5>${closedAt}</h5>
       </div>
     </div>
   </div>

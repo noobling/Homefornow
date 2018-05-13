@@ -341,7 +341,7 @@ module.exports.dashboardClosedRequests = (req, res) => {
         {
           _id: service.requests,
         },
-        'firstName lastName gender phoneNumber email dob',
+        'firstName lastName gender phoneNumber email dob closedAt',
       ).exec()
         .then((requests) => {
           // console.log(requests);
@@ -529,6 +529,12 @@ module.exports.updateRequests = (req, res) => {
   }
   console.log(req.body.requests);
   // const removedRequests = req.body.requests;
+
+  Request.update({ _id: { $in: req.body.requests } }, { closedAt: Date.now() }, (err, requests) => {
+    if (err) console.log(err);
+    console.log(requests);
+  });
+
   Service.findOneAndUpdate(
     { uri: req.params.serviceUri },
     {
