@@ -174,6 +174,7 @@ function updateRequests() {
         gender: request.gender
       }));
       $('#updateRequests > .form-group').append(requestModal(index, request))
+      addListenersForUpdateNotes(index)
       index++;
     }
     $('#spinnerLoadRequests').hide();
@@ -236,17 +237,34 @@ const requestModal = (index, request) => `
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
+          <p id="requestId${index}" style="display: none;">${request['_id']}</p>
           <h3>${request.firstName} ${request.lastName}'s request</h4>      
           <h4 style="margin-top: 2em;">Applied</h4>
           <p>${timeago().format(request.openedAt)}</p>
           <h4 style="margin-top: 1em;">Notes</h4>
-          <textarea class="form-control" rows="5">${request.notes}</textarea>
-          <button class="btn btn-primary" style="margin-top: 1em">Save note</button
+          <textarea class="form-control" rows="5" id="requestNote${index}">${request.notes}</textarea>
+          <button class="btn btn-primary" style="margin-top: 1em" id="updateNoteBtn${index}" type="button">Save note</button
         </div>
       </div>
     </div>
   </div>
 `
+
+function addListenersForUpdateNotes(index) {
+  const data = {
+    '_id': $('#requestId'+index).text(),
+    'note': $('#requestNote'+index).val()
+  }
+  $('#updateNoteBtn'+index).click(() => {
+    $.ajax({
+      url: "/service/profile/" + $('#uri').text() + "/note/add",
+      type: 'post',
+      data: data,
+      success: function(data) {
+      }
+    });
+  })
+}
 
 const UpdatePanel = ({ index, name }) => `
   <div class="panel shadow">
