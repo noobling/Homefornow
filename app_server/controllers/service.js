@@ -312,7 +312,7 @@ module.exports.dashboardOpenRequests = (req, res) => {
         {
           _id: service.openRequests,
         },
-        '_id firstName lastName gender phoneNumber email dob notes closedAt openedAt',
+        '_id firstName lastName gender phoneNumber email dob note closedAt openedAt',
       ).exec()
         .then((requests) => {
           // console.log(requests);
@@ -723,5 +723,14 @@ module.exports.dashboardImages = (req, res) => {
     });
   }).catch((err) => {
     res.status(500).json({ message: err });
+  });
+};
+
+module.exports.addNote = (req, res) => {
+  Request.findOneAndUpdate({ _id: req.body['_id'] }, { $set: { note: req.body.note } }, { new: true }, (err, doc) => {
+    if (err) {
+      res.json(err);
+    }
+    res.json(doc);
   });
 };

@@ -43,6 +43,8 @@ router.post('/profile/:serviceUri/logo/delete', serviceController.deleteLogo);
 
 router.post('/profile/:serviceUri/:index/delete', serviceController.deleteImage);
 
+router.post('/profile/:serviceUri/note/add', serviceController.addNote);
+
 router.get('/beds/available', serviceController.bedsAvailable);
 
 module.exports = router;

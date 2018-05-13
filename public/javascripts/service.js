@@ -242,7 +242,7 @@ const requestModal = (index, request) => `
           <h4 style="margin-top: 2em;">Applied</h4>
           <p>${timeago().format(request.openedAt)}</p>
           <h4 style="margin-top: 1em;">Notes</h4>
-          <textarea class="form-control" rows="5" id="requestNote${index}">${request.notes}</textarea>
+          <textarea class="form-control" rows="5" id="requestNote${index}">${request.note}</textarea>
           <button class="btn btn-primary" style="margin-top: 1em" id="updateNoteBtn${index}" type="button">Save note</button
         </div>
       </div>
@@ -250,12 +250,12 @@ const requestModal = (index, request) => `
   </div>
 `
 
-function addListenersForUpdateNotes(index) {
-  const data = {
-    '_id': $('#requestId'+index).text(),
-    'note': $('#requestNote'+index).val()
-  }
+function addListenersForUpdateNotes(index) { 
   $('#updateNoteBtn'+index).click(() => {
+    const data = {
+      '_id': $('#requestId'+index).text(),
+      'note': $('#requestNote'+index).val()
+    }
     $.ajax({
       url: "/service/profile/" + $('#uri').text() + "/note/add",
       type: 'post',
