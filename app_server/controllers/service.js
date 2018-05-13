@@ -312,7 +312,7 @@ module.exports.dashboardOpenRequests = (req, res) => {
         {
           _id: service.openRequests,
         },
-        '_id firstName lastName gender phoneNumber email dob',
+        '_id firstName lastName gender phoneNumber email dob notes closedAt openedAt',
       ).exec()
         .then((requests) => {
           // console.log(requests);
