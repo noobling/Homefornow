@@ -496,11 +496,20 @@ module.exports.updateBeds = (req, res) => {
         }
       }
     }).then(() => {
+      let available = beds.filter((bed) => { return bed.isOccupied === 'Available' });
+
+      if (available.length === 0) {
+        available = false;
+      } else {
+        available = true;
+      }
+      console.log(available);
       Service.findOneAndUpdate(
         { uri: req.params.serviceUri },
         {
           $set: {
             beds,
+            available,
           },
         },
         { runValidators: true },

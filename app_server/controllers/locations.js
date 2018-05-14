@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const admin = require('firebase-admin');
 const images = require('../middleware/images');
 const logo = require('../middleware/images');
-
+const timeago = require("timeago.js");
 const Service = mongoose.model('Service');
 
 /**
@@ -23,7 +23,8 @@ module.exports.showLocations = (req, res) => {
   const child = (req.body.hasChild ? [true] : [true, false]);
   const disability = false;
   // (req.user.hasDisability ? [true] : [true, false]);
-
+  const age = parseInt(timeago().format(req.body.dob).split(' ')[0], 10);
+  console.log(age);
   let gender = ['Either']; // If 'Other'
   if (req.body.gender === 'Male') {
     gender = ['Male', 'Either'];
@@ -40,6 +41,8 @@ module.exports.showLocations = (req, res) => {
         { child: { $in: child } },
         { disability: { $in: disability } },
         { gender: { $in: gender } },
+        { 'ageRange.maxAge': { $gte: age } },
+        { 'ageRange.minAge': { $lte: age } },
         {
           'address.coordinates.coordinates': {
             $near: {
@@ -70,8 +73,6 @@ module.exports.showLocations = (req, res) => {
           unavailableLogosPromises.push(images.getImageForService(services[i].logo));
         }
       }
-
-     
 
       Promise.all(availableImagePromises).then((availableImages) => {
         Promise.all(unavailableImagePromises).then((unavailableImages) => {
