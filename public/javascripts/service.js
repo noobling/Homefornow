@@ -199,6 +199,8 @@ function updateRequests() {
         gender: request.gender,
         closedAt
       }));
+      $('#closedRequests > .form-group').append(closedRequestModal(index, request));
+      addListenersForClosedRequestModal(index)
       index++;
     }
     $('#spinnerLoadRequestsClosed').hide();
@@ -207,7 +209,6 @@ function updateRequests() {
 }
 
 $('#updateRequests').submit(function(event) {
-  console.log('here')
   event.preventDefault();
   const submit_button = $(this).find(':submit');
   const spinner = $(this).find('#spinnerUpdateRequests');
@@ -255,6 +256,26 @@ const requestModal = (index, request) => `
   </div>
 `
 
+const closedRequestModal = (index, request) => `
+  <div class="modal fade" id="closedRequestModal${index}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p id="closedRequestId${index}" style="display: none;">${request['_id']}</p>
+          <h3>${request.firstName} ${request.lastName}'s request</h4>      
+          <h4 style="margin-top: 2em;">Applied</h4>
+          <p>${timeago().format(request.openedAt)}</p>
+          <h4 style="margin-top: 1em;">Notes</h4>
+          <textarea class="form-control" rows="5" id="closedRequestNote${index}">${request.note}</textarea>
+          <button class="btn btn-primary" style="margin-top: 1em" id="closedUpdateNoteBtn${index}" type="button">Save note</button>
+          <button class="btn btn-secondary pull-right" style="margin-top: 1em" id="reopenClosedReqBtn${index}" type="button">Reopen Request</button>
+        </div>
+      </div>
+    </div>
+  </div>
+`
+
+
 function addListenersForUpdateNotes(index) { 
   $('#updateNoteBtn'+index).click(() => {
     const data = {
@@ -267,6 +288,34 @@ function addListenersForUpdateNotes(index) {
       data: data,
       success: function(data) {
         $('#requestModal'+index).modal('toggle');
+      }
+    });
+  })
+}
+
+function addListenersForClosedRequestModal(index) { 
+  $('#reopenClosedReqBtn'+index).click(() => {
+    $.ajax({
+      url: $('#closedRequests').attr('action'),
+      type: 'post',
+      data: {'_id': $('#closedRequestId'+index).text()},
+      success: function(data) {
+        updateRequests();
+      } 
+    })
+    $('#closedRequestModal'+index).modal('toggle');                    
+  });
+  $('#closedUpdateNoteBtn'+index).click(() => {
+    const data = {
+      '_id': $('#closedRequestId'+index).text(),
+      'note': $('#closedRequestNote'+index).val()
+    }
+    $.ajax({
+      url: "/service/profile/" + $('#uri').text() + "/note/add",
+      type: 'post',
+      data: data,
+      success: function(data) {
+        $('#closedRequestModal'+index).modal('toggle');
       }
     });
   })
@@ -333,6 +382,8 @@ const RequestPanel = ({ index, name, email, number, age, id, gender }) => `
 `;
 
 const ClosedRequestPanel = ({ index, name, email, number, age, gender, closedAt }) => `
+<a data-toggle="modal" data-target="#closedRequestModal${index}" class="hover-panel">  		
+
   <div class="panel shadow" style='height: 10vh; min-height: 80px;'>
     <div class="panel-body">
       <div class="row text-center">
@@ -340,12 +391,8 @@ const ClosedRequestPanel = ({ index, name, email, number, age, gender, closedAt 
           <h4>${gender}</h4>
         </div>
         <div class="col-xs-3">
-          <a href='#'>
-            <h5>${email}</h6>
-          </a>
-          <a href='#'>
-            <h5>${number}</h6>
-          </a>
+          <h5>${email}</h5>
+          <h5>${number}</h5>
         </div>
         <div class="col-xs-3">
           <h4>${name}</h4>
@@ -358,6 +405,7 @@ const ClosedRequestPanel = ({ index, name, email, number, age, gender, closedAt 
       </div>
     </div>
   </div>
+</a>
 `;
 
 /**

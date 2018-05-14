@@ -341,7 +341,7 @@ module.exports.dashboardClosedRequests = (req, res) => {
         {
           _id: service.requests,
         },
-        'firstName lastName gender phoneNumber email dob closedAt',
+        'firstName lastName gender phoneNumber email dob closedAt note',
       ).exec()
         .then((requests) => {
           // console.log(requests);
@@ -553,6 +553,26 @@ module.exports.updateRequests = (req, res) => {
   }).catch((err) => {
     console.log(err);
     res.redirect(prevPage);
+  });
+};
+
+module.exports.reopenRequest = (req, res) => {
+  if (!req.user || req.user.role !== 'service_provider') {
+    res.status(401).json({ message: 'You are not authorised to view this page.' });
+    return;
+  }
+
+  Service.findByIdAndUpdate(req.user.service[0], {
+    $pull: {
+      requests: req.body['_id']
+    },
+    $addToSet: {
+      openRequests: req.body['_id']
+    },
+  }).exec().then(() => {
+    res.json('Reopened request');
+  }).catch((err) => {
+    res.json(err);
   });
 };
 

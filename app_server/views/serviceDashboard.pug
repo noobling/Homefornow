@@ -109,11 +109,9 @@ block content
                     .col-xs-2
                       h4 Closed Date
             .col-xs-12
-              form(action='/service/dashboard/'+service.uri+'/closed_requests/update', method='post')#closedRequests
+              form(action='/service/dashboard/'+service.uri+'/closed_requests/reopen', method='post')#closedRequests
                 img.img-responsive.center-block#spinnerLoadRequestsClosed(src='/images/loading_street.gif', style='display: none')
                 .form-group
-                input.btn.btn-secondary.pull-right(type='submit', name='Submit', value='Update Requests')
-                img.img-responsive.pull-right#spinnerUpdateRequests(src='/images/loading_spinner.gif', style='display: none; max-height: 42px')
           .spacer-sm
       #serviceProfile.tab-pane.fade.in
         .container-fluid(style='padding: 15px;')
