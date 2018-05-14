@@ -67,7 +67,7 @@ const userSchema = new mongoose.Schema({
   role: {
     type: String,
     default: 'youth',
-    enum: ['youth', 'service_provider', 'admin'],
+    enum: ['youth', 'service_provider', 'admin', 'street_connect'],
   },
   // Service providers that this user works for
   service: {

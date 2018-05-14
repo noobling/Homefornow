@@ -4,6 +4,7 @@ body {
     /*use roboto*/
     font-style: normal;
     color: #333333;
+    word-wrap: break-word;
 }
 
 h1 {
