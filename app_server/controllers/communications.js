@@ -37,26 +37,16 @@ const transporter = nodemailer.createTransport({
  */
 function sendSMS(number, message, res) {
   nexmo.message.sendSms(
-    'NEXMO', number, message, { type: 'unicode' }, // NEXMO must be changed to virtual number when in production
+    'NEXMO', number, message, { type: 'unicode' }, // 'NEXMO' must be changed to virtual number when in production
     (err, responseData) => {
       if (err) {
         console.log(err);
-        res.status(503);
-        res.json({ message: err });
-      } else {
-        console.dir(responseData);
-        // Get data from response
-        // const data = {
-        //   id: responseData.messages[0]['message-id'],
-        //   number: responseData.messages[0].to,
-        // };
-
-        // // Emit to the client
-        // io.emit('smsStatus', data);
-        res.status(201);
-        res.json({ message: `Sent text to ${number}` });
+        return res.status(503);
+        // res.json({ message: err });
       }
-    }
+      console.log(responseData.messages[0].status);
+      return responseData.messages[0].status;
+    },
   );
 }
 
@@ -121,7 +111,9 @@ module.exports.sms = (req, res) => {
  * @param {*} res
  */
 module.exports.notification = (req, res) => {
-  const { email, subject, message, number } = req.body;
+  const { email, number, name } = req.body;
+  const message = `Thank you for applying to ${name}. Your request has been recieved. We will get back to you shortly`;
+  const subject = `Request to ${name} has been recieved`;
 
   sendEmail(email, subject, message, res);
 

@@ -5,8 +5,10 @@ block content
   style.
     .HTMLify {
       white-space: pre-wrap;
+      line-height: 25px;
     }
   .container-fuid
+    #top
     if images != null || logo != null
       .spacer-xs
       .spacer-xs
@@ -50,11 +52,11 @@ block content
       .spacer-md
 
     a#back
-      img(src="/images/backarrow.svg", alt="")
+      i.material-icons(style='vertical-align: bottom;') arrow_back
       | Back to vacancies
     .row.text-center
-      .col-xs-12
-        a(href='#',data-toggle="modal",data-target="#contactmodal"+location.uri)
+      .col-xs-12(style='margin-top: 15px;')
+        a(href='#', data-toggle="modal", data-target="#contactmodal"+location.uri)
           button.btn.btn-primary
             | Contact
         +contactModal(location.name, location._id, location.available, location.phoneNumber, location.uri, location.thankyouMessage, logo)
@@ -64,30 +66,29 @@ block content
       .col-xs-12
         h1.text-center= location.name
       .col-xs-12
-        h3.text-justify.HTMLify #{location.description}
+        h3.text-left.HTMLify #{location.description}
       .col-xs-12.col-md-9
     .row.text-center
       .col-xs-12
-        h2 About
-      .col-xs-12
-        h4.text-justify.HTMLify #{location.about}
+        h4.text-left.HTMLify #{location.about}
+    .spacer-xs
     if location.amenities != null
       .row.text-center
         .col-xs-12
           h2(style='margin-bottom: 30px;') Amenities
         .col-xs-12
-          .row
-            each amenity in location.amenities
-              .col-xs-12.col-md-4.col-sm-6
-                .col-xs-3.text-right
-                  i.material-icons.sec-color.text-center(style='font-size: 50px;') #{amenity.icon} &nbsp;&nbsp;
-                .col-xs-9.text-left.no-wrap(style='padding-top: 15px;')
-                  h4(style='display: inline;') #{amenity.label}
+          each amenity in location.amenities
+            .row
+              .col-xs-2.col-xs-offset-3.text-right
+                i.material-icons.sec-color.text-center(style='font-size: 50px;') #{amenity.icon} &nbsp;&nbsp;
+              .col-xs-7.text-left.no-wrap(style='padding-top: 15px;')
+                h5(style='display: inline;') #{amenity.label}
+    .spacer-xs
     .row.text-center
       .col-xs-12
         h2 House Expectations
       .col-xs-12
-        h4.text-justify.HTMLify #{location.houseRules}
+        h4.text-left.HTMLify #{location.houseRules}
     .row.text-center
       if location.hours
         .col-xs-12
@@ -107,9 +108,9 @@ block content
           br
           | Sunday: #{location.hours.sun.open} - #{location.hours.sun.close}
     .spacer-xs
-    a#back
-      img(src="/images/backarrow.svg", alt="")
-      | Back to vacancies
+    a.text-center.pull-right(href='#top', style='margin-bottom: 20px;')
+      i.material-icons(style='vertical-align: bottom;') keyboard_arrow_up
+      | <br>Back to top
 
   script(src='/javascripts/requests.js')
   script.

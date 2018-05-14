@@ -6,8 +6,8 @@ const timeago = require("timeago.js");
 const Service = mongoose.model('Service');
 
 /**
- * Renders the bed vacancies page with short term (crisis and
- * transitional) or long term service providers. The available service
+ * Renders the bed vacancies page with short term (crisis) or
+ * long term (transitional) service providers. The available service
  * providers are listed first. Available and unavailable service providers are
  * ordered nearest to fartherest from a location specified in the req object.
  *
@@ -19,9 +19,9 @@ const Service = mongoose.model('Service');
  */
 module.exports.showLocations = (req, res) => {
   const longTerm = (req.params.lengthOfStay === 'long_term');
-  const type = (longTerm ? ['long', 'transitional'] : ['crisis']);
+  const type = (longTerm ? ['transitional'] : ['crisis']);
   const child = (req.body.hasChild ? [true] : [true, false]);
-  const disability = false;
+  // const disability = false;
   // (req.user.hasDisability ? [true] : [true, false]);
   const age = parseInt(timeago().format(req.body.dob).split(' ')[0], 10);
   console.log(age);
@@ -39,7 +39,7 @@ module.exports.showLocations = (req, res) => {
       $and: [
         { serviceType: { $in: type } },
         { child: { $in: child } },
-        { disability: { $in: disability } },
+        // { disability: { $in: disability } },
         { gender: { $in: gender } },
         { 'ageRange.maxAge': { $gte: age } },
         { 'ageRange.minAge': { $lte: age } },
@@ -79,8 +79,7 @@ module.exports.showLocations = (req, res) => {
           Promise.all(availableLogosPromises).then((availableLogos) => {
             Promise.all(unavailableLogosPromises).then((unavailableLogos) => {
               res.render('bedVacanciesList', {
-                title: 'For Now',
-                tagline: 'A place to stay',
+                serviceType: type,
                 locations: available,
                 locationImgs: availableImages,
                 locationLogos: availableLogos,
@@ -91,9 +90,9 @@ module.exports.showLocations = (req, res) => {
                   long: req.body.long,
                   lat: req.body.lat,
                 },
-              })
-            })
-          })
+              });
+            });
+          });
         }).catch(() => {
           res.render('bedVacanciesList', {
             title: 'For Now',
