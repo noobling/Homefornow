@@ -231,6 +231,32 @@ $('#updateRequests').submit(function(event) {
   });
 });
 
+function sendData(data) {
+  const submit_button = $(data).find(':submit');
+
+  const post_url = $(data).attr("action"); //get form action url
+  const request_method = $(data).attr("method"); //get form GET/POST method
+  const form_data = $(data).serialize(); //Encode form elements for submission
+
+  $.ajax({
+    url : post_url,
+    type: request_method,
+    data : form_data,
+  }).done(function(response) {
+    return;
+  });
+}
+
+$('#smsForm').submit(function(event) {
+  event.preventDefault();
+  sendData('#smsForm');  
+});
+
+$('#emailForm').submit(function(event) {
+  event.preventDefault();
+  sendData('#emailForm');  
+});
+
 function getAge(date) {
   const today = Date.now();
   const age = new Date(today - new Date(date).getTime());
@@ -299,40 +325,61 @@ const UpdatePanel = ({ index, name }) => `
   </div>
 `;
 
-const RequestPanel = ({ index, name, email, number, age, id, gender }) => `
+const RequestPanel = ({ index, name, email, number, age, id }) => {
+  var html = `
+    <div class="panel shadow" style='height: 10vh; min-height: 80px;'>
+      <div class="panel-body">
+        <div class="row text-center">
+          <div class="col-xs-2">
+            <h4>ICON</h4>
+          </div>
+          <div class="col-xs-3">
+            <a href='#' class='addEmail' data-toggle='modal' data-target='#emailmodal' data-email='${email}'>
+              <h5>${email}</h5>
+            </a>
+            `;
+  var num = number.substring(0,2);
+  if (num !== '04') {
+    html += `       <h5>${number}</h5>
+            `;
+  }
+  else {
+    html += `        <a href='#' class='addNum' data-toggle='modal' data-target='#smsmodal' data-num='${number}'>
+              <h5>${number}</h5>
+              </a>
+              `;
+  }
 
-<div class="panel shadow" style='height: 10vh; min-height: 80px;'>
-
-  <div class="panel-body">
- 		
-    <div class="row text-center">
-      <a data-toggle="modal" data-target="#requestModal${index}" class="hover-panel">  		
-        <div class="col-xs-2">
-          <h4>${gender}</h4>
+  html += `      </div>
+          <div class="col-xs-3">
+            <h4>${name}</h4>
+          </div>
+          <div class="col-xs-2">
+            <h6>${age}</h6>
+          </div>
+          <div class="col-xs-2">
+            <input type="checkbox" name='requests[${index}]' value='${id}' />
+          </div>
         </div>
-        
-        <div class="col-xs-3">
-            <h5>${email}</h5>
-            <h5>${number}</h5>
-        </div>
-        
-        <div class="col-xs-3">
-          <h4>${name}</h4>
-        </div>
-        <div class="col-xs-2">
-          <h6>${age}</h6>
-        </div>
-        </a> 
-      <div class="col-xs-2">
-        <input type="checkbox" name='requests[${index}]' value='${id}' />
       </div>
     </div>
-  </div>
-</div>
+  `;
+  return html;
+};
 
-`;
+$(document).on("click", ".addNum", function () {
+  var number = $(this).data('num');
+  number = '61'+number.substring(1,number.length);
+  $(".modal-body #tosms").val( number );
+});
 
-const ClosedRequestPanel = ({ index, name, email, number, age, gender, closedAt }) => `
+$(document).on("click", ".addEmail", function () {
+  var email = $(this).data('email');
+  $(".modal-body #toemail").val( email );
+});
+
+const ClosedRequestPanel = ({ index, name, email, number, age }) => { 
+  var html = `
   <div class="panel shadow" style='height: 10vh; min-height: 80px;'>
     <div class="panel-body">
       <div class="row text-center">
@@ -340,25 +387,37 @@ const ClosedRequestPanel = ({ index, name, email, number, age, gender, closedAt 
           <h4>${gender}</h4>
         </div>
         <div class="col-xs-3">
-          <a href='#'>
-            <h5>${email}</h6>
+          <a href='#' class='addEmail' data-toggle='modal' data-target='#emailmodal' data-email='${email}'>
+            <h5>${email}</h5>
           </a>
-          <a href='#'>
-            <h5>${number}</h6>
-          </a>
-        </div>
-        <div class="col-xs-3">
-          <h4>${name}</h4>
-        </div>
-        <div class="col-xs-2">
-          <h5>${age}</h5>
+          `;
+  var num = number.substring(0,2);
+  if (num !== '04') {
+    html += `       <h5>${number}</h5>
+            `;
+  }
+  else {
+    html += `        <a href='#' class='addNum' data-toggle='modal' data-target='#smsmodal' data-num='${number}'>
+              <h5>${number}</h5>
+              </a>
+              `;
+  }
+  html += `
+          </div>
+          <div class="col-xs-3">
+            <h4>${name}</h4>
+          </div>
+          <div class="col-xs-2">
+            <h6>${age}</h6>
+          </div>
         </div>
         <div class="col-xs-2">
           <h5>${closedAt}</h5>
       </div>
     </div>
-  </div>
-`;
+  `;
+  return html;
+};
 
 /**
  *  When the user clicks the Service Profile tab
