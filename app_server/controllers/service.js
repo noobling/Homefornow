@@ -312,7 +312,7 @@ module.exports.dashboardOpenRequests = (req, res) => {
         {
           _id: service.openRequests,
         },
-        '_id firstName lastName gender phoneNumber email dob',
+        '_id firstName lastName gender phoneNumber email dob note closedAt openedAt',
       ).exec()
         .then((requests) => {
           // console.log(requests);
@@ -341,7 +341,7 @@ module.exports.dashboardClosedRequests = (req, res) => {
         {
           _id: service.requests,
         },
-        'firstName lastName gender phoneNumber email dob',
+        'firstName lastName gender phoneNumber email dob closedAt',
       ).exec()
         .then((requests) => {
           // console.log(requests);
@@ -529,6 +529,12 @@ module.exports.updateRequests = (req, res) => {
   }
   console.log(req.body.requests);
   // const removedRequests = req.body.requests;
+
+  Request.update({ _id: { $in: req.body.requests } }, { closedAt: Date.now() }, (err, requests) => {
+    if (err) console.log(err);
+    console.log(requests);
+  });
+
   Service.findOneAndUpdate(
     { uri: req.params.serviceUri },
     {
@@ -723,5 +729,14 @@ module.exports.dashboardImages = (req, res) => {
     });
   }).catch((err) => {
     res.status(500).json({ message: err });
+  });
+};
+
+module.exports.addNote = (req, res) => {
+  Request.findOneAndUpdate({ _id: req.body['_id'] }, { $set: { note: req.body.note } }, { new: true }, (err, doc) => {
+    if (err) {
+      res.json(err);
+    }
+    res.json(doc);
   });
 };

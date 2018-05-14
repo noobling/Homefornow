@@ -63,6 +63,11 @@ const requestSchema = new mongoose.Schema({
     default: null,
     required: false,
   },
+  note: {
+    type: String,
+    required: false,
+    default: '',
+  },
   // The status of the request
   // status: {
   //   type: String,

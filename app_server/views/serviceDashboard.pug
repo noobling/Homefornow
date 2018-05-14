@@ -57,10 +57,9 @@ block content
       #bedManagement.tab-pane.fade.in.active
         .container-fluid
           .row(style='margin-top: 20px;')
-            .col-xs-6
+            .col-xs-12.level
               h3 Our Bed Count
-            .col-xs-6(style='padding-top: 30px;')
-              a.pull-right( href='#', data-toggle='modal', data-target='#editBedModal')#beds Edit Beds
+              a( href='#', data-toggle='modal', data-target='#editBedModal', style='margin-left: 1em;')#beds Edit Beds
                 i.material-icons.btn-other(style='font-size: inherit; color: inherit;') edit
             .col-xs-12
               form(action='/service/dashboard/'+service.uri+'/beds/update', method='post')#updateBeds
@@ -107,6 +106,8 @@ block content
                       h4 NAME
                     .col-xs-2
                       h4 AGE
+                    .col-xs-2
+                      h4 Closed Date
             .col-xs-12
               form(action='/service/dashboard/'+service.uri+'/closed_requests/update', method='post')#closedRequests
                 img.img-responsive.center-block#spinnerLoadRequestsClosed(src='/images/loading_street.gif', style='display: none')
@@ -394,3 +395,16 @@ block content
   script(src='/javascripts/service.js')
   script(src='/javascripts/bedsAvailable.js')
   script(src='/javascripts/images.js')
+  style.
+    .level {
+      display: flex;
+      align-items: baseline;
+    }
+    .hover-panel:hover {
+      cursor: pointer;
+      opacity: 0.5;
+      color: rgb(51, 51, 51);
+    }
+    .hover-panel {
+      color: rgb(51, 51, 51)
+    }
