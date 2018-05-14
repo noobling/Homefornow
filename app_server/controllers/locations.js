@@ -6,8 +6,8 @@ const logo = require('../middleware/images');
 const Service = mongoose.model('Service');
 
 /**
- * Renders the bed vacancies page with short term (crisis and
- * transitional) or long term service providers. The available service
+ * Renders the bed vacancies page with short term (crisis) or
+ * long term (transitional) service providers. The available service
  * providers are listed first. Available and unavailable service providers are
  * ordered nearest to fartherest from a location specified in the req object.
  *
@@ -19,9 +19,9 @@ const Service = mongoose.model('Service');
  */
 module.exports.showLocations = (req, res) => {
   const longTerm = (req.params.lengthOfStay === 'long_term');
-  const type = (longTerm ? ['long', 'transitional'] : ['crisis']);
+  const type = (longTerm ? ['transitional'] : ['crisis']);
   const child = (req.body.hasChild ? [true] : [true, false]);
-  const disability = false;
+  // const disability = false;
   // (req.user.hasDisability ? [true] : [true, false]);
 
   let gender = ['Either']; // If 'Other'
@@ -38,7 +38,7 @@ module.exports.showLocations = (req, res) => {
       $and: [
         { serviceType: { $in: type } },
         { child: { $in: child } },
-        { disability: { $in: disability } },
+        // { disability: { $in: disability } },
         { gender: { $in: gender } },
         {
           'address.coordinates.coordinates': {
@@ -71,15 +71,14 @@ module.exports.showLocations = (req, res) => {
         }
       }
 
-     
+
 
       Promise.all(availableImagePromises).then((availableImages) => {
         Promise.all(unavailableImagePromises).then((unavailableImages) => {
           Promise.all(availableLogosPromises).then((availableLogos) => {
             Promise.all(unavailableLogosPromises).then((unavailableLogos) => {
               res.render('bedVacanciesList', {
-                title: 'For Now',
-                tagline: 'A place to stay',
+                serviceType: type,
                 locations: available,
                 locationImgs: availableImages,
                 locationLogos: availableLogos,
@@ -90,9 +89,9 @@ module.exports.showLocations = (req, res) => {
                   long: req.body.long,
                   lat: req.body.lat,
                 },
-              })
-            })
-          })
+              });
+            });
+          });
         }).catch(() => {
           res.render('bedVacanciesList', {
             title: 'For Now',

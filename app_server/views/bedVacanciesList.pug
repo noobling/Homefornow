@@ -3,21 +3,31 @@ include _includes/contactModal
 include _includes/vacancyListPanel
 
 block content
-  #banner.page-header
+  .container-fluid
+    #banner.page-header(style="margin-bottom: 80px;")
+      .row
+          h1.bang LET'S FIND A
+          h1.bang HOME 
+            span.sec-color.bang 
+              if serviceType == 'crisis'
+                | FOR NOW.
+              else
+                | LONG TERM
     .row
-      .col-md-6
-        h1.bang LET'S FIND A
-        h1.bang HOME FOR
-          span.sec-color.bang  NOW.
-      .col-md-6
-          #userloc
-  .row
-    each location in locations
-      +contactModal(location.name, location._id, location.available, location.phoneNumber, location.uri, location.thankyouMessage, locationLogos[locations.indexOf(location)])
-      +vacancyPanel(location.name, location.address.suburb, location.available, location.description, location.uri, locationImgs[locations.indexOf(location)])
+      each location in locations
+        +contactModal(location.name, location._id, location.available, location.phoneNumber, location.uri, location.thankyouMessage, locationLogos[locations.indexOf(location)])
+        +vacancyPanel(location.name, location.address.suburb, location.available, location.description, location.uri, locationImgs[locations.indexOf(location)])
 
-    each dlocation in dlocations
-        +vacancyPanel(dlocation.name, dlocation.address.suburb, dlocation.available, dlocation.description, dlocation.uri, dlocationImgs[locations.indexOf(location)])
+      each dlocation in dlocations
+          +vacancyPanel(dlocation.name, dlocation.address.suburb, dlocation.available, dlocation.description, dlocation.uri, dlocationImgs[locations.indexOf(location)])
+    .spacer-xs
+    .row
+      .panel
+        .panel-header
+          h4.text-center Your Location
+        .panel-body(style="padding: 0;")
+          #userloc(style="height: 75vh;")
+
 
   script.
     /**
@@ -25,21 +35,58 @@ block content
     */
     function userMap()
     {
-        const lat = Number("#{userCoords.lat}");
-        const long = Number("#{userCoords.long}");
-        const coord = {lat: lat, lng: long}; // need to change to user current latlng
-        const map = new google.maps.Map(document.getElementById('userloc'), {
-          zoom: 14,
-          center: coord,
-          disableDefaultUI: true,
-          zoomControl: false,
-          gestureHandling: 'none'
-        });
+      const lat = Number("#{userCoords.lat}");
+      const long = Number("#{userCoords.long}");
+      const coord = {lat: lat, lng: long}; // user current latlng
+      const services = !{JSON.stringify(locations)} ;
+      services.concat(!{JSON.stringify(dlocations)});
 
-        const marker = new google.maps.Marker({
-          position: coord,
-          map: map
+      const map = new google.maps.Map(document.getElementById('userloc'), {
+        zoom: 13,
+        center: coord,
+        disableDefaultUI: true,
+        zoomControl: false,
+      });
+
+      const marker = new google.maps.Marker({
+        position: coord,
+        map: map
+      });
+      var serviceMarker = [];
+      services.forEach( function(serv) {
+        const name = serv.name;
+        const latitude = Number(serv.address.coordinates.coordinates[1]);
+        const longitude = Number(serv.address.coordinates.coordinates[0]);
+
+        const pos = {lat: latitude, lng: longitude};
+
+        serviceMarker.push( [ name, pos ] );
+      });
+
+      for( let i = 0; i < serviceMarker.length; i++) {
+        let con = '<div id="content">'+
+                  '<h4>'+ serviceMarker[i][0] +'</h4>'+
+                  '</div>';
+        let infowindow = new google.maps.InfoWindow({
+                      content: con
+                    });
+                    
+        let cityCircle = new google.maps.Circle({
+          strokeColor: '#FF0000',
+          strokeOpacity: 0.5,
+          strokeWeight: 2,
+          fillColor: '#FF0000',
+          fillOpacity: 0.25,
+          map: map,
+          center: serviceMarker[i][1],
+          radius: 1.75 * 1000 //radius in metres
         });
+        
+        google.maps.event.addListener(cityCircle, 'click', function(){
+          infowindow.setPosition(cityCircle.getCenter());
+          infowindow.open(map);
+        });
+      }
     }
   script(src='/javascripts/requests.js')
   script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key='+process.env.embed_maps_api+'&callback=userMap')

@@ -197,11 +197,10 @@ div[class^="col-"] {
 }*/
 
 /*CSS for user map ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-#userloc {
-    border-radius: 5%;
-    height: 250px;
-    width:  250px;
-}
+/* #userloc {
+    height: 60vh;
+    width:  80vw;
+} */
 
 #user-panel {
     border: transparent;
