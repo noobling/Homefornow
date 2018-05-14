@@ -1015,7 +1015,7 @@ function fetchBedsAvailable() {
     for (var i = 0; i < services.crisis.length; i++) {
       var service = services.crisis[i];
       $('#crisis-table').append(`
-      <tr>
+      <tr class="table-panel">
         <td>${service.serviceName}</td>
         <td>${service.numBeds}</td>
         <td>${service.numMale}</td>
@@ -1029,7 +1029,7 @@ function fetchBedsAvailable() {
     for (var i = 0; i < services.transitional.length; i++) {
       var service = services.transitional[i];
       $('#transitional-table').append(`
-        <tr>
+        <tr class="table-panel">
           <td>${service.serviceName}</td>
           <td>${service.phoneNumber}</td>
         </tr>

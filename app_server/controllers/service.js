@@ -437,22 +437,25 @@ module.exports.bedsAvailable = (req, res) => {
           let numFemale = 0;
           let numEither = 0;
           service.beds.forEach((bed) => {
-            if (bed.gender === 'Male') numMale++
-            if (bed.gender === 'Female') numFemale++
-            if (bed.gender === 'Either') numEither++
+            if (bed.isOccupied === 'Available') {
+              if (bed.gender === 'Male') numMale++
+              if (bed.gender === 'Female') numFemale++
+              if (bed.gender === 'Either') numEither++
+            }
           })
           serviceData.numMale = numMale;
           serviceData.numFemale = numFemale;
           serviceData.numEither = numEither;
+          serviceData.numBeds = numMale + numFemale + numEither;
           
-          if (service.serviceType == 'crisis') {
+          if (service.serviceType === 'crisis') {
             data.crisis.push(serviceData)
           } else {
             data.transitional.push(serviceData)
           }
         }
       })
-      res.send(data)
+      res.send(data);
     })
 };
 
