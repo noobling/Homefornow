@@ -119,7 +119,8 @@ module.exports.showLocations = (req, res) => {
       });
     })
     .catch((err) => {
-      res.status(500).json({ message: err });
+      console.log(err);
+      res.redirect('/');
     });
 };
 
