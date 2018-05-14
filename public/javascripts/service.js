@@ -924,6 +924,23 @@ $('a[href="#bedsAvaliable"]').on('click', function() {
 	})
 });
 
+$('#serveAmenitiesForm :input').click(function() {
+  const id = $(this).attr('id');
+  const checkedState = document.getElementById(id).checked;
+  const data = {
+    checkedState,
+    id
+  }
+  $.ajax({
+    url: '/service/amenities/update',
+    method: 'POST',
+    data,
+    success: function(data) {
+
+    }
+  })
+})
+
 /**
  * Copyright (c) 2016 hustcc
  * License: MIT

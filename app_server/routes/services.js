@@ -18,7 +18,7 @@ router.post('/dashboard/:serviceUri/requests/update', serviceController.updateRe
 router.get('/dashboard/:serviceUri/profile', serviceController.dashboardProfile);
 router.get('/dashboard/:serviceUri/images', serviceController.dashboardImages);
 router.get('/dashboard/:serviceUri/available', serviceController.dashboardAvailable);
-
+router.post('/amenities/update', serviceController.updateAmenities);
 
 // Services Profile Page route
 // TODO remove

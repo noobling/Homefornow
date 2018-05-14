@@ -116,7 +116,6 @@ function amenities(service) {
       icon: 'local_florist',
     });
   }
-  console.log(amen);
   return amen;
   //   ['BATHROOM', '', 'wc']; ///////////////////////////////////////////
 }
@@ -739,4 +738,32 @@ module.exports.addNote = (req, res) => {
     }
     res.json(doc);
   });
+};
+
+module.exports.updateAmenities = (req, res) => {
+  const payload = {};
+  payload[req.body.id] = 'on';
+  let amens = amenities(payload);
+  amens = amens.filter(amen => amen.label !== 'NO SMOKING');
+  if (amens) {
+    const amen = amens[0];
+    if (req.body.checkedState === 'true') {
+      Service.findOneAndUpdate({ _id: req.user.service[0] }, { new: true }, {
+        $push: {
+          amenities: {amen},
+        },
+      }, (err, doc) => {
+        if (err) console.log(err);
+        console.log(doc);
+      });
+    } else {
+      Service.findOneAndUpdate({ _id: req.user.service[0] }, {
+        $pull: {
+          amenities: amen,
+        },
+      });
+    }
+  }
+
+  res.json('Worked');
 };
