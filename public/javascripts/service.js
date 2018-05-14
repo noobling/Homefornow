@@ -379,8 +379,8 @@ const UpdatePanel = ({ index, name }) => `
 const RequestPanel = ({ index, name, email, number, age, id, gender }) => {
   var html = `
     <div class="panel shadow" style='height: 10vh; min-height: 80px;'>
-      <div class="panel-body">
-        <div class="row text-center">
+      <div class="panel-body" style="height: 100%;">
+      <div class="row text-center" style="height: 100%; display: flex; align-items: center;">
           <div class="col-xs-2">
             <h4>${gender}</h4>
           </div>
@@ -405,11 +405,14 @@ const RequestPanel = ({ index, name, email, number, age, id, gender }) => {
           <div class="col-xs-3">
             <h4>${name}</h4>
           </div>
-          <div class="col-xs-2">
+          <div class="col-xs-1">
             <h6>${age}</h6>
           </div>
           <div class="col-xs-2">
             <input type="checkbox" name='requests[${index}]' value='${id}' />
+          </div>
+          <div class="col-xs-1">
+            <a data-toggle="modal" data-target="#requestModal${index}" class="btn btn-primary">Edit</a>
           </div>
         </div>
       </div>
@@ -431,10 +434,9 @@ $(document).on("click", ".addEmail", function () {
 
 const ClosedRequestPanel = ({ index, name, email, number, age, gender, closedAt }) => { 
   var html = `
-<a data-toggle="modal" data-target="#closedRequestModal${index}" class="hover-panel">  		
   <div class="panel shadow" style='height: 10vh; min-height: 80px;'>
-    <div class="panel-body">
-      <div class="row text-center">
+    <div class="panel-body" style="height: 100%">
+      <div class="row text-center" style="height: 100%; display: flex; align-items: center;">
         <div class="col-xs-2">
           <h4>${gender}</h4>
         </div>
@@ -459,15 +461,17 @@ const ClosedRequestPanel = ({ index, name, email, number, age, gender, closedAt 
           <div class="col-xs-3">
             <h4>${name}</h4>
           </div>
-          <div class="col-xs-2">
+          <div class="col-xs-1">
             <h6>${age}</h6>
           </div>
           <div class="col-xs-2">
             <h5>${closedAt}</h5>
           </div>
+          <div class="col-xs-1">
+            <a data-toggle="modal" data-target="#closedRequestModal${index}" class="btn btn-primary">Edit</a>
+          </div>
       </div>
     </div>
-</a>
   `;
   return html;
 };

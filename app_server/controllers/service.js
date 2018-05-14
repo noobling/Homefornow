@@ -340,7 +340,7 @@ module.exports.dashboardClosedRequests = (req, res) => {
         {
           _id: service.requests,
         },
-        'firstName lastName gender phoneNumber email dob closedAt note',
+        'firstName lastName gender phoneNumber email dob closedAt note openedAt',
       ).exec()
         .then((requests) => {
           // console.log(requests);
