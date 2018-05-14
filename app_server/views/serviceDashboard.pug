@@ -367,7 +367,7 @@ block content
                       
             .row
               .col-xs-12.text-right
-                input.btn.btn-primary(type='submit', value='SAVE CHANGES')
+                input.btn.btn-primary.save-btn-fixed(type='submit', value='SAVE CHANGES')
       #bedsAvaliable.tab-pane.fade.in
         .container-fluid
           .row
@@ -405,4 +405,9 @@ block content
     }
     .hover-panel {
       color: rgb(51, 51, 51)
+    }
+    .save-btn-fixed {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
     }
