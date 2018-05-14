@@ -5,32 +5,40 @@ mixin signupModal(title, route, id)
                 .modal-header(style='padding-bottom: 25px;')
                     button(type='button',data-dismiss='modal').close &times;
                     h2.sec-color.bang.modal-title= title
-                    h4.modal-title(style='color: #606060;') Help us find 
-                    h4.modal-title(style='color: #606060; padding-bottom:5px;') somewhere close to you.
-                    h5.modal-title(style='color: #606060;') Fill These Details To Get The
-                    h5.modal-title(style='color: #606060;') Vacancies Suited To You
+                    h4.modal-title(style='color: #606060; padding-bottom:5px;').
+                        Help us find </br>
+                        somewhere close to you.
+                    h5.modal-title(style='color: #606060;').
+                        Fill These Details To Get The </br>
+                        Vacancies Suited To You
                 .modal-body(style='padding-top: 0px;')
                     form(action=route, method="post", id=id+'form')
                         .form-group
-                            label(for="fName") First Name
-                            input(type="text", name="fName", placeholder="e.g. John", required).form-control#fName
+                            label(for=id+"fName") First Name
+                            input(type="text", name="fName", placeholder="e.g. John", required, id=id+"fName").form-control
                         .form-group
-                            label(for="lName") Last Name
-                            input(type="text", name="lName", placeholder="e.g. Doe", required).form-control#lName
+                            label(for=id+"lName") Last Name
+                            input(type="text", name="lName", placeholder="e.g. Doe", required, id=id+"lName").form-control
                         .form-group
-                            label(for="dob") Date of Birth
-                            input(type="date", name="dob", required).form-control#ldob
+                            label(for=id+"email") Email
+                            input(type="email", name="email", placeholder="e.g. example@example.com", required, id=id+"email").form-control
+                        .form-group
+                            label(for=id+"num") What's the best number to get you on
+                            input(type="tel", name="num",  placeholder="e.g. 0412345678", minlength='10', maxlength='10', required, id=id+"num").form-control
+                        .form-group
+                            label(for=id+"dob") Date of Birth
+                            input(type="date", name="dob", required, id=id+"dob").form-control
                         .form-group
                             .row
                                 .col-xs-6
-                                    select.form-control(name="gender", placeholder="Gender", required)#gender
+                                    select.form-control(name="gender", placeholder="Gender", required, id=id+"gender")
                                         option(hidden='true', value='') Gender
                                         option Male
                                         option Female
                                         option Other
                                 .col-xs-6
                                     label.checkbox-inline
-                                        input(type="checkbox", name="child", value="yes")#child
+                                        input(type="checkbox", name="child", value="yes", id=id+"child")
                                         | Parent with child?
                         .form-group
                             //- input(name="location", type="hidden", value="test location")

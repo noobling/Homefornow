@@ -9,17 +9,19 @@ block content
     +signupModal('Right Now.', '/locations/contact/short_term', 'shortTermModal')
     +signupModal('Long Term.', '/locations/contact/long_term', 'longTermModal')
     
-    //- style.
-    //-   #location::placeholder {
-    //-     font-size: 19px;
-    //-     font-weight: 300;
-    //-   }
+    style.
+      #location {
+        border-radius: 3px;
+        box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3);
+        background-color: #ffffff;
+        border: solid 2px #333333;
+      }
 
-    #banner.page-header
+    #banner.page-header(style="margin-bottom: 17vh;")
       .row
-        .col-xs-12
-          img.img-responsive(src='/images/landing-img.png')
-    form(id='locationForm', onsubmit="event.preventDefault()")
+        .col-xs-12.col-md-8
+          img.img-responsive(src='images/landing_main.png')
+    form(id='locationForm', onsubmit='event.preventDefault()')
       .form-group
         .row
           .col-md-8.col-xs-12
@@ -33,32 +35,32 @@ block content
                   | Use 
                   a(href='javascript: geoloc();', class='geoloc' style='color: #999;')#get_location
                     | my current location
-          .col-md-2.col-xs-6.text-right
+          .col-xs-6.col-md-2.text-right
             button(type='submit', data-toggle='modal',data-target='#shortTermModal').btn.btn-lg.btn-primary#shortBtn
               | Right now
-          .col-md-2.col-xs-6.text-left
+          .col-xs-6.col-md-2.text-left
             button(type='submit', data-toggle='modal',data-target='#longTermModal').btn.btn-lg.btn-secondary#longBtn
               | Long term
     .spacer-md
     .row
       .col-xs-12
-        img.img-responsive(src='images/landing head.png', style='height: 120px;')
+        img.img-responsive(src='images/landing_where.png', style='height: 120px;')
     .spacer-sm
     .row
       .col-xs-12
         h2.bang(style="margin:0px;")="CLOSE TO YOU."
         h3(style="margin:0px;")="Nearest crisis accommodation services."
     .row
-      each location in [crisis, transitional, long]
+      each location in [crisis, transitional]
         if location
-          .col-md-4.col-sm-12
+          .col-sm-4.col-xs-12
             .panel.panel-default.panel-spaced
-              a(href='location/'+location.uri)
-                .panel-header.image.img-shadow
-                    if images[[crisis, transitional, long].indexOf(location)] != null
-                      img.img-responsive.img-square.center-block(src=images[[crisis, transitional, long].indexOf(location)])
-                    else
-                      img.img-responsive.img-square.center-block(src='images/placeholder-image.png')
+              .panel-header.image.img-shadow
+                a(href='location/'+location.uri)
+                  if images[[crisis, transitional].indexOf(location)] != null
+                    img.img-responsive.img-square.center-block(src=images[[crisis, transitional].indexOf(location)])
+                  else
+                    img.img-responsive.img-square.center-block(src='images/placeholder-image.png')
               .panel-header
                 a(href='/location/'+location.uri)
                   .panel-title.text-center.roboto-title.black.line-spc-2= location.name
@@ -73,12 +75,14 @@ block content
     .row
       .col-xs-6
         h3.bold='Entry Point'
-        h4.bold.sec-color='6496 0001'
-        h4.bold.sec-color='1800 124 684'
+        h4.bold.sec-color.
+          6496 0001 </br>
+          1800 124 684
       .col-xs-6
         h3.bold='Crisis Care'
-        h4.bold.sec-color='9223 1111'
-        h4.bold.sec-color='1800 199 008'
+        h4.bold.sec-color.
+          9223 1111 </br>
+          1800 199 008
     .spacer-xs
     script(src='/javascripts/location.js')
     script(src='/javascripts/requests.js')

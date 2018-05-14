@@ -9,11 +9,9 @@ block content
       border: solid 2px #333333 !important;
       border-radius: 3px !important;
       box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3) !important;
-      box-shadow: 0px 2px 7.8px 0.2px var(--black-30) !important;
     }
     .well {
       box-shadow: 0px 2px 7.8px 0.2px rgba(0, 0, 0, 0.3) !important;
-      box-shadow: 0px 2px 7.8px 0.2px var(--black-30) !important;
       border: solid 2px #333333 !important;
       border-radius: 3px !important;
       background-color: #ebebeb;
@@ -37,7 +35,6 @@ block content
                 select.form-control(name='serveType', id='serveType', style='padding: 6px 10px 6px 4px;', required='')
                   option(value='crisis') CRISIS
                   option(value='transitional') TRANSITIONAL
-                  option(value='long') LONG TERM
             .form-group#serveLocation
               .col-xs-12
                 label LOCATION
@@ -47,10 +44,10 @@ block content
                 select.form-control(name='serveState', id='serveState', style='padding: 6px 10px 6px 4px;', required='')
                   option(hidden='true') STATE
                   option ACT
-                  option NSW
+                  option NSW                  
+                  option NT
                   option QLD
                   option SA
-                  option NT
                   option TAS
                   option VIC
                   option WA

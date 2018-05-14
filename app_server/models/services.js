@@ -20,7 +20,7 @@ const addressSchema = new mongoose.Schema({
   state: {
     type: String,
     required: true,
-    enum: ['ACT', 'NSW', 'QLD', 'SA', 'NT', 'TAS', 'VIC', 'WA'],
+    enum: ['ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA'],
   },
   // GeoJSON object for longitude and latitude. Longitude is listed first.
   coordinates: {
@@ -189,7 +189,7 @@ const serviceSchema = new mongoose.Schema({
   serviceType: {
     type: String,
     required: true,
-    enum: ['crisis', 'transitional', 'long'],
+    enum: ['crisis', 'transitional'],
   },
   // Which genders the service provider accommodates
   gender: {

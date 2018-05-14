@@ -2,7 +2,7 @@
     .modal-dialog.modal-lg
         .modal-content
             .modal-header
-                button(type="button",data-dismiss="modal").close &times;
+                button(type="button", data-dismiss="modal").close &times;
                 h4.modal-title Email
             .modal-body
                 form(action='/email', method='post')#emailForm
@@ -19,5 +19,8 @@
                         textarea(rows="13", name="message", required="true", spellcheck="true", placeholder="Compose mail").form-control#mail
                     .text-right
                         a(href="/communications/email")
-                            input(type="submit", value="Send").btn.btn-default
-  
+                            input(type="submit", value="Send").btn.btn-primary
+script.
+    $('#emailForm').submit(function() {
+        $('#emailmodal').modal('hide');
+    });
