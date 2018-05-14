@@ -101,6 +101,8 @@ $(document).ready(function() {
   updateBeds();
 
   updateRequests();
+
+  fetchBedsAvailable();
 });
 
 /**
@@ -941,11 +943,9 @@ const AddImagePanel = ({ uri, route }) => `
 /**
  *  When the user clicks the Beds Available tab
  */
-$('a[href="#bedsAvaliable"]').on('click', function() {
-  console.log('here')
-  $('#spinnerLoadProfile').show();
-	$.get('/service/beds/available', function(services) {
-    $('#spinnerLoadProfile').hide();
+function fetchBedsAvailable() {
+  $.get('/service/beds/available', function(services) {
+    $('#spinnerBedsAvailable').hide();
     for (var i = 0; i < services.crisis.length; i++) {
       var service = services.crisis[i];
       $('#crisis-table').append(`
@@ -970,7 +970,7 @@ $('a[href="#bedsAvaliable"]').on('click', function() {
       `)
     }
 	})
-});
+}
 
 /**
  * Copyright (c) 2016 hustcc
