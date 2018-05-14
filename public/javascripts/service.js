@@ -376,13 +376,13 @@ const UpdatePanel = ({ index, name }) => `
   </div>
 `;
 
-const RequestPanel = ({ index, name, email, number, age, id }) => {
+const RequestPanel = ({ index, name, email, number, age, id, gender }) => {
   var html = `
     <div class="panel shadow" style='height: 10vh; min-height: 80px;'>
       <div class="panel-body">
         <div class="row text-center">
           <div class="col-xs-2">
-            <h4>ICON</h4>
+            <h4>${gender}</h4>
           </div>
           <div class="col-xs-3">
             <a href='#' class='addEmail' data-toggle='modal' data-target='#emailmodal' data-email='${email}'>
@@ -429,7 +429,7 @@ $(document).on("click", ".addEmail", function () {
   $(".modal-body #toemail").val( email );
 });
 
-const ClosedRequestPanel = ({ index, name, email, number, age }) => { 
+const ClosedRequestPanel = ({ index, name, email, number, age, gender, closedAt }) => { 
   var html = `
 <a data-toggle="modal" data-target="#closedRequestModal${index}" class="hover-panel">  		
   <div class="panel shadow" style='height: 10vh; min-height: 80px;'>
@@ -462,9 +462,9 @@ const ClosedRequestPanel = ({ index, name, email, number, age }) => {
           <div class="col-xs-2">
             <h6>${age}</h6>
           </div>
-        </div>
-        <div class="col-xs-2">
-          <h5>${closedAt}</h5>
+          <div class="col-xs-2">
+            <h5>${closedAt}</h5>
+          </div>
       </div>
     </div>
 </a>
