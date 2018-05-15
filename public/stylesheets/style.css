@@ -303,6 +303,13 @@ div[class^="col-"] {
     border: 0;
 }
 
+.navbar-brand,
+.navbar-nav li a {
+    line-height: 50px;
+    height: 50px;
+    padding-top: 0;
+}
+
 .material-nav {
     box-shadow: 0 4px 12px rgba(0, 0, 0, .05);
     z-index: 10;

@@ -204,39 +204,38 @@ module.exports.addService = (req, res, next) => {
 };
 
 module.exports.updateService = (req, res) => {
-  let service = new Service();
+  const service = new Service();
 
-  data = {
+  const data = {
     name: req.body.serveName,
     description: req.body.serveDesc,
     addresss: {
       suburb: req.body.serveSuburb,
       state: req.body.serveState,
-      postcode: req.body.servePostcode
+      postcode: req.body.servePostcode,
     },
     serviceType: req.body.serveType,
     ageRange: {
       minAge: req.body.serveMinAge,
-      maxAge: req.body.serveMaxAge
+      maxAge: req.body.serveMaxAge,
     },
     stayLength: req.body.serveStayLength,
     phoneNumber: req.body.servePhone,
     about: req.body.serveAbout,
     houseRules: req.body.serveRules,
-    thankyouMessage: req.body.thankyouMessage
+    thankyouMessage: req.body.thankyouMessage,
   };
 
   try {
-    Service.findOneAndUpdate({ name: req.params.serviceName }, { $set: data }, (err, doc) => {
-      if (err) console.log(err+'\n');
-      res.redirect('/location/' + service.encodeURI(req.body.serveName));      
+    Service.findOneAndUpdate({ name: req.params.serviceName }, { $set: data }, (err) => {
+      if (err) console.log(`${err}\n`);
+      res.redirect(`/location/${service.encodeURI(req.body.serveName)}`);
     });
-    
   } catch (e) {
-    res.redirect('/location/' + service.encodeURI(req.body.serveName));    
+    res.redirect(`/location/${service.encodeURI(req.body.serveName)}`);
     console.log(e);
   }
-}
+};
 
 // function returnAges(requests) {
 //   const newRequests = requests;
@@ -382,7 +381,7 @@ module.exports.dashboardProfile = (req, res) => {
 
 /**
  * Renders a service provider's dashboard. [DEPRACATED]
- * 
+ *
  * @param  {Object} req Express request object.
  * @param  {Object} res Express response object.
  */
@@ -419,44 +418,44 @@ module.exports.bedsAvailable = (req, res) => {
     return;
   }
 
-    Service.find({}, (err, services) => {
-      if (err) throw err;
-      const data = {
-        crisis: [],
-        transitional: []
-      }
-      services.forEach((service) => {
-        if (service.beds) {
-          serviceData = {
-            serviceName: service.name, 
-            phoneNumber: service.phoneNumber
+  Service.find({}, (err, services) => {
+    if (err) throw err;
+    const data = {
+      crisis: [],
+      transitional: [],
+    };
+    services.forEach((service) => {
+      if (service.beds) {
+        const serviceData = {
+          serviceName: service.name,
+          phoneNumber: service.phoneNumber,
+        };
+
+        serviceData.numBeds = service.beds.length;
+        let numMale = 0;
+        let numFemale = 0;
+        let numEither = 0;
+        service.beds.forEach((bed) => {
+          if (bed.isOccupied === 'Available') {
+            if (bed.gender === 'Male') numMale += 1;
+            if (bed.gender === 'Female') numFemale += 1;
+            if (bed.gender === 'Either') numEither += 1;
           }
-        
-          serviceData.numBeds = service.beds.length;
-          let numMale = 0;
-          let numFemale = 0;
-          let numEither = 0;
-          service.beds.forEach((bed) => {
-            if (bed.isOccupied === 'Available') {
-              if (bed.gender === 'Male') numMale++
-              if (bed.gender === 'Female') numFemale++
-              if (bed.gender === 'Either') numEither++
-            }
-          })
-          serviceData.numMale = numMale;
-          serviceData.numFemale = numFemale;
-          serviceData.numEither = numEither;
-          serviceData.numBeds = numMale + numFemale + numEither;
-          
-          if (service.serviceType === 'crisis') {
-            data.crisis.push(serviceData)
-          } else {
-            data.transitional.push(serviceData)
-          }
+        });
+        serviceData.numMale = numMale;
+        serviceData.numFemale = numFemale;
+        serviceData.numEither = numEither;
+        serviceData.numBeds = numMale + numFemale + numEither;
+
+        if (service.serviceType === 'crisis') {
+          data.crisis.push(serviceData);
+        } else {
+          data.transitional.push(serviceData);
         }
-      })
-      res.send(data);
-    })
+      }
+    });
+    res.send(data);
+  });
 };
 
 module.exports.updateBeds = (req, res) => {
@@ -499,7 +498,7 @@ module.exports.updateBeds = (req, res) => {
         }
       }
     }).then(() => {
-      let available = beds.filter((bed) => { return bed.isOccupied === 'Available' });
+      let available = beds.filter(bed => bed.isOccupied === 'Available');
 
       if (available.length === 0) {
         available = false;
@@ -575,10 +574,10 @@ module.exports.reopenRequest = (req, res) => {
 
   Service.findByIdAndUpdate(req.user.service[0], {
     $pull: {
-      requests: req.body['_id']
+      requests: req.body['_id'],
     },
     $addToSet: {
-      openRequests: req.body['_id']
+      openRequests: req.body['_id'],
     },
   }).exec().then(() => {
     res.json('Reopened request');
@@ -782,7 +781,7 @@ module.exports.updateAmenities = (req, res) => {
     if (req.body.checkedState === 'true') {
       Service.findOneAndUpdate({ _id: req.user.service[0] }, { new: true }, {
         $push: {
-          amenities: {amen},
+          amenities: { amen },
         },
       }, (err, doc) => {
         if (err) console.log(err);

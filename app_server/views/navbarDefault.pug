@@ -4,8 +4,10 @@ block navbar
   .navbar.navbar-default.navbar-fixed-top(style='z-index:99;')#navbar
     .container-fluid
       .navbar-header
-        a.navbar-brand(href='/', style='padding-left: 20px;')
-          img.logo(src="/images/logo.svg")
+        a.navbar-brand(href='/')
+          span
+            img(src="/images/logo.svg", style='height: 100%;')
+          span &emsp; Home For Now
         button.navbar-toggle(type='button', data-toggle='collapse', data-target='#navbar-main')
           span.icon-bar
           span.icon-bar
@@ -34,8 +36,3 @@ block navbar
         nav.className = navClass + ' material-nav';
       }
     };
-
-  style.
-    .logo {
-      width: 30px;
-    }
