@@ -305,11 +305,23 @@ const serviceSchema = new mongoose.Schema({
   thankyouMessage: {
     type: String,
     required: false,
-  }
+  },
 });
 
 serviceSchema.methods.encodeURI = function encodeURI(name) {
   return name.toLowerCase().replace(/\s/g, '-').replace(/[^A-Za-z0-9_-]/g, ''); // TODO: Check for duplicates
+};
+
+serviceSchema.methods.isAvailable = function isAvailable(beds) {
+  let av = false;
+  beds.forEach((bed) => {
+    console.log(bed);
+    if (bed.isOccupied === 'Available') {
+      console.log('Available');
+      av = true;
+    }
+  });
+  return av;
 };
 
 mongoose.model('Service', serviceSchema);

@@ -18,23 +18,23 @@ block content
         h2 No accommodations matched your criteria, please check back again later.
         h3(style="margin-top: 20rem;") Here are some numbers to call if you need help
         .row
-        .col-xs-6
-          h3.bold='Entry Point'
-          h4.bold.sec-color.
-            6496 0001 </br>
-            1800 124 684
-        .col-xs-6
-          h3.bold='Crisis Care'
-          h4.bold.sec-color.
-            9223 1111 </br>
-            1800 199 008
+          .col-xs-6
+            h3.bold='Entry Point'
+            h4.bold.sec-color.
+              6496 0001 </br>
+              1800 124 684
+          .col-xs-6
+            h3.bold='Crisis Care'
+            h4.bold.sec-color.
+              9223 1111 </br>
+              1800 199 008
       else
         each location in locations
           +contactModal(location.name, location._id, location.available, location.phoneNumber, location.uri, location.thankyouMessage, locationLogos[locations.indexOf(location)])
-          +vacancyPanel(location.name, location.address.suburb, location.available, location.description, location.uri, locationImgs[locations.indexOf(location)])
-
+          +vacancyPanel(location.name, location.address.suburb, true, location.description, location.uri, locationImgs[locations.indexOf(location)])
+      .spacer-xs
       each dlocation in dlocations
-          +vacancyPanel(dlocation.name, dlocation.address.suburb, dlocation.available, dlocation.description, dlocation.uri, dlocationImgs[locations.indexOf(location)])
+          +vacancyPanel(dlocation.name, dlocation.address.suburb, false, dlocation.description, dlocation.uri, dlocationImgs[locations.indexOf(location)])
     .spacer-xs
     .row
       .panel

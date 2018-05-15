@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const admin = require('firebase-admin');
 const images = require('../middleware/images');
 const logo = require('../middleware/images');
-const timeago = require("timeago.js");
+const timeago = require('timeago.js');
 const Service = mongoose.model('Service');
 
 /**
@@ -52,7 +52,7 @@ module.exports.showLocations = (req, res) => {
         },
       ],
     },
-    'name available number phoneNumber description address uri logo thankyouMessage img',
+    'name number phoneNumber description address uri logo thankyouMessage img beds',
   ).exec()
     .then((services) => {
       // Sort services into available and unavailable
@@ -63,16 +63,24 @@ module.exports.showLocations = (req, res) => {
       const unavailableLogosPromises = [];
       const unavailableImagePromises = [];
       for (let i = 0; i < services.length; i += 1) {
-        if (services[i].available) {
-          available.push(services[i]);
-          availableImagePromises.push(images.getImageForService(services[i].img[0]));
-          availableLogosPromises.push(images.getImageForService(services[i].logo));
-        } else {
-          unavailable.push(services[i]);
-          unavailableImagePromises.push(images.getImageForService(services[i].img[0]));
-          unavailableLogosPromises.push(images.getImageForService(services[i].logo));
+        if (services[i].beds) {
+          if (services[i].isAvailable(services[i].beds)) {
+            available.push(services[i]);
+            // available[available.length - 1].available =
+            //   services[i].isAvailable(services[i].beds);
+            availableImagePromises.push(images.getImageForService(services[i].img[0]));
+            availableLogosPromises.push(images.getImageForService(services[i].logo));
+          } else {
+            unavailable.push(services[i]);
+            // unavailable[unavailable.length - 1].available =
+            //   services[i].isAvailable(services[i].beds);
+            unavailableImagePromises.push(images.getImageForService(services[i].img[0]));
+            unavailableLogosPromises.push(images.getImageForService(services[i].logo));
+          }
         }
       }
+      console.log(available);
+      console.log(unavailable);
 
       Promise.all(availableImagePromises).then((availableImages) => {
         Promise.all(unavailableImagePromises).then((unavailableImages) => {
