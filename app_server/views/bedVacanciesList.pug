@@ -34,7 +34,7 @@ block content
           +vacancyPanel(location.name, location.address.suburb, true, location.description, location.uri, locationImgs[locations.indexOf(location)])
       .spacer-xs
       each dlocation in dlocations
-          +vacancyPanel(dlocation.name, dlocation.address.suburb, false, dlocation.description, dlocation.uri, dlocationImgs[locations.indexOf(location)])
+          +vacancyPanel(dlocation.name, dlocation.address.suburb, false, dlocation.description, dlocation.uri, dlocationImgs[dlocations.indexOf(dlocation)])
     .spacer-xs
     .row
       .panel

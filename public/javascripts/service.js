@@ -186,7 +186,7 @@ function updateRequests() {
   $('#closedRequests > .form-group').html('');
   $('#closedRequests > .form-group').hide();
   $('#spinnerLoadRequestsClosed').show();
-  
+
   $.get('/service/dashboard/' + $('#uri').text() + '/closed_requests/show', function(data) {
     let index = 0;
     for (request of data.requests) {
@@ -252,12 +252,12 @@ function sendData(data) {
 
 $('#smsForm').submit(function(event) {
   event.preventDefault();
-  sendData('#smsForm');  
+  sendData('#smsForm');
 });
 
 $('#emailForm').submit(function(event) {
   event.preventDefault();
-  sendData('#emailForm');  
+  sendData('#emailForm');
 });
 
 function getAge(date) {
@@ -272,7 +272,7 @@ const requestModal = (index, request) => `
       <div class="modal-content">
         <div class="modal-body">
           <p id="requestId${index}" style="display: none;">${request['_id']}</p>
-          <h3>${request.firstName} ${request.lastName}'s request</h4>      
+          <h3>${request.firstName} ${request.lastName}'s request</h4>
           <h4 style="margin-top: 2em;">Applied</h4>
           <p>${timeago().format(request.openedAt)}</p>
           <h4 style="margin-top: 1em;">Notes</h4>
@@ -290,7 +290,7 @@ const closedRequestModal = (index, request) => `
       <div class="modal-content">
         <div class="modal-body">
           <p id="closedRequestId${index}" style="display: none;">${request['_id']}</p>
-          <h3>${request.firstName} ${request.lastName}'s request</h4>      
+          <h3>${request.firstName} ${request.lastName}'s request</h4>
           <h4 style="margin-top: 2em;">Applied</h4>
           <p>${timeago().format(request.openedAt)}</p>
           <h4 style="margin-top: 1em;">Notes</h4>
@@ -304,7 +304,7 @@ const closedRequestModal = (index, request) => `
 `
 
 
-function addListenersForUpdateNotes(index) { 
+function addListenersForUpdateNotes(index) {
   $('#updateNoteBtn'+index).click(() => {
     const data = {
       '_id': $('#requestId'+index).text(),
@@ -321,7 +321,7 @@ function addListenersForUpdateNotes(index) {
   })
 }
 
-function addListenersForClosedRequestModal(index) { 
+function addListenersForClosedRequestModal(index) {
   $('#reopenClosedReqBtn'+index).click(() => {
     $.ajax({
       url: $('#closedRequests').attr('action'),
@@ -329,9 +329,9 @@ function addListenersForClosedRequestModal(index) {
       data: {'_id': $('#closedRequestId'+index).text()},
       success: function(data) {
         updateRequests();
-      } 
+      }
     })
-    $('#closedRequestModal'+index).modal('toggle');                    
+    $('#closedRequestModal'+index).modal('toggle');
   });
   $('#closedUpdateNoteBtn'+index).click(() => {
     const data = {
@@ -432,7 +432,7 @@ $(document).on("click", ".addEmail", function () {
   $(".modal-body #toemail").val( email );
 });
 
-const ClosedRequestPanel = ({ index, name, email, number, age, gender, closedAt }) => { 
+const ClosedRequestPanel = ({ index, name, email, number, age, gender, closedAt }) => {
   var html = `
   <div class="panel shadow" style='height: 10vh; min-height: 80px;'>
     <div class="panel-body" style="height: 100%">
@@ -871,140 +871,6 @@ const AddImagePanel = ({ uri, route }) => `
     </form>
   </div>
 `;
-
-// function insertPhotos(uri, logo, images) {
-//   return  "<div class='alert alert-danger' id='alertBox' style='display: none;'></div>" +
-//           "<label for='logoRow'>LOGO</label>" +
-//           "<div class='row' id='logorow'>" +
-//             insertLogoModal(logo) +
-//             "<div class='item col-xs-6'>" +
-//               "<form action='/service/profile/" + uri + "/logo/add' method='post' enctype='multipart/form-data'>" +
-//                 "<div class='thumbnail'>" +
-//                   "<div class='image highlight' style='line-height: 0px;'>" +
-//                     insertLogo(logo) +
-//                   "</div>" +
-//                 "</div>" +
-//               "</form>" +
-//             "</div>" +
-//           "</div>" +
-//           "<label for='imageRow'>PHOTOS</label>" +
-//             "<div class='row' id='imagerow'>" +
-//               insertImage(uri, images) +
-//             "</div>";
-// }
-//
-// function insertLogoModal(logo) {
-//     return "<div class='modal fade' id='deletelogomodal' role='dialog'>" +
-//               "<div class='modal-dialog modal-sm'>" +
-//                 "<div class='modal-content'>" +
-//                     "<div class='modal-header'><button class='close' type='button' data-dismiss='modal'>&times;</button>" +
-//                         "<h3>Delete this logo?</h3>" +
-//                     "</div>" +
-//                     "<div class='modal-header text-center'>" +
-//                         "<div class='image'><img class='img img-responsive' id='deleteLogoImg' src='" + logo + "' /></div>" +
-//                     "</div>" +
-//                     "<div class='modal-body text-center'>" +
-//                         "<div class='btn btn-danger' id='deletelogobutton' onclick='deleteLogo()'>Delete</div>" +
-//                     "</div>" +
-//                 "</div>" +
-//             "</div>" +
-//         "</div>";
-// }
-//
-// function insertLogo(logo) {
-//   let visibility = "";
-//   logolabel = "<label id='logoLabel' style='margin: 0px; display: none;'>";
-//   if (logo == null) {
-//     visibility = " style='display: none;'";
-//     logolabel = "<label id='logoLabel' style='margin: 0px;'>"
-//   }
-//   return  "<a id='logoLink'" + visibility + " href='#' data-toggle='modal' data-target='#deletelogomodal'>" +
-//             "<img class='img-responsive' id='logoImg' src='" + logo + "'/>" +
-//           "</a>" +
-//           logolabel +
-//             "<img class='img-responsive' id='plusLogo-img' src='/images/plus.png' alt='Add Image' style='cursor: pointer;'/>" +
-//             "<img class='img-responsive' id='spinnerLogo-gif' src='/images/loading_spinner.gif' style='display: none;'/>" +
-//             "<input id='logoAdd' type='file' accept='image/*' hidden='' name='logoAdd' onchange='event.preventDefault();'/>" +
-//           "</label>";
-// }
-//
-// function insertImageModal(img, index) {
-//   return  "<div class='modal fade' id='deleteimagemodal-image" + index + "' role='dialog'>" +
-//             "<div class='modal-dialog modal-sm'>" +
-//                 "<div class='modal-content'>" +
-//                     "<div class='modal-header'><button class='close' type='button' data-dismiss='modal'>&times;</button>" +
-//                         "<h3>Delete this image?</h3>" +
-//                     "</div>" +
-//                     "<div class='modal-header text-center'>" +
-//                         "<div class='image'><img class='img img-responsive' id='deleteImg" + index + "' src='" + img + "' /></div>" +
-//                     "</div>" +
-//                     "<div class='modal-body text-center'>" +
-//                         "<div class='btn btn-danger' id='deleteimagebutton-image" + index + "' onclick='deleteImage(" + index + ")'>Delete</div>" +
-//                     "</div>" +
-//                 "</div>" +
-//             "</div>" +
-//         "</div>";
-// }
-//
-// function insertImageThumbnail(image, index, isHidden) {
-//   column = "<div class='item col-xs-4' style='padding-top: 5px; padding-bottom: 5px;' id='item" + index + "'>";
-//   if (isHidden) {
-//     column = "<div class='item col-xs-4' style='display: none;' id='item" + index + "'>"
-//   }
-//   return  insertImageModal(image, index) +
-//           column +
-//             "<div class='thumbnail'>" +
-//               "<div class='image highlight'>" +
-//                 "<a href='#' id='imagethumbnailmodal" + index + "' data-toggle='modal' data-target='#deleteimagemodal-image" + index + "'>" +
-//                   "<img class='img-responsive' src='" + image + "' id='img" + index + "'/>" +
-//                 "</a>" +
-//               "</div>" +
-//             "</div>" +
-//           "</div>";
-// }
-//
-// function insertImageAdd(uri) {
-//   return  "<div class='item col-xs-4' id='itemAdd'>" +
-//             "<form action='/service/profile/" + uri + "/add' method='post' enctype='multipart/form-data'>" +
-//                 "<div class='thumbnail'>" +
-//                     "<div class='image highlight' style='line-height: 0px; border: 0px;'>" +
-//                       "<label style='margin: 0px;'>" +
-//                           "<img class='img-responsive' id='plus-img' src='/images/plus.png' alt='Add Image' style='cursor: pointer;'/>" +
-//                           "<img class='img-responsive' id='spinner-gif' src='/images/loading_spinner.gif' style='display: none;'/>" +
-//                           "<input id='fileAdd' type='file' accept='image/*' hidden='' name='fileAdd' onchange='event.preventDefault();'/>" +
-//                       "</label>" +
-//                     "</div>" +
-//                 "</div>" +
-//             "</form>" +
-//           "</div>";
-// }
-//
-// function insertImage(uri, images) {
-//   if (images != null && images.length > 0) {
-//     result = "";
-//     if (length <= 5) {
-//       result += insertImageAdd(uri);
-//     }
-//
-//     for (let index = 0; index < 6; index += 1) {
-//       if (index < images.length) {
-//         result += insertImageThumbnail(images[index], index, false);
-//       }
-//       else {
-//         result += insertImageThumbnail('', index, true);
-//       }
-//     }
-//     return result;
-//   } else {
-//     thumbnails = "";
-//     for (let index = 0; index < 6; index += 1) {
-//       thumbnails += insertImageThumbnail('', index, true);
-//     }
-//     return  "<div class='item col-xs-4'></div>" +
-//             insertImageAdd(uri) +
-//             thumbnails;
-//   }
-// }
 
 /**
  *  When the user clicks the Beds Available tab

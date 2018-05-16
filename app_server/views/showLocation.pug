@@ -72,17 +72,18 @@ block content
       .col-xs-12
         h4.text-left.HTMLify #{location.about}
     .spacer-xs
-    if location.amenities != null
-      .row.text-center
-        .col-xs-12
-          h2(style='margin-bottom: 30px;') Amenities
-        .col-xs-12
-          each amenity in location.amenities
+      if location.amenities != null
+        .row.text-center
+          .col-xs-12
+            h2(style='margin-bottom: 30px;') Amenities
+          .col-xs-12
             .row
-              .col-xs-2.col-xs-offset-3.text-right
-                i.material-icons.sec-color.text-center(style='font-size: 50px;') #{amenity.icon} &nbsp;&nbsp;
-              .col-xs-7.text-left.no-wrap(style='padding-top: 15px;')
-                h5(style='display: inline;') #{amenity.label}
+              each amenity in location.amenities
+                .col-xs-12.col-md-4.col-sm-6
+                  .col-xs-3.text-right
+                    i.material-icons.sec-color.text-center(style='font-size: 50px;') #{amenity.icon} &nbsp;&nbsp;
+                  .col-xs-9.text-left.no-wrap(style='padding-top: 15px;')
+                    h4(style='display: inline;') #{amenity.label}
     .spacer-xs
     .row.text-center
       .col-xs-12
