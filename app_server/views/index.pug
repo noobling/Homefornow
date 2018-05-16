@@ -5,9 +5,11 @@ block content
     include _includes/messages/error
     include _includes/messages/info
     include _includes/signupModal
+    include _includes/inDevNotifModal
     
     +signupModal('Right Now.', '/locations/contact/short_term', 'shortTermModal')
     +signupModal('Long Term.', '/locations/contact/long_term', 'longTermModal')
+    +inDevNotifModal()
     
     style.
       #location {
@@ -87,3 +89,8 @@ block content
     script(src='/javascripts/location.js')
     script(src='/javascripts/requests.js')
     script(async='', defer='',  src='https://maps.googleapis.com/maps/api/js?key=AIzaSyA3i_JFMmmWMoWvhYFQ8BubRxjCZddZNFw&libraries=places&callback=initialize')
+    script.
+      if (!localStorage.visited) {
+        $('#inDevNotifModal').modal('toggle')
+        localStorage.visited = true;
+      }
