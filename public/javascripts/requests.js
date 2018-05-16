@@ -27,7 +27,6 @@ function submitPhoneNumber (form)
       }
     }
   })
-  console.log($(form).serialize());
   $.ajax({
     url: "/request/update",
     type: "post",

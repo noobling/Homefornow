@@ -18,8 +18,8 @@ const transporter = nodemailer.createTransport({
   secure: false, // true for 465, false for other ports */
   service: 'gmail',
   auth: {
-    user: 'cfcxanglicare@gmail.com', // Anglicare email ID (placeholder for now) **Need to make it .env for actual email
-    pass: 'GyRCGrabvkrC3Nfz', // Anglicare email ID (placeholder for now) **Need to make it .env for actual email
+    user: process.env.email_user, // Anglicare email ID
+    pass: process.env.email_pass, // Anglicare email pass
   },
   // remove when deployed, only for testing
   tls: {
