@@ -15,6 +15,9 @@ const router = express.Router();
 router.get('/', ctrlIndex.index);
 
 router.get('/about', ctrlOthers.about);
+router.get('/contact', ctrlOthers.contact);
+router.get('/terms_of_use', ctrlOthers.terms_of_use);
+
 
 router.get('/location/:serviceUri', ctrlLocations.showLocation);
 

@@ -2,69 +2,57 @@ extends navbarDefault
 
 block content
     #banner.page-header
-      style.
-        hr {
-          height: 2px;
-          width: 52.3437vw;
-          background-color: #616161;
-          margin-top: 0px;
-        }
       .container-fluid
         .row
           .col-xs-12
-            h2.bang.sec-color(style="margin-bottom: 30px;")="HOME FOR NOW"
+            h2.bang.sec-color(style="margin-bottom: 30px;") HOME FOR NOW
             h4.bold.
               A Web App that allows young people to search for vacant places 
               in the Crisis and Transitional Accommodation sectors, and allows
               Services to manage requests for housing.
             hr.pull-left
         .row
-          .col-xs-12
-            h2.bang="About Us"
+          .col-md-6.col-xs-12
+            h2.bang About Us
             p.
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim 
-              ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-              aliquip ex ea commodo consequat. Duis aute irure dolor in 
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-              pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
-              culpa qui officia deserunt mollit anim id est laborum. 
-              Doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo 
-              inventore veritatis et quasi architecto beatae vitae dicta sunt 
-              explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur
-              aut odit aut fugit, sed quia consequuntur magni dolores eos qui
-              ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui
-              dolorem ipsum quia dolor sit amet, consectetur, adipisci.
+              About half of the 100,000 people who are homeless on any night in 
+              Australia are under 25. The experience of homelessness is 
+              confusing and isolating. We think that the way our system works 
+              shouldn’t make that feeling worse. This web application was 
+              developed to solve one small part of the problem – the search for 
+              a vacancy in an accommodation service: a HomeForNow.
+          .col-md-6.col-xs-12
+            h2.bang For You
+            p.
+              HomeForNow works by making a listing of the live vacancies 
+              possible and connecting young people experiencing homelessness 
+              with the services who are best placed to provide support and 
+              warmth. Above all, it puts live information directly in the hands 
+              of young people and allows them to make their own choices in 
+              their journey out of homelessness.   
         .row
           .col-xs-12
-            h2.bang="For You"
+            h2.bang Who we are
+          .col-xs-12
             p.
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do 
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim 
-              ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-              aliquip ex ea commodo consequat. Duis aute irure dolor in 
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-              pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
-              culpa qui officia deserunt mollit anim id est laborum. 
-              Doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo 
-              inventore veritatis et quasi architecto beatae vitae dicta sunt 
-              explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur
-              aut odit aut fugit, sed quia consequuntur magni dolores eos qui
-              ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui
-              dolorem ipsum quia dolor sit amet, consectetur, adipisci.
+              HomeForNow was developed by a partnership between Anglicare WA, 
+              Coders for Causes and UWA’s Innovation Quarter. The tough work 
+              of development was taken on by a group of volunteers from Coders 
+              for Causes alongside emerging designers who volunteered from the 
+              community. These volunteers worked closely with Anglicare WA 
+              so that HomeForNow would closely meet the needs of young people 
+              and the sector. The team continues to oversee HomeForNow’s 
+              development, while Anglicare WA works to integrate the 
+              technology into the youth accommodation sector.
         .row
-          .col-sm-8
-            p
-              | map
-          .col-sm-4
-            p
-              | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-              | do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              | Ut enim ad minim veniam, quis nostrud one voluptatem sequi nesciunt. 
-            p
-              | Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
-              | consectetur, adipisci velit, sed quia non numquam eius modi tempora
-              | incidunt ut labore et dolore magnam aliquam quaerat voluptatem.    
+          .col-lg-3.col-sm-6.col-xs-12.center-block
+            img.img-responsive.logo-image(src="/images/CFC_Logo.png")
+          .col-lg-3.col-sm-6.col-xs-12.center-block
+            img.img-responsive.logo-image(src="/images/Luke_Logo.png")
+          .col-lg-3.col-sm-6.col-xs-12.center-block
+            img.img-responsive.logo-image(src="/images/AWA_Horizontal.png")
+          .col-lg-3.col-sm-6.col-xs-12.center-block
+            img.img-responsive.logo-image(src="/images/UWA_Horizontal.png")
         .row
           .col-xs-6
             h3.bold='Entry Point'
@@ -76,3 +64,15 @@ block content
             h4.bold.sec-color.
               9223 1111 </br>
               1800 199 008
+              
+    style.
+      .logo-image {
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+      hr {
+        height: 2px;
+        width: 52.3437vw;
+        background-color: #616161;
+        margin-top: 0px;
+      }
