@@ -105,3 +105,8 @@ block content
     }
   script(src='/javascripts/requests.js')
   script(async='', defer='', src='https://maps.googleapis.com/maps/api/js?key='+process.env.embed_maps_api+'&callback=userMap')
+  script. 
+    Array.from(document.forms).forEach(function(form) { 
+      form.elements.email.value = localStorage.email 
+      form.elements.number.value = localStorage.number 
+    }) 

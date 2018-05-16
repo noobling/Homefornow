@@ -58,13 +58,13 @@ block content
           .col-sm-4.col-xs-12
             .panel.panel-default.panel-spaced
               .panel-header.image.img-shadow
-                a(href='location/'+location.uri)
+                a.serviceLink(href='location/'+location.uri)
                   if images[[crisis, transitional].indexOf(location)] != null
                     img.img-responsive.img-square.center-block(src=images[[crisis, transitional].indexOf(location)])
                   else
                     img.img-responsive.img-square.center-block(src='images/placeholder-image.png')
               .panel-header
-                a(href='/location/'+location.uri)
+                a.serviceLink(href='/location/'+location.uri)
                   .panel-title.text-center.roboto-title.black.line-spc-2= location.name
                 .text-justify.text-center.roboto-desc.dark-grey.line-spc-4(style='padding-top: 5px;')
                     | #{location.description}
@@ -94,3 +94,5 @@ block content
         $('#inDevNotifModal').modal('toggle')
         localStorage.visited = true;
       }
+
+      $('.serviceLink').click(function() { localStorage.fromIndex = true }) 

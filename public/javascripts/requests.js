@@ -13,6 +13,12 @@ function submitRequest(form)
 // https://stackoverflow.com/questions/25983603/how-to-submit-html-form-without-redirection
 function submitPhoneNumber (form)
 {
+  localStorage.number = form.elements.number.value; 
+  localStorage.email = form.elements.email.value; 
+  Array.from(document.forms).forEach(function(form) { 
+    form.elements.email.value = localStorage.email 
+    form.elements.number.value = localStorage.number 
+  }) 
   console.log($(form).serialize());
   $.ajax({
     url: "/request/update",

@@ -20,12 +20,6 @@ mixin signupModal(title, route, id)
                             label(for=id+"lName") Last Name
                             input(type="text", name="lName", placeholder="e.g. Doe", required, id=id+"lName").form-control
                         .form-group
-                            label(for=id+"email") Email
-                            input(type="email", name="email", placeholder="e.g. example@example.com", required, id=id+"email").form-control
-                        .form-group
-                            label(for=id+"num") What's the best number to get you on
-                            input(type="tel", name="num",  placeholder="e.g. 0412345678", minlength='10', maxlength='10', required, id=id+"num").form-control
-                        .form-group
                             label(for=id+"dob") Date of Birth
                             input(type="date", name="dob", required, id=id+"dob").form-control
                         .form-group
