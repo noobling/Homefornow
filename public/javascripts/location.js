@@ -4,33 +4,33 @@ $(function() {
   var max = new Date();
 
 
-  min.setYear(min.getYear()-26);
-  max.setYear(max.getYear()-13);
+  min.setYear(1900 + min.getYear() - 26);
+  max.setYear(1900 + max.getYear() - 13);
 
   // make 2 digits out of 1
-  var day = min.getDate();
-  if(day<10)
-  day = "0"+day;
+  var minDay = min.getDate();
+  if(minDay < 10)
+    minDay = "0" + minDay;
 
-  var month = min.getMonth()+1;
-  if(month<10)
-  month = "0"+month;
+  var minMonth = min.getMonth()+1;
+  if(minMonth < 10)
+    minMonth = "0" + minMonth;
 
   // same for current (to be the min later)
-  var cDay = max.getDate();
-  if(cDay<10)
-  cDay = "0"+cDay;
+  var maxDay = max.getDate();
+  if(maxDay < 10)
+    maxDay = "0" + maxDay;
 
-  var cMonth = max.getMonth()+1;
-  if(cMonth<10)
-  cMonth = "0"+cMonth;
+  var maxMonth = max.getMonth()+1;
+  if(maxMonth < 10)
+    maxMonth = "0" + maxMonth;
 
-  var curEntry = max.getYear()+1900+"-"+cMonth+"-"+cDay;
-  var dateEntry = min.getYear()+1900+"-"+month+"-"+day;
+  var minEntry = min.getYear() + 1900 + "-" + minMonth + "-" + minDay;
+  var maxEntry = max.getYear() + 1900 + "-" + maxMonth + "-" + maxDay;
 
   $('input[type="date"]').attr({
-    "min": dateEntry,
-    "max": curEntry,
+    "min": minEntry,
+    "max": maxEntry,
   });
 });
 
