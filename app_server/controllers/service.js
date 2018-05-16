@@ -175,8 +175,9 @@ module.exports.addService = (req, res, next) => {
       service.about = req.body.serveAbout;
       service.houseRules = req.body.serveRules;
       service.amenities = amenities(req.body);
+      service.thankyouMessage = req.body.thankyouMessage;
 
-      console.log(service.amenities);
+      console.log(service);
 
       service.save().then((newService) => {
         const newUser = new User();
