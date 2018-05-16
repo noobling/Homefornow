@@ -44,7 +44,6 @@ function sendSMS(number, message, res) {
         return res.status(503);
         // res.json({ message: err });
       }
-      console.log(responseData.messages[0].status);
       return responseData.messages[0].status;
     },
   );
@@ -74,7 +73,6 @@ function sendEmail(to, subject, text, res) {
       res.status(503);
       res.json({ message: error });
     }
-    console.log(info);
     res.status(200);
     res.json({ message: `Sent email to ${to}` });
   });
