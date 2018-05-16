@@ -57,7 +57,6 @@ module.exports.index = (req, res) => {
     {
       crisis: (callback) => { findService(callback, 'crisis'); },
       transitional: (callback) => { findService(callback, 'transitional'); },
-      long: (callback) => { findService(callback, 'long'); },
     },
     (err, services) => {
       if (err) {
@@ -74,13 +73,11 @@ module.exports.index = (req, res) => {
       Promise.all([
         images.getImageForService(services.crisis.img[0], services.crisis.uri),
         images.getImageForService(services.transitional.img[0], services.transitional.uri),
-        images.getImageForService(services.long.img[0], services.long.uri),
       ]).then(([result1, result2, result3]) => {
         res.render('index', {
           user: req.user,
           crisis: services.crisis,
           transitional: services.transitional,
-          long: services.long,
           images: [result1, result2, result3],
           title1: 'Let\'s find a',
           title2: 'Home for now',
