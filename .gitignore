@@ -57,8 +57,9 @@ typings/
 # dotenv environment variables file
 .env
 
-# Firebase Admin SDK Private Key
+# Firebase Admin SDK Private Keys
 homefornow-fd495-firebase-adminsdk-xy17w-62ee8ab849.json
+homefornow-bb31e-firebase-adminsdk-7n626-a4e0f1c140.json
 
 # Mac DS_Store
 .DS_Store
