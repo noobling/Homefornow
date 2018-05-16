@@ -56,11 +56,9 @@ module.exports.wipeRequests = (req, res) => {
         openRequests: [],
       },
     },
-  );
-
-  Request.deleteMany({});
-
-  return res.redirect('/');
+  ).exec().then(() => {
+    Request.deleteMany({}).exec().then(() => res.redirect('/'));
+  });
 };
 
 module.exports.adminData = (req, res) => {
