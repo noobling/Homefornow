@@ -273,7 +273,8 @@ const requestModal = (index, request) => `
         <div class="modal-body">
           <p id="requestId${index}" style="display: none;">${request['_id']}</p>
           <h3>${request.firstName} ${request.lastName}'s request</h4>
-          <h4 style="margin-top: 2em;">Applied</h4>
+          <h4 style="margin-top: 2em;">Applied at</h4>
+          <p>${new Date(request.openedAt).toLocaleString()}</p>
           <p>${timeago().format(request.openedAt)}</p>
           <h4 style="margin-top: 1em;">Notes</h4>
           <textarea class="form-control" rows="5" id="requestNote${index}">${request.note}</textarea>
