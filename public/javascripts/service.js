@@ -125,7 +125,7 @@ function updateBeds() {
         index,
         name: bed.name
       }));
-      $('#avaliable'+index).prop('checked', bed.isOccupied === 'Available');
+      $('#available'+index).prop('checked', bed.isOccupied === 'Available');
       $('#pending'+index).prop('checked', bed.isOccupied === 'Pending');
       $('#unavailable'+index).prop('checked', bed.isOccupied === 'Unavailable');
       $('#bedtype'+index).text(bed.bedType);
@@ -270,14 +270,16 @@ const requestModal = (index, request) => `
   <div class="modal fade" id="requestModal${index}">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-body">
+        <div class="modal-header">
+          <button type="button" data-dismiss="modal" class="close">&times;</button>
           <p id="requestId${index}" style="display: none;">${request['_id']}</p>
-          <h3>${request.firstName} ${request.lastName}'s request</h4>
-          <h4 style="margin-top: 2em;">Applied at</h4>
+          <h4 style="font-weight: bold;">${request.firstName} ${request.lastName}'s request</h4>      
+        </div>
+        <div class="modal-body">
+          <h4>Applied</h4>
           <p>${new Date(request.openedAt).toLocaleString()}</p>
-          <p>${timeago().format(request.openedAt)}</p>
           <h4 style="margin-top: 1em;">Notes</h4>
-          <textarea class="form-control" rows="5" id="requestNote${index}">${request.note}</textarea>
+          <textarea class="form-control" rows="5" id="requestNote${index}" style="resize:none;">${request.note}</textarea>
           <button class="btn btn-primary" style="margin-top: 1em" id="updateNoteBtn${index}" type="button">Save note</button
         </div>
       </div>
@@ -361,8 +363,8 @@ const UpdatePanel = ({ index, name }) => `
           <h4>${name}</h4>
         </div>
         <div class="col-xs-2">
-          <h6>Avaliable</h6>
-          <input type="radio" name="beds[${index}][isOccupied]" value="Available" id='avaliable${index}' />
+          <h6>Available</h6>
+          <input type="radio" name="beds[${index}][isOccupied]" value="Available" id='available${index}' />
         </div>
         <div class="col-xs-2">
           <h6>Pending</h6>
@@ -406,14 +408,16 @@ const RequestPanel = ({ index, name, email, number, age, id, gender }) => {
           <div class="col-xs-3">
             <h4>${name}</h4>
           </div>
-          <div class="col-xs-1">
-            <h6>${age}</h6>
-          </div>
-          <div class="col-xs-2">
-            <input type="checkbox" name='requests[${index}]' value='${id}' />
-          </div>
-          <div class="col-xs-1">
-            <a data-toggle="modal" data-target="#requestModal${index}" class="btn btn-primary">Edit</a>
+          <div class="col-xs-4">
+            <div class="col-xs-3">
+              <h6>${age}</h6>
+            </div>
+            <div class="col-xs-5">
+              <input type="checkbox" name='requests[${index}]' value='${id}' />
+            </div>
+            <div class="col-xs-4">
+              <a data-toggle="modal" data-target="#requestModal${index}" class="btn btn-primary">Notes</a>
+            </div>
           </div>
         </div>
       </div>
@@ -462,14 +466,16 @@ const ClosedRequestPanel = ({ index, name, email, number, age, gender, closedAt 
           <div class="col-xs-3">
             <h4>${name}</h4>
           </div>
-          <div class="col-xs-1">
-            <h6>${age}</h6>
-          </div>
-          <div class="col-xs-2">
-            <h5>${closedAt}</h5>
-          </div>
-          <div class="col-xs-1">
-            <a data-toggle="modal" data-target="#closedRequestModal${index}" class="btn btn-primary">Edit</a>
+          <div class="col-xs-4">
+            <div class="col-xs-3">
+              <h6>${age}</h6>
+            </div>
+            <div class="col-xs-5">
+              <h5>${closedAt}</h5>
+            </div>
+            <div class="col-xs-4">
+              <a data-toggle="modal" data-target="#closedRequestModal${index}" class="btn btn-primary">Notes</a>
+            </div>
           </div>
       </div>
     </div>

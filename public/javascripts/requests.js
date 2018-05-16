@@ -15,15 +15,18 @@ function submitPhoneNumber (form)
 {
   localStorage.number = form.elements.number.value; 
   localStorage.email = form.elements.email.value; 
-  Array.from(document.forms).forEach(function(form) { 
-    if (localStorage.email) {
-      form.elements.email.value = localStorage.email 
+  Array.from(document.forms).forEach(function(f) {
+    if (f.elements.email) {
+      if (localStorage.email) {
+        f.elements.email.value = localStorage.email;
+      }
     }
-
-    if (localStorage.number) {
-      form.elements.number.value = localStorage.number 
+    if (f.elements.number) {
+      if (localStorage.number) {
+        f.elements.number.value = localStorage.number;
+      }
     }
-  }) 
+  })
   console.log($(form).serialize());
   $.ajax({
     url: "/request/update",
@@ -35,6 +38,6 @@ function submitPhoneNumber (form)
     },
   })
   .fail(function(jqXHR, textStatus) {
-    console.log("[ERROR] Phone number submission: " + textStatus);
+    console.log("[ERROR]: Contact information submission: " + textStatus);
   })
 };

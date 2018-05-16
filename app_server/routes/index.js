@@ -62,10 +62,6 @@ router.post('/email', ctrlComm.email);
  */
 router.post('/sms', ctrlComm.sms);
 
-/**
- * Notification API
- */
-router.post('/notification', ctrlComm.notification);
 
 /**
  * admin API

@@ -31,6 +31,8 @@ mixin vacancyPanel(serviceName, suburb, available, description, uri, image)
                         .col-xs-12
                           if available
                             h2.panel-panel-important(style="color: #cc0066; font-size: 25px;") Available
+                          else
+                            h2.panel-panel-important(style="color: #cc0066; font-size: 25px;") Not Available
           .row
             .container-fluid
               h2.panel-panel-important= serviceName

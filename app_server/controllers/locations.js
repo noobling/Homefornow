@@ -19,6 +19,7 @@ const Service = mongoose.model('Service');
  * @param  {Object} res Express response object.
  */
 module.exports.showLocations = (req, res) => {
+  const name = req.body.fName + ' ' +req.body.lName;
   const longTerm = (req.params.lengthOfStay === 'long_term');
   const type = (longTerm ? ['transitional'] : ['crisis']);
   const child = (req.body.hasChild ? [true] : [true, false]);
@@ -32,8 +33,6 @@ module.exports.showLocations = (req, res) => {
   } else if (req.body.gender === 'Female') {
     gender = ['Female', 'Either'];
   }
-
-  console.log(req.body);
 
   Service.find(
     {
@@ -53,7 +52,7 @@ module.exports.showLocations = (req, res) => {
         },
       ],
     },
-    'name number phoneNumber description address uri logo thankyouMessage img beds',
+    'name description address uri logo thankyouMessage img beds',
   ).exec()
     .then((services) => {
       // Sort services into available and unavailable
@@ -80,14 +79,13 @@ module.exports.showLocations = (req, res) => {
           }
         }
       }
-      console.log(available);
-      console.log(unavailable);
 
       Promise.all(availableImagePromises).then((availableImages) => {
         Promise.all(unavailableImagePromises).then((unavailableImages) => {
           Promise.all(availableLogosPromises).then((availableLogos) => {
             Promise.all(unavailableLogosPromises).then((unavailableLogos) => {
               res.render('bedVacanciesList', {
+                userName: name,
                 serviceType: type,
                 locations: available,
                 locationImgs: availableImages,
@@ -146,7 +144,6 @@ module.exports.showLocation = (req, res) => {
   ).exec().then((service) => {
     images.getImagesForService(service, req.params.serviceUri).then((results) => {
       logo.getImageForService(service.logo, req.params.serviceUri).then((result) => {
-        console.log(result);
         res.render('showLocation', {
           location: service,
           images: results.images,

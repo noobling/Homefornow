@@ -61,10 +61,11 @@ block content
                       h4 CONTACT
                     .col-xs-3
                       h4 NAME
-                    .col-xs-1
-                      h4 AGE
-                    .col-xs-2
-                      h4 CONTACTED
+                    .col-xs-4
+                      .col-xs-3
+                        h4 AGE
+                      .col-xs-5
+                        h4 CONTACTED
             .col-xs-12
               form(action='/service/dashboard/'+service.uri+'/requests/update', method='post')#updateRequests
                 img.img-responsive.center-block#spinnerLoadRequests(src='/images/loading_spinner.gif', style='display: none')
@@ -84,10 +85,11 @@ block content
                       h4 CONTACT
                     .col-xs-3
                       h4 NAME
-                    .col-xs-1
-                      h4 AGE
-                    .col-xs-2
-                      h4 Closed Date
+                    .col-xs-4
+                      .col-xs-3
+                        h4 AGE
+                      .col-xs-5
+                        h4 CLOSED DATE
             .col-xs-12
               form(action='/service/dashboard/'+service.uri+'/closed_requests/reopen', method='post')#closedRequests
                 img.img-responsive.center-block#spinnerLoadRequestsClosed(src='/images/loading_spinner.gif', style='display: none')
@@ -108,7 +110,6 @@ block content
                   select.form-control(name='serveType', id='serveType', style='padding: 6px 10px 6px 4px;', required='')
                     option(value='crisis') CRISIS
                     option(value='transitional') TRANSITIONAL
-                    option(value='long') LONG TERM
               .form-group
                 .col-xs-12
                   label LOCATION
@@ -201,8 +202,8 @@ block content
                 .form-group
                 .row
                   .col-xs-12
-                    label(for='serveRules') THANK YOU MESSAGE FOR APPLICANTS
-                    textarea(rows="5", name='thankyouMessage',id='thankyouMessage', spellcheck="true", placeholder="Enter Description").form-control
+                    label(for='thankyouMessage') THANK YOU MESSAGE FOR APPLICANTS
+                    textarea(rows="5", name='thankyouMessage',id='thankyouMessage', spellcheck="true", placeholder="Enter Message", style='margin-bottom: 15px;').form-control
               .col-md-6.col-xs-12
                 .form-group#serveAmenitiesForm
                   label AMENITIES

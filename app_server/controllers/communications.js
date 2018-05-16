@@ -5,8 +5,8 @@ const Nexmo = require('nexmo');
  * SMS initialisation
  */
 const nexmo = new Nexmo({
-  apiKey: 'ce6c3e3f',
-  apiSecret: 'cd30f98332bf88e7',
+  apiKey: process.env.nexmo_api,
+  apiSecret: process.env.nexmo_secret,
 }, { debug: true });
 
 /**
@@ -37,7 +37,7 @@ const transporter = nodemailer.createTransport({
  */
 function sendSMS(number, message, res) {
   nexmo.message.sendSms(
-    'NEXMO', number, message, { type: 'unicode' }, // 'NEXMO' must be changed to virtual number when in production
+    process.env.nexmo_number, number, message, { type: 'unicode' }, // 'NEXMO' must be changed to virtual number when in production
     (err, responseData) => {
       if (err) {
         console.log(err);
@@ -110,12 +110,12 @@ module.exports.sms = (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-module.exports.notification = (req, res) => {
-  const { email, number, name } = req.body;
-  const message = `Thank you for applying to ${name}. Your request has been recieved. We will get back to you shortly`;
-  const subject = `Request to ${name} has been recieved`;
+module.exports.notification = (number, email, message, subject, res) => {
+  if (email !== undefined) {
+    sendEmail(email, subject, message, res);
+  }
 
-  sendEmail(email, subject, message, res);
-
-  sendSMS(number, message, res);
+  if (number !== undefined) {
+    sendSMS(number, message, res);
+  }
 };

@@ -15,8 +15,11 @@ block content
                 | LONG TERM
     .row
       if locations.length == 0
-        h2 No accommodations matched your criteria, please check back again later.
-        h3(style="margin-top: 20rem;") Here are some numbers to call if you need help
+        h2
+          | We're really sorry.<br>There are no current vacancies that you are eligible for.<br><br>
+          | HomeForNow only works for young people 15-25 in Perth, Western Australia
+        .spacer-xs
+        h3 Here are some numbers to call if you are in Perth and need help
         .row
           .col-xs-6
             h3.bold='Entry Point'
@@ -30,7 +33,7 @@ block content
               1800 199 008
       else
         each location in locations
-          +contactModal(location.name, location._id, location.available, location.phoneNumber, location.uri, location.thankyouMessage, locationLogos[locations.indexOf(location)])
+          +contactModal(userName, location.name, location._id, location.available, location.uri, location.thankyouMessage, locationLogos[locations.indexOf(location)])
           +vacancyPanel(location.name, location.address.suburb, true, location.description, location.uri, locationImgs[locations.indexOf(location)])
       .spacer-xs
       each dlocation in dlocations
@@ -53,8 +56,8 @@ block content
       const lat = Number("#{userCoords.lat}");
       const long = Number("#{userCoords.long}");
       const coord = {lat: lat, lng: long}; // user current latlng
-      const services = !{JSON.stringify(locations)} ;
-      services.concat(!{JSON.stringify(dlocations)});
+      const servicesAvail = !{JSON.stringify(locations)} ;
+      const servicesNotAvail = !{JSON.stringify(dlocations)};
 
       const map = new google.maps.Map(document.getElementById('userloc'), {
         zoom: 13,
@@ -67,20 +70,59 @@ block content
         position: coord,
         map: map
       });
-      var serviceMarker = [];
-      services.forEach( function(serv) {
+
+      let servicesAvailMarker = [];
+      let servicesNotMarker = [];
+
+      servicesAvail.forEach( function(serv) {
         const name = serv.name;
         const latitude = Number(serv.address.coordinates.coordinates[1]);
         const longitude = Number(serv.address.coordinates.coordinates[0]);
 
         const pos = {lat: latitude, lng: longitude};
 
-        serviceMarker.push( [ name, pos ] );
+        servicesAvailMarker.push( [ name, pos ] );
+      });
+      servicesNotAvail.forEach( function(serv) {
+        const name = serv.name;
+        const latitude = Number(serv.address.coordinates.coordinates[1]);
+        const longitude = Number(serv.address.coordinates.coordinates[0]);
+
+        const pos = {lat: latitude, lng: longitude};
+
+        servicesNotMarker.push( [ name, pos ] );
       });
 
-      for( let i = 0; i < serviceMarker.length; i++) {
+      //Circle marker for available services
+      for( let i = 0; i < servicesAvailMarker.length; i++) {
         let con = '<div id="content">'+
-                  '<h4>'+ serviceMarker[i][0] +'</h4>'+
+                  '<h4>'+ servicesAvailMarker[i][0] +'</h4>'+
+                  '</div>';
+        let infowindow = new google.maps.InfoWindow({
+                      content: con
+                    });
+                    
+        let cityCircle = new google.maps.Circle({
+          strokeColor: '#0000FF',
+          strokeOpacity: 0.5,
+          strokeWeight: 2,
+          fillColor: '#0000FF',
+          fillOpacity: 0.25,
+          map: map,
+          center: servicesAvailMarker[i][1],
+          radius: 1.75 * 1000 //radius in metres
+        });
+        
+        google.maps.event.addListener(cityCircle, 'click', function(){
+          infowindow.setPosition(cityCircle.getCenter());
+          infowindow.open(map);
+        });
+      }
+
+      // Service marker for non available services
+      for( let i = 0; i < servicesNotMarker.length; i++) {
+        let con = '<div id="content">'+
+                  '<h4>'+ servicesNotMarker[i][0] +'</h4>'+
                   '</div>';
         let infowindow = new google.maps.InfoWindow({
                       content: con
@@ -93,7 +135,7 @@ block content
           fillColor: '#FF0000',
           fillOpacity: 0.25,
           map: map,
-          center: serviceMarker[i][1],
+          center: servicesNotMarker[i][1],
           radius: 1.75 * 1000 //radius in metres
         });
         

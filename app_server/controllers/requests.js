@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 
 const Request = mongoose.model('Request');
 const Service = mongoose.model('Service');
-// const User = mongoose.model('User');
+const User = mongoose.model('User');
+
+const not = require('./communications.js');
 
 /**
  * Prints an error to the console and sends a json repsonse
@@ -40,9 +42,7 @@ module.exports.addRequest = (req, res) => {
 };
 
 module.exports.addPhoneToRequest = (req, res) => {
-  console.log('yee');
   if (req.session.requestId) {
-    console.log('yeet');
     // Add phone number to request
     Request.findOneAndUpdate(
       { _id: req.session.requestId },
@@ -58,21 +58,75 @@ module.exports.addPhoneToRequest = (req, res) => {
         if (err) {
           console.log('[ERROR] RequestsController: '.concat(err));
           res.status(500).json({ message: 'Could not add phone number to request.' });
+        } else {
+          console.log(req.body);
         }
       },
     );
-    // Add request to service
-    Service.findOneAndUpdate(
-      { _id: req.body.serviceId },
-      { $push: { openRequests: req.session.requestId } },
-      { runValidators: true, new: true },
-      (err) => {
-        if (err) {
-          console.log('[ERROR] RequestsController: '.concat(err));
-          res.status(500).json({ message: 'Could not submit request to service provider.' });
-        }
-      },
-    );
+    User.findOne(
+      { service: req.body.serviceId },
+      'email',
+    ).exec().then((servicedata) => {
+      const serviceEmail = servicedata.email;
+      Service.findById(
+        req.body.serviceId,
+        'phoneNumber name',
+      ).exec().then((service) => {
+        let serviceNum = service.phoneNumber;
+        const serviceName = service.name;
+        // Add request to service
+        Service.findOneAndUpdate(
+          { _id: req.body.serviceId },
+          { $push: { openRequests: req.session.requestId } },
+          { runValidators: true, new: true },
+          (err) => {
+            if (err) {
+              console.log('[ERROR] RequestsController: '.concat(err));
+              res.status(500).json({ message: 'Could not submit request to service provider.' });
+            } else {
+              // Notification to young person
+              let userEmail = req.body.email;
+              let userNum = req.body.number;
+              userNum = userNum.replace(/\s/g, '');
+              const { userName } = req.body;
+              const num = userNum.substring(0, 2);
+              if (num === '04' ) {
+                userNum = '61'.concat(userNum.substring(1, userNum.length));
+              }
+              else {
+                userNum = undefined;
+              }
+
+              if (userEmail == null) {
+                userEmail = undefined;
+              }
+
+              const YPmessage = `Thank you for applying to ${serviceName}. Your request has been recieved. We will get back to you shortly`;
+              const YPsubject = `Request to ${serviceName} has been recieved`;
+
+              not.notification(userNum, userEmail, YPmessage, YPsubject);
+
+              // Notification to service
+              serviceNum = serviceNum.replace(/\s/g, '');
+              if (num === '04') {
+                serviceNum = '61'.concat(serviceNum.substring(1, serviceNum.length));
+              }
+              else {
+                serviceNum = undefined;
+              }
+              if (userEmail == null) {
+                userEmail = undefined;
+              }
+
+              const servMessage = `A request to ${serviceName} has been recieved from ${userName}`;
+              const servSubject = `Request from ${userName} has been recieved`;
+
+              not.notification(serviceNum, serviceEmail, servMessage, servSubject);
+            }
+          },
+        );
+      });
+    });
   } else {
     // TODO: Handle this case
     //    Tell the user to submit a new request?
