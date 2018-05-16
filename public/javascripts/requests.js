@@ -16,8 +16,13 @@ function submitPhoneNumber (form)
   localStorage.number = form.elements.number.value; 
   localStorage.email = form.elements.email.value; 
   Array.from(document.forms).forEach(function(form) { 
-    form.elements.email.value = localStorage.email 
-    form.elements.number.value = localStorage.number 
+    if (localStorage.email) {
+      form.elements.email.value = localStorage.email 
+    }
+
+    if (localStorage.number) {
+      form.elements.number.value = localStorage.number 
+    }
   }) 
   console.log($(form).serialize());
   $.ajax({
