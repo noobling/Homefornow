@@ -62,13 +62,6 @@ module.exports.index = (req, res) => {
       if (err) {
         console.log('[ERROR] IndexController: '.concat(err));
       }
-      let user;
-      if (req.user) {
-        user = {
-          id: req.user.id,
-          name: req.user.name,
-        };
-      }
 
       Promise.all([
         images.getImageForService(services.crisis.img[0], services.crisis.uri),

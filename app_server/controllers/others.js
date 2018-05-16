@@ -22,5 +22,5 @@ module.exports.contact = (req, res) => {
  * @param  {Object} res Express response object.
  */
 module.exports.terms_of_use = (req, res) => {
-  res.render('terms_of_use', { title: 'Terms of Use' });
+  res.render('termsOfUse', { title: 'Terms of Use' });
 };

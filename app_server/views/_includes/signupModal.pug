@@ -43,5 +43,23 @@ mixin signupModal(title, route, id)
                             .text-center
                               button.btn.btn-primary(name="Submit", type="submit", style='width: 200px; margin-bottom: 10px;') Get Suitable Vacancies
                             .text-center
-                                a(href='#', style='font-size: 11px; color: #282828; text-decoration: underline;') Privacy Info
+                                a(href='#privacy'+id, data-toggle="collapse", aria-expanded="false" aria-controls="privacy"+id, style='font-size: 11px; color: #282828; text-decoration: underline;') Privacy Info
+                            .collapse(id='privacy'+id)
+                              p
+                                | Anglicare WA (ABN 32797454970) is collecting your personal information so accommodation 
+                                | services can contact you about access to their services.  We may also collect personal 
+                                | information about you for this purpose from accommodation services. 
+                                span.bold 
+                                  | By providing your details you consent to receiving messages from us 
+                                  | (including via email and SMS) in connection with this purpose or in order to provide 
+                                  | you with other information about our services
+                                | . If you do not provide the personal information collected, we will not be able process 
+                                | your request. Our Privacy Policy (available at 
+                                a(href="/terms_of_use") www.homefornow.org.au/terms_of_use
+                                | ) states how you can seek to access or correct any personal information we hold about 
+                                | you, how to complain about a privacy breach by us and how we will deal with a privacy 
+                                | complaint.  You can contact us at 
+                                a info@anglicarewa.org.au
+                                | .
+                                
 //- script(src='/javascripts/requests.js')
