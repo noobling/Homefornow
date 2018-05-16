@@ -1,9 +1,10 @@
 extends navbarDefault
 
 block content
-    #banner.page-header
-        .row
-            h1= error.status
-            h2= message
+  #banner.page-header
     .row
-        pre #{error.stack}
+      .col-xs-12.text-center
+        h1.bang= error.status
+        h2.bold= message
+      .col-xs-12
+        img.img-responsive(src="/images/error.gif")
