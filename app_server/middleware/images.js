@@ -2,17 +2,17 @@
 const admin = require('firebase-admin');
 const Multer = require('multer');
 const mongoose = require('mongoose');
-const serviceAccount = require('../../homefornow-fd495-firebase-adminsdk-xy17w-62ee8ab849.json');
+const serviceAccount = require('../../homefornow-bb31e-firebase-adminsdk-7n626-a4e0f1c140.json');
 
 const Service = mongoose.model('Service');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  storageBucket: 'homefornow-fd495.appspot.com',
+  storageBucket: 'homefornow-bb31e.firebaseio.com',
 });
 
 
-const bucket = admin.storage().bucket();
+const bucket = admin.storage().bucket('homefornow-bb31e');
 
 function sendUploadToFirebase(req, res, next) {
   if (!req.file) {
