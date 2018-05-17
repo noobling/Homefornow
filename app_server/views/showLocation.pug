@@ -56,7 +56,7 @@ block content
       | Back to vacancies
     .row.text-center
       .col-xs-12(style='margin-top: 15px;')
-        a(href='#', data-toggle="modal", data-target="#contactmodal"+location.uri)
+        a#contactBtn(href='#', data-toggle="modal", data-target="#contactmodal"+location.uri)
           button.btn.btn-primary
             | Contact
         +contactModal(location.name, location._id, location.available, location.phoneNumber, location.uri, location.thankyouMessage, logo)
@@ -109,6 +109,9 @@ block content
           br
           | Sunday: #{location.hours.sun.open} - #{location.hours.sun.close}
     .spacer-xs
+    a#back 
+      i.material-icons(style='vertical-align: bottom;') arrow_back 
+      | Back to vacancies 
     a.text-center.pull-right(href='#top', style='margin-bottom: 20px;')
       i.material-icons(style='vertical-align: bottom;') keyboard_arrow_up
       | <br>Back to top
@@ -119,6 +122,10 @@ block content
       history.back()
     })
 
+    if (localStorage.fromIndex) { 
+      localStorage.removeItem('fromIndex') 
+      $('#contactBtn').hide() 
+    } 
   style.
     #back:hover {
       cursor: pointer;

@@ -24,10 +24,10 @@ module.exports.login = (req, res, next) => {
     if (err) {
       next(err);
     }
-    
+
     if (!user) {
       console.log('no user');
-      res.render('index', {errors: ['Incorrect credentials']});
+      res.render('index', { errors: ['Incorrect credentials'] });
       return;
     }
     req.logIn(user, (err2) => {

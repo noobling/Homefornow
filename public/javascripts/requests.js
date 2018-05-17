@@ -13,7 +13,20 @@ function submitRequest(form)
 // https://stackoverflow.com/questions/25983603/how-to-submit-html-form-without-redirection
 function submitPhoneNumber (form)
 {
-  console.log($(form).serialize());
+  localStorage.number = form.elements.number.value; 
+  localStorage.email = form.elements.email.value; 
+  Array.from(document.forms).forEach(function(f) {
+    if (f.elements.email) {
+      if (localStorage.email) {
+        f.elements.email.value = localStorage.email;
+      }
+    }
+    if (f.elements.number) {
+      if (localStorage.number) {
+        f.elements.number.value = localStorage.number;
+      }
+    }
+  })
   $.ajax({
     url: "/request/update",
     type: "post",
@@ -24,6 +37,6 @@ function submitPhoneNumber (form)
     },
   })
   .fail(function(jqXHR, textStatus) {
-    console.log("[ERROR] Phone number submission: " + textStatus);
+    console.log("[ERROR]: Contact information submission: " + textStatus);
   })
 };

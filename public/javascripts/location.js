@@ -1,3 +1,40 @@
+$(function() {
+  // get current date
+  var min = new Date();
+  var max = new Date();
+
+
+  min.setYear(1900 + min.getYear() - 26);
+  max.setYear(1900 + max.getYear() - 13);
+
+  // make 2 digits out of 1
+  var minDay = min.getDate();
+  if(minDay < 10)
+    minDay = "0" + minDay;
+
+  var minMonth = min.getMonth()+1;
+  if(minMonth < 10)
+    minMonth = "0" + minMonth;
+
+  // same for current (to be the min later)
+  var maxDay = max.getDate();
+  if(maxDay < 10)
+    maxDay = "0" + maxDay;
+
+  var maxMonth = max.getMonth()+1;
+  if(maxMonth < 10)
+    maxMonth = "0" + maxMonth;
+
+  var minEntry = min.getYear() + 1900 + "-" + minMonth + "-" + minDay;
+  var maxEntry = max.getYear() + 1900 + "-" + maxMonth + "-" + maxDay;
+
+  $('input[type="date"]').attr({
+    "min": minEntry,
+    "max": maxEntry,
+  });
+});
+
+
 /**
  * Initialises the Google places autocomplete object.
  * Adds event listeners to the 'For now' and 'Long term' buttons on the index page.

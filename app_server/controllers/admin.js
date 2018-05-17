@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 // const ansync = require('async');
 
 const Service = mongoose.model('Service');
+const Request = mongoose.model('Request');
 
 module.exports.admin = (req, res) => {
   const prevPage = req.header('Referer') || '/';
@@ -36,6 +37,28 @@ module.exports.addService = (req, res) => {
   }
 
   return res.render('addServiceCreation');
+};
+
+module.exports.wipeRequests = (req, res) => {
+  const prevPage = req.header('Referer') || '/';
+  if (!req.user) {
+    return res.redirect(prevPage);
+  }
+  if (req.user.role !== 'admin') {
+    return res.redirect(prevPage);
+  }
+
+  Service.updateMany(
+    {},
+    {
+      $set: {
+        request: [],
+        openRequests: [],
+      },
+    },
+  ).exec().then(() => {
+    Request.deleteMany({}).exec().then(() => res.redirect('/'));
+  });
 };
 
 module.exports.adminData = (req, res) => {

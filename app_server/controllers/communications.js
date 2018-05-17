@@ -5,8 +5,8 @@ const Nexmo = require('nexmo');
  * SMS initialisation
  */
 const nexmo = new Nexmo({
-  apiKey: 'ce6c3e3f',
-  apiSecret: 'cd30f98332bf88e7',
+  apiKey: process.env.nexmo_api,
+  apiSecret: process.env.nexmo_secret,
 }, { debug: true });
 
 /**
@@ -18,8 +18,8 @@ const transporter = nodemailer.createTransport({
   secure: false, // true for 465, false for other ports */
   service: 'gmail',
   auth: {
-    user: 'cfcxanglicare@gmail.com', // Anglicare email ID (placeholder for now) **Need to make it .env for actual email
-    pass: 'GyRCGrabvkrC3Nfz', // Anglicare email ID (placeholder for now) **Need to make it .env for actual email
+    user: process.env.email_user, // Anglicare email ID
+    pass: process.env.email_pass, // Anglicare email pass
   },
   // remove when deployed, only for testing
   tls: {
@@ -37,14 +37,13 @@ const transporter = nodemailer.createTransport({
  */
 function sendSMS(number, message, res) {
   nexmo.message.sendSms(
-    'NEXMO', number, message, { type: 'unicode' }, // 'NEXMO' must be changed to virtual number when in production
+    process.env.nexmo_number, number, message, { type: 'unicode' }, // 'NEXMO' must be changed to virtual number when in production
     (err, responseData) => {
       if (err) {
         console.log(err);
         return res.status(503);
         // res.json({ message: err });
       }
-      console.log(responseData.messages[0].status);
       return responseData.messages[0].status;
     },
   );
@@ -74,7 +73,6 @@ function sendEmail(to, subject, text, res) {
       res.status(503);
       res.json({ message: error });
     }
-    console.log(info);
     res.status(200);
     res.json({ message: `Sent email to ${to}` });
   });
@@ -110,12 +108,12 @@ module.exports.sms = (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-module.exports.notification = (req, res) => {
-  const { email, number, name } = req.body;
-  const message = `Thank you for applying to ${name}. Your request has been recieved. We will get back to you shortly`;
-  const subject = `Request to ${name} has been recieved`;
+module.exports.notification = (number, email, message, subject, res) => {
+  if (email !== undefined) {
+    sendEmail(email, subject, message, res);
+  }
 
-  sendEmail(email, subject, message, res);
-
-  sendSMS(number, message, res);
+  if (number !== undefined) {
+    sendSMS(number, message, res);
+  }
 };

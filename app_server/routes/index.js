@@ -15,6 +15,9 @@ const router = express.Router();
 router.get('/', ctrlIndex.index);
 
 router.get('/about', ctrlOthers.about);
+router.get('/contact', ctrlOthers.contact);
+router.get('/terms_of_use', ctrlOthers.terms_of_use);
+
 
 router.get('/location/:serviceUri', ctrlLocations.showLocation);
 
@@ -59,10 +62,6 @@ router.post('/email', ctrlComm.email);
  */
 router.post('/sms', ctrlComm.sms);
 
-/**
- * Notification API
- */
-router.post('/notification', ctrlComm.notification);
 
 /**
  * admin API
@@ -70,6 +69,7 @@ router.post('/notification', ctrlComm.notification);
 
 router.get('/admin', ctrlAdmin.admin);
 router.get('/admin/addservice', ctrlAdmin.addService);
+router.get('/admin/wipe_requests', ctrlAdmin.wipeRequests);
 router.post('/addservice', ctrlService.addService);
 router.post('/service/update/:serviceName', ctrlService.updateService);
 

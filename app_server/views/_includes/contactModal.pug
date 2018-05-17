@@ -1,4 +1,4 @@
-mixin contactModal(serviceName, serviceId, available, phoneNumber, uri, thankyouMessage, logoUrl)
+mixin contactModal(name, serviceName, serviceId, available, uri, thankyouMessage, logoUrl)
     .modal.fade(id="contactmodal"+uri,role="dialog")
         .modal-dialog.modal-sm
             .modal-content
@@ -13,7 +13,7 @@ mixin contactModal(serviceName, serviceId, available, phoneNumber, uri, thankyou
                 .modal-body
                     form
                         .form-group
-                            label(for="number") Phone Number
+                            label(for="number") What's the best number to get you on
                             input.form-control(type="tel", name="number", minlength='10')
                         .text-center
                             label - and/or - 
@@ -22,6 +22,7 @@ mixin contactModal(serviceName, serviceId, available, phoneNumber, uri, thankyou
                             input.form-control(type="email", name="email")
                         .form-group
                             input(type="hidden", name="serviceId", value=serviceId)
+                            input(type="hidden", name="userName", value=name)
                         .form-group
                             .text-right                                
                                 a(data-toggle="modal", href="#waitmodal"+uri)

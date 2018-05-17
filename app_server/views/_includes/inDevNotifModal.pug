@@ -1,21 +1,25 @@
 mixin inDevNotifModal()
 	.modal.fade(id="inDevNotifModal",role="dialog")
-			.modal-dialog
-					.modal-content
-							.modal-header
-								button(type='button', data-dismiss='modal').close &times;									
-							.modal-body
-								h3 Thank you for using our app. Please note that it is still in active development if you have
-								p Here are some numbers to call if you need help
-								.row
-									.col-xs-6
-										h3.bold='Entry Point'
-										h4.bold.sec-color.
-											6496 0001 </br>
-											1800 124 684
-									.col-xs-6
-										h3.bold='Crisis Care'
-										h4.bold.sec-color.
-											9223 1111 </br>
-											1800 199 008
-								button.btn.btn-primary(data-dismiss="modal") Close
+		.modal-dialog.modal-md
+			.modal-content
+				.modal-body
+					button(type='button', data-dismiss='modal').close &times;
+					img.img-responsive(src="/images/logo.svg", style='max-height: 20vh; margin-bottom: 15px;')
+					h3="Hi,"
+					p.                  
+						HomeForNow is still in testing and is not currently operational - feel free to look around and give use some feedback but don’t rely HomeForNow for finding accommodation yet - stay tuned.<br><br>
+						The HomeForNow team<br>
+						info@homefornow.org.au<br><br>
+						If you need assistance, please call:<br>
+					.row
+						.col-xs-6
+							h4.bold='Entry Point'
+							h5.bold.sec-color.
+								6496 0001 </br>
+								1800 124 684
+						.col-xs-6
+							h4.bold='Crisis Care'
+							h5.bold.sec-color.
+								9223 1111 </br>
+								1800 199 008
+
