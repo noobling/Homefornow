@@ -104,7 +104,7 @@ module.exports.addPhoneToRequest = (req, res) => {
               const YPmessage = `Thank you for applying to ${serviceName}. Your request has been recieved. We will get back to you shortly`;
               const YPsubject = `Request to ${serviceName} has been recieved`;
 
-              not.notification(userNum, userEmail, YPmessage, YPsubject);
+              not.notification(userNum, userEmail, YPmessage, YPsubject, res);
 
               // Notification to service
               serviceNum = serviceNum.replace(/\s/g, '');
@@ -121,7 +121,7 @@ module.exports.addPhoneToRequest = (req, res) => {
               const servMessage = `A request to ${serviceName} has been recieved from ${userName}`;
               const servSubject = `Request from ${userName} has been recieved`;
 
-              not.notification(serviceNum, serviceEmail, servMessage, servSubject);
+              not.notification(serviceNum, serviceEmail, servMessage, servSubject, res);
             }
           },
         );
