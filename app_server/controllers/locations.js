@@ -22,11 +22,7 @@ module.exports.showLocations = (req, res) => {
   const name = req.body.fName + ' ' +req.body.lName;
   const longTerm = (req.params.lengthOfStay === 'long_term');
   const type = (longTerm ? ['transitional'] : ['crisis']);
-  const child = (req.body.hasChild ? [true] : [true, false]);
-  // const disability = false;
-  // (req.user.hasDisability ? [true] : [true, false]);
   const age = parseInt(timeago().format(req.body.dob).split(' ')[0], 10);
-  console.log(age);
   let gender = ['Either']; // If 'Other'
   if (req.body.gender === 'Male') {
     gender = ['Male', 'Either'];
@@ -38,8 +34,6 @@ module.exports.showLocations = (req, res) => {
     {
       $and: [
         { serviceType: { $in: type } },
-        { child: { $in: child } },
-        // { disability: { $in: disability } },
         { gender: { $in: gender } },
         { 'ageRange.maxAge': { $gte: age } },
         { 'ageRange.minAge': { $lte: age } },
@@ -55,6 +49,10 @@ module.exports.showLocations = (req, res) => {
     'name description address uri logo thankyouMessage img beds',
   ).exec()
     .then((services) => {
+      if (req.body.child) {
+        // eslint-disable-next-line
+        services = hasBedWithChild(services);
+      }
       // Sort services into available and unavailable
       const available = [];
       const availableImagePromises = [];
@@ -174,3 +172,12 @@ module.exports.showLocation = (req, res) => {
     res.status(500).json({ message: err });
   });
 };
+
+function hasBedWithChild(services) {
+  return services.filter((service) => {
+    for (let i = 0; i < service.beds.length; i += 1) {
+      if (service.beds[i].bedType === 'ParentChild') return true;
+    }
+    return false;
+  });
+}
