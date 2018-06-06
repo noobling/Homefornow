@@ -356,21 +356,21 @@ const UpdatePanel = ({ index, name }) => `
   <div class="panel shadow">
     <div class="panel-body">
       <div class="row text-center">
-        <div class="col-xs-2">
+        <div class="col-xs-6 col-sm-2">
           <h4 id="bedtype${index}" style="text-transform: uppercase;">ICON</h4>
         </div>
-        <div class="col-xs-4">
+        <div class="col-xs-6 col-sm-4">
           <h4>${name}</h4>
         </div>
-        <div class="col-xs-2">
+        <div class="col-xs-4 col-sm-2">
           <h6>Available</h6>
           <input type="radio" name="beds[${index}][isOccupied]" value="Available" id='available${index}' />
         </div>
-        <div class="col-xs-2">
+        <div class="col-xs-4 col-sm-2">
           <h6>Pending</h6>
           <input type="radio" name="beds[${index}][isOccupied]" value="Pending" id='pending${index}' />
         </div>
-        <div class="col-xs-2">
+        <div class="col-xs-4 col-sm-2">
           <h6>Occupied</h6>
           <input type="radio" name="beds[${index}][isOccupied]" value="Unavailable" id='unavailable${index}' />
         </div>
@@ -384,10 +384,10 @@ const RequestPanel = ({ index, name, email, number, age, id, gender }) => {
     <div class="panel shadow" style='height: 10vh; min-height: 80px;'>
       <div class="panel-body" style="height: 100%;">
       <div class="row text-center" style="height: 100%; display: flex; align-items: center;">
-          <div class="col-xs-2">
+          <div class="col-xs-6 col-sm-2">
             <h4>${gender}</h4>
           </div>
-          <div class="col-xs-3">
+          <div class="col-xs-6 col-sm-2">
             <a href='#' class='addEmail' data-toggle='modal' data-target='#emailmodal' data-email='${email}'>
               <h5>${email}</h5>
             </a>
@@ -405,19 +405,17 @@ const RequestPanel = ({ index, name, email, number, age, id, gender }) => {
   }
 
   html += `      </div>
-          <div class="col-xs-3">
+          <div class="col-xs-6 col-sm-2">
             <h4>${name}</h4>
           </div>
-          <div class="col-xs-4">
-            <div class="col-xs-3">
+          <div class="col-xs-6 col-sm-1">
               <h6>${age}</h6>
-            </div>
-            <div class="col-xs-5">
-              <input type="checkbox" name='requests[${index}]' value='${id}' />
-            </div>
-            <div class="col-xs-4">
-              <a data-toggle="modal" data-target="#requestModal${index}" class="btn btn-primary">Notes</a>
-            </div>
+          </div>
+          <div class="col-xs-6 col-sm-2">
+            <input type="checkbox" name='requests[${index}]' value='${id}' />
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <a data-toggle="modal" data-target="#requestModal${index}" class="btn btn-primary">Notes</a>
           </div>
         </div>
       </div>
@@ -442,10 +440,10 @@ const ClosedRequestPanel = ({ index, name, email, number, age, gender, closedAt 
   <div class="panel shadow" style='height: 10vh; min-height: 80px;'>
     <div class="panel-body" style="height: 100%">
       <div class="row text-center" style="height: 100%; display: flex; align-items: center;">
-        <div class="col-xs-2">
+        <div class="col-xs-6.col-sm-2">
           <h4>${gender}</h4>
         </div>
-        <div class="col-xs-3">
+        <div class="col-xs-6.col-sm-2">
           <a href='#' class='addEmail' data-toggle='modal' data-target='#emailmodal' data-email='${email}'>
             <h5>${email}</h5>
           </a>
@@ -463,19 +461,17 @@ const ClosedRequestPanel = ({ index, name, email, number, age, gender, closedAt 
   }
   html += `
           </div>
-          <div class="col-xs-3">
+          <div class="col-xs-6.col-sm-2">
             <h4>${name}</h4>
           </div>
-          <div class="col-xs-4">
-            <div class="col-xs-3">
-              <h6>${age}</h6>
-            </div>
-            <div class="col-xs-5">
-              <h5>${closedAt}</h5>
-            </div>
-            <div class="col-xs-4">
-              <a data-toggle="modal" data-target="#closedRequestModal${index}" class="btn btn-primary">Notes</a>
-            </div>
+          <div class="col-xs-6.col-sm-1">
+            <h6>${age}</h6>
+          </div>
+          <div class="col-xs-6.col-sm-2">
+            <h5>${closedAt}</h5>
+          </div>
+          <div class="col-xs-6.col-sm-3">
+            <a data-toggle="modal" data-target="#closedRequestModal${index}" class="btn btn-primary">Notes</a>
           </div>
       </div>
     </div>

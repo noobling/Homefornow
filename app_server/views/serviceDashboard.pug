@@ -55,17 +55,16 @@ block content
               .panel
                 .panel-body
                   .row.text-center
-                    .col-xs-2
+                    .col-xs-6.col-sm-2
                       h4 GENDER
-                    .col-xs-3
+                    .col-xs-6.col-sm-2
                       h4 CONTACT
-                    .col-xs-3
+                    .col-xs-6.col-sm-2
                       h4 NAME
-                    .col-xs-4
-                      .col-xs-3
-                        h4 AGE
-                      .col-xs-5
-                        h4 CONTACTED
+                    .col-xs-6.col-sm-1
+                      h4 AGE
+                    .col-xs-6.col-sm-2
+                      h4 CONTACTED
             .col-xs-12
               form(action='/service/dashboard/'+service.uri+'/requests/update', method='post')#updateRequests
                 img.img-responsive.center-block#spinnerLoadRequests(src='/images/loading_spinner.gif', style='display: none')
@@ -79,17 +78,16 @@ block content
               .panel
                 .panel-body
                   .row.text-center
-                    .col-xs-2
+                    .col-xs-6.col-sm-2
                       h4 GENDER
-                    .col-xs-3
+                    .col-xs-6.col-sm-2
                       h4 CONTACT
-                    .col-xs-3
+                    .col-xs-6.col-sm-2
                       h4 NAME
-                    .col-xs-4
-                      .col-xs-3
-                        h4 AGE
-                      .col-xs-5
-                        h4 CLOSED DATE
+                    .col-xs-6.col-sm-1
+                      h4 AGE
+                    .col-xs-6.col-sm-2
+                      h4 CLOSED DATE
             .col-xs-12
               form(action='/service/dashboard/'+service.uri+'/closed_requests/reopen', method='post')#closedRequests
                 img.img-responsive.center-block#spinnerLoadRequestsClosed(src='/images/loading_spinner.gif', style='display: none')
