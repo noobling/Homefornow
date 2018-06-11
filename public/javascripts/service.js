@@ -414,7 +414,7 @@ const RequestPanel = ({ index, name, email, number, age, id, gender }) => {
           <div class="col-xs-6 col-sm-2">
             <input type="checkbox" name='requests[${index}]' value='${id}' />
           </div>
-          <div class="col-xs-6 col-sm-3">
+          <div>
             <a data-toggle="modal" data-target="#requestModal${index}" class="btn btn-primary">Notes</a>
           </div>
         </div>
@@ -440,10 +440,10 @@ const ClosedRequestPanel = ({ index, name, email, number, age, gender, closedAt 
   <div class="panel shadow" style='height: 10vh; min-height: 80px;'>
     <div class="panel-body" style="height: 100%">
       <div class="row text-center" style="height: 100%; display: flex; align-items: center;">
-        <div class="col-xs-6.col-sm-2">
+        <div class="col-xs-6 col-sm-2">
           <h4>${gender}</h4>
         </div>
-        <div class="col-xs-6.col-sm-2">
+        <div class="col-xs-6 col-sm-2">
           <a href='#' class='addEmail' data-toggle='modal' data-target='#emailmodal' data-email='${email}'>
             <h5>${email}</h5>
           </a>
@@ -461,16 +461,16 @@ const ClosedRequestPanel = ({ index, name, email, number, age, gender, closedAt 
   }
   html += `
           </div>
-          <div class="col-xs-6.col-sm-2">
+          <div class="col-xs-6 col-sm-2">
             <h4>${name}</h4>
           </div>
-          <div class="col-xs-6.col-sm-1">
+          <div class="col-xs-6 col-sm-1">
             <h6>${age}</h6>
           </div>
-          <div class="col-xs-6.col-sm-2">
+          <div class="col-xs-6 col-sm-2">
             <h5>${closedAt}</h5>
           </div>
-          <div class="col-xs-6.col-sm-3">
+          <div>
             <a data-toggle="modal" data-target="#closedRequestModal${index}" class="btn btn-primary">Notes</a>
           </div>
       </div>

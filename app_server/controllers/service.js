@@ -780,22 +780,30 @@ module.exports.updateAmenities = (req, res) => {
   if (amens) {
     const amen = amens[0];
     if (req.body.checkedState === 'true') {
-      Service.findOneAndUpdate({ _id: req.user.service[0] }, { new: true }, {
-        $push: {
-          amenities: { amen },
-        },
-      }, (err, doc) => {
-        if (err) console.log(err);
-        console.log(doc);
+      Service.findById(req.user.service[0], (err, service) => {
+        service.amenities.push(amen);
+        service.save((err, updatedService) => {
+          if (err) {
+            res.status(400).json(err);
+          } else {
+            res.json(updatedService);
+          }
+        })
       });
     } else {
       Service.findOneAndUpdate({ _id: req.user.service[0] }, {
         $pull: {
           amenities: amen,
         },
+      }, (err, service) => {
+        if (err) {
+          res.status(400).json('error');
+        } else {
+          res.json(service);
+        }
       });
     }
+  } else {
+    res.json({ message: 'No amenities' });
   }
-
-  res.json('Worked');
 };
