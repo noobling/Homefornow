@@ -120,6 +120,116 @@ function amenities(service) {
   //   ['BATHROOM', '', 'wc']; ///////////////////////////////////////////
 }
 
+function findAmenityToUpdate(amenity, status) {
+  if (amenity === 'TV') {
+    return {
+      label: 'TV',
+      name: 'TV',
+      icon: 'tv',
+    };
+  }
+  if (amenity === 'WASHER') {
+    return {
+      label: 'LAUNDRY/WASHER',
+      name: 'WASHER',
+      icon: 'local_laundry_service',
+    };
+  }
+  if (amenity=== 'WIFI') {
+    return {
+      label: 'WIFI',
+      name: 'WIFI',
+      icon: 'wifi',
+    };
+  }
+  if (amenity === 'BATH') {
+    return {
+      label: 'BATHROOM',
+      name: 'BATH',
+      icon: 'wc',
+    };
+  }
+  if (amenity === 'SMOKE') {
+    if (status === 'true') {
+      return {
+        label: 'SMOKING',
+        name: 'SMOKE',
+        icon: 'smoking_rooms',
+      };
+    } else {
+      return {
+        label: 'NO SMOKING',
+        name: 'SMOKE',
+        icon: 'smoke_free',
+      };
+    }
+  }
+  if (amenity === 'AIRCON') {
+    return {
+      label: 'AIR-CONDITIONING',
+      name: 'AIRCON',
+      icon: 'ac_unit',
+    };
+  }
+  if (amenity === 'GAMES') {
+    return {
+      label: 'GAMES/CONSOLE',
+      name: 'GAMES',
+      icon: 'videogame_asset',
+    };
+  }
+  if (amenity === 'GYM') {
+    return {
+      label: 'GYM',
+      name: 'GYM',
+      icon: 'fitness_center',
+    };
+  }
+  if (amenity === 'STUDY') {
+    return {
+      label: 'STUDY',
+      name: 'STUDY',
+      icon: 'local_library',
+    };
+  }
+  if (amenity === 'KITCHEN') {
+    return {
+      label: 'KITCHEN',
+      name: 'KITCHEN',
+      icon: 'local_dining',
+    };
+  }
+  if (amenity === 'PHONE') {
+    return {
+      label: 'PHONE',
+      name: 'PHONE',
+      icon: 'phone',
+    };
+  }
+  if (amenity === 'CURFEW') {
+    return {
+      label: 'CURFEW',
+      name: 'CURFEW',
+      icon: 'schedule',
+    };
+  }
+  if (amenity === 'SECURE') {
+    return {
+      label: 'SECURE',
+      name: 'SECURE',
+      icon: 'lock',
+    };
+  }
+  if (amenity === 'OUTDOOR') {
+    return {
+      label: 'OUTDOOR/GARDEN',
+      name: 'OUTDOOR',
+      icon: 'local_florist',
+    };
+  }
+  return false;
+}
+
 /**
  * Renders the service page.
  * @param  {Object} req Express request object.
@@ -773,29 +883,33 @@ module.exports.addNote = (req, res) => {
 };
 
 module.exports.updateAmenities = (req, res) => {
-  const payload = {};
-  payload[req.body.id] = 'on';
-  let amens = amenities(payload);
-  amens = amens.filter(amen => amen.label !== 'NO SMOKING');
-  if (amens) {
-    const amen = amens[0];
+  const amenity = findAmenityToUpdate(req.body.id, req.body.checkedState)
+  if (amenity) {
     if (req.body.checkedState === 'true') {
-      Service.findOneAndUpdate({ _id: req.user.service[0] }, { new: true }, {
-        $push: {
-          amenities: { amen },
-        },
-      }, (err, doc) => {
-        if (err) console.log(err);
-        console.log(doc);
+      Service.findById(req.user.service[0], (err, service) => {
+        service.amenities.push(amenity);
+        service.save((err, updatedService) => {
+          if (err) {
+            res.status(400).json(err);
+          } else {
+            res.json(updatedService);
+          }
+        })
       });
     } else {
       Service.findOneAndUpdate({ _id: req.user.service[0] }, {
         $pull: {
-          amenities: amen,
+          amenities: amenity,
         },
+      }, (err, service) => {
+        if (err) {
+          res.status(400).json('error');
+        } else {
+          res.json(service);
+        }
       });
     }
+  } else {
+    res.status(400).json({ message: 'No amenities set' });
   }
-
-  res.json('Worked');
 };
