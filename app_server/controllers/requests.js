@@ -101,8 +101,8 @@ module.exports.addPhoneToRequest = (req, res) => {
                 userEmail = undefined;
               }
 
-              const YPmessage = `Thank you for applying to ${serviceName}. Your request has been recieved. We will get back to you shortly`;
-              const YPsubject = `Request to ${serviceName} has been recieved`;
+              const YPmessage = `Thank you for applying to ${serviceName}. Your request has been received. We will get back to you shortly`;
+              const YPsubject = `Request to ${serviceName} has been received`;
 
               not.notification(userNum, userEmail, YPmessage, YPsubject, res);
 
