@@ -319,8 +319,9 @@ module.exports.updateService = (req, res) => {
 
   const data = {
     name: req.body.serveName,
+    uri: service.encodeURI(req.body.serveName),
     description: req.body.serveDesc,
-    addresss: {
+    address: {
       suburb: req.body.serveSuburb,
       state: req.body.serveState,
       postcode: req.body.servePostcode,
@@ -339,8 +340,15 @@ module.exports.updateService = (req, res) => {
 
   try {
     Service.findOneAndUpdate({ name: req.params.serviceName }, { $set: data }, (err) => {
+      if (err) console.log(`${err}\n`);      
+      User.findById(req.user.id, (err, user) => {
+        user.email = req.body.serveEmail;
+        user.save((err, result) => {
+          if (err) console.log(`${err}\n`);          
+          res.redirect(`/location/${service.encodeURI(req.body.serveName)}`);          
+        });
+      });
       if (err) console.log(`${err}\n`);
-      res.redirect(`/location/${service.encodeURI(req.body.serveName)}`);
     });
   } catch (e) {
     res.redirect(`/location/${service.encodeURI(req.body.serveName)}`);
