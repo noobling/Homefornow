@@ -894,15 +894,16 @@ module.exports.updateAmenities = (req, res) => {
   const amenity = findAmenityToUpdate(req.body.id, req.body.checkedState)
   if (amenity) {
     if (req.body.checkedState === 'true') {
-      Service.findById(req.user.service[0], (err, service) => {
-        service.amenities.push(amenity);
-        service.save((err, updatedService) => {
-          if (err) {
-            res.status(400).json(err);
-          } else {
-            res.json(updatedService);
-          }
-        })
+      Service.findOneAndUpdate({ _id: req.user.service[0] }, {
+        $push: {
+          amenities: amenity,
+        },
+      }, (err, service) => {
+        if (err) {
+          res.status(400).json(err);
+        } else {
+          res.json(service);
+        }
       });
     } else {
       Service.findOneAndUpdate({ _id: req.user.service[0] }, {
