@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 
 const User = mongoose.model('User');
+const Service = mongoose.model('Service');
 
 // This builds a json response
 // Generally you should call `return` after this
@@ -112,4 +113,14 @@ module.exports.register = (req, res, next) => {
     .catch((err) => {
       next(err);
     });
+};
+
+module.exports.getLogin = (req, res) => {
+  if (req.user) {
+    Service.findById(req.user.service[0], (err, service) => {
+      res.redirect(`/service/dashboard/${service.uri}`);
+    });
+  } else {
+    res.render('login');
+  }
 };
