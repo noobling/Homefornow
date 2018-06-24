@@ -120,8 +120,8 @@ module.exports.showLocations = (req, res) => {
       });
     })
     .catch((err) => {
-      console.log(err);
       res.redirect('/');
+      throw new Error(err);
     });
 };
 
