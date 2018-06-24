@@ -70,7 +70,7 @@ module.exports.addPhoneToRequest = (req, res) => {
       const serviceEmail = servicedata.email;
       Service.findById(
         req.body.serviceId,
-        'phoneNumber name',
+        'phoneNumber name uri',
       ).exec().then((service) => {
         let serviceNum = service.phoneNumber;
         const serviceName = service.name;
@@ -117,9 +117,9 @@ module.exports.addPhoneToRequest = (req, res) => {
               if (userEmail == null) {
                 userEmail = undefined;
               }
-
-              const servMessage = `A request to ${serviceName} has been recieved from ${userName}`;
-              const servSubject = `Request from ${userName} has been recieved`;
+              const serviceUrl = `${process.env.base_url}/service/dashboard/${service.uri}`;
+              const servMessage = `A request to ${serviceName} has been received from ${userName}. View request here: ${serviceUrl}`;
+              const servSubject = `Request from ${userName} has been received`;
 
               not.notification(serviceNum, serviceEmail, servMessage, servSubject, res);
             }

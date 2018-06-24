@@ -80,7 +80,7 @@ function geoloc() {
             country = void 0;
         var addressComponents = results[0].address_components;
 
-        for (i = 0; i < addressComponents.length; ++i) {
+        for (var i = 0; i < addressComponents.length; ++i) {
           if (!country && addressComponents[i].types[0] == 'country') country = addressComponents[i].long_name;else if (!state && addressComponents[i].types[0] == 'administrative_area_level_1') state = addressComponents[i].short_name;else if (!locality && addressComponents[i].types[0] == 'locality') locality = addressComponents[i].long_name;
         }
         document.getElementById('location').value = locality + ' ' + state + ', ' + country;
@@ -178,7 +178,7 @@ function search(autocomplete, isLongTerm) // Fills form with lat and long from t
 
   geocoder.geocode(request, function (results, status) {
     if (status == 'OK') {
-      coords = {
+      var coords = {
         lat: results[0].geometry.location.lat(),
         long: results[0].geometry.location.lng()
         // if(user) {

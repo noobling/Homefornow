@@ -113,7 +113,7 @@ module.exports.notification = (number, email, message, subject, res) => {
     sendEmail(email, subject, message, res);
   }
 
-  // if (number !== undefined) {
-  //   sendSMS(number, message, res);
-  // }
+  if (number !== undefined) {
+    sendSMS(number, message, res);
+  }
 };

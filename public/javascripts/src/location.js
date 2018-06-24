@@ -83,7 +83,7 @@ function geoloc()
                 let locality, state, country;
                 const addressComponents = results[0].address_components;
 
-                for (i = 0; i < addressComponents.length; ++i)
+                for (var i = 0; i < addressComponents.length; ++i)
                 {
                     if (!country && addressComponents[i].types[0] == 'country')
                         country = addressComponents[i].long_name;
@@ -191,7 +191,7 @@ function search(autocomplete, isLongTerm) // Fills form with lat and long from t
 
   geocoder.geocode( request, (results, status) => {
     if (status == 'OK') {
-      coords = {
+      var coords = {
         lat: results[0].geometry.location.lat(),
         long: results[0].geometry.location.lng()
       }

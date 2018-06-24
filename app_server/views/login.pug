@@ -1,6 +1,7 @@
 extends navbarDefault
 
 block content
+	include _includes/messages/error
 	.login-form(style='margin-top: 8rem;')
 		h2.bang.sec-color Service Log-In
 		form(action='/login', method='post', role='form')

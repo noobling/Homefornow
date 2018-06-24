@@ -372,7 +372,7 @@ module.exports.updateService = (req, res) => {
 module.exports.dashboard = (req, res) => {
   if (!req.user || req.user.role !== 'service_provider') {
     // res.status(401).json({ message: 'You are not authorised to view this page.' });
-    res.redirect('/');
+    res.render('login', { errors: ['Please sign in to access this page'] });
     return;
   }
   Service.findById(
