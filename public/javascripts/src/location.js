@@ -1,101 +1,113 @@
-"use strict";
-
-$(function () {
+$(function() {
   // get current date
   var min = new Date();
   var max = new Date();
+
 
   min.setYear(1900 + min.getYear() - 26);
   max.setYear(1900 + max.getYear() - 13);
 
   // make 2 digits out of 1
   var minDay = min.getDate();
-  if (minDay < 10) minDay = "0" + minDay;
+  if(minDay < 10)
+    minDay = "0" + minDay;
 
-  var minMonth = min.getMonth() + 1;
-  if (minMonth < 10) minMonth = "0" + minMonth;
+  var minMonth = min.getMonth()+1;
+  if(minMonth < 10)
+    minMonth = "0" + minMonth;
 
   // same for current (to be the min later)
   var maxDay = max.getDate();
-  if (maxDay < 10) maxDay = "0" + maxDay;
+  if(maxDay < 10)
+    maxDay = "0" + maxDay;
 
-  var maxMonth = max.getMonth() + 1;
-  if (maxMonth < 10) maxMonth = "0" + maxMonth;
+  var maxMonth = max.getMonth()+1;
+  if(maxMonth < 10)
+    maxMonth = "0" + maxMonth;
 
   var minEntry = min.getYear() + 1900 + "-" + minMonth + "-" + minDay;
   var maxEntry = max.getYear() + 1900 + "-" + maxMonth + "-" + maxDay;
 
   $('input[type="date"]').attr({
     "min": minEntry,
-    "max": maxEntry
+    "max": maxEntry,
   });
 });
+
 
 /**
  * Initialises the Google places autocomplete object.
  * Adds event listeners to the 'For now' and 'Long term' buttons on the index page.
  */
-function initialize() {
-  var options = {
-    types: ['(cities)'],
-    componentRestrictions: { country: 'au' }
-  };
+function initialize()
+{
+    const options = {
+        types: ['(cities)'],
+        componentRestrictions: { country: 'au' }
+    };
 
-  var input = document.getElementById('location');
-  var autocomplete = new google.maps.places.Autocomplete(input, options);
+    const input = document.getElementById('location');
+    const autocomplete = new google.maps.places.Autocomplete(input, options);
 
-  var shortBtn = document.getElementById('shortBtn');
-  var longBtn = document.getElementById('longBtn');
+    const shortBtn = document.getElementById('shortBtn');
+    const longBtn = document.getElementById('longBtn');
 
-  shortBtn.addEventListener('click', function () {
-    search(autocomplete, false);
-  });
-  longBtn.addEventListener('click', function () {
-    search(autocomplete, true);
-  });
+    shortBtn.addEventListener('click', () => { search(autocomplete, false) });
+    longBtn.addEventListener('click', () => { search(autocomplete, true) });
 }
 
 /**
  * 'Use Current Location' functionality.
  * Gets the user's current latitude and longitude coordinates.
  */
-function geoloc() {
-  var oldLocValue = document.getElementById('location').value;
-  document.getElementById('location').value = 'Finding your location ...';
+function geoloc()
+{
+    const oldLocValue = document.getElementById('location').value;
+    document.getElementById('location').value = 'Finding your location ...';
 
-  if (!navigator.geolocation) {
-    alert('Geolocation is not supported by your browser');
-    document.getElementById('location').value = oldLocValue;
-  }
+    if (!navigator.geolocation)
+    {
+      alert('Geolocation is not supported by your browser');
+      document.getElementById('location').value = oldLocValue;
+    }
 
-  function success(position) {
-    var lat = position.coords.latitude;
-    var lng = position.coords.longitude;
+    function success(position)
+    {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
 
-    var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ 'address': lat + ', ' + lng }, function (results, status) {
-      if (status == 'OK') {
-        var locality = void 0,
-            state = void 0,
-            country = void 0;
-        var addressComponents = results[0].address_components;
+        const geocoder = new google.maps.Geocoder;
+        geocoder.geocode( { 'address': lat + ', ' + lng }, (results, status) => {
+            if (status == 'OK')
+            {
+                let locality, state, country;
+                const addressComponents = results[0].address_components;
 
-        for (i = 0; i < addressComponents.length; ++i) {
-          if (!country && addressComponents[i].types[0] == 'country') country = addressComponents[i].long_name;else if (!state && addressComponents[i].types[0] == 'administrative_area_level_1') state = addressComponents[i].short_name;else if (!locality && addressComponents[i].types[0] == 'locality') locality = addressComponents[i].long_name;
-        }
-        document.getElementById('location').value = locality + ' ' + state + ', ' + country;
-      } else {
-        console.log('Geocode was not successful for the following reason: ' + status);
-      }
-    });
-  }
+                for (i = 0; i < addressComponents.length; ++i)
+                {
+                    if (!country && addressComponents[i].types[0] == 'country')
+                        country = addressComponents[i].long_name;
+                    else if (!state && addressComponents[i].types[0] == 'administrative_area_level_1')
+                        state = addressComponents[i].short_name;
+                    else if (!locality && addressComponents[i].types[0] == 'locality')
+                        locality = addressComponents[i].long_name;
+                }
+                document.getElementById('location').value = locality + ' ' + state + ', ' + country;
+            }
+            else
+            {
+                console.log('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
 
-  function error() {
-    alert('Unable to retrieve your location');
-    document.getElementById('location').value = oldLocValue;
-  }
+    function error()
+    {
+	    alert('Unable to retrieve your location');
+      document.getElementById('location').value = oldLocValue;
+    }
 
-  navigator.geolocation.getCurrentPosition(success, error);
+    navigator.geolocation.getCurrentPosition(success, error);
 }
 
 // /**
@@ -132,9 +144,11 @@ function geoloc() {
  * @param  {Object} coords       JSON object containing lat and long coordinates of searched location.
  * @param  {String} lengthOfStay If the user is searching for 'short_term' or 'long_term' accommodation.
  */
-function unsignedInSearch(coords, lengthOfStay) {
+function unsignedInSearch(coords, lengthOfStay)
+{
   if (lengthOfStay == 'long_term') {
-    var longTerm = document.getElementById('Long Term.');
+    const longTerm = document.getElementById('Long Term.');
+
 
     document.getElementById('latitude Long Term.').value = coords.lat;
     document.getElementById('longitude Long Term.').value = coords.long;
@@ -142,7 +156,7 @@ function unsignedInSearch(coords, lengthOfStay) {
 
     $(longTerm).modal('show');
   } else if (lengthOfStay == 'short_term') {
-    var shortTerm = document.getElementById('Right Now.');
+    const shortTerm = document.getElementById('Right Now.');
 
     document.getElementById('latitude Right Now.').value = coords.lat;
     document.getElementById('longitude Right Now.').value = coords.long;
@@ -150,6 +164,7 @@ function unsignedInSearch(coords, lengthOfStay) {
 
     $(shortTerm).modal('show');
   }
+
 }
 
 /**
@@ -161,30 +176,29 @@ function unsignedInSearch(coords, lengthOfStay) {
 function search(autocomplete, isLongTerm) // Fills form with lat and long from the Google Maps API
 {
   // const user = document.getElementById('userId');
-  var lengthOfStay = isLongTerm ? 'long_term' : 'short_term';
+  const lengthOfStay = isLongTerm ? 'long_term' : 'short_term';
 
-  var address = document.getElementById('location').value;
-  if (!address) {
-    return;
-  }
+  const address = document.getElementById('location').value;
+  if (!address) { return; }
 
-  var geocoder = new google.maps.Geocoder();
-  var request = {
+  const geocoder = new google.maps.Geocoder;
+  const request = {
     address: address,
     componentRestrictions: {
       country: 'au'
     }
-  };
+  }
 
-  geocoder.geocode(request, function (results, status) {
+  geocoder.geocode( request, (results, status) => {
     if (status == 'OK') {
       coords = {
         lat: results[0].geometry.location.lat(),
         long: results[0].geometry.location.lng()
-        // if(user) {
+      }
+      // if(user) {
         // signedInSearch(coords, lengthOfStay);
-        // } else {
-      };unsignedInSearch(coords, lengthOfStay);
+      // } else {
+      unsignedInSearch(coords, lengthOfStay);
       // }
     } else {
       console.log('Geocode was not successful for the following reason: ' + status);

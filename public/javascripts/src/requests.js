@@ -1,7 +1,6 @@
-"use strict";
-
 //Submit request
-function submitRequest(form) {
+function submitRequest(form)
+{
   // TODO: validation code
   locationForm = document.getElementById("locationForm");
   // form.elements["location"].value = locationForm.elements["locationInput"].value;
@@ -12,10 +11,11 @@ function submitRequest(form) {
 
 // Submit phoneNumber with Ajax to prevent page reload
 // https://stackoverflow.com/questions/25983603/how-to-submit-html-form-without-redirection
-function submitPhoneNumber(form) {
-  localStorage.number = form.elements.number.value;
-  localStorage.email = form.elements.email.value;
-  Array.from(document.forms).forEach(function (f) {
+function submitPhoneNumber (form)
+{
+  localStorage.number = form.elements.number.value; 
+  localStorage.email = form.elements.email.value; 
+  Array.from(document.forms).forEach(function(f) {
     if (f.elements.email) {
       if (localStorage.email) {
         f.elements.email.value = localStorage.email;
@@ -26,15 +26,17 @@ function submitPhoneNumber(form) {
         f.elements.number.value = localStorage.number;
       }
     }
-  });
+  })
   $.ajax({
     url: "/request/update",
     type: "post",
     data: $(form).serialize(),
-    success: function success(data) {
+    success: function(data)
+    {
       console.log(data);
-    }
-  }).fail(function (jqXHR, textStatus) {
+    },
+  })
+  .fail(function(jqXHR, textStatus) {
     console.log("[ERROR]: Contact information submission: " + textStatus);
-  });
+  })
 };

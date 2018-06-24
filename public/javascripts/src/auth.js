@@ -1,5 +1,3 @@
-'use strict';
-
 function login() {
   $('#loginTab')[0].click();
 

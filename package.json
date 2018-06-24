@@ -7,7 +7,8 @@
     "devstart": "nodemon ./bin/www",
     "test": "./node_modules/mocha/bin/_mocha",
     "mocha": "mocha",
-    "seed": "node generate.seed.data.js"
+    "seed": "node generate.seed.data.js",
+    "watch": "babel --watch public/javascripts/src/ -d public/javascripts/"
   },
   "engines": {
     "node": "~8.9.1",

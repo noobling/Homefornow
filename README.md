@@ -33,6 +33,8 @@ A simple responsive web application that allows homeless youths to easily search
 
 * `npm run devstart` This runs the project using nodemon. To reset the server then use 'rs'.
 
+* `npm run watch` This watches for frontend js changes so they can be transpiled using babel
+
 ## Developers
 
 * Alex Arnold
