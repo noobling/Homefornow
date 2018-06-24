@@ -7,7 +7,8 @@ $('#editBedModal').on('show.bs.modal', function() {
     url: '/service/dashboard/' + $('#uri').text() + '/beds/show',
     method: 'GET',
     success: function(data) {
-      for (bed of data.service.beds) {
+      for (var i = 0; i < data.service.beds.length; i++) {
+        var bed = data.service.beds[i];
         $('#bedList').append(BedPanel({
           index: bedIndex,
           name: bed.name,
@@ -120,7 +121,8 @@ function updateBeds() {
   $('#spinnerLoadBeds').show();
   $.get('/service/dashboard/' + $('#uri').text() + '/beds/show', function(data) {
     let index = 0;
-    for (bed of data.service.beds) {
+    for (var i = 0; i < data.service.beds.length; i++) {
+      var bed = data.service.beds[i];
       $('#updateBeds > .form-group').append(UpdatePanel({
         index,
         name: bed.name
@@ -165,7 +167,8 @@ function updateRequests() {
   $('#spinnerLoadRequests').show();
   $.get('/service/dashboard/' + $('#uri').text() + '/requests/show', function(data) {
     let index = 0;
-    for (request of data.requests) {
+    for (var i = 0; i < data.requests.length; i++) {
+      var request = data.requests[i];
       $('#updateRequests > .form-group').append(RequestPanel({
         index,
         name: request.firstName + ' ' + request.lastName,
@@ -189,7 +192,8 @@ function updateRequests() {
 
   $.get('/service/dashboard/' + $('#uri').text() + '/closed_requests/show', function(data) {
     let index = 0;
-    for (request of data.requests) {
+    for (var i = 0; i < data.requests.length; i++) {
+      var request = data.requests[i];
       let closedAt = new Date(request.closedAt);
       closedAt = closedAt.toLocaleDateString();
       $('#closedRequests > .form-group').append(ClosedRequestPanel({
@@ -510,7 +514,8 @@ $('a[href="#serviceProfile"]').on('click', function() {
     let $inputs = $('#serveAmenitiesForm :input');
 
     $inputs.each(function() {
-      for (amen of data.service.amenities) {
+      for (var i = 0; i < data.service.amenities.length; i++)
+        var amen = data.service.amenities[i];
         if (amen.name === this.id) {
           $(this).prop('checked', true);
         }
@@ -556,7 +561,8 @@ function createImages(uri, logo, images) {
     $('#photoSpace').children('div[data=addImage]').show(0);
   }
   if (images) {
-    for (image of images) {
+    for (i = 0; i < images.length; i++) {
+      var image = images[i];
       $('#photoSpace').append(ImagePanel({
         uri,
         image,
