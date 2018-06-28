@@ -385,7 +385,7 @@ $('a[href="#serviceProfile"]').on('click', function () {
     $('#serveRules').val(data.service.houseRules);
     $('#thankyouMessage').val(data.service.thankyouMessage);
 
-    if (data.service.settings.allowTexts !== false) {
+    if (data.service.settings === undefined || data.service.settings.allowTexts !== false) {
       $('#serveAllowTexts').prop('checked', true);
     }
     var $inputs = $('#serveAmenitiesForm :input');

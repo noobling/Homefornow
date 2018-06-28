@@ -104,14 +104,13 @@ module.exports.addPhoneToRequest = (req, res) => {
               const YPmessage = `Thank you for applying to ${serviceName}. Your request has been received. We will get back to you shortly`;
               const YPsubject = `Request to ${serviceName} has been received`;
 
-              not.notification(userNum, userEmail, YPmessage, YPsubject, res);
+              // not.notification(userNum, userEmail, YPmessage, YPsubject, res);
 
               // Notification to service
               serviceNum = serviceNum.replace(/\s/g, '');
               if (num === '04') {
                 serviceNum = '61'.concat(serviceNum.substring(1, serviceNum.length));
-              }
-              else {
+              } else {
                 serviceNum = undefined;
               }
               if (userEmail == null) {
