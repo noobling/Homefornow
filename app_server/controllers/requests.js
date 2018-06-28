@@ -70,7 +70,7 @@ module.exports.addPhoneToRequest = (req, res) => {
       const serviceEmail = servicedata.email;
       Service.findById(
         req.body.serviceId,
-        'phoneNumber name uri',
+        'phoneNumber name uri settings.allowTexts',
       ).exec().then((service) => {
         let serviceNum = service.phoneNumber;
         const serviceName = service.name;
@@ -121,7 +121,7 @@ module.exports.addPhoneToRequest = (req, res) => {
               const servMessage = `A request to ${serviceName} has been received from ${userName}. View request here: ${serviceUrl}`;
               const servSubject = `Request from ${userName} has been received`;
 
-              not.notification(serviceNum, serviceEmail, servMessage, servSubject, res);
+              not.notification(serviceNum, serviceEmail, servMessage, servSubject, res, { sendSMS: service.settings.allowTexts });
             }
           },
         );

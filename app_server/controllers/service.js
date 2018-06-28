@@ -317,10 +317,15 @@ module.exports.addService = (req, res, next) => {
 module.exports.updateService = (req, res) => {
   const service = new Service();
 
+  const allowTexts = req.body.allowTexts ? true : false;
+  
   const data = {
     name: req.body.serveName,
     uri: service.encodeURI(req.body.serveName),
     description: req.body.serveDesc,
+    settings: {
+      allowTexts: allowTexts,
+    },
     address: {
       suburb: req.body.serveSuburb,
       state: req.body.serveState,
@@ -484,7 +489,7 @@ module.exports.dashboardProfile = (req, res) => {
   }
   Service.findById(
     req.user.service[0],
-    'name address.suburb address.state address.postcode phoneNumber serviceType ageRange.minAge ageRange.maxAge stayLength description about houseRules amenities.name thankyouMessage',
+    'name address.suburb address.state address.postcode phoneNumber serviceType ageRange.minAge ageRange.maxAge stayLength description about houseRules amenities.name thankyouMessage settings',
   ).exec()
     .then((service) => {
       // console.log(`service = ${service}`);

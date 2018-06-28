@@ -108,12 +108,14 @@ module.exports.sms = (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-module.exports.notification = (number, email, message, subject, res) => {
+module.exports.notification = (number, email, message, subject, res, options) => {
   if (email !== undefined) {
     sendEmail(email, subject, message, res);
   }
 
-  if (number !== undefined) {
-    sendSMS(number, message, res);
+  if (options.sendSMS !== false) {
+    if (number !== undefined) {
+      sendSMS(number, message, res);
+    }
   }
 };

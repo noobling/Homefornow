@@ -511,6 +511,9 @@ $('a[href="#serviceProfile"]').on('click', function() {
     $('#serveRules').val(data.service.houseRules);
     $('#thankyouMessage').val(data.service.thankyouMessage);
 
+    if (data.service.settings.allowTexts !== false) {
+      $('#serveAllowTexts').prop('checked', true)
+    }
     let $inputs = $('#serveAmenitiesForm :input');
 
     $inputs.each(function() {

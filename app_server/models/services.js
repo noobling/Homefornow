@@ -175,6 +175,13 @@ const amenitiesSchema = new mongoose.Schema({
   },
 });
 
+const settingsSchema = new mongoose.Schema({
+  allowTexts: {
+    type: Boolean,
+    default: true,
+  },
+});
+
 /**
  * Schema for storing a service provider.
  * @type {mongoose.Schema}
@@ -305,6 +312,9 @@ const serviceSchema = new mongoose.Schema({
   thankyouMessage: {
     type: String,
     required: false,
+  },
+  settings: {
+    type: settingsSchema,
   },
 });
 
