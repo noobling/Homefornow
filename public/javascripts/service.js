@@ -438,7 +438,7 @@ function createImages(uri, logo, images) {
     $('#photoSpace').children('div[data=addImage]').show(0);
   }
   if (images) {
-    for (i = 0; i < images.length; i++) {
+    for (var i = 0; i < images.length; i++) {
       var image = images[i];
       $('#photoSpace').append(ImagePanel({
         uri: uri,
