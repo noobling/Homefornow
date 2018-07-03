@@ -39,8 +39,6 @@ block content
           .row(style='margin-top: 20px;')
             .col-xs-12.level
               h3 Our Bed Count
-              a( href='#', data-toggle='modal', data-target='#editBedModal', style='margin-left: 1em;')#beds Edit Beds
-                i.material-icons.btn-other(style='font-size: inherit; color: inherit;') edit
             .col-xs-12
               form(action='/service/dashboard/'+service.uri+'/beds/update', method='post')#updateBeds
                 img.img-responsive.center-block#spinnerLoadBeds(src='/images/loading_spinner.gif', style='display: none')
@@ -99,6 +97,10 @@ block content
           img.img-responsive.center-block#spinnerLoadProfile(src='/images/loading_spinner.gif', style='display: none')
           form(action='', method='post', role='form', id='addServiceForm')
             .row
+              .form-group
+                label(style='text-decoration: underline;')
+                  a( href='#', data-toggle='modal', data-target='#editBedModal', style='margin-left: 1em;')#beds EDIT BEDS
+                  i.material-icons.btn-other(style='font-size: inherit; color: inherit;') edit
               .form-group
                 .col-xs-12.col-sm-7(style='margin-bottom: 15px;')
                   label(for='serveName') SERVICE NAME
