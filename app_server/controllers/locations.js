@@ -46,7 +46,7 @@ module.exports.showLocations = (req, res) => {
         // eslint-disable-next-line
         services = hasBedWithChild(services);
       }
-      let { gender } = req.body.gender;
+      let { gender } = req.body;
       if (gender === 'Other') gender = 'Either';
       services = servicesWithBedGender(services, gender);
       // Sort services into available and unavailable

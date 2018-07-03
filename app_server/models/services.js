@@ -325,9 +325,7 @@ serviceSchema.methods.encodeURI = function encodeURI(name) {
 serviceSchema.methods.isAvailable = function isAvailable(beds) {
   let av = false;
   beds.forEach((bed) => {
-    console.log(bed);
     if (bed.isOccupied === 'Available') {
-      console.log('Available');
       av = true;
     }
   });
