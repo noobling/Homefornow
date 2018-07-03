@@ -94,4 +94,10 @@ block content
         localStorage.visited = true;
       }
 
-      $('.serviceLink').click(function() { localStorage.fromIndex = true }) 
+      $('.serviceLink').click(function() { localStorage.fromIndex = true })
+    script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js")
+    link(rel="stylesheet", href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
+    script.
+      $(function() {
+          $('input[type="date"]').datepicker({dateFormat: 'yy-mm-dd'})
+      })
