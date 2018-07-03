@@ -113,13 +113,13 @@ module.exports.notification = (number, email, message, subject, res, options) =>
     sendEmail(email, subject, message, res);
   }
 
-  if (options) {
-    if (options.sendSMS !== false) {
-      if (number !== undefined) {
+  if (number !== undefined) {
+    if (options) {
+      if (options.sendSMS !== false) {
         sendSMS(number, message, res);
       }
+    } else {
+      sendSMS(number, message, res);
     }
-  } else {
-    sendSMS(number, message, res);
   }
 };

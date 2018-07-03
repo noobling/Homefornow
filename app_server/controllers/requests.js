@@ -97,7 +97,7 @@ module.exports.addPhoneToRequest = (req, res) => {
                 userNum = undefined;
               }
 
-              if (userEmail == null) {
+              if (!userEmail) {
                 userEmail = undefined;
               }
 
