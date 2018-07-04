@@ -8,7 +8,7 @@ const session = require('express-session');
 const passport = require('passport');
 const flash = require('connect-flash');
 const Raven = require('raven');
-
+const enforce = require('express-sslify');
 
 require('dotenv').config();
 require('./app_server/models/db');
@@ -18,6 +18,10 @@ const index = require('./app_server/routes/index');
 const services = require('./app_server/routes/services');
 
 const app = express();
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+}
 
 // Must configure Raven before doing anything else with it
 Raven.config(process.env.DSN).install();
@@ -33,16 +37,29 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({
-  secret: 'randomsecret',
-  resave: true,
-  saveUninitialized: false,
-  cookie: {
-    secure: false, // TODO: set this to true once the website uses https
-    httpOnly: true,
-    maxAge: 3600000, // One hour
-  },
-})); // SECRET SHOULD BE STORED IN ENVIRONMENT VARIABLES
+if (process.env.NODE_ENV === 'production') {
+  app.use(session({
+    secret: process.env.secret,
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+      secure: true, // TODO: set this to true once the website uses https
+      httpOnly: true,
+      maxAge: 3600000, // One hour
+    },
+  })); // SECRET SHOULD BE STORED IN ENVIRONMENT VARIABLES
+} else {
+  app.use(session({
+    secret: 'randomsecret',
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+      secure: false, // TODO: set this to true once the website uses https
+      httpOnly: true,
+      maxAge: 3600000, // One hour
+    },
+  })); // SECRET SHOULD BE STORED IN ENVIRONMENT VARIABLES
+}
 app.use((req, res, next) => {
   res.locals.session = req.session;
   next();
