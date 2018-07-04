@@ -8,8 +8,7 @@ module.exports.admin = (req, res) => {
   const prevPage = req.header('Referer') || '/';
   if (!req.user) {
     res.redirect(prevPage);
-  }
-  if (req.user.role === 'admin') {
+  } else if (req.user.role === 'admin') {
     Service.find({ }, { name: 1, beds: 1, requests: 1 }).exec()
       .then((service) => {
         res.render('admin', {
