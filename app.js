@@ -38,40 +38,31 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
-  secret: 'randomsecret',
-  resave: true,
-  saveUninitialized: false,
-  cookie: {
-    secure: false, // TODO: set this to true once the website uses https
-    httpOnly: true,
-    maxAge: 3600000, // One hour
-  },
-})); // SECRET SHOULD BE STORED IN ENVIRONMENT VARIABLES
+if (process.env.NODE_ENV === 'production') {
+  app.use(session({
+    secret: process.env.secret,
+    resave: true,
+    saveUninitialized: false,
+    proxy: true, // Need to set this for heroku because it uses reverse proxies
+    cookie: {
+      secure: true, // TODO: set this to true once the website uses https
+      httpOnly: true,
+      maxAge: 3600000, // One hour
+    },
+  })); // SECRET SHOULD BE STORED IN ENVIRONMENT VARIABLES
+} else {
+  app.use(session({
+    secret: 'randomsecret',
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+      secure: false, // TODO: set this to true once the website uses https
+      httpOnly: true,
+      maxAge: 3600000, // One hour
+    },
+  })); // SECRET SHOULD BE STORED IN ENVIRONMENT VARIABLES
+}
 
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(session({
-//     secret: process.env.secret,
-//     resave: true,
-//     saveUninitialized: false,
-//     cookie: {
-//       secure: true, // TODO: set this to true once the website uses https
-//       httpOnly: true,
-//       maxAge: 3600000, // One hour
-//     },
-//   })); // SECRET SHOULD BE STORED IN ENVIRONMENT VARIABLES
-// } else {
-//   app.use(session({
-//     secret: 'randomsecret',
-//     resave: true,
-//     saveUninitialized: false,
-//     cookie: {
-//       secure: false, // TODO: set this to true once the website uses https
-//       httpOnly: true,
-//       maxAge: 3600000, // One hour
-//     },
-//   })); // SECRET SHOULD BE STORED IN ENVIRONMENT VARIABLES
-// }
 app.use((req, res, next) => {
   res.locals.session = req.session;
   next();
