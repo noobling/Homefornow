@@ -12,6 +12,7 @@ const nexmo = new Nexmo({
 /**
  * Email initialisation
  */
+
 const transporter = nodemailer.createTransport({
   /* {host: 'smtp.gmail.com', // Anglicare email SMTP host (placeholder for now)
   port: 587,
@@ -23,7 +24,7 @@ const transporter = nodemailer.createTransport({
   },
   // remove when deployed, only for testing
   tls: {
-    rejectUnautorized: false,
+    rejectUnauthorized: false,
   },
 
 });
