@@ -7,6 +7,31 @@ block content
       white-space: pre-wrap;
       line-height: 25px;
     }
+  .pswp(tabindex="-1" role="dialog" aria-hidden="true")
+      .pswp__bg
+      .pswp__scroll-wrap
+        .pswp__container
+          .pswp__item
+          .pswp__item
+          .pswp__item
+        .pswp__ui.pswp__ui--hidden
+          .pswp__top-bar
+            .pswp__counter
+            button.pswp__button.pswp__button--close(title="Close (Esc)")
+            button.pswp__button.pswp__button--share(title="Share")
+            button.pswp__button.pswp__button--fs(title="Toggle fullscreen")
+            button.pswp__button.pswp__button--zoom(title="Zoom in/out")
+            .pswp__preloader
+              .pswp__preloader__icn
+                .pswp__preloader__cut
+                  .pswp__preloader__donut
+          .pswp__share-modal.pswp__share-modal--hidden.pswp__single-tap
+            .pswp__share-tooltip
+          button.pswp__button.pswp__button--arrow--left(title="Previous (arrow left)")
+          button.pswp__button.pswp__button--arrow--right(title="Next (arrow right)")
+          .pswp__caption
+            .pswp__caption__center
+
   .container-fuid
     #top
     if images != null || logo != null
@@ -32,10 +57,10 @@ block content
                     each image in images
                       if index == 1
                         .item.active.img-carousel
-                          img.img-square.center-block.img-carousel(src=image, alt='Image ' + index++)
+                          img.img-square.center-block.img-carousel.service-img(src=image, alt='Image ' + index++)
                       else
                         .item.img-carousel
-                          img.img-square.center-block.img-carousel(src=image, alt='Image ' + index++)
+                          img.img-square.center-block.img-carousel.service-img(src=image, alt='Image ' + index++)
                     // Left and right controls
                     a.left.carousel-control(href='#myCarousel', data-slide='prev')
                       span.glyphicon.glyphicon-chevron-left(style='color: #b3b3b3;')
@@ -51,22 +76,19 @@ block content
     else
       .spacer-md
 
-    a#back
-      i.material-icons(style='vertical-align: bottom;') arrow_back
-      | Back to vacancies
     .row.text-center
       .col-xs-12(style='margin-top: 15px;')
         a#contactBtn(href='#', data-toggle="modal", data-target="#contactmodal"+location.uri)
           button.btn.btn-primary
-            | Contact
+            | CONTACT
         +contactModal(location.name, location._id, location.available, location.phoneNumber, location.uri, location.thankyouMessage, logo)
 
     .spacer-xs
     .row.text-center
       .col-xs-12
-        h1.text-center= location.name
+        h2.text-center(style='margin-bottom: 30px;')= location.name
       .col-xs-12
-        h3.text-left.HTMLify #{location.description}
+        h4.text-left.HTMLify #{location.description}
       .col-xs-12.col-md-9
     .row.text-center
       .col-xs-12
@@ -75,7 +97,7 @@ block content
       if location.amenities != null
         .row.text-center
           .col-xs-12
-            h2(style='margin-bottom: 30px;') Amenities
+            h2(style='margin-bottom: 40px;') Amenities
           .col-xs-12
             .row
               each amenity in location.amenities
@@ -87,7 +109,7 @@ block content
     .spacer-xs
     .row.text-center
       .col-xs-12
-        h2 House Expectations
+        h2(style='margin-bottom: 20px;') House Expectations
       .col-xs-12
         h4.text-left.HTMLify #{location.houseRules}
     .row.text-center
@@ -116,6 +138,10 @@ block content
       i.material-icons(style='vertical-align: bottom;') keyboard_arrow_up
       | <br>Back to top
 
+  link(rel="stylesheet", href="https://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.css")
+  link(rel="stylesheet", href="https://rawgit.com/dimsemenov/PhotoSwipe/master/dist/default-skin/default-skin.css")
+  script(src='https://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe.min.js')
+  script(src='https://rawgit.com/dimsemenov/PhotoSwipe/master/dist/photoswipe-ui-default.min.js')
   script(src='/javascripts/requests.js')
   script.
     $('#back').click(function() {
@@ -125,11 +151,38 @@ block content
     if (localStorage.fromIndex) { 
       localStorage.removeItem('fromIndex') 
       $('#contactBtn').hide() 
-    } 
+    }
+
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+
+    var items = [
+    ];
+
+    var options = {
+      index: 0
+    }
+
+    var images = !{JSON.stringify(images)};
+
+    for (var i = 0; i < images.length; i++) {
+      items.push({
+        src: images[i],
+        w: 600,
+        h: 400
+      })
+    }
+
+    $('.service-img').click(function () {
+      var gallery = new PhotoSwipe(pswpElement,PhotoSwipeUI_Default, items, options);
+      gallery.init()
+    })
   style.
     #back:hover {
       cursor: pointer;
     }
     .img-carousel {
       height: 100% !important;
+    }
+    .service-img {
+      cursor: pointer;
     }
