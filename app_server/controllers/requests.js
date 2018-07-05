@@ -120,7 +120,14 @@ module.exports.addPhoneToRequest = (req, res) => {
               const servMessage = `A request to ${serviceName} has been received from ${userName}. View request here: ${serviceUrl}`;
               const servSubject = `Request from ${userName} has been received`;
 
-              not.notification(serviceNum, serviceEmail, servMessage, servSubject, res, { sendSMS: service.settings.allowTexts });
+              let options = null;
+              if (service.settings) {
+                options = {
+                  sendSMS: service.settings.allowTexts,
+                };
+              }
+
+              not.notification(serviceNum, serviceEmail, servMessage, servSubject, res, options);
             }
           },
         );
