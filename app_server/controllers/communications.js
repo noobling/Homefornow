@@ -17,16 +17,11 @@ const transporter = nodemailer.createTransport({
   /* {host: 'smtp.gmail.com', // Anglicare email SMTP host (placeholder for now)
   port: 587,
   secure: false, // true for 465, false for other ports */
-  service: 'gmail',
+  service: 'Gmail',
   auth: {
     user: process.env.email_user, // Anglicare email ID
     pass: process.env.email_pass, // Anglicare email pass
   },
-  // remove when deployed, only for testing
-  tls: {
-    rejectUnauthorized: false,
-  },
-
 });
 
 /**
