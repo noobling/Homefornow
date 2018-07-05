@@ -33,10 +33,16 @@ function amenities(service) {
       icon: 'wifi',
     });
   }
-  if (service.BATH === 'on') {
+  if (service.BATH === 'private') {
     amen.push({
-      label: 'BATHROOM',
-      name: 'BATH',
+      label: 'BATHROOM PRIVATE',
+      name: 'BATHPRIVATE',
+      icon: 'wc',
+    });
+  } else {
+    amen.push({
+      label: 'BATHROOM SHARED',
+      name: 'BATHSHARED',
       icon: 'wc',
     });
   }
@@ -142,10 +148,17 @@ function findAmenityToUpdate(amenity, status) {
       icon: 'wifi',
     };
   }
-  if (amenity === 'BATH') {
+  if (amenity === 'BATHPRIVATE') {
     return {
-      label: 'BATHROOM',
-      name: 'BATH',
+      label: 'BATHROOM PRIVATE',
+      name: 'BATHPRIVATE',
+      icon: 'wc',
+    };
+  }
+  if (amenity === 'BATHSHARED') {
+    return {
+      label: 'BATHROOM SHARED',
+      name: 'BATHSHARED',
       icon: 'wc',
     };
   }
@@ -896,7 +909,7 @@ module.exports.addNote = (req, res) => {
 };
 
 module.exports.updateAmenities = (req, res) => {
-  const amenity = findAmenityToUpdate(req.body.id, req.body.checkedState)
+  const amenity = findAmenityToUpdate(req.body.id, req.body.checkedState);   
   if (amenity) {
     if (req.body.checkedState === 'true') {
       Service.findOneAndUpdate({ _id: req.user.service[0] }, {
@@ -910,6 +923,19 @@ module.exports.updateAmenities = (req, res) => {
           res.json(service);
         }
       });
+      if (req.body.id === 'BATHSHARED') {
+        console.log('executing bath shared')
+        const bathPrivate = findAmenityToUpdate('BATHPRIVATE');
+        Service.findOneAndUpdate({_id: req.user.service[0]}, { $pull: {amenities: bathPrivate}}, (err, service) => {
+          if (err) console.log(err);
+        });
+      } else if (req.body.id === 'BATHPRIVATE') {
+        console.log('executing bath private')
+        const bathShared = findAmenityToUpdate('BATHSHARED');
+        Service.findOneAndUpdate({ _id: req.user.service[0] }, { $pull: { amenities: bathShared } }, (err, service) => {
+          if (err) console.log(err);
+        });
+      }
     } else {
       Service.findOneAndUpdate({ _id: req.user.service[0] }, {
         $pull: {
