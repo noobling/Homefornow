@@ -108,7 +108,7 @@ module.exports.addPhoneToRequest = (req, res) => {
 
               // Notification to service
               serviceNum = serviceNum.replace(/\s/g, '');
-              if (num === '04') {
+              if (serviceNum.substring(0, 2) === '04') {
                 serviceNum = '61'.concat(serviceNum.substring(1, serviceNum.length));
               } else {
                 serviceNum = undefined;
