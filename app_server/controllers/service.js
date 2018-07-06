@@ -371,7 +371,6 @@ module.exports.updateService = (req, res) => {
     // Update the address coordinates
     googleMapsClient.geocode({ address: req.body.serveSuburb.concat(', ').concat(req.body.serveState).concat(', ').concat(req.body.serveState) }).asPromise()
       .then((response) => {
-        console.log(response.json.results);
         console.log(response.json.results[0].geometry.location);
         const coords = response.json.results[0].geometry.location;
         Service.findOneAndUpdate({ name: req.params.serviceName }, { $set: { 'address.coordinates.coordinates': [coords.lng, coords.lat] } }, (err) => {
