@@ -134,7 +134,7 @@ block content
     a#back 
       i.material-icons(style='vertical-align: bottom;') arrow_back 
       | Back to vacancies 
-    a.text-center.pull-right(href='#top', style='margin-bottom: 20px;')
+    a.text-center.pull-right#back-to-top-btn(style='margin-bottom: 20px;')
       i.material-icons(style='vertical-align: bottom;') keyboard_arrow_up
       | <br>Back to top
 
@@ -175,6 +175,11 @@ block content
     $('.service-img').click(function () {
       var gallery = new PhotoSwipe(pswpElement,PhotoSwipeUI_Default, items, options);
       gallery.init()
+    })
+
+    $('#back-to-top-btn').click(function () {
+      document.body.scrollTop = 0; // For safari
+      document.documentElement.scrollTop = 0; // For the other browsers
     })
   style.
     #back:hover {
