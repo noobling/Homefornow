@@ -1,5 +1,7 @@
 var bedIndex = 0;
 
+$.ajaxSetup({ cache: false })
+
 $('#editBedModal').on('show.bs.modal', function() {
   $('#spinnerAddBeds').show();
   $('#bedList').hide();
