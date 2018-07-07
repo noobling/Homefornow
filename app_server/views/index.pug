@@ -85,6 +85,11 @@ block content
           9223 1111 </br>
           1800 199 008
     .spacer-xs
+    #cookieConsent
+      #closeCookieConsent x
+      | This website is using cookies. 
+      a(href='/policy', target='_blank') More Info.
+      a.cookieConsentOK That's Fine
     script(src='/javascripts/location.js')
     script(src='/javascripts/requests.js')
     script(async='', defer='',  src='https://maps.googleapis.com/maps/api/js?key=AIzaSyA3i_JFMmmWMoWvhYFQ8BubRxjCZddZNFw&libraries=places&callback=initialize')
@@ -101,3 +106,60 @@ block content
       $(function() {
           $('input[type="date"]').datepicker({dateFormat: 'yy-mm-dd'})
       })
+    style.
+      #cookieConsent {
+          background-color: rgba(20,20,20,0.8);
+          min-height: 26px;
+          font-size: 14px;
+          color: #ccc;
+          line-height: 26px;
+          padding: 8px 0 8px 30px;
+          font-family: "Trebuchet MS",Helvetica,sans-serif;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          display: none;
+          z-index: 9999;
+      }
+      #cookieConsent a {
+          color: #4B8EE7;
+          text-decoration: none;
+      }
+      #closeCookieConsent {
+          float: right;
+          display: inline-block;
+          cursor: pointer;
+          height: 20px;
+          width: 20px;
+          margin: -15px 0 0 0;
+          font-weight: bold;
+      }
+      #closeCookieConsent:hover {
+          color: #FFF;
+      }
+      #cookieConsent a.cookieConsentOK {
+          background-color: #F1D600;
+          color: #000;
+          display: inline-block;
+          border-radius: 5px;
+          padding: 0 20px;
+          cursor: pointer;
+          float: right;
+          margin: 0 60px 0 10px;
+      }
+      #cookieConsent a.cookieConsentOK:hover {
+          background-color: #E0C91F;
+      }
+    script.
+      $(document).ready(function(){
+        if (!localStorage.acceptCookies) {
+          $('#cookieConsent').fadeIn(200);
+        }
+        $("#closeCookieConsent, .cookieConsentOK").click(function() {
+          $("#cookieConsent").fadeOut(200);
+        });
+        $('.cookieConsentOK').click(function () {
+          localStorage.acceptCookies = true;
+        })
+      }); 

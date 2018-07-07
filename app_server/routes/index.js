@@ -27,6 +27,10 @@ router.post('/locations/:lengthOfStay', ctrlLocations.showLocations);
 
 router.post('/request/update', ctrlRequests.addPhoneToRequest);
 router.post('/locations/contact/:lengthOfStay', ctrlRequests.addRequest);
+
+router.get('/policy', (req, res) => {
+  return res.render('policy');
+});
 /**
  * Authentication
  */
