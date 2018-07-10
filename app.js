@@ -9,11 +9,13 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const Raven = require('raven');
 const enforce = require('express-sslify');
+const mongoose = require('mongoose');
 
 require('dotenv').config();
 require('./app_server/models/db');
 require('./app_server/config/passport');
 
+const Service = mongoose.model('Service');
 const index = require('./app_server/routes/index');
 const services = require('./app_server/routes/services');
 
@@ -86,7 +88,19 @@ app.use(flash());
 app.use((req, res, next) => {
   res.locals.messages = req.flash();
   res.locals.user = req.user;
-  next();
+  if (req.user && req.user.role === 'service_provider') {
+    Service.find({ 
+      _id: {
+        $in: req.user.service
+      } 
+    }, (err, userServices) => {
+      if (err) console.log(err);
+      res.locals.services = userServices;
+      next();
+    });
+  } else {
+    next();
+  }
 });
 /** End custom middleware */
 

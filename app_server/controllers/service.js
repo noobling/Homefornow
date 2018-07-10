@@ -303,21 +303,30 @@ module.exports.addService = (req, res, next) => {
       console.log(service);
 
       service.save().then((newService) => {
-        const newUser = new User();
+        if (req.body.serveUser === 'None') {
+          const newUser = new User();
 
-        newUser.name = req.body.serveName;
-        newUser.email = req.body.serveEmail;
-        newUser.dob = new Date();
-        newUser.gender = 'Other';
-        newUser.role = 'service_provider';
-        newUser.service = newService.id;
-        newUser.setPassword(req.body.servePass);
+          newUser.name = req.body.serveName;
+          newUser.email = req.body.serveEmail;
+          newUser.dob = new Date();
+          newUser.gender = 'Other';
+          newUser.role = 'service_provider';
+          newUser.service = newService.id;
+          newUser.setPassword(req.body.servePass);
 
-        newUser.save().then(() => {
-          res.redirect('/location/'.concat(newService.uri));
-        }).catch((err) => {
-          next(err);
-        });
+          newUser.save().then(() => {
+            res.redirect('/location/'.concat(newService.uri));
+          }).catch((err) => {
+            next(err);
+          });
+        } else {
+          User.findOneAndUpdate({ _id: req.body.serveUser }, {
+            $push: { service: newService._id }
+          }, (err, user) => {
+            if (err) console.log(err);
+            res.redirect('/location/'.concat(newService.uri));
+          });
+        }
       }).catch((err) => {
         next(err);
       });
@@ -331,7 +340,7 @@ module.exports.updateService = (req, res) => {
   const service = new Service();
 
   const allowTexts = req.body.allowTexts ? true : false;
-  
+
   const data = {
     name: req.body.serveName,
     uri: service.encodeURI(req.body.serveName),
@@ -390,7 +399,16 @@ module.exports.updateService = (req, res) => {
 //   }
 //   return newRequests;
 // }
-
+function canAccessDashboard(user, serviceId) {
+  if (user.role === 'admin') return true;
+  else if (user.role === 'service_provider') {
+    return user.service.find((uService) => {
+      return uService.toString() === serviceId.toString();
+    })
+  } else {
+    return false;
+  }
+}
 /**
  * Renders a service provider's dashboard.
  * @param  {Object} req Express request object.
@@ -402,14 +420,19 @@ module.exports.dashboard = (req, res) => {
     res.render('login', { errors: ['Please sign in to access this page'] });
     return;
   }
-  Service.findById(
-    req.user.service[0],
-    'name uri',
+  Service.find(
+    { uri: req.params.serviceUri },
+    'name uri _id',
   ).exec()
     .then((service) => {
-      res.render('serviceDashboard', {
-        service,
-      });
+      const uService = service[0];
+      if (canAccessDashboard(req.user, uService._id)) {
+        res.render('serviceDashboard', {
+          service: uService,
+        });
+      } else {
+        res.status(403).render('index', { errors: ['You do not own this service'] });
+      }
     })
     .catch((err) => {
       res.status(401).json({ message: err });
@@ -426,15 +449,18 @@ module.exports.dashboardBeds = (req, res) => {
     res.status(401).json({ message: 'You are not authorised to view this page.' });
     return;
   }
-  Service.findById(
-    req.user.service[0],
+  Service.find(
+    { uri: req.params.serviceUri },
     'beds',
   ).exec()
     .then((service) => {
-      // console.log(service);
-      res.send({
-        service,
-      });
+      if (canAccessDashboard(req.user, service[0]._id)) {
+        res.send({
+          service: service[0],
+        });
+      } else {
+        res.status(403).send({ message: 'Unauthorized' });
+      }
     })
     .catch((err) => {
       res.status(401).json({ message: err });
@@ -446,27 +472,31 @@ module.exports.dashboardOpenRequests = (req, res) => {
     res.status(401).json({ message: 'You are not authorised to view this page.' });
     return;
   }
-  Service.findById(
-    req.user.service[0],
+  Service.find(
+    { uri: req.params.serviceUri },
     'openRequests',
   ).exec()
     .then((service) => {
       // console.log(service.openRequests);
-      Request.find(
-        {
-          _id: service.openRequests,
-        },
-        '_id firstName lastName gender phoneNumber email dob note closedAt openedAt',
-      ).exec()
-        .then((requests) => {
-          // console.log(requests);
-          res.send({
-            requests,
+      if (canAccessDashboard(req.user, service[0]._id)) {
+        Request.find(
+          {
+            _id: service[0].openRequests,
+          },
+          '_id firstName lastName gender phoneNumber email dob note closedAt openedAt',
+        ).exec()
+          .then((requests) => {
+            // console.log(requests);
+            res.send({
+              requests,
+            });
+          })
+          .catch((err) => {
+            res.status(401).json({ message: err });
           });
-        })
-        .catch((err) => {
-          res.status(401).json({ message: err });
-        });
+      } else {
+        res.status(403).send({ message: 'Unauthorized' });
+      }
     });
 };
 
@@ -475,27 +505,30 @@ module.exports.dashboardClosedRequests = (req, res) => {
     res.status(401).json({ message: 'You are not authorised to view this page.' });
     return;
   }
-  Service.findById(
-    req.user.service[0],
+  Service.find(
+    { uri: req.params.serviceUri },
     'requests',
   ).exec()
     .then((service) => {
-      // console.log(service.openRequests);
-      Request.find(
-        {
-          _id: service.requests,
-        },
-        'firstName lastName gender phoneNumber email dob closedAt note openedAt',
-      ).exec()
-        .then((requests) => {
-          // console.log(requests);
-          res.send({
-            requests,
+      if (canAccessDashboard(req.user, service[0]._id)) {
+        Request.find(
+          {
+            _id: service[0].requests,
+          },
+          'firstName lastName gender phoneNumber email dob closedAt note openedAt',
+        ).exec()
+          .then((requests) => {
+            // console.log(requests);
+            res.send({
+              requests,
+            });
+          })
+          .catch((err) => {
+            res.status(401).json({ message: err });
           });
-        })
-        .catch((err) => {
-          res.status(401).json({ message: err });
-        });
+      } else {
+        res.status(403).send({ message: 'Unauthorized' });
+      }
     });
 };
 
@@ -509,16 +542,19 @@ module.exports.dashboardProfile = (req, res) => {
     res.status(401).json({ message: 'You are not authorised to view this page.' });
     return;
   }
-  Service.findById(
-    req.user.service[0],
+  Service.find(
+    { uri: req.params.serviceUri },
     'name address.suburb address.state address.postcode phoneNumber serviceType ageRange.minAge ageRange.maxAge stayLength description about houseRules amenities.name thankyouMessage settings',
   ).exec()
     .then((service) => {
-      // console.log(`service = ${service}`);
-      res.send({
-        service,
-        email: req.user.email,
-      });
+      if (canAccessDashboard(req.user, service[0]._id)) {
+        res.send({
+          service: service[0],
+          email: req.user.email,
+        });
+      } else {
+        res.status(403).send({ message: 'Unauthorized' });        
+      }
     })
     .catch((err) => {
       res.status(401).json({ message: err });
@@ -718,7 +754,7 @@ module.exports.reopenRequest = (req, res) => {
     return;
   }
 
-  Service.findByIdAndUpdate(req.user.service[0], {
+  Service.findOneAndUpdate({ uri: req.params.serviceUri }, {
     $pull: {
       requests: req.body['_id'],
     },
@@ -921,7 +957,7 @@ module.exports.updateAmenities = (req, res) => {
   const amenity = findAmenityToUpdate(req.body.id, req.body.checkedState);   
   if (amenity) {
     if (req.body.checkedState === 'true') {
-      Service.findOneAndUpdate({ _id: req.user.service[0] }, {
+      Service.findOneAndUpdate({ uri: req.params.serviceUri }, {
         $push: {
           amenities: amenity,
         },
@@ -935,18 +971,18 @@ module.exports.updateAmenities = (req, res) => {
       if (req.body.id === 'BATHSHARED') {
         console.log('executing bath shared')
         const bathPrivate = findAmenityToUpdate('BATHPRIVATE');
-        Service.findOneAndUpdate({_id: req.user.service[0]}, { $pull: {amenities: bathPrivate}}, (err, service) => {
+        Service.findOneAndUpdate({ uri: req.params.serviceUri }, { $pull: {amenities: bathPrivate}}, (err, service) => {
           if (err) console.log(err);
         });
       } else if (req.body.id === 'BATHPRIVATE') {
         console.log('executing bath private')
         const bathShared = findAmenityToUpdate('BATHSHARED');
-        Service.findOneAndUpdate({ _id: req.user.service[0] }, { $pull: { amenities: bathShared } }, (err, service) => {
+        Service.findOneAndUpdate({ uri: req.params.serviceUri }, { $pull: { amenities: bathShared } }, (err, service) => {
           if (err) console.log(err);
         });
       }
     } else {
-      Service.findOneAndUpdate({ _id: req.user.service[0] }, {
+      Service.findOneAndUpdate({ uri: req.params.serviceUri }, {
         $pull: {
           amenities: amenity,
         },

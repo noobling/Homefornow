@@ -753,7 +753,7 @@ $('#serveAmenitiesForm :input').click(function () {
     id: id
   };
   $.ajax({
-    url: '/service/amenities/update',
+    url: '/service/amenities/' + $('#uri').text() + '/update',
     method: 'POST',
     data: data,
     success: function success(data) {}

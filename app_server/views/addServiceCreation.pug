@@ -27,6 +27,12 @@ block content
         form(action='/addservice', method='post', role='form', id='addServiceForm')  
           .row
             .form-group#serveName
+              .col-xs-6(style='margin-bottom: 15px;')
+                label(for='serveUser') USER
+                select.form-control(name='serveUser', id='serveUser')
+                  option(value='None') None
+                  each user in users
+                    option(value=user._id) #{user.name}
               .col-xs-12.col-sm-7(style='margin-bottom: 15px;')
                 label(for='serveName') SERVICE NAME
                 input(type='text', name='serveName', id='serveName', required='').form-control

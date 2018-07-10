@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 const Service = mongoose.model('Service');
 const Request = mongoose.model('Request');
+const User = mongoose.model('User');
 
 module.exports.admin = (req, res) => {
   const prevPage = req.header('Referer') || '/';
@@ -28,14 +29,16 @@ module.exports.admin = (req, res) => {
 
 module.exports.addService = (req, res) => {
   const prevPage = req.header('Referer') || '/';
-  if (!req.user) {
-    return res.redirect(prevPage);
-  }
-  if (req.user.role !== 'admin') {
-    return res.redirect(prevPage);
-  }
+  User.find({ role: 'service_provider' }, '_id name', (err, users) => {
+    if (!req.user) {
+      return res.redirect(prevPage);
+    }
+    if (req.user.role !== 'admin') {
+      return res.redirect(prevPage);
+    }
 
-  return res.render('addServiceCreation');
+    return res.render('addServiceCreation', { users });
+  });
 };
 
 module.exports.wipeRequests = (req, res) => {
