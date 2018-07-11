@@ -15,18 +15,19 @@ block navbar
       #navbar-main.navbar-collapse.collapse
         ul.nav.navbar-nav.navbar-right
           if user
-            if services
-              li.dropdown
-                a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
                   | Welcome #{user.name} 
                   span.caret
-                ul.dropdown-menu
+              ul.dropdown-menu
+                li
+                  a(href='/user/settings') Settings
+                li.divider(role='separator')
+                li.dropdown-header Your Accommodations
+                if services
                   each service in services
                     li
                       a(href=process.env.base_url + '/service/dashboard/' + service.uri) #{service.name}
-            else
-              li
-                a(href='/admin') Welcome #{user.name}
             li
               a(href='/logout', style='padding-right: 20px;') Logout
           else

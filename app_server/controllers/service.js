@@ -998,3 +998,9 @@ module.exports.updateAmenities = (req, res) => {
     res.status(400).json({ message: 'No amenities set' });
   }
 };
+
+module.exports.userSettings = (req, res) => {
+  if (!req.user) return res.render('index');
+
+  return res.render('userSettings');
+};

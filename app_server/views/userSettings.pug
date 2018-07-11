@@ -1,0 +1,86 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  // import CSS
+  link(rel='stylesheet' href='https://unpkg.com/element-ui/lib/theme-chalk/index.css')
+  link(rel="stylesheet", href="//at.alicdn.com/t/font_137970_p1tpzmomxp9cnmi.css")
+#app
+  el-main
+    el-button(@click='goHome') Home
+    h2.title #{user.name} User Settings
+    el-form(ref='form' :model='form')
+      el-form-item(label='Name')
+        el-input(v-model='form.name')
+      el-form-item(label='Login Email')
+        el-input(v-model='form.loginEmail')
+      el-form-item(label='Notification Email')
+        el-input(v-model='form.notifEmail')
+      el-form-item(label='Receive Text Messages')
+        el-switch(v-model='form.allowTexts')
+      el-form-item
+        el-button(type='primary') Update Settings
+    h2.title Change Password
+    el-form(ref='passForm' :model='passForm' status-icon :rules='passRules')
+      el-form-item(label='Password' prop='password')
+        el-input(v-model='passForm.password')
+      el-form-item('label'='Confirm' prop='passwordConf')
+        el-input(v-model='passForm.passwordConf')
+      el-form-item
+        el-button(type='primary') Update Password
+// import Vue before Element
+script(src='https://unpkg.com/vue/dist/vue.js')
+// import JavaScript
+script(src='https://unpkg.com/element-ui/lib/index.js')
+script.
+  new Vue({
+    el: '#app',
+    data: function() {
+      var validatePass = (rule, value, cb) => {
+        if (value === '') { cb(new Error('Please input the password')) }
+        else { 
+          if (this.passForm.passwordConf !== '') { this.$refs.passForm.validateField('passwordConf'); }
+          cb();            
+        }
+      };
+       var validatePass2 = (rule, value, cb) => {
+        if (value === '') { cb (new Error('Please input the password again')) }
+        else if (value !== this.passForm.password) { cb(new Error('The passwords do not match')); }
+        else { cb(); }
+      };
+      return { 
+        visible: false,
+        form: {
+          name: '',
+          loginEmail: '',
+          notifEmail: '',
+          allowTexts: true
+        },
+        passForm: {
+          password: '',
+          passwordConf: '',
+        },
+
+        passRules: {
+          password: [
+            { validator: validatePass, trigger: 'blur' }
+          ],
+          passwordConf: [
+            { validator: validatePass2, trigger: 'blur'}
+          ]
+        }
+      }
+      
+    },
+    methods: {
+      goHome: function() {
+        window.location.href = '/admin';
+      }
+    }
+  })
+style.
+  #app {
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  }
+  .title {
+    font-weight: normal;
+  }
