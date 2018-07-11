@@ -121,7 +121,7 @@ div[class^="col-"] {
 }
 
 .btn-lg {
-  width: 10vw;
+  width: inherit;
   min-width: 150px;
 }
 
