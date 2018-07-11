@@ -6,6 +6,11 @@ head
   link(rel="stylesheet", href="//at.alicdn.com/t/font_137970_p1tpzmomxp9cnmi.css")
 #app
   el-main
+    el-dialog(title='Attention' :visible.sync='dialogVisible')
+      span This page is still in development. Feel free to click around but no changes will be saved.
+      span(slot='footer')
+        el-button(@click='dialogVisible = false') OK
+
     el-button(@click='goHome') Home
     h2.title #{user.name} User Settings
     el-form(ref='form' :model='form')
@@ -67,7 +72,9 @@ script.
           passwordConf: [
             { validator: validatePass2, trigger: 'blur'}
           ]
-        }
+        },
+
+        dialogVisible: true
       }
       
     },

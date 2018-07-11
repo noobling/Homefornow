@@ -1000,7 +1000,13 @@ module.exports.updateAmenities = (req, res) => {
 };
 
 module.exports.userSettings = (req, res) => {
-  if (!req.user) return res.render('index');
+  if (!req.user) return res.status(401).render('index');
 
   return res.render('userSettings');
+};
+
+module.exports.userService = (req, res) => {
+  if (!req.user) return res.status(401).render('index');
+
+  return res.render('userService');
 };

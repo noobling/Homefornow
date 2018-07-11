@@ -80,4 +80,5 @@ router.post('/addservice', ctrlService.addService);
 router.post('/service/update/:serviceName', ctrlService.updateService);
 
 router.get('/user/settings', ctrlService.userSettings);
+router.get('/user/service', ctrlService.userService);
 module.exports = router;

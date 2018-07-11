@@ -1,0 +1,49 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  // import CSS
+  link(rel='stylesheet' href='https://unpkg.com/element-ui/lib/theme-chalk/index.css')
+  link(rel="stylesheet", href="//at.alicdn.com/t/font_137970_p1tpzmomxp9cnmi.css")
+#app
+  el-header
+    el-menu(mode='horizontal' default-active='1')
+      el-menu-item(index='1') Homefornow
+  el-main
+    h1.title Your Accommodations
+    if services
+      el-row(:gutter='20')
+        each service in services
+          el-col(:span='8')
+            el-card(shadow='hover')
+              div(slot='header')
+                span=service.name
+                el-button(style='float: right; margin-top: 15px;') Show
+              .events
+                p Events for accommodations e.g. New user request
+    else
+      h2.title You do not have any accommodations
+script(src='https://unpkg.com/vue/dist/vue.js')
+// import JavaScript
+script(src='https://unpkg.com/element-ui/lib/index.js')
+script.
+  new Vue({
+    el: '#app',
+    data: function() {
+      return {
+        uri: ''
+      }
+    },
+    methods: {
+      goToService: function(service) {
+        console.log(service);
+        window.location.href = service.uri;
+      }
+    }
+  })
+style.
+  #app {
+    font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  }
+  .title {
+    font-weight: normal;
+  }
