@@ -414,6 +414,13 @@ $('a[href="#serviceProfile"]').on('click', function () {
 });
 
 function createImages(uri, logo, images) {
+  var isIE = false;
+  var ua = window.navigator.userAgent;
+  var msie = ua.indexOf("MSIE ");
+
+  if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+    isIE = true;
+  }
   if (logo) {
     $('#logoSpace').append(ImagePanel({
       uri: uri,
@@ -422,19 +429,33 @@ function createImages(uri, logo, images) {
     }));
     $('#logoSpace').children('div[data=image]').show(0);
   } else {
-    $('#logoSpace').append(AddImagePanel({
-      uri: uri,
-      route: '/logo/add'
-    }));
+    if (isIE) {
+      $('#logoSpace').append(AddImagePanelIE({
+        uri: uri,
+        route: '/logo/add'
+      }));
+    } else {
+      $('#logoSpace').append(AddImagePanel({
+        uri: uri,
+        route: '/logo/add'
+      }));
+    }
     $('#logoSpace').children('div[data=addImage]').show(0);
   }
 
   var index = 0;
   if (!images || images.length < 6) {
-    $('#photoSpace').append(AddImagePanel({
-      uri: uri,
-      route: '/add'
-    }));
+    if (isIE) {
+      $('#photoSpace').append(AddImagePanelIE({
+        uri: uri,
+        route: '/add'
+      }));
+    } else {
+      $('#photoSpace').append(AddImagePanel({
+        uri: uri,
+        route: '/add'
+      }));
+    }
     $('#photoSpace').children('div[data=addImage]').show(0);
   }
   if (images) {
@@ -723,6 +744,12 @@ var AddImagePanel = function AddImagePanel(_ref6) {
   var uri = _ref6.uri,
       route = _ref6.route;
   return '\n  <div class="col-sm-2 col-xs-6" data="addImage" style="display: none;">\n    <form action=\'/service/profile/' + uri + route + '\' method=\'post\' enctype=\'multipart/form-data\'>\n      <div class=\'thumbnail\' style=\'line-height: 0px;\'>\n        <div class=\'image highlight\'>\n          <label style="margin: 0px;">\n            <img class=\'img-responsive\' id=\'plus-img\' src=\'/images/plus.png\' alt=\'Add Image\' style=\'cursor: pointer;\'/>\n            <img class=\'img-responsive\' id=\'spinner-gif\' src=\'/images/loading_spinner.gif\' style=\'display: none;\'/>\n            <input type=\'file\' accept=\'image/*\' hidden=\'\' name=\'fileAdd\' />\n          </label>\n        </div>\n      </div>\n    </form>\n  </div>\n';
+};
+
+var AddImagePanelIE = function AddImagePanelIE(_ref7) {
+  var uri = _ref7.uri,
+      route = _ref7.route;
+  return '\n  <div class="col-sm-3 col-xs-6" data="addImage" style="display: none;">\n    <form action=\'/service/profile/' + uri + route + '\' method=\'post\' enctype=\'multipart/form-data\'>\n      <input type=\'file\' accept=\'image/*\' name=\'fileAdd\' />\n    </form>\n  </div>\n';
 };
 
 /**

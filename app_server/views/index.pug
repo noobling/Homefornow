@@ -104,7 +104,12 @@ block content
     link(rel="stylesheet", href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
     script.
       $(function() {
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE ");
+
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
           $('input[type="date"]').datepicker({dateFormat: 'yy-mm-dd'})
+        }
       })
     style.
       #cookieConsent {

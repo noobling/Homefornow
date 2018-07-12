@@ -540,6 +540,13 @@ $('a[href="#serviceProfile"]').on('click', function() {
 });
 
 function createImages(uri, logo, images) {
+  var isIE = false;
+  var ua = window.navigator.userAgent;
+  var msie = ua.indexOf("MSIE ");
+
+  if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+    isIE = true;
+  }
   if (logo) {
     $('#logoSpace').append(ImagePanel({
       uri,
@@ -548,19 +555,33 @@ function createImages(uri, logo, images) {
     }));
     $('#logoSpace').children('div[data=image]').show(0);
   } else {
-    $('#logoSpace').append(AddImagePanel({
-      uri,
-      route: '/logo/add',
-    }));
+    if (isIE) {
+      $('#logoSpace').append(AddImagePanelIE({
+        uri,
+        route: '/logo/add',
+      }));
+    } else {
+      $('#logoSpace').append(AddImagePanel({
+        uri,
+        route: '/logo/add',
+      }));
+    }
     $('#logoSpace').children('div[data=addImage]').show(0);
   }
 
   let index = 0;
   if (!images || images.length < 6) {
-    $('#photoSpace').append(AddImagePanel({
-      uri,
-      route: '/add',
-    }));
+    if (isIE) {
+      $('#photoSpace').append(AddImagePanelIE({
+        uri,
+        route: '/add',
+      }));
+    } else {
+      $('#photoSpace').append(AddImagePanel({
+        uri,
+        route: '/add',
+      }));
+    }
     $('#photoSpace').children('div[data=addImage]').show(0);
   }
   if (images) {
@@ -883,6 +904,14 @@ const AddImagePanel = ({ uri, route }) => `
     </form>
   </div>
 `;
+
+const AddImagePanelIE = ({ uri, route }) => `
+  <div class="col-sm-3 col-xs-6" data="addImage" style="display: none;">
+    <form action='/service/profile/${uri}${route}' method='post' enctype='multipart/form-data'>
+      <input type='file' accept='image/*' name='fileAdd' />
+    </form>
+  </div>
+`
 
 /**
  *  When the user clicks the Beds Available tab
