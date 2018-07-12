@@ -731,10 +731,37 @@ var AddImagePanel = function AddImagePanel(_ref6) {
 function fetchBedsAvailable() {
   $.get('/service/beds/available', function (services) {
     $('#spinnerBedsAvailable').hide();
+    var numSegments = 1;
+    var numAdded = 0;
+
     for (var i = 0; i < services.crisis.length; i++) {
       var service = services.crisis[i];
-      $('#crisis-table').append('\n      <tr class="table-panel">\n        <td>' + service.serviceName + '</td>\n        <td>' + service.numBeds + '</td>\n        <td>' + service.numMale + '</td>\n        <td>' + service.numFemale + '</td>\n        <td>' + service.numEither + '</td>\n        <td>' + service.phoneNumber + '</td>\n      </tr>\n      ');
+
+      $('#crisis-table').append('\n      <tr class="table-panel crisis-segment crisis-segment-' + numSegments + '">\n        <td class=\'crisis-table-service-name\'>' + service.serviceName + '</td>\n        <td>' + service.numBeds + '</td>\n        <td>' + service.numMale + '</td>\n        <td>' + service.numFemale + '</td>\n        <td>' + service.numEither + '</td>\n        <td>' + service.phoneNumber + '</td>\n      </tr>\n      ');
+
+      numAdded++;
+
+      // We reached the max number of items we want to show at once, time to create a new page to paginate the items
+      if (numAdded >= 7) {
+        numSegments++;
+        numAdded = 0;
+      }
     }
+    $('.crisis-segment').hide();
+    $('.crisis-segment-1').show();
+
+    var links = '';
+    for (var i = 0; i < numSegments; i++) {
+      var num = i + 1;
+      links += '<li><a href="#" class="crisis-table-link">' + num + '</a></li>';
+    }
+
+    $('#crisis-table').append('\n      <ul class=\'pagination\'>\n        ' + links + '\n      </ul>\n    ');
+
+    $('.crisis-table-link').click(function (elem) {
+      $('.crisis-segment').hide();
+      $('.crisis-segment-' + elem.target.innerHTML).show();
+    });
 
     for (var i = 0; i < services.transitional.length; i++) {
       var service = services.transitional[i];
