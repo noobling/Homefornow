@@ -830,7 +830,7 @@ function toggleInputs() {
   });
 }
 
-$('#photoUploadRow').on('click', 'a[id^=imagethumbnailmodal]', function() {
+$('#photoUploadRow').on('click', 'a[id^=imagethumbnailmodal]', function(event) {
   console.log('open modal');
   event.preventDefault();
   $(this).closest('div[data=image]').children('div[id^=deleteimagemodal-image]').modal('show');
