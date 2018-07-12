@@ -492,8 +492,6 @@ $('a[href="#serviceProfile"]').on('click', function() {
   $('#addServiceForm').hide();
   $('#spinnerLoadProfile').show();
   $.get('/service/dashboard/' + $('#uri').text() + '/profile', function(data) {
-    document.getElementById('addServiceForm').action =  '/service/update/' + data.service.name;
-
     $('#serveName').val(data.service.name);
     $('#serveType').val(data.service.serviceType);
 

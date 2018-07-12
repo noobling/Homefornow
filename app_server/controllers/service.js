@@ -366,7 +366,7 @@ module.exports.updateService = (req, res) => {
   };
 
   try {
-    Service.findOneAndUpdate({ name: req.params.serviceName }, { $set: data }, (err) => {
+    Service.findOneAndUpdate({ uri: req.params.serviceUri }, { $set: data }, (err) => {
       if (err) console.log(`${err}\n`);      
       User.findById(req.user.id, (err, user) => {
         user.email = req.body.serveEmail;

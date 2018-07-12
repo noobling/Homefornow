@@ -77,7 +77,7 @@ router.get('/admin', ctrlAdmin.admin);
 router.get('/admin/addservice', ctrlAdmin.addService);
 router.get('/admin/wipe_requests', ctrlAdmin.wipeRequests);
 router.post('/addservice', ctrlService.addService);
-router.post('/service/update/:serviceName', ctrlService.updateService);
+router.post('/service/update/:serviceUri', ctrlService.updateService);
 
 router.get('/user/settings', ctrlService.userSettings);
 router.get('/user/service', ctrlService.userService);

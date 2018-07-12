@@ -95,7 +95,7 @@ block content
         .container-fluid(style='padding: 15px;')
           .spacer-xs
           img.img-responsive.center-block#spinnerLoadProfile(src='/images/loading_spinner.gif', style='display: none')
-          form(action='', method='post', role='form', id='addServiceForm')
+          form(action='/service/update/' + service.uri, method='post', role='form', id='addServiceForm')
             .row
               .form-group
                 label(style='text-decoration: underline;')
