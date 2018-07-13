@@ -12,17 +12,30 @@ const nexmo = new Nexmo({
 /**
  * Email initialisation
  */
-
-const transporter = nodemailer.createTransport({
-  /* {host: 'smtp.gmail.com', // Anglicare email SMTP host (placeholder for now)
+let transporter = null;
+if (process.env.NODE_ENV === 'production') {
+  transporter = nodemailer.createTransport({
+    host: 'smtp.elasticemail.com',
+    port: 2525,
+    secure: false,
+    auth: {
+      user: process.env.email_user, // Anglicare email ID
+      pass: process.env.email_pass, // Anglicare email pass
+    },
+  });
+} else {
+  transporter = nodemailer.createTransport({
+  /* {host: 'smtp.gmail.com', // Anglicare email SMTP host (placeholder for now) 
   port: 587,
-  secure: false, // true for 465, false for other ports */
-  service: 'Gmail',
-  auth: {
-    user: process.env.email_user, // Anglicare email ID
-    pass: process.env.email_pass, // Anglicare email pass
-  },
-});
+  secure: false, // true for 465, false for other ports */ 
+    service: 'Gmail',
+    auth: {
+      user: process.env.email_user, // Anglicare email ID
+      pass: process.env.email_pass, // Anglicare email pass
+    },
+  });
+}
+
 
 /**
  * Send an SMS to the given number
@@ -56,7 +69,7 @@ function sendSMS(number, message, res) {
 function sendEmail(to, subject, text, res) {
   // setup email data with unicode symbols
   const mailOptions = {
-    from: 'cfcxanglicare@gmail.com', // sender address
+    from: 'info@homefornow.org.au', // sender address
     to, // list of receivers separated by comma
     subject, // Subject line
     text, // plain text body
