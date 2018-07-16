@@ -24,6 +24,11 @@ module.exports.showLocations = (req, res) => {
   const type = (longTerm ? ['transitional'] : ['crisis']);
   const age = parseInt(timeago().format(req.body.dob).split(' ')[0], 10);
 
+  if (!req.body.long || !req.body.lat) {
+    req.body.long = 115.8605;
+    req.body.lat = -31.9505;
+  }
+
   Service.find(
     {
       $and: [
@@ -121,7 +126,6 @@ module.exports.showLocations = (req, res) => {
     })
     .catch((err) => {
       res.redirect('/');
-      throw new Error(err);
     });
 };
 
