@@ -10,12 +10,7 @@ module.exports.admin = (req, res) => {
   if (!req.user) {
     res.redirect(prevPage);
   } else if (req.user.role === 'admin') {
-    Service.find({ }, { name: 1, beds: 1, requests: 1 }).exec()
-      .then((service) => {
-        res.render('admin', {
-          services: service,
-        });
-      });
+    res.render('admin');
   } else if (req.user.role === 'service_provider') {
     Service.findById(req.user.service[0], 'uri').exec().then((service) => {
       res.redirect('/service/dashboard/'.concat(service.uri));

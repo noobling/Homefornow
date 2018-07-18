@@ -98,6 +98,12 @@ app.use((req, res, next) => {
       res.locals.services = userServices;
       next();
     });
+  } else if (req.user && req.user.role === 'admin') {
+    Service.find({}, (err, result) => {
+      if (err) console.log(err);
+      res.locals.services = result;
+      next();
+    });
   } else {
     next();
   }

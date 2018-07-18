@@ -36,9 +36,7 @@ block content
 									.panel-body
 										.row
 											.col-xs-6
-												each bed in service.beds
-													p= bed.gender
-												p THESE ARE WORDS
+												a.btn.btn-default(href='/service/dashboard/' + service.uri) Edit Service
 											.col-xs-6
 												each request in service.requests
 													p= request.firstName + ", " + request.createdAt

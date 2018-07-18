@@ -367,15 +367,8 @@ module.exports.updateService = (req, res) => {
 
   try {
     Service.findOneAndUpdate({ uri: req.params.serviceUri }, { $set: data }, (err) => {
-      if (err) console.log(`${err}\n`);      
-      User.findById(req.user.id, (err, user) => {
-        user.email = req.body.serveEmail;
-        user.save((err, result) => {
-          if (err) console.log(`${err}\n`);          
-          res.redirect(`/location/${service.encodeURI(req.body.serveName)}`);          
-        });
-      });
       if (err) console.log(`${err}\n`);
+      res.redirect(`/location/${service.encodeURI(req.body.serveName)}`);
     });
     // Update the address coordinates
     googleMapsClient.geocode({ address: req.body.serveSuburb.concat(', ').concat(req.body.serveState).concat(', ').concat(req.body.serveState) }).asPromise()
@@ -415,7 +408,7 @@ function canAccessDashboard(user, serviceId) {
  * @param  {Object} res Express response object.
  */
 module.exports.dashboard = (req, res) => {
-  if (!req.user || req.user.role !== 'service_provider') {
+  if (!req.user) {
     // res.status(401).json({ message: 'You are not authorised to view this page.' });
     res.render('login', { errors: ['Please sign in to access this page'] });
     return;
@@ -445,7 +438,7 @@ module.exports.dashboard = (req, res) => {
  * @param  {Object} res Express response object.
  */
 module.exports.dashboardBeds = (req, res) => {
-  if (!req.user || req.user.role !== 'service_provider') {
+  if (!req.user) {
     res.status(401).json({ message: 'You are not authorised to view this page.' });
     return;
   }
@@ -468,7 +461,7 @@ module.exports.dashboardBeds = (req, res) => {
 };
 
 module.exports.dashboardOpenRequests = (req, res) => {
-  if (!req.user || req.user.role !== 'service_provider') {
+  if (!req.user) {
     res.status(401).json({ message: 'You are not authorised to view this page.' });
     return;
   }
@@ -501,7 +494,7 @@ module.exports.dashboardOpenRequests = (req, res) => {
 };
 
 module.exports.dashboardClosedRequests = (req, res) => {
-  if (!req.user || req.user.role !== 'service_provider') {
+  if (!req.user) {
     res.status(401).json({ message: 'You are not authorised to view this page.' });
     return;
   }
@@ -538,7 +531,7 @@ module.exports.dashboardClosedRequests = (req, res) => {
  * @param  {Object} res Express response object.
  */
 module.exports.dashboardProfile = (req, res) => {
-  if (!req.user || req.user.role !== 'service_provider') {
+  if (!req.user) {
     res.status(401).json({ message: 'You are not authorised to view this page.' });
     return;
   }
@@ -568,7 +561,7 @@ module.exports.dashboardProfile = (req, res) => {
  * @param  {Object} res Express response object.
  */
 module.exports.dashboardAvailable = (req, res) => {
-  if (!req.user || req.user.role !== 'service_provider') {
+  if (!req.user) {
     res.status(401).json({ message: 'You are not authorised to view this page.' });
     return;
   }
@@ -595,7 +588,7 @@ module.exports.dashboardAvailable = (req, res) => {
 };
 
 module.exports.bedsAvailable = (req, res) => {
-  if (!req.user || req.user.role !== 'service_provider') {
+  if (!req.user) {
     res.status(401).json({ message: 'You are not authorised to view this page.' });
     return;
   }
@@ -641,7 +634,7 @@ module.exports.bedsAvailable = (req, res) => {
 };
 
 module.exports.updateBeds = (req, res) => {
-  if (!req.user || req.user.role !== 'service_provider') {
+  if (!req.user) {
     res.status(401).json({ message: 'You are not authorised to view this page.' });
     return;
   }
@@ -707,7 +700,7 @@ module.exports.updateBeds = (req, res) => {
 };
 
 module.exports.updateRequests = (req, res) => {
-  if (!req.user || req.user.role !== 'service_provider') {
+  if (!req.user) {
     res.status(401).json({ message: 'You are not authorised to view this page.' });
     return;
   }
@@ -749,7 +742,7 @@ module.exports.updateRequests = (req, res) => {
 };
 
 module.exports.reopenRequest = (req, res) => {
-  if (!req.user || req.user.role !== 'service_provider') {
+  if (!req.user) {
     res.status(401).json({ message: 'You are not authorised to view this page.' });
     return;
   }
