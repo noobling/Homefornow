@@ -376,7 +376,7 @@ block content
             .col-xs-12
               .level(style='justify-content: center;')
                 h3.text-center TRANSITIONAL
-                input.form-control#trans-table-search(type='text', placeholder='Search for transitional service', style='max-width: 20em; margin-left: 1em')
+                input.form-control#transitional-table-search(type='text', placeholder='Search for transitional service', style='max-width: 20em; margin-left: 1em')
               table.table#transitional-table
                 tr
                   th SERVICES
@@ -386,23 +386,27 @@ block content
   script(src='/javascripts/service.js')
   script(src='/javascripts/bedsAvailable.js')
   script.
-    // Search box code
-    $('#crisis-table-search').keyup(function (elem) {
-      var search = $('#crisis-table-search').val();
-      $('.crisis-segment').hide();
-      // Dont do any searching if search box is empty
-      if (!search || search == '') {
-        $('.crisis-segment-1').show();
-      } else {
-        // Show all services which names have the included letters in them
-        $('.crisis-segment').each(function (_, segment) {
-          var name = segment.firstElementChild.innerText
-          if (name.toLowerCase().indexOf(search.toLowerCase()) >= 0) {
-            $(segment).show();
-          }
-        })
-      }
-    })
+    function addSearch(serviceName) {
+      $('#'+serviceName+'-table-search').keyup(function (elem) {
+        var search = $('#'+serviceName+'-table-search').val();
+        $('.'+serviceName+'-segment').hide();
+        // Dont do any searching if search box is empty
+        if (!search || search == '') {
+          $('.'+serviceName+'-segment-1').show();
+        } else {
+          // Show all services which names have the included letters in them
+          $('.'+serviceName+'-segment').each(function (_, segment) {
+            var name = segment.firstElementChild.innerText
+            if (name.toLowerCase().indexOf(search.toLowerCase()) >= 0) {
+              $(segment).show();
+            }
+          })
+        }
+      })
+    }
+    addSearch('crisis')
+    addSearch('transitional')
+    
   style.
     .level {
       display: flex;

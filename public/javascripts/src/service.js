@@ -920,16 +920,26 @@ function addPagination(name, services) {
   for (var i = 0; i < services.length; i++) {
     var service = services[i];
 
-    $('#' + name + '-table').append(`
-    <tr class="table-panel ${name}-segment ${name}-segment-${numSegments}">
-      <td class='${name}-table-service-name'>${service.serviceName}</td>
-      <td>${service.numBeds}</td>
-      <td>${service.numMale}</td>
-      <td>${service.numFemale}</td>
-      <td>${service.numEither}</td>
-      <td>${service.phoneNumber}</td>
-    </tr>
-    `)
+    if (name === 'transitional') {
+      $('#' + name + '-table').append(`
+      <tr class="table-panel ${name}-segment ${name}-segment-${numSegments}">
+        <td class='${name}-table-service-name'>${service.serviceName}</td>
+        <td>${service.phoneNumber}</td>
+      </tr>
+      `)
+    } else {
+      $('#' + name + '-table').append(`
+      <tr class="table-panel ${name}-segment ${name}-segment-${numSegments}">
+        <td class='${name}-table-service-name'>${service.serviceName}</td>
+        <td>${service.numBeds}</td>
+        <td>${service.numMale}</td>
+        <td>${service.numFemale}</td>
+        <td>${service.numEither}</td>
+        <td>${service.phoneNumber}</td>
+      </tr>
+      `)
+    }
+   
 
     numAdded++;
     
@@ -943,9 +953,10 @@ function addPagination(name, services) {
   $('.'+name+'-segment-1').show();
 
   var links = '';
+  var linkTo = name === 'transitional' ? '#transitional-table': '#crisis-table';
   for (var i = 0; i < numSegments; i++) {
     var num = i + 1;
-    links += '<li><a href="#" class="'+name+'-table-link">' + num + '</a></li>';
+    links += '<li><a href="'+linkTo +'" class="'+name+'-table-link">' + num + '</a></li>';
   }
 
   $('#'+name+'-table').append(`
@@ -969,16 +980,8 @@ function fetchBedsAvailable() {
     $('#spinnerBedsAvailable').hide();
     
     addPagination('crisis', services.crisis)
-    
-    for (var i = 0; i < services.transitional.length; i++) {
-      var service = services.transitional[i];
-      $('#transitional-table').append(`
-        <tr class="table-panel">
-          <td>${service.serviceName}</td>
-          <td>${service.phoneNumber}</td>
-        </tr>
-      `)
-    }
+
+    addPagination('transitional', services.transitional)
 	})
 }
 

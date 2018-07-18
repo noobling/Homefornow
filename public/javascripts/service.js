@@ -759,7 +759,11 @@ function addPagination(name, services) {
   for (var i = 0; i < services.length; i++) {
     var service = services[i];
 
-    $('#' + name + '-table').append('\n    <tr class="table-panel ' + name + '-segment ' + name + '-segment-' + numSegments + '">\n      <td class=\'' + name + '-table-service-name\'>' + service.serviceName + '</td>\n      <td>' + service.numBeds + '</td>\n      <td>' + service.numMale + '</td>\n      <td>' + service.numFemale + '</td>\n      <td>' + service.numEither + '</td>\n      <td>' + service.phoneNumber + '</td>\n    </tr>\n    ');
+    if (name === 'transitional') {
+      $('#' + name + '-table').append('\n      <tr class="table-panel ' + name + '-segment ' + name + '-segment-' + numSegments + '">\n        <td class=\'' + name + '-table-service-name\'>' + service.serviceName + '</td>\n        <td>' + service.phoneNumber + '</td>\n      </tr>\n      ');
+    } else {
+      $('#' + name + '-table').append('\n      <tr class="table-panel ' + name + '-segment ' + name + '-segment-' + numSegments + '">\n        <td class=\'' + name + '-table-service-name\'>' + service.serviceName + '</td>\n        <td>' + service.numBeds + '</td>\n        <td>' + service.numMale + '</td>\n        <td>' + service.numFemale + '</td>\n        <td>' + service.numEither + '</td>\n        <td>' + service.phoneNumber + '</td>\n      </tr>\n      ');
+    }
 
     numAdded++;
 
@@ -773,9 +777,10 @@ function addPagination(name, services) {
   $('.' + name + '-segment-1').show();
 
   var links = '';
+  var linkTo = name === 'transitional' ? '#transitional-table' : '#crisis-table';
   for (var i = 0; i < numSegments; i++) {
     var num = i + 1;
-    links += '<li><a href="#" class="' + name + '-table-link">' + num + '</a></li>';
+    links += '<li><a href="' + linkTo + '" class="' + name + '-table-link">' + num + '</a></li>';
   }
 
   $('#' + name + '-table').append('\n    <ul class=\'pagination\'>\n      ' + links + '\n    </ul>\n  ');
@@ -795,10 +800,7 @@ function fetchBedsAvailable() {
 
     addPagination('crisis', services.crisis);
 
-    for (var i = 0; i < services.transitional.length; i++) {
-      var service = services.transitional[i];
-      $('#transitional-table').append('\n        <tr class="table-panel">\n          <td>' + service.serviceName + '</td>\n          <td>' + service.phoneNumber + '</td>\n        </tr>\n      ');
-    }
+    addPagination('transitional', services.transitional);
   });
 }
 
