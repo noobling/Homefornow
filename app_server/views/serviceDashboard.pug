@@ -374,7 +374,9 @@ block content
             .col-xs-12
           .row
             .col-xs-12
-              h3.text-center TRANSITIONAL
+              .level(style='justify-content: center;')
+                h3.text-center TRANSITIONAL
+                input.form-control#trans-table-search(type='text', placeholder='Search for transitional service', style='max-width: 20em; margin-left: 1em')
               table.table#transitional-table
                 tr
                   th SERVICES

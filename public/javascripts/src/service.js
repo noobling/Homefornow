@@ -913,57 +913,63 @@ const AddImagePanelIE = ({ uri, route }) => `
   </div>
 `
 
+function addPagination(name, services) {
+  var numSegments = 1;
+  var numAdded = 0;
+
+  for (var i = 0; i < services.length; i++) {
+    var service = services[i];
+
+    $('#' + name + '-table').append(`
+    <tr class="table-panel ${name}-segment ${name}-segment-${numSegments}">
+      <td class='${name}-table-service-name'>${service.serviceName}</td>
+      <td>${service.numBeds}</td>
+      <td>${service.numMale}</td>
+      <td>${service.numFemale}</td>
+      <td>${service.numEither}</td>
+      <td>${service.phoneNumber}</td>
+    </tr>
+    `)
+
+    numAdded++;
+    
+    // We reached the max number of items we want to show at once, time to create a new page to paginate the items
+    if (numAdded >= 7) {
+      numSegments++;
+      numAdded = 0;
+    }
+  }
+  $('.'+name+'-segment').hide();
+  $('.'+name+'-segment-1').show();
+
+  var links = '';
+  for (var i = 0; i < numSegments; i++) {
+    var num = i + 1;
+    links += '<li><a href="#" class="'+name+'-table-link">' + num + '</a></li>';
+  }
+
+  $('#'+name+'-table').append(`
+    <ul class='pagination'>
+      ${links}
+    </ul>
+  `)
+
+  $('.'+name+'-table-link').click(function (elem) {
+    $('.'+name+'-segment').hide();
+    $('.'+name+'-segment-' + elem.target.innerHTML).show();
+  })
+
+}
+
 /**
  *  When the user clicks the Beds Available tab
  */
 function fetchBedsAvailable() {
   $.get('/service/beds/available', function(services) {
     $('#spinnerBedsAvailable').hide();
-    var numSegments = 1;
-    var numAdded = 0;
     
-    for (var i = 0; i < services.crisis.length; i++) {
-      var service = services.crisis[i];
-
-      $('#crisis-table').append(`
-      <tr class="table-panel crisis-segment crisis-segment-${numSegments}">
-        <td class='crisis-table-service-name'>${service.serviceName}</td>
-        <td>${service.numBeds}</td>
-        <td>${service.numMale}</td>
-        <td>${service.numFemale}</td>
-        <td>${service.numEither}</td>
-        <td>${service.phoneNumber}</td>
-      </tr>
-      `)
-
-      numAdded++;
-      
-      // We reached the max number of items we want to show at once, time to create a new page to paginate the items
-      if (numAdded >= 7) {
-        numSegments++;
-        numAdded = 0;
-      }
-    }
-    $('.crisis-segment').hide();
-    $('.crisis-segment-1').show();
-
-    var links = '';
-    for (var i = 0; i < numSegments; i++) {
-      var num = i + 1;
-      links += '<li><a href="#" class="crisis-table-link">' + num + '</a></li>';
-    }
-
-    $('#crisis-table').append(`
-      <ul class='pagination'>
-        ${links}
-      </ul>
-    `)
-
-    $('.crisis-table-link').click(function (elem) {
-      $('.crisis-segment').hide();
-      $('.crisis-segment-' + elem.target.innerHTML).show();
-    })
-
+    addPagination('crisis', services.crisis)
+    
     for (var i = 0; i < services.transitional.length; i++) {
       var service = services.transitional[i];
       $('#transitional-table').append(`
