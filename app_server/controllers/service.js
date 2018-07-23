@@ -337,6 +337,10 @@ module.exports.addService = (req, res, next) => {
 };
 
 module.exports.updateService = (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ message: 'You must be logged in to create a new service provider.' });
+  }
+
   const service = new Service();
 
   const allowTexts = req.body.allowTexts ? true : false;
@@ -387,8 +391,8 @@ module.exports.updateService = (req, res) => {
         });
       });
   } catch (e) {
-    res.redirect(`/location/${service.encodeURI(req.body.serveName)}`);
-    console.log(e);
+    console.log(e);    
+    return res.redirect(`/location/${service.encodeURI(req.body.serveName)}`);
   }
 };
 
