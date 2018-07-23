@@ -14,6 +14,8 @@ block navbar
           span.icon-bar
       #navbar-main.navbar-collapse.collapse
         ul.nav.navbar-nav.navbar-right
+          li
+            a(href='#', data-toggle='modal', data-target='#contact-us-modal') Contact Us
           if user
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown', role='button', aria-haspopup='true', aria-expanded='false')
