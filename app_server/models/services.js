@@ -196,7 +196,7 @@ const serviceSchema = new mongoose.Schema({
   serviceType: {
     type: String,
     required: true,
-    enum: ['crisis', 'transitional'],
+    enum: ['crisis', 'transitional', 'disabled'],
   },
   // Which genders the service provider accommodates
   gender: {
