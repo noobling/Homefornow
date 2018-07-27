@@ -108,7 +108,7 @@ block content
         var msie = ua.indexOf("MSIE ");
 
         if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-          $('input[type="date"]').datepicker({dateFormat: 'yy-mm-dd'})
+          $('input[type="date"]').datepicker({defaultDate: "-15y", changeYear: true, changeMonth: true})
         }
       })
     style.
