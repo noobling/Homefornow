@@ -38,7 +38,7 @@
     "passport-local": "^1.0.0",
     "pug": "^2.0.1",
     "raven": "^2.6.3",
-    "request": "^2.87.0",
+    "request": "^2.88.0",
     "serve-favicon": "~2.4.5",
     "timeago.js": "^3.0.2"
   },
